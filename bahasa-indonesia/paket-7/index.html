@@ -1,0 +1,2086 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan TKA Bahasa Indonesia – Paket 7</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+        :root {
+            --primary: #1a56db;
+            --primary-dark: #1e429f;
+            --primary-light: #ebf5ff;
+            --success: #057a55;
+            --success-light: #def7ec;
+            --danger: #e02424;
+            --danger-light: #fde8e8;
+            --text: #1f2a37;
+            --text-muted: #6b7280;
+            --bg: #f0f4ff;
+            --white: #ffffff;
+            --border: #d1d5db;
+            --radius: 12px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: clamp(14px, 3.5vw, 16px);
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        input,
+        textarea,
+        select,
+        button,
+        .allow-select {
+            user-select: auto !important;
+        }
+
+        body *::selection {
+            background: transparent;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            padding: 0 14px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(26, 86, 219, 0.4);
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .brand-name {
+            font-family: 'Baloo 2', cursive;
+            font-size: clamp(0.8rem, 3vw, 1rem);
+            font-weight: 700;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sub-brand {
+            font-size: clamp(0.6rem, 2.2vw, 0.7rem);
+            opacity: 0.8;
+            font-weight: 600;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .user-chip {
+            display: none;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: clamp(0.65rem, 2.2vw, 0.78rem);
+            font-weight: 700;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            max-width: 110px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .timer-chip {
+            display: none;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-weight: 800;
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
+        }
+
+        .font-controls {
+            display: flex;
+            gap: 3px;
+        }
+
+        .font-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            width: 26px;
+            height: 26px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.6rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .font-btn:active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .slide {
+            display: none;
+        }
+
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.25s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .page {
+            padding: 16px;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .page-narrow {
+            padding: 16px;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: clamp(16px, 4vw, 28px);
+            border: 1px solid rgba(209, 213, 219, 0.6);
+            margin-bottom: 16px;
+        }
+
+        .card-header {
+            font-family: 'Baloo 2', cursive;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 4px;
+        }
+
+        .card-sub {
+            color: var(--text-muted);
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 700;
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+            margin-bottom: 5px;
+        }
+
+        .form-label span {
+            color: var(--danger);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Nunito', sans-serif;
+            font-size: clamp(0.85rem, 3.5vw, 1rem);
+            color: var(--text);
+            background: var(--white);
+            -webkit-appearance: none;
+            transition: border-color 0.15s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.1);
+        }
+
+        .email-hint {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 8px;
+            padding: 9px 12px;
+            margin-top: 6px;
+            font-size: clamp(0.72rem, 2.8vw, 0.82rem);
+            color: #92400e;
+            line-height: 1.5;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 11px 18px;
+            border-radius: 8px;
+            border: none;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: clamp(0.82rem, 3vw, 0.95rem);
+            cursor: pointer;
+            transition: all 0.15s;
+            touch-action: manipulation;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:active {
+            background: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background: white;
+            border: 1.5px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .btn-outline:active {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:active {
+            background: #c81e1e;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        .rule-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            background: var(--bg);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .rule-num {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.8rem;
+        }
+
+        .rule-text {
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+            line-height: 1.65;
+            padding-top: 3px;
+        }
+
+        .rule-text strong {
+            color: var(--primary-dark);
+        }
+
+        .paket-badge {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            border: 1px solid #bfdbfe;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 3px 10px;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .q-item {
+            display: none;
+        }
+
+        .q-item.active-q {
+            display: block;
+            animation: qSlide 0.2s ease-out;
+        }
+
+        @keyframes qSlide {
+            from {
+                opacity: 0;
+                transform: translateX(8px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0)
+            }
+        }
+
+        .q-category {
+            display: inline-block;
+            font-size: clamp(0.65rem, 2.5vw, 0.75rem);
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .stimulus {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-left: 4px solid var(--primary);
+            padding: clamp(12px, 3vw, 18px);
+            margin-bottom: 16px;
+            border-radius: 8px;
+            line-height: 1.75;
+            font-size: clamp(0.82rem, 3vw, 0.93rem);
+        }
+
+        .stim-title {
+            font-weight: 800;
+            color: var(--primary-dark);
+            font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            border-bottom: 1.5px dashed #e5e7eb;
+        }
+
+        .stimulus p {
+            margin-bottom: 10px;
+        }
+
+        .stimulus p:last-child {
+            margin-bottom: 0;
+        }
+
+        .stimulus em {
+            font-style: italic;
+            color: #374151;
+        }
+
+        .stimulus strong {
+            font-weight: 800;
+        }
+
+        .stimulus ul {
+            margin-left: 1.4rem;
+            margin-top: 6px;
+        }
+
+        .stimulus ul li {
+            margin-bottom: 6px;
+            line-height: 1.7;
+        }
+
+        .stimulus del {
+            color: #9ca3af;
+        }
+
+        .stim-img-wrap {
+            text-align: center;
+            margin: 12px 0;
+        }
+
+        .stim-img-wrap img {
+            max-width: 100%;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+        }
+
+        .stim-img-caption {
+            font-size: 0.72rem;
+            color: #9ca3af;
+            margin-top: 5px;
+        }
+
+        .stim-img-placeholder {
+            background: #f3f4f6;
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            padding: 20px;
+            color: #6b7280;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .q-text {
+            font-size: clamp(0.9rem, 3.5vw, 1.05rem);
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 14px;
+            line-height: 1.6;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 14px;
+            background: white;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            font-size: clamp(0.82rem, 3vw, 0.93rem);
+            color: #374151;
+            line-height: 1.5;
+            touch-action: manipulation;
+        }
+
+        .option-label:active {
+            background: var(--primary-light);
+            border-color: var(--primary);
+        }
+
+        .option-label input {
+            margin-top: 2px;
+            transform: scale(1.15);
+            flex-shrink: 0;
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            font-size: clamp(0.75rem, 3vw, 0.88rem);
+        }
+
+        .matrix-table th {
+            background: #f3f4f6;
+            padding: clamp(8px, 2vw, 12px);
+            font-weight: 800;
+        }
+
+        .matrix-table td {
+            border: 1px solid #e5e7eb;
+            padding: clamp(8px, 2vw, 12px);
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .matrix-table td:first-child {
+            text-align: left;
+            padding-left: clamp(10px, 2.5vw, 16px);
+        }
+
+        .quiz-nav-bar {
+            position: sticky;
+            bottom: 0;
+            background: white;
+            border-top: 1px solid var(--border);
+            box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.07);
+            z-index: 90;
+            padding: 10px 14px;
+        }
+
+        .quiz-nav-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .q-indicator {
+            font-weight: 800;
+            color: var(--primary);
+            font-size: clamp(0.75rem, 2.8vw, 0.9rem);
+            background: var(--primary-light);
+            padding: 5px 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .quiz-nav-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .nav-toggle-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--primary-light);
+            border: 1px solid #bfdbfe;
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: clamp(0.72rem, 2.8vw, 0.82rem);
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .answered-count {
+            font-size: clamp(0.7rem, 2.8vw, 0.8rem);
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        .drawer-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 200;
+        }
+
+        .drawer-overlay.show {
+            display: block;
+        }
+
+        .nav-drawer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 16px 16px 0 0;
+            box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.15);
+            z-index: 201;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 70vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-drawer.open {
+            transform: translateY(0);
+        }
+
+        .drawer-handle {
+            width: 36px;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            margin: 10px auto 0;
+            flex-shrink: 0;
+        }
+
+        .drawer-header {
+            padding: 10px 16px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .drawer-title {
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+
+        .drawer-close {
+            background: var(--bg);
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        .drawer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+            gap: 6px;
+            padding: 10px 12px;
+            overflow-y: auto;
+        }
+
+        .nav-btn {
+            aspect-ratio: 1;
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            touch-action: manipulation;
+            min-height: 36px;
+            max-height: 40px;
+        }
+
+        .nav-btn:active {
+            transform: scale(0.9);
+        }
+
+        .nav-btn.current {
+            border: 2.5px solid var(--primary);
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .nav-btn.answered {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+
+        .nav-btn.answered.current {
+            border: 2.5px solid var(--primary-dark);
+        }
+
+        .drawer-footer {
+            padding: 10px 14px 14px;
+            border-top: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .result-hero {
+            text-align: center;
+            padding: 20px 16px;
+            background: linear-gradient(135deg, var(--primary-light) 0%, white 80%);
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+        }
+
+        .score-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+            border: 5px solid var(--primary);
+            background: white;
+            box-shadow: 0 4px 16px rgba(26, 86, 219, 0.15);
+        }
+
+        .score-circle.lulus {
+            border-color: var(--success);
+        }
+
+        .score-num {
+            font-family: 'Baloo 2', cursive;
+            font-size: clamp(1.8rem, 6vw, 2.4rem);
+            font-weight: 800;
+            color: var(--primary-dark);
+            line-height: 1;
+        }
+
+        .score-circle.lulus .score-num {
+            color: var(--success);
+        }
+
+        .score-lbl {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .result-status {
+            font-family: 'Baloo 2', cursive;
+            font-size: clamp(1.1rem, 4vw, 1.3rem);
+            font-weight: 700;
+        }
+
+        .result-desc {
+            color: var(--text-muted);
+            font-size: clamp(0.78rem, 3vw, 0.9rem);
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        .result-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .meta-box {
+            background: var(--bg);
+            padding: 10px 12px;
+            border-radius: 8px;
+        }
+
+        .meta-lbl {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+
+        .meta-val {
+            font-weight: 800;
+            font-size: clamp(0.82rem, 3vw, 0.92rem);
+        }
+
+        .comp-bar {
+            margin-bottom: 12px;
+        }
+
+        .comp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 5px;
+            gap: 8px;
+        }
+
+        .comp-name {
+            font-weight: 700;
+            font-size: clamp(0.75rem, 3vw, 0.85rem);
+            flex: 1;
+        }
+
+        .comp-score {
+            font-weight: 800;
+            font-size: clamp(0.72rem, 2.8vw, 0.82rem);
+            white-space: nowrap;
+        }
+
+        .bar-track {
+            height: 10px;
+            background: #e5e7eb;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .bar-tuntas {
+            background: linear-gradient(90deg, #059669, #34d399);
+        }
+
+        .bar-belum {
+            background: linear-gradient(90deg, #dc2626, #f87171);
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 16px 0;
+        }
+
+        .section-title {
+            font-family: 'Baloo 2', cursive;
+            font-size: clamp(0.95rem, 3.5vw, 1.05rem);
+            color: var(--primary-dark);
+            margin-bottom: 12px;
+        }
+
+        .email-status {
+            padding: 12px 14px;
+            border-radius: 10px;
+            margin-top: 14px;
+            font-size: clamp(0.78rem, 3vw, 0.88rem);
+            font-weight: 700;
+            line-height: 1.5;
+        }
+
+        .es-sending {
+            background: #eff6ff;
+            color: var(--primary);
+            border: 1px solid #bfdbfe;
+        }
+
+        .es-sent {
+            background: var(--success-light);
+            color: var(--success);
+            border: 1px solid #a7f3d0;
+        }
+
+        .es-error {
+            background: var(--danger-light);
+            color: var(--danger);
+            border: 1px solid #fca5a5;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(3px);
+            align-items: center;
+            justify-content: center;
+            z-index: 300;
+            padding: 16px;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            padding: clamp(20px, 5vw, 28px);
+            width: 100%;
+            max-width: 360px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal h3 {
+            font-family: 'Baloo 2', cursive;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+            font-size: clamp(1.1rem, 4vw, 1.25rem);
+        }
+
+        .modal p {
+            color: var(--text-muted);
+            margin-bottom: 18px;
+            line-height: 1.6;
+            font-size: clamp(0.82rem, 3vw, 0.93rem);
+        }
+
+        .modal-btns {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .modal-btns .btn {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e5e7eb;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            margin: 12px auto;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        @media (max-width:380px) {
+            .sub-brand {
+                display: none;
+            }
+
+            .font-controls {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body oncontextmenu="return false;" ondragstart="return false;">
+
+    <div class="header">
+        <div class="header-brand">
+            <span class="logo">📖</span>
+            <div>
+                <div class="brand-name">Latihan TKA · Bahasa Indonesia</div>
+                <div class="sub-brand">SD Muhammadiyah 01 Kukusan · Kelas 6</div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="user-chip" id="user-chip"></div>
+            <div class="timer-chip" id="timer-chip">00:00</div>
+            <div class="font-controls">
+                <button class="font-btn" onclick="App.changeFontSize(-1)">A−</button>
+                <button class="font-btn" onclick="App.changeFontSize(1)">A+</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="slide-login" class="slide active">
+        <div class="page-narrow">
+            <div class="card" style="margin-top:8px;">
+                <div class="paket-badge">📖 Bahasa Indonesia · Paket 7</div>
+                <div class="card-header">Selamat Datang! 👋</div>
+                <div class="card-sub">Isi data berikut sebelum memulai latihan soal</div>
+                <div class="form-group">
+                    <label class="form-label">Nama Lengkap Siswa <span>*</span></label>
+                    <input type="text" id="inp-nama" class="form-control allow-select" placeholder="Tulis nama siswa...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Kelas <span>*</span></label>
+                    <select id="inp-kelas" class="form-control allow-select">
+                        <option value="">-- Pilih Kelas --</option>
+                        <option value="6A">6A</option>
+                        <option value="6B">6B</option>
+                        <option value="6C">6C</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email Orang Tua <span>*</span></label>
+                    <input type="email" id="inp-email" class="form-control allow-select" placeholder="email@orangtua.com">
+                    <div class="email-hint">📧 Laporan hasil latihan dikirim otomatis ke email ini setelah selesai.</div>
+                </div>
+                <button class="btn btn-primary btn-full" onclick="App.login()" style="margin-top:10px;">Lanjut ke Petunjuk →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PETUNJUK -->
+    <div id="slide-rules" class="slide">
+        <div class="page-narrow">
+            <div class="card" style="margin-top:8px;">
+                <div class="paket-badge">📖 Bahasa Indonesia · Paket 7</div>
+                <div class="card-header">📋 Petunjuk Pengerjaan</div>
+                <div class="card-sub">Bahasa Indonesia · 30 soal · Waktu bebas</div>
+                <div class="rule-item">
+                    <div class="rule-num">1</div>
+                    <div class="rule-text"><strong>Baca teks dengan seksama</strong> — Paket ini memuat soal yang membutuhkan pemahaman mendalam. Jangan terburu-buru menjawab sebelum membaca tuntas.</div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-num">2</div>
+                    <div class="rule-text"><strong>Amati gambar dan infografis</strong> — Beberapa soal dilengkapi ilustrasi, iklan, atau infografis. Perhatikan setiap detail visual untuk menjawab dengan tepat.</div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-num">3</div>
+                    <div class="rule-text"><strong>Urutan soal diacak</strong> — Tiap sesi latihan, urutan soal akan berbeda secara otomatis.</div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-num">4</div>
+                    <div class="rule-text"><strong>Navigasi soal</strong> — Ketuk <em>"Lihat Semua Soal"</em> di bagian bawah untuk melompat ke nomor mana saja. Kotak <span style="background:var(--success);color:white;padding:1px 7px;border-radius:4px;font-size:0.75rem;">hijau</span> = sudah dijawab.</div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-num">5</div>
+                    <div class="rule-text"><strong>Laporan ke orang tua</strong> — Setelah klik "Kumpulkan", laporan nilai dikirim otomatis ke email orang tua.</div>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-top:20px;gap:10px;flex-wrap:wrap;">
+                    <button class="btn btn-outline" onclick="App.showSlide('login')">← Kembali</button>
+                    <button class="btn btn-primary" onclick="App.startExam()">Mulai Mengerjakan →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUIZ -->
+    <div id="slide-quiz" class="slide">
+        <div class="page" id="quiz-container" style="padding-bottom:4px;"></div>
+        <div class="quiz-nav-bar">
+            <div class="quiz-nav-top">
+                <button class="btn btn-outline" id="btn-prev" onclick="App.move(-1)">← Sebelumnya</button>
+                <div class="q-indicator" id="q-indicator">Soal 1 / 30</div>
+                <button class="btn btn-primary" id="btn-next" onclick="App.move(1)">Selanjutnya →</button>
+            </div>
+            <div class="quiz-nav-bottom">
+                <button class="nav-toggle-btn" onclick="App.openDrawer()">📋 Lihat Semua Soal</button>
+                <span class="answered-count" id="answered-count">0 / 30 dijawab</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- HASIL -->
+    <div id="slide-result" class="slide">
+        <div class="page-narrow">
+            <div class="card" style="margin-top:8px;">
+                <div class="result-hero">
+                    <div class="score-circle" id="score-circle">
+                        <div class="score-num" id="score-num">--</div>
+                        <div class="score-lbl">NILAI</div>
+                    </div>
+                    <div class="result-status" id="result-status">Menghitung...</div>
+                    <div class="result-desc" id="result-desc"></div>
+                </div>
+                <div class="result-meta" id="result-meta"></div>
+                <div class="section-title">📊 Capaian per Kompetensi</div>
+                <div id="result-bars"></div>
+                <div id="email-status-box"></div>
+                <div class="divider"></div>
+                <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+                    <button class="btn btn-outline" onclick="App.retryExam()">🔄 Coba Lagi</button>
+                    <button class="btn btn-primary" onclick="App.showSlide('login')">📝 Mulai Baru</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="drawer-overlay" id="drawer-overlay" onclick="App.closeDrawer()"></div>
+    <div class="nav-drawer" id="nav-drawer">
+        <div class="drawer-handle"></div>
+        <div class="drawer-header">
+            <span class="drawer-title">Navigasi Soal</span>
+            <button class="drawer-close" onclick="App.closeDrawer()">✕</button>
+        </div>
+        <div class="drawer-grid" id="nav-grid"></div>
+        <div class="drawer-footer">
+            <button class="btn btn-danger btn-full" onclick="App.closeDrawer();App.confirmFinish();">✅ Selesai & Kumpulkan</button>
+        </div>
+    </div>
+
+    <div class="overlay" id="modal-confirm" style="display:none;">
+        <div class="modal">
+            <h3>⚠️ Yakin Selesai?</h3>
+            <p id="modal-confirm-text"></p>
+            <div class="modal-btns">
+                <button class="btn btn-outline" onclick="document.getElementById('modal-confirm').style.display='none'">Periksa Lagi</button>
+                <button class="btn btn-danger" onclick="App.submitExam()">Ya, Kumpulkan!</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="modal-loading" style="display:none;">
+        <div class="modal">
+            <h3>⏳ Memproses Nilai...</h3>
+            <div class="spinner"></div>
+            <p>Jangan tutup halaman ini.</p>
+        </div>
+    </div>
+
+    <script>
+        const EMAILJS_CONFIG = {
+            PUBLIC_KEY: "xOghGdjMfoGLAB-CE",
+            SERVICE_ID: "service_03pdwdr",
+            TEMPLATE_ID: "template_hi8a1k9"
+        };
+
+        /* ══════════════════════════════════════════════════════════
+           IMAGE ASSETS — Paket 7
+           Ganti URL di bawah setelah upload gambar ke hosting.
+           Digunakan pada: soal 13-15 (iklan), soal 16-18 (infografis)
+           ══════════════════════════════════════════════════════════ */
+        const IMG = {
+            iklan: "https://i.postimg.cc/9011nFFC/bi_p7_iklan.png",
+            infografis: "https://i.postimg.cc/KjQQHvcW/bi_p7_infografis.png"
+        };
+
+        /* ══════════════════════════════════════════════════════════
+           STIMULUS — 10 tema baru, belum pernah dipakai di Paket 1–6
+           ══════════════════════════════════════════════════════════ */
+        const S = {
+
+            hutan_amazon: `<div class="stimulus"><div class="stim-title">Teks Informasi · Hutan Amazon: Paru-Paru Dunia yang Mulai Tersengal</div>
+<p>Hutan hujan Amazon membentang seluas 5,5 juta kilometer persegi di Amerika Selatan — hampir tiga kali luas wilayah Indonesia. Ia adalah rumah bagi sekitar 10% dari seluruh spesies yang dikenal di bumi, mengandung lebih dari 40.000 jenis tumbuhan, 1.300 spesies burung, dan diperkirakan 2,5 juta spesies serangga. Bukan sekadar hutan — Amazon adalah cadangan keanekaragaman hayati terbesar yang tersisa di planet ini.</p>
+<p>Namun fungsi Amazon yang paling sering disebut adalah perannya sebagai "paru-paru bumi." Melalui proses fotosintesis, jutaan pohon di Amazon menyerap miliaran ton karbon dioksida setiap tahun dan melepaskan oksigen ke atmosfer. Selain itu, hutan ini bertindak sebagai "pompa air" raksasa — pohon-pohonnya menguapkan air dari tanah ke atmosfer, membentuk awan yang menghasilkan curah hujan di wilayah yang jauh, termasuk di kawasan pertanian Amerika Selatan.</p>
+<p>Sayangnya, laju deforestasi Amazon mengkhawatirkan. Setiap tahun, sekitar 10.000 kilometer persegi hutan hilang — sebagian besar untuk membuka lahan pertanian dan penggembalaan ternak. Para ilmuwan memperingatkan bahwa ketika Amazon kehilangan lebih dari 25% tutupan hutannya, ekosistem ini bisa mencapai titik kritis di mana ia tidak lagi mampu memulihkan diri secara alami dan akan berubah menjadi sabana kering secara permanen.</p>
+<p>Saat ini, Amazon telah kehilangan sekitar 17% tutupan hutannya. Ini berarti kita berada sangat dekat dengan ambang batas yang tidak bisa dibalikkan. Menjaga Amazon bukan hanya urusan Brasil — dampak kehilangannya akan dirasakan oleh seluruh penduduk bumi melalui perubahan pola cuaca, kenaikan suhu global, dan percepatan kepunahan spesies.</p></div>`,
+
+            pohon_tua: `<div class="stimulus"><div class="stim-title">Cerita Fiksi · Pohon yang Mendengar</div>
+<p>Di sudut halaman sekolah tua itu, ada pohon beringin yang tidak ada di buku pelajaran manapun. Batangnya sebesar pelukan tiga orang dewasa, akarnya menjalar seperti jari-jari tua yang mencengkeram tanah. Naufal tidak pernah benar-benar memperhatikannya sampai suatu siang, saat terpaksa duduk sendirian di bawahnya karena teman-temannya lupa mengajaknya bermain.</p>
+<p>Iseng, Naufal menelusuri permukaan kulit kayu dengan jarinya. Dan di sanalah — tersembunyi di antara tonjolan-tonjolan kulit kayu — ia menemukan ukiran-ukiran kecil. Nama. Tanggal. Kadang satu kalimat pendek. <em>"Reni 1978 — lulus ujian!"</em> di samping <em>"Bambang + Wati 1983"</em>, dan lebih jauh lagi, <em>"Kelas 6B 1971 — semoga sukses semua."</em></p>
+<p>Naufal duduk lebih lama dari yang ia rencanakan. Ia menghitung: ukiran tertua yang ia temukan bertanggal 1965. Enam puluh tahun lalu. Orang-orang yang mengukir nama mereka di sini kini sudah dewasa, mungkin punya cucu seumurnya, mungkin sudah tiada. Tapi nama mereka masih di sini.</p>
+<p>Keesokan harinya, Naufal datang membawa pisau kecil. Ia berdiri lama di depan pohon itu, pisau di tangan, mencari tempat kosong di antara semua nama yang sudah ada. Lalu ia memasukkan pisaunya kembali ke saku. Tidak — pohon ini sudah cukup penuh dengan kenangan orang lain. Cukup baginya untuk tahu bahwa ia telah membacanya, bahwa ia telah hadir, bahwa rangkaian itu kini menyertakannya tanpa perlu mengukirkan nama.</p></div>`,
+
+            gula_bahaya: `<div class="stimulus"><div class="stim-title">Teks Informasi · Gula: Manis di Lidah, Bahaya yang Tersembunyi</div>
+<p>Ketika mendengar kata "makanan manis," kebanyakan orang langsung membayangkan kue ulang tahun, permen, atau minuman bersoda. Padahal, gula tersembunyi jauh lebih banyak terdapat di makanan yang tidak terasa manis sama sekali — seperti saus tomat kemasan, roti tawar, sereal sarapan "sehat," yogurt rasa buah, dan bahkan bumbu instan. Inilah yang disebut gula tambahan tersembunyi, dan inilah yang paling berbahaya.</p>
+<p>Badan Kesehatan Dunia (WHO) merekomendasikan asupan gula tambahan tidak lebih dari 25 gram per hari untuk orang dewasa — setara dengan sekitar 6 sendok teh. Namun survei menunjukkan bahwa rata-rata anak Indonesia usia sekolah mengonsumsi dua hingga tiga kali lipat jumlah tersebut setiap harinya, sebagian besar dari minuman kemasan dan jajanan di kantin.</p>
+<p>Bahaya konsumsi gula berlebih tidak hanya soal gigi berlubang yang sudah diketahui sejak kecil. Konsumsi gula tinggi secara konsisten memicu resistensi insulin — kondisi di mana sel-sel tubuh tidak lagi merespons sinyal insulin dengan baik, yang merupakan langkah awal menuju diabetes tipe 2. Penelitian terbaru juga mengaitkan konsumsi gula berlebih dengan peradangan kronis, gangguan daya ingat, dan perubahan suasana hati yang drastis pada anak-anak.</p>
+<p>Membaca label gizi adalah langkah pertama yang bisa dilakukan siapa saja. Gula tambahan bisa tersembunyi di balik nama-nama seperti sirup jagung fruktosa tinggi, sukrosa, maltosa, dekstrosa, atau sari tebu. Mengenali nama-nama ini adalah kunci untuk membuat pilihan yang lebih sehat setiap harinya.</p></div>`,
+
+            pelari_terakhir: `<div class="stimulus"><div class="stim-title">Cerita Fiksi · Garis Finish</div>
+<p>Karina memegang posisi kedua sejak lap pertama. Di depannya, Tari — pesaing terkuatnya dari kelas 6B — berlari dengan ritme yang hampir sempurna. Di belakangnya, jarak dengan pelari ketiga semakin jauh. Ini kesempatan. Karina hanya perlu menunggu momen yang tepat untuk menyalip.</p>
+<p>Itu terjadi di tikungan terakhir. Tari menginjak tepi jalur yang basah, tergelincir, dan jatuh ke sisi kiri. Suara dukungan dari tribun seketika berubah menjadi keheningan, lalu gumaman cemas. Karina tiba di titik itu dalam sepersekian detik — cukup untuk melihat bahwa Tari sedang mencoba berdiri tapi tidak bisa, wajahnya memucat menahan sakit di pergelangannya.</p>
+<p>Karina berhenti.</p>
+<p>Ia merunduk di samping Tari, membantu gadis itu duduk, dan berteriak ke petugas di pinggir lapangan. Perlombaan berlanjut — pelari ketiga, keempat, kelima melewati mereka satu per satu. Ketika petugas akhirnya tiba dan membawa Tari keluar lapangan, Karina masih berdiri di sana. Ia tidak pernah menyentuh garis finish.</p>
+<p>Di ruang ganti, beberapa pelatih beradu pandang dengan ekspresi yang sulit diterjemahkan — antara kecewa dan kagum. Tari, yang ternyata hanya mengalami keseleo ringan, mendatangi Karina sebelum pulang. "Kamu bisa menang tadi," katanya pelan. Karina mengangkat bahu. "Menang dari siapa? Kamu tidak bisa berlari."</p></div>`,
+
+            iklan_minuman: `<div class="stimulus"><div class="stim-title">Teks Iklan · ENERJIK+ Minuman Konsentrasi Belajar</div>
+<div class="stim-img-wrap" id="img-iklan-wrap">
+  <img src="${IMG.iklan}" alt="Iklan ENERJIK+ minuman konsentrasi belajar" onerror="document.getElementById('img-iklan-wrap').innerHTML='<div class=\\'stim-img-placeholder\\'>🖼️ Gambar iklan ENERJIK+ belum tersedia.<br>Paste URL gambar pada bagian IMG di dalam kode.</div>'">
+  <div class="stim-img-caption">📌 Gambar: Iklan Produk ENERJIK+ — digunakan pada Soal 13, 14, 15</div>
+</div>
+<p>Iklan di atas mempromosikan minuman energi bernama <strong>ENERJIK+</strong> yang dipasarkan khusus untuk pelajar menjelang musim ujian. Elemen-elemen iklan yang ditampilkan:</p>
+<ul>
+  <li>Klaim utama: <em>"Tingkatkan Konsentrasimu — Raih Nilai 100 Bersama ENERJIK+!"</em></li>
+  <li>Sub-klaim: <em>"Mengandung 20 vitamin penting"</em> dan <em>"Terbukti secara klinis meningkatkan fokus belajar"</em></li>
+  <li>Elemen urgensi: <em>"Stok Terbatas! Promo hanya berlaku HARI INI — hemat 43%!"</em></li>
+  <li>Harga coret: <del>Rp15.000</del> → <strong>Rp8.500</strong></li>
+  <li>Visual utama: seorang siswa berseragam tersenyum lebar sambil mengacungkan kertas ujian bertanda 100/100</li>
+  <li>Bintang testimoni: foto seorang atlet muda dengan kutipan <em>"Aku selalu minum ENERJIK+ sebelum latihan!"</em></li>
+</ul></div>`,
+
+            infografis_layar: `<div class="stimulus"><div class="stim-title">Infografis · Kebiasaan Digital Siswa Sekolah Dasar Indonesia 2024</div>
+<div class="stim-img-wrap" id="img-infografis-wrap">
+  <img src="${IMG.infografis}" alt="Infografis kebiasaan digital siswa SD Indonesia" onerror="document.getElementById('img-infografis-wrap').innerHTML='<div class=\\'stim-img-placeholder\\'>🖼️ Gambar infografis belum tersedia.<br>Paste URL gambar pada bagian IMG di dalam kode.</div>'">
+  <div class="stim-img-caption">📌 Gambar: Infografis Kebiasaan Digital Siswa SD — digunakan pada Soal 16, 17, 18</div>
+</div>
+<p>Infografis di atas menyajikan data survei terhadap <strong>1.200 siswa SD kelas 4–6</strong> dari berbagai kota di Indonesia (2024). Data utama yang ditampilkan:</p>
+<ul>
+  <li><strong>72%</strong> siswa menggunakan gawai lebih dari 3 jam sehari di luar jam sekolah</li>
+  <li><strong>45%</strong> masih aktif menggunakan gawai setelah pukul 21.00 malam</li>
+  <li><strong>28%</strong> mengaku sering sulit berkonsentrasi di kelas keesokan harinya</li>
+  <li>Kegiatan utama: menonton video (68%), bermain game (52%), media sosial (31%), membaca buku digital (12%)</li>
+  <li>Hanya <strong>1 dari 5</strong> siswa yang orang tuanya menetapkan batas waktu pemakaian gawai secara konsisten</li>
+</ul></div>`,
+
+            air_bersih: `<div class="stimulus"><div class="stim-title">Teks Informasi · Air Bersih: Hak yang Sedang Dipertaruhkan</div>
+<p>Bumi memiliki sekitar 1,4 miliar kilometer kubik air, jumlah yang tampak sangat besar. Namun 97,5% dari seluruh air itu adalah air asin di lautan yang tidak bisa langsung diminum. Dari 2,5% yang merupakan air tawar, sekitar 69% terkunci dalam lapisan es di kutub dan gletser. Yang benar-benar tersedia untuk digunakan manusia — di sungai, danau, dan akuifer yang bisa diakses — hanyalah sekitar 0,3% dari total air di bumi.</p>
+<p>Sumber daya yang sangat terbatas ini kini menghadapi tekanan yang semakin besar. Populasi dunia terus tumbuh, kebutuhan pertanian dan industri meningkat, sementara perubahan iklim mengubah pola curah hujan secara drastis — membuat daerah yang sudah kering semakin kering, dan meningkatkan frekuensi banjir di daerah lain. Saat ini, lebih dari 2 miliar orang di seluruh dunia hidup di negara yang mengalami tekanan air tinggi.</p>
+<p>Di Indonesia, ironi terjadi: sebagai negara tropis dengan curah hujan tinggi, Indonesia justru menghadapi krisis air bersih di banyak wilayah. Bukan karena tidak ada air, melainkan karena polusi, pengelolaan yang buruk, dan infrastruktur yang tidak merata. Jutaan orang di pedesaan masih mengandalkan air sungai yang tercemar untuk kebutuhan sehari-hari.</p>
+<p>Para ahli memperingatkan bahwa perang di masa depan mungkin bukan soal minyak, melainkan soal air. Mengelola air dengan bijak — tidak membuang air, tidak mencemari sumber air, dan mendukung penghijauan daerah tangkapan air — adalah investasi yang manfaatnya akan terasa lintas generasi.</p></div>`,
+
+            tukang_kunci: `<div class="stimulus"><div class="stim-title">Cerita Fiksi · Kotak Amanah</div>
+<p>Pak Ruslan sudah menjadi tukang kunci selama empat puluh tahun. Tangannya hafal bahasa setiap kunci — klik kecil yang berarti gembok terbuka, geseran lembut yang berarti laci rahasia sudah menyerah, bunyi metalik yang berarti brankas sudah tidak punya rahasia lagi. Tidak ada kunci di kota ini yang belum pernah ia taklukkan.</p>
+<p>Suatu sore, seorang perempuan muda datang dengan membawa kotak kayu berukuran sedang. Kotak itu terkunci, dan ia bercerita bahwa kotak itu milik almarhum pamannya — seorang pria tua yang tinggal sendiri dan baru meninggal tiga hari lalu. "Tidak ada surat wasiat yang menyebutkan isi kotak ini. Tapi kami menemukan alamat Bapak di saku bajunya."</p>
+<p>Pak Ruslan memperhatikan kotak itu lama. Kunci jenis ini — gembok antik dengan mekanisme tumbler enam pin — bisa ia buka dalam waktu kurang dari lima menit. Tapi yang ia katakan kemudian mengejutkan perempuan itu: "Saya tidak akan membuka kotak ini."</p>
+<p>Ia menjelaskan: "Pak tua itu menyimpan alamat saya bukan agar kotak ini dibuka oleh orang asing. Ia menyimpannya agar kotak ini sampai ke orang yang tepat dengan selamat. Tugas saya adalah mengantarnya, bukan membukanya. Yang punya hak membuka kotak ini adalah keluarganya — setelah mereka duduk bersama dan memutuskan apakah mereka siap."</p>
+<p>Perempuan itu terdiam. Lalu ia mengangguk pelan, mengambil kembali kotak itu, dan pergi. Pak Ruslan tidak pernah tahu apa isi kotak itu. Dan ia tidak pernah merasa perlu untuk tahu.</p></div>`,
+
+            plastik_laut: `<div class="stimulus"><div class="stim-title">Teks Informasi · Lautan Plastik: Ketika Sampah Menjadi Ekosistem Beracun</div>
+<p>Di Samudra Pasifik Utara, terdapat gumpalan sampah plastik yang disebut Great Pacific Garbage Patch — sebuah "pulau" sampah yang luasnya diperkirakan tiga kali lipat luas daratan Prancis. Namun ini bukan tumpukan plastik yang bisa dilihat dengan jelas dari permukaan laut; sebagian besar berupa serpihan plastik berukuran sangat kecil yang melayang-layang dalam kolom air, membuat laut terlihat seperti sup plastik bening.</p>
+<p>Plastik di laut tidak menghilang — ia hanya hancur menjadi potongan yang semakin kecil yang disebut mikroplastik. Partikel-partikel ini berukuran kurang dari 5 milimeter, cukup kecil untuk ditelan oleh ikan, kerang, dan zooplankton. Ketika manusia mengonsumsi makanan laut, kita juga menelan mikroplastik tersebut. Sebuah studi memperkirakan rata-rata manusia mengonsumsi sekitar 5 gram plastik setiap minggu — setara dengan berat sebuah kartu kredit.</p>
+<p>Yang membuat situasi ini semakin serius adalah fakta bahwa plastik bertindak seperti spons kimia: ia menyerap dan mengkonsentrasi polutan berbahaya dari air laut, termasuk pestisida dan logam berat. Ketika plastik yang penuh racun ini dimakan oleh organisme laut, konsentrasi racun meningkat seiring dengan naiknya rantai makanan — sebuah proses yang disebut biomagnifikasi.</p>
+<p>Sumber utama plastik laut bukan kapal atau nelayan, melainkan sampah daratan yang tidak dikelola dengan baik dan terbawa ke laut melalui sungai. Indonesia adalah salah satu dari lima negara penyumbang sampah plastik terbesar ke lautan dunia. Ini bukan tuduhan, melainkan tanggung jawab yang harus kita hadapi bersama.</p></div>`,
+
+            sepeda_kakek: `<div class="stimulus"><div class="stim-title">Cerita Fiksi · Satu Rantai, Satu Cerita</div>
+<p>Di pojok gudang, di antara ember cat kering dan rak berdebu, Rangga menemukan sepeda tua berwarna biru kusam. Roda kempes, rantai berkarat, sadel retak di satu sisi. "Itu sepeda Kakek," kata Ibu dari pintu gudang. "Jangan disentuh, nanti tanganmu kotor." Tapi Rangga sudah memegang stang-nya.</p>
+<p>Kakek datang sore itu dan menemukan Rangga sedang mencoba memompa ban dengan pompa yang bocor. Orang tua itu tidak memarahi. Ia justru duduk di bangku kayu, menggulung lengan bajunya, dan berkata: "Ambilkan kunci pas yang ada di kotak merah itu."</p>
+<p>Mereka bekerja selama dua jam. Kakek mengajari Rangga cara memasang rantai yang lepas, cara menyetel rem yang meleset, cara mengganti ban dalam yang bocor. Di sela-sela pekerjaan, cerita mengalir. Kakek bercerita bahwa sepeda itu ia beli dengan tabungan gaji pertamanya sebagai guru. Selama tiga puluh tahun, ia mengayuh sepeda itu pergi-pulang ke sekolah — delapan kilometer setiap hari, dalam hujan, dalam terik, dalam kabut pagi yang membuat napas berasap.</p>
+<p>"Tidak pernah terlambat?" tanya Rangga. "Dua kali," jawab Kakek. "Sekali karena ban bocor di jalan berlumpur. Sekali karena saya berhenti untuk menolong orang tua yang jatuh." Ia tersenyum. "Dua-duanya alasan yang saya tidak menyesal."</p>
+<p>Ketika sepeda itu akhirnya berdiri tegak dengan ban yang keras dan rantai yang berkilat, Rangga tidak langsung menungganginya. Ia berdiri dan memandangnya lama — bukan karena kagum, tapi karena tiba-tiba ia mengerti bahwa sebuah benda bisa menyimpan kehidupan seseorang jika kita mau duduk cukup lama untuk mendengarnya.</p></div>`
+
+        };
+
+        /* ══════════════════════════════════════════════════════════
+           SOAL PAKET 7 — 30 soal · 10 tema · 3 level kognitif:
+           · Tekstual: pemahaman makna konsep, detail presisi, fakta eksplisit
+           · Inferensial: sebab-akibat implisit, motivasi karakter, implikasi data
+           · Evaluasi: penilaian kritis nilai, pesan, teknik penulisan, validitas klaim
+           ══════════════════════════════════════════════════════════ */
+        const SOAL = [
+
+            /* ── Tema 1: Hutan Amazon ── */
+            {
+                id: 1,
+                cat: "Pemahaman Tekstual",
+                type: "pg",
+                score: 1,
+                stim: S.hutan_amazon,
+                q: "Menurut teks, apa fungsi Amazon sebagai 'pompa air' yang membedakannya dari sekadar menghasilkan oksigen?",
+                opt: [
+                    "Amazon menyimpan air hujan dalam akar pohon-pohonnya sehingga tidak terjadi banjir di wilayah sekitarnya",
+                    "Pohon-pohon Amazon menguapkan air ke atmosfer membentuk awan yang menghasilkan hujan di wilayah yang jauh",
+                    "Amazon menyaring air sungai dan menjadikannya layak minum bagi jutaan penduduk Amerika Selatan",
+                    "Hutan Amazon mencegah intrusi air laut ke daratan dengan membentuk sabuk hijau di sepanjang pantai"
+                ],
+                ans: "Pohon-pohon Amazon menguapkan air ke atmosfer membentuk awan yang menghasilkan hujan di wilayah yang jauh"
+            },
+
+            {
+                id: 2,
+                cat: "Pemahaman Inferensial",
+                type: "pg",
+                score: 1,
+                stim: S.hutan_amazon,
+                q: "Informasi bahwa Amazon sudah kehilangan 17% tutupan hutan dan ambang batas kritis ada di 25%, secara implisit menyampaikan pesan apa kepada pembaca?",
+                opt: [
+                    "Deforestasi Amazon belum perlu dikhawatirkan karena masih jauh dari ambang batas kritis",
+                    "Kita berada di zona bahaya nyata — jika deforestasi terus berlanjut dengan laju saat ini, titik tidak bisa kembali bisa tercapai dalam waktu yang tidak lama",
+                    "Pemerintah Brasil bertanggung jawab penuh dan masyarakat dunia tidak perlu terlibat dalam pelestariannya",
+                    "Teknologi pertanian modern dapat menggantikan fungsi ekologis Amazon jika hutan ini akhirnya musnah"
+                ],
+                ans: "Kita berada di zona bahaya nyata — jika deforestasi terus berlanjut dengan laju saat ini, titik tidak bisa kembali bisa tercapai dalam waktu yang tidak lama"
+            },
+
+            {
+                id: 3,
+                cat: "Evaluasi dan Apresiasi",
+                type: "pgk-cat",
+                score: 2,
+                stim: S.hutan_amazon,
+                q: "Berdasarkan informasi dalam teks, tentukan apakah pernyataan berikut DAPAT DISIMPULKAN atau TIDAK DAPAT DISIMPULKAN!",
+                rows: [
+                    "Kepunahan spesies yang tinggal di Amazon akan berdampak pada ekosistem di luar kawasan Amazon itu sendiri.",
+                    "Pertanian dan penggembalaan ternak adalah satu-satunya penyebab deforestasi Amazon."
+                ],
+                cols: ["Dapat Disimpulkan", "Tidak Dapat Disimpulkan"],
+                ans: ["Dapat Disimpulkan", "Tidak Dapat Disimpulkan"]
+            },
+
+            /* ── Tema 2: Pohon Tua ── */
+            {
+                id: 4,
+                cat: "Pemahaman Tekstual",
+                type: "pg",
+                score: 1,
+                stim: S.pohon_tua,
+                q: "Apa yang ditemukan Naufal saat menelusuri kulit kayu pohon beringin tua tersebut?",
+                opt: [
+                    "Sebuah kotak kecil berisi foto-foto siswa dari generasi terdahulu",
+                    "Ukiran-ukiran berisi nama, tanggal, dan kadang kalimat pendek dari siswa-siswa yang pernah bersekolah di sana",
+                    "Tanda-tanda pembangunan yang direncanakan sekolah untuk menebang pohon tersebut",
+                    "Sarang serangga langka yang belum pernah ditemukan di kota itu sebelumnya"
+                ],
+                ans: "Ukiran-ukiran berisi nama, tanggal, dan kadang kalimat pendek dari siswa-siswa yang pernah bersekolah di sana"
+            },
+
+            {
+                id: 5,
+                cat: "Pemahaman Inferensial",
+                type: "pg",
+                score: 1,
+                stim: S.pohon_tua,
+                q: "Mengapa Naufal akhirnya memutuskan TIDAK mengukir namanya sendiri, padahal sudah membawa pisau kecil untuk itu?",
+                opt: [
+                    "Karena ia tidak menemukan tempat kosong yang cukup besar di antara ukiran-ukiran yang sudah ada",
+                    "Karena ia takut dimarahi oleh guru jika ketahuan merusak pohon sekolah",
+                    "Karena ia menyadari bahwa kehadirannya membaca nama-nama itu sudah cukup untuk menjadikannya bagian dari rangkaian tersebut tanpa perlu meninggalkan bekas",
+                    "Karena pisaunya tidak cukup tajam untuk mengukir kayu pohon yang sudah sangat keras itu"
+                ],
+                ans: "Karena ia menyadari bahwa kehadirannya membaca nama-nama itu sudah cukup untuk menjadikannya bagian dari rangkaian tersebut tanpa perlu meninggalkan bekas"
+            },
+
+            {
+                id: 6,
+                cat: "Evaluasi dan Apresiasi",
+                type: "pgk",
+                score: 2,
+                stim: S.pohon_tua,
+                q: "Pilih DUA nilai atau pesan yang paling kuat terkandung dalam cerita ini!",
+                opt: [
+                    "Kehadiran yang tulus dan penuh kesadaran bisa menghubungkan kita dengan orang-orang dari generasi berbeda tanpa perlu meninggalkan jejak fisik",
+                    "Pohon-pohon tua di lingkungan sekolah harus dijaga karena memiliki nilai sejarah yang tidak ternilai",
+                    "Menghargai karya dan kenangan orang lain adalah bentuk kerendahan hati yang lebih bermakna dari keinginan untuk dikenang",
+                    "Anak-anak yang sering menyendiri di sekolah lebih peka terhadap nilai-nilai sejarah dibanding yang lainnya"
+                ],
+                ans: ["Kehadiran yang tulus dan penuh kesadaran bisa menghubungkan kita dengan orang-orang dari generasi berbeda tanpa perlu meninggalkan jejak fisik", "Menghargai karya dan kenangan orang lain adalah bentuk kerendahan hati yang lebih bermakna dari keinginan untuk dikenang"]
+            },
+
+            /* ── Tema 3: Gula & Kesehatan ── */
+            {
+                id: 7,
+                cat: "Pemahaman Tekstual",
+                type: "pg",
+                score: 1,
+                stim: S.gula_bahaya,
+                q: "Apa yang dimaksud dengan 'gula tambahan tersembunyi' dalam teks ini, dan mengapa disebut 'tersembunyi'?",
+                opt: [
+                    "Gula alami yang terdapat dalam buah-buahan; disebut tersembunyi karena tidak tampak di permukaan buah",
+                    "Gula yang ditambahkan ke dalam makanan yang tidak terasa manis, sehingga konsumen tidak menyadari keberadaannya",
+                    "Gula sintesis yang dibuat di laboratorium dan tidak terdeteksi oleh lidah manusia",
+                    "Gula yang sengaja disembunyikan oleh produsen makanan dalam kemasan yang tidak berlabel"
+                ],
+                ans: "Gula yang ditambahkan ke dalam makanan yang tidak terasa manis, sehingga konsumen tidak menyadari keberadaannya"
+            },
+
+            {
+                id: 8,
+                cat: "Pemahaman Inferensial",
+                type: "pgk-cat",
+                score: 2,
+                stim: S.gula_bahaya,
+                q: "Berdasarkan penjelasan dalam teks, tentukan apakah pernyataan berikut SESUAI atau TIDAK SESUAI!",
+                rows: [
+                    "Kemampuan membaca label gizi penting karena gula tambahan bisa hadir dengan berbagai nama yang tidak familiar.",
+                    "Dampak konsumsi gula berlebih pada anak hanya bersifat fisik dan tidak berpengaruh pada kemampuan belajar."
+                ],
+                cols: ["Sesuai", "Tidak Sesuai"],
+                ans: ["Sesuai", "Tidak Sesuai"]
+            },
+
+            {
+                id: 9,
+                cat: "Evaluasi dan Apresiasi",
+                type: "pg",
+                score: 1,
+                stim: S.gula_bahaya,
+                q: "Penulis teks memilih membuka tulisan dengan gambaran tentang makanan 'tidak manis' yang mengandung gula. Apa tujuan strategi pembuka ini?",
+                opt: [
+                    "Untuk menakut-nakuti pembaca agar berhenti mengonsumsi semua makanan kemasan",
+                    "Untuk mematahkan asumsi pembaca bahwa bahaya gula mudah diidentifikasi, dan menegaskan bahwa masalahnya lebih luas dari yang disadari",
+                    "Untuk menunjukkan bahwa hanya makanan manis yang berbahaya bagi kesehatan anak-anak",
+                    "Untuk mengkritik industri makanan yang sengaja membohongi konsumen dengan label produk yang menyesatkan"
+                ],
+                ans: "Untuk mematahkan asumsi pembaca bahwa bahaya gula mudah diidentifikasi, dan menegaskan bahwa masalahnya lebih luas dari yang disadari"
+            },
+
+            /* ── Tema 4: Pelari Terakhir ── */
+            {
+                id: 10,
+                cat: "Pemahaman Tekstual",
+                type: "pg",
+                score: 1,
+                stim: S.pelari_terakhir,
+                q: "Mengapa Karina menghentikan larinya di tikungan terakhir?",
+                opt: [
+                    "Karena ia mengalami kram otot yang membuatnya tidak bisa melanjutkan perlombaan",
+                    "Karena ia melihat Tari jatuh dan tidak bisa berdiri sendiri, sehingga Karina memilih berhenti untuk membantu",
+                    "Karena pelatihnya berteriak memberi instruksi untuk berhenti dan menunggu peserta lain",
+                    "Karena aturan perlombaan mengharuskan pelari membantu peserta yang cedera di lintasan"
+                ],
+                ans: "Karena ia melihat Tari jatuh dan tidak bisa berdiri sendiri, sehingga Karina memilih berhenti untuk membantu"
+            },
+
+            {
+                id: 11,
+                cat: "Pemahaman Inferensial",
+                type: "pg",
+                score: 1,
+                stim: S.pelari_terakhir,
+                q: "Ekspresi para pelatih yang 'beradu pandang dengan ekspresi antara kecewa dan kagum' mencerminkan konflik batin apa?",
+                opt: [
+                    "Mereka kecewa karena Tari tidak berhasil menyelesaikan lomba, dan kagum pada keberanian Karina membantu",
+                    "Mereka terbelah antara keinginan melihat tim mereka memenangkan medali dan pengakuan atas kemuliaan tindakan Karina yang mengorbankan kemenangannya demi orang lain",
+                    "Mereka kecewa dengan kualitas lapangan yang menyebabkan kecelakaan, dan kagum pada ketahanan fisik Tari",
+                    "Mereka tidak mengerti mengapa Karina berhenti dan mengira ia mengalami cedera tersembunyi"
+                ],
+                ans: "Mereka terbelah antara keinginan melihat tim mereka memenangkan medali dan pengakuan atas kemuliaan tindakan Karina yang mengorbankan kemenangannya demi orang lain"
+            },
+
+            {
+                id: 12,
+                cat: "Evaluasi dan Apresiasi",
+                type: "pgk",
+                score: 2,
+                stim: S.pelari_terakhir,
+                q: "Pilih DUA nilai yang paling menonjol dikisahkan melalui tindakan Karina dalam cerita ini!",
+                opt: [
+                    "Empati yang mendahulukan keselamatan orang lain di atas kepentingan pribadi, bahkan di saat kompetitif sekalipun",
+                    "Sportivitas yang sejati terletak pada cara kita memperlakukan lawan, bukan hanya pada cara kita memenangkan pertandingan",
+                    "Seorang atlet harus selalu memprioritaskan kemenangan tim karena itulah tujuan utama berolahraga",
+                    "Perlombaan yang adil mengharuskan semua peserta menyelesaikan lomba apapun kondisinya"
+                ],
+                ans: ["Empati yang mendahulukan keselamatan orang lain di atas kepentingan pribadi, bahkan di saat kompetitif sekalipun", "Sportivitas yang sejati terletak pada cara kita memperlakukan lawan, bukan hanya pada cara kita memenangkan pertandingan"]
+            },
+
+            /* ── Tema 5: Iklan Minuman (dengan gambar) ── */
+            {
+                id: 13,
+                cat: "Pemahaman Tekstual",
+                type: "pg",
+                score: 1,
+                stim: S.iklan_minuman,
+                q: "Berdasarkan iklan ENERJIK+, klaim manakah yang disampaikan secara eksplisit sebagai bukti ilmiah?",
+                opt: [
+                    "Harga produk yang sudah diturunkan 43% dari harga aslinya",
+                    "Pernyataan 'Terbukti secara klinis meningkatkan fokus belajar'",
+                    "Foto siswa yang mendapatkan nilai 100 setelah minum ENERJIK+",
+                    "Testimoni atlet muda tentang kebiasaan minumnya sebelum latihan"
+                ],
+                ans: "Pernyataan 'Terbukti secara klinis meningkatkan fokus belajar'"
+            },
+
+            {
+                id: 14,
+                cat: "Pemahaman Inferensial",
+                type: "pg",
+                score: 1,
+                stim: S.iklan_minuman,
+                q: "Penggunaan kata 'Stok Terbatas! Promo hanya berlaku HARI INI' dalam iklan ini memanfaatkan mekanisme psikologi apa?",
+                opt: [
+                    "Prinsip otoritas: menggunakan tokoh ahli untuk memperkuat kepercayaan calon pembeli",
+                    "Prinsip kelangkaan dan urgensi: menciptakan tekanan waktu buatan agar pembeli bertindak tanpa berpikir panjang",
+                    "Prinsip konsistensi: mendorong pembeli untuk tetap setia pada produk yang sudah pernah dicoba",
+                    "Prinsip timbal balik: memberi kesan bahwa pembeli mendapat manfaat lebih dari harga yang dibayar"
+                ],
+                ans: "Prinsip kelangkaan dan urgensi: menciptakan tekanan waktu buatan agar pembeli bertindak tanpa berpikir panjang"
+            },
+
+            {
+                id: 15,
+                cat: "Evaluasi dan Apresiasi",
+                type: "pgk-cat",
+                score: 2,
+                stim: S.iklan_minuman,
+                q: "Berdasarkan klaim-klaim dalam iklan ENERJIK+, tentukan apakah pernyataan berikut DAPAT DIVERIFIKASI atau MENYESATKAN!",
+                rows: [
+                    "Klaim 'Terbukti secara klinis meningkatkan fokus' perlu dipertanyakan karena tidak menyertakan nama lembaga, metode, atau sumber penelitian yang dimaksud.",
+                    "Visual siswa meraih nilai 100 setelah minum ENERJIK+ secara langsung membuktikan bahwa minuman ini meningkatkan nilai ujian."
+                ],
+                cols: ["Dapat Diverifikasi", "Menyesatkan / Perlu Diperiksa"],
+                ans: ["Menyesatkan / Perlu Diperiksa", "Menyesatkan / Perlu Diperiksa"]
+            },
+
+            /* ── Tema 6: Infografis Waktu Layar (dengan gambar) ── */
+            {
+                id: 16,
+                cat: "Pemahaman Tekstual",
+                type: "pg",
+                score: 1,
+                stim: S.infografis_layar,
+                q: "Berdasarkan data dalam infografis, berapa persen siswa yang mengaku sering sulit berkonsentrasi di kelas keesokan harinya?",
+                opt: [
+                    "72% dari total responden",
+                    "45% dari total responden",
+                    "28% dari total responden",
+                    "12% dari total responden"
+                ],
+                ans: "28% dari total responden"
+            },
+
+            {
+                id: 17,
+                cat: "Pemahaman Inferensial",
+                type: "pg",
+                score: 1,
+                stim: S.infografis_layar,
+                q: "Data bahwa hanya 12% siswa menggunakan gawai untuk membaca buku digital dibandingkan 68% untuk menonton video, menyiratkan apa tentang pola penggunaan gawai siswa SD?",
+                opt: [
+                    "Gawai tidak efektif digunakan untuk membaca karena layarnya terlalu kecil bagi anak-anak",
+                    "Gawai lebih banyak digunakan untuk hiburan pasif daripada kegiatan yang mengembangkan kemampuan literasi",
+                    "Anak-anak lebih menyukai buku fisik daripada buku digital sehingga angka pembaca buku digital rendah",
+                    "Konten video di internet memiliki kualitas edukatif yang lebih tinggi dibandingkan buku digital"
+                ],
+                ans: "Gawai lebih banyak digunakan untuk hiburan pasif daripada kegiatan yang mengembangkan kemampuan literasi"
+            },
+
+            {
+                id: 18,
+                cat: "Evaluasi dan Apresiasi",
+                type: "pgk",
+                score: 2,
+                stim: S.infografis_layar,
+                q: "Pilih DUA kesimpulan yang VALID berdasarkan data dalam infografis — tanpa menambah informasi dari luar!",
+                opt: [
+                    "Mayoritas siswa menggunakan gawai melebihi batas waktu yang dianjurkan oleh para ahli kesehatan",
+                    "Sebagian besar orang tua siswa tidak menerapkan aturan pembatasan waktu gawai secara konsisten",
+                    "Menonton video dan bermain game terbukti lebih berbahaya bagi perkembangan anak dibandingkan media sosial",
+                    "Penggunaan gawai setelah pukul 21.00 berpotensi mengganggu kualitas tidur siswa"
+                ],
+                ans: ["Sebagian besar orang tua siswa tidak menerapkan aturan pembatasan waktu gawai secara konsisten", "Penggunaan gawai setelah pukul 21.00 berpotensi mengganggu kualitas tidur siswa"]
+            },
+
+            /* ── Tema 7: Air Bersih ── */
+            {
+                id: 19,
+                cat: "Pemahaman Tekstual",
+                type: "pg",
+                score: 1,
+                stim: S.air_bersih,
+                q: "Dari total air yang ada di bumi, berapa persen yang benar-benar tersedia untuk digunakan manusia dari sungai, danau, dan akuifer yang dapat diakses?",
+                opt: [
+                    "97,5% dari total air bumi",
+                    "2,5% dari total air bumi",
+                    "Sekitar 0,3% dari total air bumi",
+                    "Sekitar 69% dari air tawar yang ada"
+                ],
+                ans: "Sekitar 0,3% dari total air bumi"
+            },
+
+            {
+                id: 20,
+                cat: "Pemahaman Inferensial",
+                type: "pg",
+                score: 1,
+                stim: S.air_bersih,
+                q: "Mengapa penulis menyebut kasus Indonesia sebagai 'ironi'? Apa yang kontradiktif dalam situasi yang digambarkan?",
+                opt: [
+                    "Indonesia adalah negara kepulauan tetapi tidak memiliki infrastruktur pelabuhan yang memadai untuk distribusi air bersih",
+                    "Indonesia memiliki curah hujan yang tinggi sebagai negara tropis, tetapi justru mengalami krisis air bersih karena masalah pengelolaan dan polusi",
+                    "Indonesia memiliki banyak sungai tetapi justru mengimpor air minum dalam jumlah besar dari negara lain",
+                    "Indonesia sering mengalami banjir di musim hujan tetapi kekeringan parah di musim kemarau secara bergantian"
+                ],
+                ans: "Indonesia memiliki curah hujan yang tinggi sebagai negara tropis, tetapi justru mengalami krisis air bersih karena masalah pengelolaan dan polusi"
+            },
+
+            {
+                id: 21,
+                cat: "Evaluasi dan Apresiasi",
+                type: "pgk-cat",
+                score: 2,
+                stim: S.air_bersih,
+                q: "Berdasarkan teks, tentukan apakah pernyataan berikut SESUAI atau TIDAK SESUAI!",
+                rows: [
+                    "Perubahan iklim memperburuk distribusi air bersih secara global dengan mengubah pola curah hujan.",
+                    "Krisis air bersih di Indonesia semata-mata disebabkan oleh kurangnya jumlah air hujan yang turun setiap tahunnya."
+                ],
+                cols: ["Sesuai", "Tidak Sesuai"],
+                ans: ["Sesuai", "Tidak Sesuai"]
+            },
+
+            /* ── Tema 8: Tukang Kunci ── */
+            {
+                id: 22,
+                cat: "Pemahaman Tekstual",
+                type: "pg",
+                score: 1,
+                stim: S.tukang_kunci,
+                q: "Mengapa Pak Ruslan menolak membuka kotak milik almarhum paman perempuan itu, padahal ia mampu melakukannya?",
+                opt: [
+                    "Karena kotak itu terlalu antik dan Pak Ruslan khawatir merusaknya jika dipaksakan dibuka",
+                    "Karena ia menganggap tugasnya hanya memastikan kotak itu sampai ke tangan keluarga yang berhak membukanya, bukan membukanya sendiri",
+                    "Karena peraturan hukum melarang tukang kunci membuka benda milik orang yang sudah meninggal tanpa surat resmi",
+                    "Karena ia mencurigai isi kotak itu berbahaya dan tidak ingin terlibat dalam masalah hukum"
+                ],
+                ans: "Karena ia menganggap tugasnya hanya memastikan kotak itu sampai ke tangan keluarga yang berhak membukanya, bukan membukanya sendiri"
+            },
+
+            {
+                id: 23,
+                cat: "Pemahaman Inferensial",
+                type: "pg",
+                score: 1,
+                stim: S.tukang_kunci,
+                q: "Kalimat 'Pak Ruslan tidak pernah tahu apa isi kotak itu. Dan ia tidak pernah merasa perlu untuk tahu.' mengungkapkan prinsip hidup apa dari tokoh tersebut?",
+                opt: [
+                    "Rasa ingin tahu yang rendah adalah tanda kemalasan yang perlu dihindari",
+                    "Integritas sejati tidak membutuhkan pembuktian atau rasa ingin tahu tentang apa yang 'terlewatkan' — berbuat benar sudah cukup sebagai tujuan itu sendiri",
+                    "Tukang kunci profesional harus menjaga kerahasiaan pekerjaan mereka sebagai standar industri",
+                    "Orang yang sudah tua tidak lagi memiliki rasa keingintahuan yang kuat terhadap hal-hal di sekitarnya"
+                ],
+                ans: "Integritas sejati tidak membutuhkan pembuktian atau rasa ingin tahu tentang apa yang 'terlewatkan' — berbuat benar sudah cukup sebagai tujuan itu sendiri"
+            },
+
+            {
+                id: 24,
+                cat: "Evaluasi dan Apresiasi",
+                type: "pgk",
+                score: 2,
+                stim: S.tukang_kunci,
+                q: "Pilih DUA nilai karakter yang paling kuat tercermin dari tindakan Pak Ruslan!",
+                opt: [
+                    "Integritas: menahan diri dari sesuatu yang bisa dilakukan karena menghormati batas yang seharusnya",
+                    "Rasa hormat terhadap privasi: menyadari bahwa kemampuan untuk melakukan sesuatu tidak berarti hak untuk melakukannya",
+                    "Keberanian: berani menolak permintaan pelanggan demi mendapatkan imbalan yang lebih besar",
+                    "Keingintahuan: selalu mencari tahu lebih banyak tentang orang-orang yang datang ke tokonya"
+                ],
+                ans: ["Integritas: menahan diri dari sesuatu yang bisa dilakukan karena menghormati batas yang seharusnya", "Rasa hormat terhadap privasi: menyadari bahwa kemampuan untuk melakukan sesuatu tidak berarti hak untuk melakukannya"]
+            },
+
+            /* ── Tema 9: Plastik & Lautan ── */
+            {
+                id: 25,
+                cat: "Pemahaman Tekstual",
+                type: "pgk",
+                score: 2,
+                stim: S.plastik_laut,
+                q: "Pilih DUA fakta tentang polusi plastik laut yang disebutkan secara EKSPLISIT dalam teks!",
+                opt: [
+                    "Rata-rata manusia mengonsumsi sekitar 5 gram plastik setiap minggu melalui makanan laut dan air minum",
+                    "Indonesia telah berhasil mengurangi kontribusinya sebagai penyumbang plastik laut dalam lima tahun terakhir",
+                    "Great Pacific Garbage Patch sebagian besar terdiri dari serpihan plastik kecil yang melayang dalam kolom air, bukan tumpukan plastik yang terlihat",
+                    "Plastik di laut hancur menjadi senyawa kimia yang tidak berbahaya setelah terpapar sinar matahari selama bertahun-tahun"
+                ],
+                ans: ["Rata-rata manusia mengonsumsi sekitar 5 gram plastik setiap minggu melalui makanan laut dan air minum", "Great Pacific Garbage Patch sebagian besar terdiri dari serpihan plastik kecil yang melayang dalam kolom air, bukan tumpukan plastik yang terlihat"]
+            },
+
+            {
+                id: 26,
+                cat: "Pemahaman Inferensial",
+                type: "pg",
+                score: 1,
+                stim: S.plastik_laut,
+                q: "Proses 'biomagnifikasi' yang dijelaskan dalam teks mengimplikasikan bahwa siapa yang paling berisiko terkena dampak racun dari plastik di laut?",
+                opt: [
+                    "Organisme laut yang paling kecil karena mereka langsung menelan mikroplastik dalam jumlah terbesar",
+                    "Predator puncak rantai makanan, termasuk manusia, karena konsentrasi racun meningkat setiap naik tingkatan rantai makanan",
+                    "Plastik laut hanya berbahaya bagi hewan laut dan tidak menimbulkan risiko bagi manusia yang hanya sesekali makan ikan",
+                    "Nelayan yang bekerja langsung di atas Garbage Patch karena mereka paling sering terpapar uap plastik yang menguap"
+                ],
+                ans: "Predator puncak rantai makanan, termasuk manusia, karena konsentrasi racun meningkat setiap naik tingkatan rantai makanan"
+            },
+
+            {
+                id: 27,
+                cat: "Evaluasi dan Apresiasi",
+                type: "pg",
+                score: 1,
+                stim: S.plastik_laut,
+                q: "Penulis teks menutup dengan kalimat 'Ini bukan tuduhan, melainkan tanggung jawab yang harus kita hadapi bersama.' Apa tujuan pilihan kata ini?",
+                opt: [
+                    "Untuk membebaskan Indonesia dari kritik internasional tentang pengelolaan sampah plastiknya",
+                    "Untuk mengubah nada dari menyalahkan menjadi mengajak, sehingga pembaca merasa dipanggil untuk bertindak bukan dihakimi",
+                    "Untuk menyatakan bahwa masalah plastik laut adalah kesalahan kolektif yang tidak bisa diselesaikan oleh siapapun",
+                    "Untuk menunjukkan bahwa data yang disajikan tidak cukup kuat untuk menjadi 'tuduhan' yang sah secara ilmiah"
+                ],
+                ans: "Untuk mengubah nada dari menyalahkan menjadi mengajak, sehingga pembaca merasa dipanggil untuk bertindak bukan dihakimi"
+            },
+
+            /* ── Tema 10: Sepeda Kakek ── */
+            {
+                id: 28,
+                cat: "Pemahaman Tekstual",
+                type: "pg",
+                score: 1,
+                stim: S.sepeda_kakek,
+                q: "Apa yang membuat Rangga akhirnya berdiri lama memandangi sepeda yang sudah diperbaiki, bukan langsung menungganginya?",
+                opt: [
+                    "Karena ia ragu apakah perbaikan sepeda sudah cukup kuat untuk ditunggangi tanpa risiko",
+                    "Karena ia tiba-tiba menyadari bahwa sepeda itu menyimpan kehidupan seseorang dan cerita-cerita yang baru ia dengar dari Kakek",
+                    "Karena ia sedang menunggu Kakek memberikan izin resmi untuk mengendarai sepeda tersebut",
+                    "Karena ia merasa lelah setelah dua jam bekerja keras dan ingin beristirahat sebelum mencoba sepeda itu"
+                ],
+                ans: "Karena ia tiba-tiba menyadari bahwa sepeda itu menyimpan kehidupan seseorang dan cerita-cerita yang baru ia dengar dari Kakek"
+            },
+
+            {
+                id: 29,
+                cat: "Pemahaman Inferensial",
+                type: "pg",
+                score: 1,
+                stim: S.sepeda_kakek,
+                q: "Jawaban Kakek tentang dua kali ia terlambat — 'Dua-duanya alasan yang saya tidak menyesal' — mengungkapkan pandangan hidup apa?",
+                opt: [
+                    "Keterlambatan tidak pernah memiliki konsekuensi serius di dunia pendidikan sehingga tidak perlu dicemaskan",
+                    "Ada hal-hal yang lebih penting dari kedisiplinan waktu, seperti menolong orang lain, dan itulah yang layak untuk tidak disesali",
+                    "Guru yang telah mengabdi lama memiliki hak untuk sesekali terlambat tanpa perlu memberikan alasan",
+                    "Kakek tidak pernah sepenuhnya menghargai ketepatan waktu selama karirnya sebagai seorang guru"
+                ],
+                ans: "Ada hal-hal yang lebih penting dari kedisiplinan waktu, seperti menolong orang lain, dan itulah yang layak untuk tidak disesali"
+            },
+
+            {
+                id: 30,
+                cat: "Evaluasi dan Apresiasi",
+                type: "pgk-cat",
+                score: 2,
+                stim: S.sepeda_kakek,
+                q: "Berdasarkan nilai-nilai yang terkandung dalam cerita, tentukan apakah pernyataan berikut SESUAI atau TIDAK SESUAI!",
+                rows: [
+                    "Benda-benda biasa bisa menjadi jembatan komunikasi antargenerasi yang membawa pelajaran berharga.",
+                    "Dedikasi pada pekerjaan berarti tidak pernah membiarkan hal lain menginterupsi kewajiban kita, apapun situasinya."
+                ],
+                cols: ["Sesuai", "Tidak Sesuai"],
+                ans: ["Sesuai", "Tidak Sesuai"]
+            }
+        ];
+
+        /* ══ APP ENGINE ══ */
+        const App = {
+            state: {
+                nama: '',
+                kelas: '',
+                email: '',
+                answers: {},
+                order: []
+            },
+            currIdx: 0,
+            timerInt: null,
+            elapsed: 0,
+            fontMult: 1,
+
+            init() {
+                this.fontMult = parseFloat(localStorage.getItem('tka_bi_font') || '1');
+                this.applyFont(this.fontMult);
+                emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+            },
+
+            login() {
+                const nama = document.getElementById('inp-nama').value.trim();
+                const kelas = document.getElementById('inp-kelas').value;
+                const email = document.getElementById('inp-email').value.trim();
+                if (!nama) {
+                    alert('Nama siswa wajib diisi!');
+                    return;
+                }
+                if (!kelas) {
+                    alert('Kelas wajib dipilih!');
+                    return;
+                }
+                if (!email || !email.includes('@')) {
+                    alert('Format email orang tua tidak valid!');
+                    return;
+                }
+                Object.assign(this.state, {
+                    nama,
+                    kelas,
+                    email
+                });
+                this.showSlide('rules');
+            },
+
+            startExam() {
+                this.state.answers = {};
+                this.state.order = Array.from({
+                    length: SOAL.length
+                }, (_, i) => i);
+                for (let i = SOAL.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [this.state.order[i], this.state.order[j]] = [this.state.order[j], this.state.order[i]];
+                }
+                this.currIdx = 0;
+                this.elapsed = 0;
+                clearInterval(this.timerInt);
+                this.timerInt = setInterval(() => {
+                    this.elapsed++;
+                    const m = String(Math.floor(this.elapsed / 60)).padStart(2, '0');
+                    const s = String(this.elapsed % 60).padStart(2, '0');
+                    document.getElementById('timer-chip').textContent = `${m}:${s}`;
+                }, 1000);
+                document.getElementById('user-chip').textContent = this.state.nama;
+                document.getElementById('user-chip').style.display = 'block';
+                document.getElementById('timer-chip').style.display = 'block';
+                this.renderQuestions();
+                this.renderNavGrid();
+                this.showSlide('quiz');
+                this.goTo(0);
+            },
+
+            renderQuestions() {
+                const box = document.getElementById('quiz-container');
+                box.innerHTML = '';
+                this.state.order.forEach((qi, i) => {
+                    const s = SOAL[qi];
+                    let html = `<div id="qi-${i}" class="q-item" data-qid="${s.id}">
+        <span class="q-category">${s.cat}</span>
+        ${s.stim||''}
+        <p class="q-text">${i+1}. ${s.q}</p>`;
+                    if (s.type === 'pg') {
+                        s.opt.forEach((o, oi) => html += `<label class="option-label"><input type="radio" name="a_${s.id}" value="${o}" onchange="App.saveAns(${s.id},${oi},${qi})"> ${o}</label>`);
+                    } else if (s.type === 'pgk') {
+                        s.opt.forEach((o, oi) => html += `<label class="option-label"><input type="checkbox" name="a_${s.id}" value="${o}" onchange="App.saveMulti(${s.id},${oi},${qi})"> ${o}</label>`);
+                    } else if (s.type === 'pgk-cat') {
+                        html += `<table class="matrix-table"><tr><th style="text-align:left;">Pernyataan</th><th>${s.cols[0]}</th><th>${s.cols[1]}</th></tr>`;
+                        s.rows.forEach((r, ri) => html += `<tr><td>${r}</td><td><input type="radio" name="mx_${s.id}_${ri}" onchange="App.saveMx(${s.id},${ri},'${s.cols[0]}')"></td><td><input type="radio" name="mx_${s.id}_${ri}" onchange="App.saveMx(${s.id},${ri},'${s.cols[1]}')"></td></tr>`);
+                        html += `</table>`;
+                    }
+                    html += `</div>`;
+                    box.innerHTML += html;
+                });
+            },
+
+            renderNavGrid() {
+                const g = document.getElementById('nav-grid');
+                g.innerHTML = '';
+                this.state.order.forEach((qi, i) => g.innerHTML += `<div id="nb-${i}" class="nav-btn" onclick="App.goTo(${i});App.closeDrawer();">${i+1}</div>`);
+                document.getElementById('answered-count').textContent = `0 / ${SOAL.length} dijawab`;
+            },
+
+            goTo(idx) {
+                if (idx < 0 || idx >= SOAL.length) return;
+                this.currIdx = idx;
+                document.querySelectorAll('.q-item').forEach(e => e.classList.remove('active-q'));
+                document.getElementById(`qi-${idx}`).classList.add('active-q');
+                document.getElementById('q-indicator').textContent = `Soal ${idx+1} / ${SOAL.length}`;
+                document.getElementById('btn-prev').disabled = (idx === 0);
+                const nBtn = document.getElementById('btn-next');
+                if (idx === SOAL.length - 1) {
+                    nBtn.textContent = '✅ Selesai';
+                    nBtn.onclick = () => this.confirmFinish();
+                    nBtn.className = 'btn btn-danger';
+                } else {
+                    nBtn.textContent = 'Selanjutnya →';
+                    nBtn.onclick = () => this.move(1);
+                    nBtn.className = 'btn btn-primary';
+                }
+                this.restoreVisual(idx);
+                this.updateNavUI();
+                const el = document.getElementById(`qi-${idx}`);
+                if (el) {
+                    const top = el.getBoundingClientRect().top + window.scrollY - 64;
+                    window.scrollTo({
+                        top: Math.max(0, top),
+                        behavior: 'smooth'
+                    });
+                }
+            },
+
+            move(step) {
+                this.goTo(this.currIdx + step);
+            },
+
+            saveAns(qid, oi, qi) {
+                this.state.answers[qid] = SOAL[qi].opt[oi];
+                this.updateNavUI();
+            },
+            saveMulti(qid, oi, qi) {
+                const val = SOAL[qi].opt[oi];
+                let c = this.state.answers[qid] || [];
+                c = c.includes(val) ? c.filter(x => x !== val) : [...c, val];
+                this.state.answers[qid] = c;
+                this.updateNavUI();
+            },
+            saveMx(qid, ri, val) {
+                let c = this.state.answers[qid] || [];
+                c[ri] = val;
+                this.state.answers[qid] = c;
+                this.updateNavUI();
+            },
+
+            checkFilled(qid) {
+                const v = this.state.answers[qid];
+                if (!v) return false;
+                return Array.isArray(v) ? v.filter(Boolean).length > 0 : true;
+            },
+
+            restoreVisual(idx) {
+                const s = SOAL[this.state.order[idx]];
+                const ans = this.state.answers[s.id];
+                if (!ans) return;
+                if (s.type === 'pg') {
+                    const el = document.querySelector(`input[name="a_${s.id}"][value="${CSS.escape(ans)}"]`);
+                    if (el) el.checked = true;
+                } else if (s.type === 'pgk') {
+                    ans.forEach(v => {
+                        const el = document.querySelector(`input[name="a_${s.id}"][value="${CSS.escape(v)}"]`);
+                        if (el) el.checked = true;
+                    });
+                } else if (s.type === 'pgk-cat') {
+                    ans.forEach((v, ri) => {
+                        if (v) {
+                            const el = document.querySelector(`input[name="mx_${s.id}_${ri}"]`); /* restore by finding correct col */
+                            const tbl = document.querySelectorAll(`input[name="mx_${s.id}_${ri}"]`);
+                            tbl.forEach(inp => {
+                                if (inp.getAttribute('onchange') && inp.getAttribute('onchange').includes(`'${v}'`)) inp.checked = true;
+                            });
+                        }
+                    });
+                }
+            },
+
+            updateNavUI() {
+                let answered = 0;
+                this.state.order.forEach((qi, i) => {
+                    const filled = this.checkFilled(SOAL[qi].id);
+                    if (filled) answered++;
+                    const el = document.getElementById(`nb-${i}`);
+                    if (el) el.className = 'nav-btn' + (i === this.currIdx ? ' current' : '') + (filled ? ' answered' : '');
+                });
+                const c = document.getElementById('answered-count');
+                if (c) c.textContent = `${answered} / ${SOAL.length} dijawab`;
+            },
+
+            openDrawer() {
+                document.getElementById('nav-drawer').classList.add('open');
+                document.getElementById('drawer-overlay').classList.add('show');
+            },
+            closeDrawer() {
+                document.getElementById('nav-drawer').classList.remove('open');
+                document.getElementById('drawer-overlay').classList.remove('show');
+            },
+
+            confirmFinish() {
+                const unanswered = SOAL.filter(s => !this.checkFilled(s.id)).length;
+                document.getElementById('modal-confirm-text').textContent = unanswered > 0 ?
+                    `Masih ada ${unanswered} soal yang belum dijawab. Yakin ingin mengumpulkan?` :
+                    `Semua soal telah dijawab. Yakin ingin mengumpulkan?`;
+                document.getElementById('modal-confirm').style.display = 'flex';
+            },
+
+            submitExam() {
+                document.getElementById('modal-confirm').style.display = 'none';
+                document.getElementById('modal-loading').style.display = 'flex';
+                clearInterval(this.timerInt);
+                const stats = {};
+                let totS = 0,
+                    totM = 0;
+                SOAL.forEach(s => {
+                    if (!stats[s.cat]) stats[s.cat] = {
+                        s: 0,
+                        m: 0
+                    };
+                    stats[s.cat].m += s.score;
+                    totM += s.score;
+                    const u = this.state.answers[s.id];
+                    let pt = 0;
+                    if (u) {
+                        if (s.type === 'pg' && u === s.ans) pt = s.score;
+                        else if (s.type === 'pgk' && JSON.stringify([...u].sort()) === JSON.stringify([...s.ans].sort())) pt = s.score;
+                        else if (s.type === 'pgk-cat') {
+                            let m = 0;
+                            s.ans.forEach((k, i) => {
+                                if (u[i] === k) m++;
+                            });
+                            pt = (m / s.rows.length) * s.score;
+                        }
+                    }
+                    stats[s.cat].s += pt;
+                    totS += pt;
+                });
+                const final = Math.round((totS / totM) * 100);
+                const tuntas = final >= 70;
+                const kompData = {};
+                const notTuntas = [];
+                for (const cat in stats) {
+                    const p = stats[cat].m > 0 ? Math.round((stats[cat].s / stats[cat].m) * 100) : 0;
+                    kompData[cat] = {
+                        skor: p,
+                        tuntas: p >= 70
+                    };
+                    if (p < 70) notTuntas.push(cat);
+                }
+                const desc = notTuntas.length === 0 ?
+                    '🎉 Selamat! Kamu telah menguasai semua kompetensi.' :
+                    '📌 Perlu bimbingan lebih lanjut pada: ' + notTuntas.join(', ') + '.';
+                document.getElementById('modal-loading').style.display = 'none';
+                this.showResult(final, tuntas, desc, kompData);
+                this.sendEmail(final, tuntas, desc, kompData);
+            },
+
+            showResult(score, tuntas, desc, kompData) {
+                this.showSlide('result');
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                const circle = document.getElementById('score-circle');
+                circle.className = 'score-circle' + (tuntas ? ' lulus' : '');
+                document.getElementById('score-num').textContent = score;
+                document.getElementById('result-status').textContent = tuntas ? '🎉 Tuntas!' : '📚 Perlu Bimbingan';
+                document.getElementById('result-desc').textContent = desc;
+                const em = Math.floor(this.elapsed / 60),
+                    es = this.elapsed % 60;
+                document.getElementById('result-meta').innerHTML = `
+      <div class="meta-box"><div class="meta-lbl">Siswa</div><div class="meta-val">${this.state.nama}</div></div>
+      <div class="meta-box"><div class="meta-lbl">Kelas</div><div class="meta-val">${this.state.kelas}</div></div>
+      <div class="meta-box"><div class="meta-lbl">Durasi</div><div class="meta-val">${em} mnt ${es} dtk</div></div>
+      <div class="meta-box"><div class="meta-lbl">Tanggal</div><div class="meta-val">${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})}</div></div>`;
+                let barsHTML = '';
+                for (const cat in kompData) {
+                    const d = kompData[cat];
+                    barsHTML += `<div class="comp-bar">
+        <div class="comp-header">
+          <span class="comp-name">${cat}</span>
+          <span class="comp-score" style="color:${d.tuntas?'var(--success)':'var(--danger)'}">
+            ${d.skor}% — ${d.tuntas?'✅ Tuntas':'⚠️ Perlu Bimbingan'}
+          </span>
+        </div>
+        <div class="bar-track"><div class="bar-fill ${d.tuntas?'bar-tuntas':'bar-belum'}" style="width:0%" data-w="${d.skor}%"></div></div>
+      </div>`;
+                }
+                document.getElementById('result-bars').innerHTML = barsHTML;
+                setTimeout(() => document.querySelectorAll('.bar-fill').forEach(el => {
+                    el.style.width = el.dataset.w;
+                }), 200);
+            },
+
+            sendEmail(score, tuntas, desc, kompData) {
+                const box = document.getElementById('email-status-box');
+                box.innerHTML = `<div class="email-status es-sending">✉️ Sedang mengirim laporan ke <strong>${this.state.email}</strong>...</div>`;
+                let rows = '';
+                for (const cat in kompData) {
+                    const d = kompData[cat];
+                    rows += `<tr><td style="padding:8px 14px;border:1px solid #e5e7eb;">${cat}</td>
+        <td style="padding:8px 14px;border:1px solid #e5e7eb;text-align:center;font-weight:700;">${d.skor}%</td>
+        <td style="padding:8px 14px;border:1px solid #e5e7eb;text-align:center;color:${d.tuntas?'#057a55':'#e02424'};font-weight:700;">${d.tuntas?'✅ Tuntas':'⚠️ Perlu Bimbingan'}</td></tr>`;
+                }
+                const detailHtml = `<table style="width:100%;border-collapse:collapse;font-size:14px;">
+      <tr style="background:#1e3a8a;color:white;">
+        <th style="padding:10px 14px;text-align:left;">Kompetensi</th>
+        <th style="padding:10px;">Skor</th><th style="padding:10px;">Status</th>
+      </tr>${rows}</table>`;
+                const em = Math.floor(this.elapsed / 60),
+                    es = this.elapsed % 60;
+                emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, {
+                    to_email: this.state.email,
+                    nama_siswa: this.state.nama,
+                    kelas: this.state.kelas,
+                    skor: score,
+                    status: tuntas ? 'TUNTAS ✅' : 'Perlu Bimbingan 📚',
+                    tanggal: new Date().toLocaleString('id-ID', {
+                        weekday: 'long',
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }),
+                    durasi: `${em} menit ${es} detik`,
+                    detail_html: detailHtml,
+                    kesimpulan: desc
+                }).then(() => {
+                    box.innerHTML = `<div class="email-status es-sent">✅ Laporan berhasil dikirim ke <strong>${this.state.email}</strong>. Minta orang tua cek kotak masuk email.</div>`;
+                }).catch(err => {
+                    box.innerHTML = `<div class="email-status es-error">❌ Gagal mengirim email. Periksa koneksi internet.<br><small>${err.text||JSON.stringify(err)}</small></div>`;
+                });
+            },
+
+            retryExam() {
+                this.state.answers = {};
+                this.showSlide('rules');
+                window.scrollTo({
+                    top: 0
+                });
+            },
+
+            showSlide(id) {
+                document.querySelectorAll('.slide').forEach(e => e.classList.remove('active'));
+                document.getElementById('slide-' + id).classList.add('active');
+                if (id !== 'quiz') {
+                    document.getElementById('user-chip').style.display = 'none';
+                    document.getElementById('timer-chip').style.display = 'none';
+                }
+                if (id === 'login') clearInterval(this.timerInt);
+                window.scrollTo({
+                    top: 0
+                });
+            },
+
+            applyFont(m) {
+                document.querySelectorAll('.stimulus,.q-text,.option-label,.matrix-table').forEach(el => {
+                    el.style.fontSize = `${m}rem`;
+                });
+            },
+            changeFontSize(step) {
+                this.fontMult = Math.max(0.8, Math.min(1.6, this.fontMult + step * 0.1));
+                this.applyFont(this.fontMult);
+                localStorage.setItem('tka_bi_font', this.fontMult);
+            }
+        };
+
+        window.onload = () => App.init();
+        document.addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && ['u', 's'].includes(e.key.toLowerCase())) e.preventDefault();
+        });
+        document.addEventListener('selectstart', e => {
+            if (!['INPUT', 'TEXTAREA'].includes(e.target.tagName) && !e.target.classList.contains('allow-select')) e.preventDefault();
+        });
+    </script>
+</body>
+
+</html>
