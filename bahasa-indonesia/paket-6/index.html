@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan TKA Bahasa Indonesia – Paket 6</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+:root {
+  --primary:       #1a56db;
+  --primary-dark:  #1e429f;
+  --primary-light: #ebf5ff;
+  --success:       #057a55;
+  --success-light: #def7ec;
+  --danger:        #e02424;
+  --danger-light:  #fde8e8;
+  --text:          #1f2a37;
+  --text-muted:    #6b7280;
+  --bg:            #f0f4ff;
+  --white:         #ffffff;
+  --border:        #d1d5db;
+  --radius:        12px;
+  --shadow:        0 4px 20px rgba(0,0,0,0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: clamp(14px, 3.5vw, 16px); }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg); color: var(--text);
+  -webkit-user-select: none; user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+input, textarea, select, button, .allow-select { user-select: auto !important; }
+body *::selection { background: transparent; }
+
+.header {
+  position: sticky; top: 0; z-index: 100;
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: white; padding: 0 14px; height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 2px 10px rgba(26,86,219,0.4);
+}
+.header-brand { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.logo { font-size: 1.3rem; flex-shrink: 0; }
+.brand-name { font-family: 'Baloo 2', cursive; font-size: clamp(0.8rem,3vw,1rem); font-weight: 700; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sub-brand { font-size: clamp(0.6rem,2.2vw,0.7rem); opacity: 0.8; font-weight: 600; }
+.header-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.user-chip { display:none; background:rgba(255,255,255,0.15); padding:3px 10px; border-radius:20px; font-size:clamp(0.65rem,2.2vw,0.78rem); font-weight:700; border:1px solid rgba(255,255,255,0.25); max-width:110px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.timer-chip { display:none; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25); padding:3px 10px; border-radius:6px; font-family:monospace; font-weight:800; font-size:clamp(0.8rem,2.5vw,1rem); }
+.font-controls { display:flex; gap:3px; }
+.font-btn { background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); color:white; width:26px; height:26px; border-radius:5px; cursor:pointer; font-size:0.6rem; font-weight:800; display:flex; align-items:center; justify-content:center; }
+.font-btn:active { background:rgba(255,255,255,0.3); }
+
+.slide { display:none; }
+.slide.active { display:block; animation:fadeIn 0.25s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)} }
+
+.page { padding:16px; max-width:860px; margin:0 auto; }
+.page-narrow { padding:16px; max-width:560px; margin:0 auto; }
+
+.card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:clamp(16px,4vw,28px); border:1px solid rgba(209,213,219,0.6); margin-bottom:16px; }
+.card-header { font-family:'Baloo 2',cursive; font-size:clamp(1.2rem,4vw,1.5rem); font-weight:700; color:var(--primary-dark); margin-bottom:4px; }
+.card-sub { color:var(--text-muted); font-size:clamp(0.8rem,3vw,0.9rem); margin-bottom:20px; }
+
+.form-group { margin-bottom:14px; }
+.form-label { display:block; font-weight:700; font-size:clamp(0.8rem,3vw,0.9rem); margin-bottom:5px; }
+.form-label span { color:var(--danger); }
+.form-control { width:100%; padding:11px 14px; border:1.5px solid var(--border); border-radius:8px; font-family:'Nunito',sans-serif; font-size:clamp(0.85rem,3.5vw,1rem); color:var(--text); background:var(--white); -webkit-appearance:none; transition:border-color 0.15s; }
+.form-control:focus { border-color:var(--primary); outline:none; box-shadow:0 0 0 3px rgba(26,86,219,0.1); }
+.email-hint { background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:9px 12px; margin-top:6px; font-size:clamp(0.72rem,2.8vw,0.82rem); color:#92400e; line-height:1.5; }
+
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:11px 18px; border-radius:8px; border:none; font-family:'Nunito',sans-serif; font-weight:800; font-size:clamp(0.82rem,3vw,0.95rem); cursor:pointer; transition:all 0.15s; touch-action:manipulation; }
+.btn-primary { background:var(--primary); color:white; }
+.btn-primary:active { background:var(--primary-dark); }
+.btn-outline { background:white; border:1.5px solid var(--border); color:var(--text-muted); }
+.btn-outline:active { border-color:var(--primary); color:var(--primary); }
+.btn-danger { background:var(--danger); color:white; }
+.btn-danger:active { background:#c81e1e; }
+.btn-full { width:100%; }
+
+.rule-item { display:flex; gap:12px; padding:12px; background:var(--bg); border-radius:8px; margin-bottom:8px; }
+.rule-num { width:28px; height:28px; min-width:28px; background:var(--primary); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.8rem; }
+.rule-text { font-size:clamp(0.8rem,3vw,0.9rem); line-height:1.65; padding-top:3px; }
+.rule-text strong { color:var(--primary-dark); }
+
+.paket-badge { display:inline-block; background:var(--primary-light); color:var(--primary-dark); border:1px solid #bfdbfe; border-radius:6px; font-size:0.72rem; font-weight:800; padding:3px 10px; margin-bottom:12px; letter-spacing:0.5px; }
+
+.q-item { display:none; }
+.q-item.active-q { display:block; animation:qSlide 0.2s ease-out; }
+@keyframes qSlide { from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)} }
+
+.q-category { display:inline-block; font-size:clamp(0.65rem,2.5vw,0.75rem); background:var(--primary-light); color:var(--primary); padding:3px 10px; border-radius:20px; font-weight:800; margin-bottom:10px; }
+.stimulus { background:white; border:1px solid #e5e7eb; border-left:4px solid var(--primary); padding:clamp(12px,3vw,18px); margin-bottom:16px; border-radius:8px; line-height:1.8; font-size:clamp(0.82rem,3vw,0.93rem); }
+.stim-title { font-weight:800; color:var(--primary-dark); font-size:clamp(0.7rem,2.5vw,0.8rem); text-transform:uppercase; letter-spacing:0.4px; padding-bottom:8px; margin-bottom:12px; border-bottom:1.5px dashed #e5e7eb; }
+.stimulus p { margin-bottom:10px; }
+.stimulus p:last-child { margin-bottom:0; }
+.stimulus em { font-style:italic; color:#374151; }
+.stimulus strong { font-weight:800; }
+.stim-label { display:inline-block; background:#f3f4f6; border:1px solid #e5e7eb; border-radius:4px; font-size:0.7rem; font-weight:800; color:#6b7280; padding:2px 8px; margin-bottom:8px; }
+
+.q-text { font-size:clamp(0.9rem,3.5vw,1.05rem); font-weight:700; color:#111827; margin-bottom:14px; line-height:1.6; }
+.option-label { display:flex; align-items:flex-start; gap:10px; padding:12px 14px; background:white; border:1.5px solid var(--border); border-radius:8px; margin-bottom:8px; cursor:pointer; font-size:clamp(0.82rem,3vw,0.93rem); color:#374151; line-height:1.5; touch-action:manipulation; }
+.option-label:active { background:var(--primary-light); border-color:var(--primary); }
+.option-label input { margin-top:2px; transform:scale(1.15); flex-shrink:0; }
+.matrix-table { width:100%; border-collapse:collapse; margin-top:12px; border-radius:8px; overflow:hidden; border:1px solid var(--border); font-size:clamp(0.75rem,3vw,0.88rem); }
+.matrix-table th { background:#f3f4f6; padding:clamp(8px,2vw,12px); font-weight:800; }
+.matrix-table td { border:1px solid #e5e7eb; padding:clamp(8px,2vw,12px); text-align:center; line-height:1.4; }
+.matrix-table td:first-child { text-align:left; padding-left:clamp(10px,2.5vw,16px); }
+
+.quiz-nav-bar { position:sticky; bottom:0; background:white; border-top:1px solid var(--border); box-shadow:0 -3px 12px rgba(0,0,0,0.07); z-index:90; padding:10px 14px; }
+.quiz-nav-top { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+.q-indicator { font-weight:800; color:var(--primary); font-size:clamp(0.75rem,2.8vw,0.9rem); background:var(--primary-light); padding:5px 12px; border-radius:20px; white-space:nowrap; }
+.quiz-nav-bottom { display:flex; justify-content:space-between; align-items:center; margin-top:8px; padding-top:8px; border-top:1px solid #f3f4f6; }
+.nav-toggle-btn { display:flex; align-items:center; gap:6px; background:var(--primary-light); border:1px solid #bfdbfe; color:var(--primary); padding:6px 14px; border-radius:20px; font-weight:800; font-size:clamp(0.72rem,2.8vw,0.82rem); cursor:pointer; touch-action:manipulation; }
+.answered-count { font-size:clamp(0.7rem,2.8vw,0.8rem); color:var(--text-muted); font-weight:700; }
+
+.drawer-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:200; }
+.drawer-overlay.show { display:block; }
+.nav-drawer { position:fixed; bottom:0; left:0; right:0; background:white; border-radius:16px 16px 0 0; box-shadow:0 -8px 30px rgba(0,0,0,0.15); z-index:201; transform:translateY(100%); transition:transform 0.3s cubic-bezier(0.4,0,0.2,1); max-height:70vh; display:flex; flex-direction:column; }
+.nav-drawer.open { transform:translateY(0); }
+.drawer-handle { width:36px; height:4px; background:var(--border); border-radius:2px; margin:10px auto 0; flex-shrink:0; }
+.drawer-header { padding:10px 16px 8px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); flex-shrink:0; }
+.drawer-title { font-weight:800; font-size:0.9rem; }
+.drawer-close { background:var(--bg); border:none; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1rem; color:var(--text-muted); }
+.drawer-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(36px,1fr)); gap:6px; padding:10px 12px; overflow-y:auto; }
+.nav-btn { aspect-ratio:1; border:1.5px solid var(--border); border-radius:6px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.72rem; color:var(--text-muted); cursor:pointer; touch-action:manipulation; min-height:36px; max-height:40px; }
+.nav-btn:active { transform:scale(0.9); }
+.nav-btn.current { border:2.5px solid var(--primary); color:var(--primary); background:var(--primary-light); }
+.nav-btn.answered { background:var(--success); color:white; border-color:var(--success); }
+.nav-btn.answered.current { border:2.5px solid var(--primary-dark); }
+.drawer-footer { padding:10px 14px 14px; border-top:1px solid var(--border); flex-shrink:0; }
+
+.result-hero { text-align:center; padding:20px 16px; background:linear-gradient(135deg,var(--primary-light) 0%,white 80%); border-radius:var(--radius); margin-bottom:16px; }
+.score-circle { width:100px; height:100px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; margin:0 auto 14px; border:5px solid var(--primary); background:white; box-shadow:0 4px 16px rgba(26,86,219,0.15); }
+.score-circle.lulus { border-color:var(--success); }
+.score-num { font-family:'Baloo 2',cursive; font-size:clamp(1.8rem,6vw,2.4rem); font-weight:800; color:var(--primary-dark); line-height:1; }
+.score-circle.lulus .score-num { color:var(--success); }
+.score-lbl { font-size:0.65rem; font-weight:700; color:var(--text-muted); }
+.result-status { font-family:'Baloo 2',cursive; font-size:clamp(1.1rem,4vw,1.3rem); font-weight:700; }
+.result-desc { color:var(--text-muted); font-size:clamp(0.78rem,3vw,0.9rem); margin-top:6px; line-height:1.5; }
+.result-meta { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:16px; }
+.meta-box { background:var(--bg); padding:10px 12px; border-radius:8px; }
+.meta-lbl { font-size:0.68rem; color:var(--text-muted); margin-bottom:2px; }
+.meta-val { font-weight:800; font-size:clamp(0.82rem,3vw,0.92rem); }
+.comp-bar { margin-bottom:12px; }
+.comp-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:5px; gap:8px; }
+.comp-name { font-weight:700; font-size:clamp(0.75rem,3vw,0.85rem); flex:1; }
+.comp-score { font-weight:800; font-size:clamp(0.72rem,2.8vw,0.82rem); white-space:nowrap; }
+.bar-track { height:10px; background:#e5e7eb; border-radius:5px; overflow:hidden; }
+.bar-fill { height:100%; border-radius:5px; transition:width 1.2s cubic-bezier(0.25,1,0.5,1); }
+.bar-tuntas { background:linear-gradient(90deg,#059669,#34d399); }
+.bar-belum  { background:linear-gradient(90deg,#dc2626,#f87171); }
+.divider { height:1px; background:var(--border); margin:16px 0; }
+.section-title { font-family:'Baloo 2',cursive; font-size:clamp(0.95rem,3.5vw,1.05rem); color:var(--primary-dark); margin-bottom:12px; }
+.email-status { padding:12px 14px; border-radius:10px; margin-top:14px; font-size:clamp(0.78rem,3vw,0.88rem); font-weight:700; line-height:1.5; }
+.es-sending { background:#eff6ff; color:var(--primary); border:1px solid #bfdbfe; }
+.es-sent    { background:var(--success-light); color:var(--success); border:1px solid #a7f3d0; }
+.es-error   { background:var(--danger-light); color:var(--danger); border:1px solid #fca5a5; }
+
+.overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); backdrop-filter:blur(3px); align-items:center; justify-content:center; z-index:300; padding:16px; }
+.modal { background:white; border-radius:16px; padding:clamp(20px,5vw,28px); width:100%; max-width:360px; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.2); }
+.modal h3 { font-family:'Baloo 2',cursive; color:var(--primary-dark); margin-bottom:8px; font-size:clamp(1.1rem,4vw,1.25rem); }
+.modal p { color:var(--text-muted); margin-bottom:18px; line-height:1.6; font-size:clamp(0.82rem,3vw,0.93rem); }
+.modal-btns { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+.modal-btns .btn { flex:1; min-width:120px; }
+.spinner { width:40px; height:40px; border:4px solid #e5e7eb; border-top:4px solid var(--primary); border-radius:50%; margin:12px auto; animation:spin 0.8s linear infinite; }
+@keyframes spin { to{transform:rotate(360deg)} }
+@media (max-width:380px) { .sub-brand{display:none;} .font-controls{display:none;} }
+</style>
+</head>
+<body oncontextmenu="return false;" ondragstart="return false;">
+
+<div class="header">
+  <div class="header-brand">
+    <span class="logo">📖</span>
+    <div>
+      <div class="brand-name">Latihan TKA · Bahasa Indonesia</div>
+      <div class="sub-brand">SD Muhammadiyah 01 Kukusan · Kelas 6</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="user-chip"  id="user-chip"></div>
+    <div class="timer-chip" id="timer-chip">00:00</div>
+    <div class="font-controls">
+      <button class="font-btn" onclick="App.changeFontSize(-1)">A−</button>
+      <button class="font-btn" onclick="App.changeFontSize(1)">A+</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div id="slide-login" class="slide active">
+  <div class="page-narrow">
+    <div class="card" style="margin-top:8px;">
+      <div class="paket-badge">📖 Bahasa Indonesia · Paket 6</div>
+      <div class="card-header">Selamat Datang! 👋</div>
+      <div class="card-sub">Isi data berikut sebelum memulai latihan soal</div>
+      <div class="form-group">
+        <label class="form-label">Nama Lengkap Siswa <span>*</span></label>
+        <input type="text" id="inp-nama" class="form-control allow-select" placeholder="Tulis nama siswa...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Kelas <span>*</span></label>
+        <select id="inp-kelas" class="form-control allow-select">
+          <option value="">-- Pilih Kelas --</option>
+          <option value="6A">6A</option>
+          <option value="6B">6B</option>
+          <option value="6C">6C</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Orang Tua <span>*</span></label>
+        <input type="email" id="inp-email" class="form-control allow-select" placeholder="email@orangtua.com">
+        <div class="email-hint">📧 Laporan hasil latihan dikirim otomatis ke email ini setelah selesai.</div>
+      </div>
+      <button class="btn btn-primary btn-full" onclick="App.login()" style="margin-top:10px;">Lanjut ke Petunjuk →</button>
+    </div>
+  </div>
+</div>
+
+<!-- PETUNJUK -->
+<div id="slide-rules" class="slide">
+  <div class="page-narrow">
+    <div class="card" style="margin-top:8px;">
+      <div class="paket-badge">📖 Bahasa Indonesia · Paket 6</div>
+      <div class="card-header">📋 Petunjuk Pengerjaan</div>
+      <div class="card-sub">Bahasa Indonesia · 30 soal · Waktu bebas</div>
+      <div class="rule-item">
+        <div class="rule-num">1</div>
+        <div class="rule-text"><strong>Baca seluruh teks sebelum menjawab</strong> — Beberapa soal membutuhkan pemahaman keseluruhan teks, bukan hanya satu bagian.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">2</div>
+        <div class="rule-text"><strong>Urutan soal diacak</strong> — Tiap sesi latihan, urutan soal akan berbeda secara otomatis.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">3</div>
+        <div class="rule-text"><strong>Navigasi soal</strong> — Ketuk <em>"Lihat Semua Soal"</em> di bagian bawah untuk melompat ke nomor mana saja. Kotak <span style="background:var(--success);color:white;padding:1px 7px;border-radius:4px;font-size:0.75rem;">hijau</span> = sudah dijawab.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">4</div>
+        <div class="rule-text"><strong>Laporan ke orang tua</strong> — Setelah klik "Kumpulkan", laporan nilai dikirim otomatis ke email orang tua.</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:20px;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-outline" onclick="App.showSlide('login')">← Kembali</button>
+        <button class="btn btn-primary" onclick="App.startExam()">Mulai Mengerjakan →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="slide-quiz" class="slide">
+  <div class="page" id="quiz-container" style="padding-bottom:4px;"></div>
+  <div class="quiz-nav-bar">
+    <div class="quiz-nav-top">
+      <button class="btn btn-outline" id="btn-prev" onclick="App.move(-1)">← Sebelumnya</button>
+      <div class="q-indicator" id="q-indicator">Soal 1 / 30</div>
+      <button class="btn btn-primary" id="btn-next" onclick="App.move(1)">Selanjutnya →</button>
+    </div>
+    <div class="quiz-nav-bottom">
+      <button class="nav-toggle-btn" onclick="App.openDrawer()">📋 Lihat Semua Soal</button>
+      <span class="answered-count" id="answered-count">0 / 30 dijawab</span>
+    </div>
+  </div>
+</div>
+
+<!-- HASIL -->
+<div id="slide-result" class="slide">
+  <div class="page-narrow">
+    <div class="card" style="margin-top:8px;">
+      <div class="result-hero">
+        <div class="score-circle" id="score-circle">
+          <div class="score-num" id="score-num">--</div>
+          <div class="score-lbl">NILAI</div>
+        </div>
+        <div class="result-status" id="result-status">Menghitung...</div>
+        <div class="result-desc"   id="result-desc"></div>
+      </div>
+      <div class="result-meta" id="result-meta"></div>
+      <div class="section-title">📊 Capaian per Kompetensi</div>
+      <div id="result-bars"></div>
+      <div id="email-status-box"></div>
+      <div class="divider"></div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn btn-outline" onclick="App.retryExam()">🔄 Coba Lagi</button>
+        <button class="btn btn-primary" onclick="App.showSlide('login')">📝 Mulai Baru</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="drawer-overlay" id="drawer-overlay" onclick="App.closeDrawer()"></div>
+<div class="nav-drawer" id="nav-drawer">
+  <div class="drawer-handle"></div>
+  <div class="drawer-header">
+    <span class="drawer-title">Navigasi Soal</span>
+    <button class="drawer-close" onclick="App.closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-grid" id="nav-grid"></div>
+  <div class="drawer-footer">
+    <button class="btn btn-danger btn-full" onclick="App.closeDrawer();App.confirmFinish();">✅ Selesai & Kumpulkan</button>
+  </div>
+</div>
+
+<div class="overlay" id="modal-confirm" style="display:none;">
+  <div class="modal">
+    <h3>⚠️ Yakin Selesai?</h3>
+    <p id="modal-confirm-text"></p>
+    <div class="modal-btns">
+      <button class="btn btn-outline" onclick="document.getElementById('modal-confirm').style.display='none'">Periksa Lagi</button>
+      <button class="btn btn-danger" onclick="App.submitExam()">Ya, Kumpulkan!</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="modal-loading" style="display:none;">
+  <div class="modal">
+    <h3>⏳ Memproses Nilai...</h3>
+    <div class="spinner"></div>
+    <p>Jangan tutup halaman ini.</p>
+  </div>
+</div>
+
+<script>
+const EMAILJS_CONFIG = {
+  PUBLIC_KEY:  "xOghGdjMfoGLAB-CE",
+  SERVICE_ID:  "service_03pdwdr",
+  TEMPLATE_ID: "template_hi8a1k9"
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   STIMULUS — 10 tema baru, teks lebih padat argumen dan nuansa
+   ═══════════════════════════════════════════════════════════════ */
+const S = {
+
+bias_konfirmasi: `<div class="stimulus"><div class="stim-title">Teks Informasi · Ketika Otak Memilih Hanya Mendengar yang Ingin Didengar</div>
+<p>Bayangkan kamu sudah yakin bahwa tim sepak bola favoritmu adalah yang terbaik. Setiap kali tim itu menang, kamu dengan senang hati menceritakannya kepada semua orang. Setiap kali kalah, kamu mencari-cari alasan: wasitnya tidak adil, pemain terbaik sedang cedera, lapangannya tidak kondusif. Tanpa disadari, kamu sedang melakukan apa yang para psikolog sebut sebagai <em>bias konfirmasi</em>.</p>
+<p>Bias konfirmasi adalah kecenderungan alami otak manusia untuk mencari, menafsirkan, dan mengingat informasi dengan cara yang memperkuat keyakinan yang sudah ada — dan mengabaikan informasi yang bertentangan. Ini bukan tanda kurang cerdas; penelitian menunjukkan bahwa orang yang lebih cerdas justru lebih mahir dalam membangun argumen untuk membenarkan apa yang sudah mereka percaya.</p>
+<p>Dampaknya bisa serius. Dalam kehidupan nyata, bias konfirmasi dapat membuat seseorang mempertahankan pendapat yang keliru, menolak informasi kesehatan yang penting, atau tidak mampu memahami sudut pandang orang lain. Di tingkat masyarakat, ia menjadi bahan bakar bagi polarisasi: kelompok-kelompok yang hanya mengonsumsi informasi yang memperkuat pandangan mereka sendiri semakin lama semakin sulit berdialog satu sama lain.</p>
+<p>Cara melawannya bukan dengan tidak memiliki pendapat — melainkan dengan secara aktif mencari argumen yang menentang keyakinan kita sendiri. Para ilmuwan menyebutnya <em>steel-manning</em>: membangun versi terkuat dari argumen lawan sebelum mengkritiknya. Jika kamu tidak bisa menjelaskan sudut pandang berbeda dengan adil, berarti kamu belum benar-benar memahami isu tersebut.</p></div>`,
+
+tuduhan_salah: `<div class="stimulus"><div class="stim-title">Cerita Fiksi · Sebelum Kamu Yakin</div>
+<p>Dompet Bu Ratna hilang di hari Jumat. Kelas gempar. Semua mata — tanpa ada yang benar-benar memutuskan untuk menuduh — secara perlahan mulai mengarah ke Eko. Bukan karena ada bukti. Hanya karena Eko adalah anak yang diam, yang duduk di pojok, yang tidak pernah punya banyak teman, dan yang pernah sekali terlihat memungut uang receh yang jatuh dari meja tanpa melapor.</p>
+<p>Bu Ratna sendiri tidak menuduh siapapun. Tapi pertanyaannya — "Apa ada yang melihat sesuatu yang tidak biasa hari ini?" — terasa menyentuh Eko secara khusus karena semua kepala menoleh ke arahnya saat kalimat itu diucapkan.</p>
+<p>Dua jam kemudian, dompet ditemukan di laci meja Bu Ratna sendiri, terjatuh ke sela-sela di antara buku-buku tebal. Bu Ratna meminta maaf kepada seluruh kelas atas kepanikan yang tidak perlu. Tidak ada yang secara langsung meminta maaf kepada Eko.</p>
+<p>Di perjalanan pulang, Ayu — satu-satunya yang tidak ikut menoleh ke arah Eko tadi — berjalan di sampingnya. "Itu tidak adil tadi," katanya. Eko mengangguk. "Tapi tidak ada yang bilang apa-apa." Ayu diam sejenak. "Aku juga tidak. Itu yang paling tidak adilnya."</p></div>`,
+
+mikroplastik: `<div class="stimulus"><div class="stim-title">Teks Informasi · Plastik dalam Tubuh Kita: Batas yang Sudah Terlampaui</div>
+<p>Pada tahun 2018, para peneliti menemukan sesuatu yang mengejutkan: mikroplastik — potongan plastik berdiameter kurang dari 5 milimeter — ditemukan dalam sampel tinja manusia dari delapan negara yang berbeda. Ini adalah pertama kalinya dikonfirmasi bahwa plastik telah memasuki sistem pencernaan manusia secara luas. Penelitian selanjutnya menemukan mikroplastik dalam darah, paru-paru, plasenta ibu hamil, dan bahkan jaringan jantung manusia.</p>
+<p>Sumber masuknya beragam: air minum yang dikemas dalam botol plastik, makanan laut yang tercemar, udara dalam ruangan yang mengandung serat plastik dari karpet dan pakaian sintetis, serta makanan yang disimpan atau dipanaskan dalam wadah plastik. Rata-rata manusia diperkirakan mengonsumsi setara dengan satu kartu kredit — sekitar 5 gram plastik — setiap minggu tanpa disadari.</p>
+<p>Yang mengkhawatirkan bukan hanya keberadaan fisik partikel plastik itu sendiri, melainkan zat kimia yang terbawa bersamanya. Beberapa aditif plastik — termasuk bisfenol A (BPA) dan ftalat — dikenal sebagai <em>endocrine disruptors</em>, zat yang mengganggu sistem hormon tubuh dan dikaitkan dengan gangguan perkembangan, kesuburan, dan peningkatan risiko beberapa jenis kanker.</p>
+<p>Sampai saat ini, belum ada konsensus ilmiah tentang berapa ambang batas yang benar-benar aman bagi manusia. Ini bukan berarti tidak ada risiko — melainkan bahwa kita sedang hidup di tengah eksperimen berskala masif yang tidak pernah dirancang, dan hasilnya belum sepenuhnya diketahui.</p></div>`,
+
+dua_pendapat: `<div class="stimulus"><div class="stim-title">Cerita Fiksi · Debat di Bawah Pohon Mangga</div>
+<p>Setiap sore, Dika dan Rafi duduk di bawah pohon mangga di halaman sekolah sambil menunggu jemputan. Mereka sudah berteman sejak kelas satu, tapi sore itu pertama kalinya mereka mendapati diri berbeda pendapat dengan cara yang terasa serius.</p>
+<p>Topiknya sederhana: apakah sekolah seharusnya melarang penggunaan gawai sepenuhnya selama jam belajar? Dika berpendapat ya. "Gawai itu gangguan. Tidak ada yang bisa fokus kalau ada notifikasi terus-menerus. Kalau dilarang, semua bisa belajar dengan setara." Rafi menggeleng. "Tapi gawai juga alat belajar. Kamus digital, video penjelasan, aplikasi latihan soal — semua ada di sana. Kalau dilarang, siswa yang tidak punya buku bagus jadi lebih dirugikan."</p>
+<p>Dika berpikir sebentar. "Tapi guru tidak bisa mengawasi 30 anak sekaligus. Kalau ada gawai, pasti ada yang main game diam-diam." Rafi mengangguk pelan. "Itu memang masalah. Tapi solusinya mengajarkan tanggung jawab, bukan melarang alatnya. Kalau kita melarang semua yang bisa disalahgunakan, kita juga harus melarang buku karena buku juga bisa jadi tempat sembunyi untuk tidur." Dika tertawa kecil meski tidak mau mengakuinya.</p>
+<p>Mereka tidak sampai pada kesepakatan hari itu. Tapi keduanya pulang dengan sesuatu yang tidak mereka miliki sebelumnya: satu argumen dari sisi yang berlawanan yang belum bisa mereka patahkan.</p></div>`,
+
+bahasa_daerah: `<div class="stimulus"><div class="stim-title">Teks Informasi · Ketika Sebuah Bahasa Mati, Apa yang Ikut Hilang?</div>
+<p>Setiap dua minggu, rata-rata satu bahasa di dunia punah — lenyap bersama kepergian penutur terakhirnya. Dari sekitar 7.000 bahasa yang masih ada di dunia hari ini, lebih dari separuh diperkirakan akan punah sebelum akhir abad ini. Indonesia sendiri memiliki lebih dari 700 bahasa daerah, menjadikannya salah satu negara dengan keragaman linguistik terkaya di dunia — sekaligus salah satu yang paling rentan kehilangan warisan tersebut.</p>
+<p>Kepunahan bahasa bukan sekadar hilangnya kata-kata. Setiap bahasa adalah sistem pengetahuan yang unik: cara memandang waktu, ruang, hubungan antarmanusia, dan alam yang berbeda dari bahasa lain. Bahasa Hopi dari Amerika Serikat, misalnya, tidak memiliki konsep waktu sebagai garis lurus seperti dalam bahasa Indo-Eropa — waktu dalam Hopi bersifat siklus. Ketika bahasa itu punah, cara berpikir tentang waktu yang dikandungnya ikut hilang selamanya.</p>
+<p>Di Indonesia, tekanan terbesar datang dari urbanisasi dan dominasi bahasa nasional serta bahasa asing dalam pendidikan dan ekonomi. Generasi muda yang tumbuh di kota sering kali tidak lagi menggunakan bahasa leluhur mereka karena dianggap tidak berguna secara praktis. Namun para linguis mengingatkan bahwa "tidak berguna secara praktis" adalah penilaian yang dangkal: bahasa daerah menyimpan kosakata tentang ekosistem lokal, pengetahuan obat tradisional, dan praktik pertanian yang tidak ada padanannya dalam bahasa lain.</p>
+<p>Mendokumentasikan bahasa yang terancam punah adalah pekerjaan mendesak. Namun lebih dari sekadar dokumentasi, yang dibutuhkan adalah memberi ruang bagi bahasa-bahasa itu untuk tetap hidup — dalam percakapan sehari-hari, dalam lagu, dalam cerita yang dituturkan kepada anak-anak.</p></div>`,
+
+kepercayaan: `<div class="stimulus"><div class="stim-title">Cerita Fiksi · Rekahan dan Jembatan</div>
+<p>Tiga bulan lalu, Nando menceritakan rahasia Citra kepada hampir seluruh kelas. Bukan karena jahat — atau setidaknya begitu ia berulang kali menjelaskan kepada dirinya sendiri — melainkan karena tergelincir: obrolan yang terasa ringan, sebelum ia sadar seberapa jauh ia sudah bicara. Kerusakan yang ditimbulkan tidak ringan. Citra tidak lagi menyapa Nando selama dua bulan penuh.</p>
+<p>Nando sudah mencoba meminta maaf tiga kali. Dua kali Citra tidak menjawab. Sekali ia menjawab: "Aku tahu kamu menyesal. Tapi maaf tidak otomatis membuat kepercayaan kembali." Nando tidak tahu harus menjawab apa.</p>
+<p>Yang mengubah keadaan bukan kata-kata. Suatu hari, Citra tanpa sengaja tertinggal tas saat mengikuti kegiatan di luar sekolah. Di dalam tas ada dompet, kunci rumah, dan buku hariannya. Nando menemukan tas itu, dan tanpa membuka satupun isinya, ia menyimpan tas itu sampai Citra kembali. Tidak ada yang tahu. Tidak ada saksi.</p>
+<p>Saat Citra menerima tasnya kembali — utuh, tidak ada yang terbuka — ia berdiri lama tanpa bicara. Kemudian ia berkata pelan: "Kepercayaan memang tidak bisa dikembalikan dengan kata-kata. Tapi mungkin bisa dibangun kembali dengan tindakan." Nando tidak menjawab. Ia hanya mengangguk, dan untuk pertama kalinya dalam tiga bulan, Citra mengangguk balik.</p></div>`,
+
+kecerdasan_buatan: `<div class="stimulus"><div class="stim-title">Teks Informasi · Kecerdasan Buatan: Alat, Bukan Tuan</div>
+<p>Kecerdasan buatan (AI) kini hadir dalam kehidupan kita dengan cara yang sering tidak kita sadari: rekomendasi video di platform streaming, filter spam di email, sistem navigasi yang menyesuaikan rute secara real-time, hingga alat bantu diagnosis medis. Di balik semua ini adalah algoritma — serangkaian instruksi matematis yang memungkinkan mesin "belajar" dari data dan membuat keputusan.</p>
+<p>Namun kemampuan luar biasa AI juga membawa risiko yang nyata. Salah satu yang paling serius adalah <em>algorithmic bias</em> — ketika AI mewarisi dan memperkuat bias yang ada dalam data pelatihannya. Sistem rekrutmen kerja berbasis AI yang dilatih dengan data historis di mana perempuan kurang terwakili, misalnya, cenderung merekomendasikan kandidat laki-laki meskipun kualifikasi keduanya setara. Sistem pengenalan wajah yang dilatih terutama dengan wajah berkulit terang menunjukkan tingkat kesalahan yang jauh lebih tinggi pada wajah berkulit gelap.</p>
+<p>Masalah kedua adalah ketergantungan berlebih. Ketika navigasi GPS rusak atau tidak tersedia, banyak orang tidak lagi mampu menemukan jalan sendiri. Ketika kalkulator selalu tersedia, kemampuan berhitung mental melemah. Para pendidik khawatir bahwa ketergantungan berlebih pada AI untuk menulis dan berpikir dapat melemahkan kemampuan berpikir kritis yang justru paling dibutuhkan di era ini.</p>
+<p>Kunci bukan pada penolakan terhadap teknologi — melainkan pada kesadaran tentang cara kerjanya, batasannya, dan nilai-nilai yang tertanam di dalamnya. AI adalah alat yang luar biasa kuat. Seperti semua alat kuat, manfaat atau bahayanya bergantung sepenuhnya pada siapa yang memegangnya dan dengan tujuan apa.</p></div>`,
+
+tradisi_modern: `<div class="stimulus"><div class="stim-title">Cerita Fiksi · Nada yang Tidak Bisa Diunduh</div>
+<p>Kakek selalu memainkan angklung setiap Minggu pagi. Bukan pertunjukan, hanya kebiasaan — duduk di beranda, memainkan melodi lama yang tidak ada judulnya, sambil secangkir teh panas mendingin di sampingnya. Farel, cucunya, selalu mendengarkan dari balik pintu tanpa pernah masuk.</p>
+<p>Suatu Minggu, Kakek tidak keluar karena sendi lututnya sedang kumat. Farel yang membawakan teh, dan tanpa rencana, duduk lebih lama dari biasanya. "Kakek, itu lagu apa?" Kakek tersenyum. "Tidak ada namanya. Kakek buat sendiri waktu muda." Farel terkejut. "Kakek bisa nulis musik?" Kakek menggeleng. "Tidak bisa. Tapi bisa main."</p>
+<p>Hari itu Farel belajar tiga chord pertama dari Kakek. Tangannya kaku, nadanya sumbang, dan ia harus mengulang gerakan yang sama dua puluh kali sebelum terdengar benar. Berbeda sekali dengan belajar dari video tutorial yang bisa dipercepat, dijeda, atau diulang dengan klik. Di sini, tidak ada tombol apapun. Hanya tangan Kakek yang membenarkan posisi jarinya, perlahan.</p>
+<p>"Kenapa Kakek tidak rekam lagu ini?" tanya Farel di akhir sesi. Kakek berpikir sebentar. "Karena lagu ini tidak selesai. Setiap kali Kakek main, sedikit berbeda. Itu yang membuatnya hidup." Farel menatap angklung di tangannya. Untuk pertama kalinya, ia mengerti bahwa ada hal-hal yang justru menjadi kurang ketika dibekukan menjadi sempurna.</p></div>`,
+
+data_dan_tindakan: `<div class="stimulus"><div class="stim-title">Teks Informasi · Ketika Fakta Tidak Cukup: Kesenjangan antara Tahu dan Bertindak</div>
+<p>Hampir semua orang tahu bahwa merokok berbahaya. Hampir semua orang tahu bahwa olahraga teratur baik untuk kesehatan. Hampir semua orang tahu bahwa membuang sampah sembarangan merusak lingkungan. Namun pengetahuan saja — bahkan pengetahuan yang sudah sangat luas dan terdokumentasi dengan baik — ternyata tidak otomatis mengubah perilaku.</p>
+<p>Para psikolog menyebut fenomena ini sebagai <em>intention-behavior gap</em>: jurang antara niat dan tindakan. Penelitian menunjukkan bahwa faktor yang paling kuat mengubah perilaku bukanlah informasi tambahan, melainkan: norma sosial (apa yang dianggap normal oleh kelompok terdekat), identitas diri (perilaku apa yang konsisten dengan siapa diri kita), kemudahan akses (seberapa mudah perilaku yang diinginkan bisa dilakukan), dan konsekuensi yang terasa segera (bukan konsekuensi yang baru terasa puluhan tahun kemudian).</p>
+<p>Ini memiliki implikasi penting bagi cara kita membahas masalah-masalah besar seperti perubahan iklim. Kampanye yang hanya menyajikan data dan statistik tentang seberapa berbahaya perubahan iklim terbukti kurang efektif dibandingkan kampanye yang menunjukkan bahwa tetangga, teman, dan anggota komunitas kita sudah mulai mengubah perilaku mereka. Manusia adalah makhluk sosial: kita lebih termotivasi oleh apa yang dilakukan orang-orang di sekitar kita daripada oleh angka-angka abstrak.</p>
+<p>Ini bukan alasan untuk pesimis. Ini adalah panduan: jika ingin mengubah perilaku — diri sendiri maupun orang lain — mulailah dengan memahami apa yang benar-benar menggerakkan manusia, bukan hanya apa yang seharusnya menggerakkan mereka menurut logika.</p></div>`,
+
+harga_sebuah_pilihan: `<div class="stimulus"><div class="stim-title">Cerita Fiksi · Yang Tidak Dipilih</div>
+<p>Ibu Dina pernah hampir menjadi pelukis profesional. Tidak banyak yang tahu ini — tidak ada karya yang terpajang di dinding, tidak ada pameran yang pernah diikuti. Yang ada hanyalah satu kotak kayu di sudut gudang berisi cat-cat kering dan kuas-kuas yang sudah lama tidak disentuh.</p>
+<p>Dina menemukannya suatu siang ketika mencari kardus untuk tugas sekolah. "Bu, ini punya Ibu?" tanyanya sambil membuka kotak itu. Ibunya berdiri di pintu gudang, ekspresinya sulit dibaca. "Iya." Dina mengangkat satu kuas tua. "Ibu bisa melukis?" Ibunya mengangguk pelan. "Dulu."</p>
+<p>"Kenapa berhenti?" Ibunya tidak menjawab langsung. Ia masuk, duduk di lantai di samping kotak itu, dan membuka satu tube cat yang sudah mengeras. "Karena ada kamu," katanya akhirnya. Tapi cara ia mengatakannya tidak terdengar seperti keluhan — lebih seperti pernyataan tentang sebuah pertukaran yang sudah ia terima sepenuhnya.</p>
+<p>Dina tidak tahu harus merespons apa. Namun saat makan malam, ia bertanya, "Ibu tidak menyesal?" Ibunya mengambil sepiring nasi. "Setiap pilihan datang dengan harga. Yang penting bukan apakah kamu tidak membayar harganya — tapi apakah itu sepadan." Ia menatap Dina. "Menurutmu?"</p>
+<p>Dina tidak menjawab. Tapi pertanyaan itu tinggal lama, seperti cat yang sudah kering di kuas — tidak mudah dibersihkan, dan entah kenapa tidak ingin dibersihkan.</p></div>`
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   SOAL PAKET 6 — Level kognitif meningkat dari Paket 4 & 5:
+
+   Jenis pertanyaan baru yang diperkenalkan:
+   · "Asumsi apa yang mendasari argumen ini?" (identifikasi premis tersembunyi)
+   · "Informasi mana yang paling MELEMAHKAN klaim teks?"
+   · "Ringkasan mana yang paling tepat mewakili keseluruhan isi?"
+   · "Apa KETERBATASAN dari solusi yang diusulkan penulis?"
+   · "Apa PERSAMAAN logis antara dua situasi berbeda dalam teks?"
+   · Pilihan jawaban dirancang lebih dekat satu sama lain —
+     perbedaan antar pilihan bersifat konseptual, bukan faktual
+   ═══════════════════════════════════════════════════════════════ */
+const SOAL = [
+
+/* ── Tema 1: Bias Konfirmasi ── */
+{id:1, cat:"Pemahaman Tekstual", type:"pg", score:1, stim:S.bias_konfirmasi,
+ q:"Manakah ringkasan yang paling tepat mewakili isi keseluruhan teks ini?",
+ opt:[
+   "Orang yang cerdas lebih rentan terhadap bias konfirmasi karena mereka lebih pandai berargumen",
+   "Bias konfirmasi adalah kecenderungan alami otak yang dapat merusak pemikiran dan hubungan sosial, dan dapat dilawan dengan secara aktif memahami sudut pandang yang berlawanan",
+   "Media sosial adalah penyebab utama bias konfirmasi di masyarakat modern karena memudahkan orang untuk hanya mengonsumsi informasi yang mereka sukai",
+   "Untuk berpikir objektif, seseorang harus berusaha tidak memiliki pendapat apapun sebelum mempelajari sebuah isu"
+ ],
+ ans:"Bias konfirmasi adalah kecenderungan alami otak yang dapat merusak pemikiran dan hubungan sosial, dan dapat dilawan dengan secara aktif memahami sudut pandang yang berlawanan"},
+
+{id:2, cat:"Pemahaman Inferensial", type:"pg", score:1, stim:S.bias_konfirmasi,
+ q:"Fakta bahwa 'orang yang lebih cerdas justru lebih mahir membangun argumen untuk membenarkan apa yang sudah mereka percaya' mengandung asumsi tersembunyi apa tentang hubungan antara kecerdasan dan objektivitas?",
+ opt:[
+   "Kecerdasan tinggi selalu menghasilkan pemikiran yang lebih jernih dan objektif",
+   "Kecerdasan tidak menjamin objektivitas — bahkan bisa digunakan untuk mempercanggih pembenaran atas keyakinan yang sudah ada",
+   "Orang yang tidak terlalu cerdas lebih mudah mengakui kesalahan karena tidak bisa membangun argumen yang rumit",
+   "Kecerdasan dan objektivitas adalah dua kemampuan yang sepenuhnya terpisah dan tidak saling berhubungan"
+ ],
+ ans:"Kecerdasan tidak menjamin objektivitas — bahkan bisa digunakan untuk mempercanggih pembenaran atas keyakinan yang sudah ada"},
+
+{id:3, cat:"Evaluasi dan Apresiasi", type:"pgk-cat", score:2, stim:S.bias_konfirmasi,
+ q:"Berdasarkan logika yang dibangun dalam teks, tentukan apakah pernyataan berikut MEMPERKUAT atau MEMPERLEMAH argumen utama teks!",
+ rows:[
+   "Sebuah penelitian menemukan bahwa orang lebih mudah mengingat berita yang sesuai dengan pandangan politik mereka daripada yang bertentangan.",
+   "Seseorang yang berhasil memenangkan debat tidak selalu berarti ia memiliki argumen yang lebih kuat secara logis."
+ ],
+ cols:["Memperkuat","Memperlemah"],
+ ans:["Memperkuat","Memperkuat"]},
+
+/* ── Tema 2: Tuduhan Salah ── */
+{id:4, cat:"Pemahaman Tekstual", type:"pg", score:1, stim:S.tuduhan_salah,
+ q:"Apa yang membuat situasi Eko secara tidak langsung menuduhnya meskipun tidak ada seorang pun yang secara terang-terangan mengucapkan tuduhan?",
+ opt:[
+   "Eko sebelumnya pernah terbukti mengambil barang milik teman sekelas",
+   "Kombinasi dari sifatnya yang pendiam, tempat duduknya yang terisolasi, dan memori insiden uang receh membuat orang secara tak sadar mengasosiasikannya dengan kecurigaan",
+   "Bu Ratna secara diam-diam sudah curiga kepada Eko sebelum bertanya kepada kelas",
+   "Teman-teman Eko memang berniat menuduhnya dan mengoordinasikan respons mereka"
+ ],
+ ans:"Kombinasi dari sifatnya yang pendiam, tempat duduknya yang terisolasi, dan memori insiden uang receh membuat orang secara tak sadar mengasosiasikannya dengan kecurigaan"},
+
+{id:5, cat:"Pemahaman Inferensial", type:"pg", score:1, stim:S.tuduhan_salah,
+ q:"Pernyataan Ayu, 'Aku juga tidak. Itu yang paling tidak adilnya,' mencerminkan pemahaman moral yang lebih dalam tentang apa?",
+ opt:[
+   "Bahwa diam saat menyaksikan ketidakadilan menjadikan seseorang turut bertanggung jawab atas ketidakadilan tersebut",
+   "Bahwa Ayu merasa bersalah karena terlambat membela Eko setelah kasus selesai",
+   "Bahwa hanya orang yang secara aktif menuduh yang bertanggung jawab atas dampak sosial dari sebuah kecurigaan",
+   "Bahwa kejujuran setelah kejadian lebih bernilai daripada keberanian pada saat kejadian berlangsung"
+ ],
+ ans:"Bahwa diam saat menyaksikan ketidakadilan menjadikan seseorang turut bertanggung jawab atas ketidakadilan tersebut"},
+
+{id:6, cat:"Evaluasi dan Apresiasi", type:"pg", score:1, stim:S.tuduhan_salah,
+ q:"Jika cerita ini dijadikan landasan diskusi tentang keadilan, pertanyaan etis yang PALING MENDASAR yang diangkat cerita ini adalah...",
+ opt:[
+   "Bagaimana seharusnya guru menangani kasus kehilangan barang di kelas?",
+   "Apakah kecurigaan tanpa bukti sudah cukup untuk dianggap sebagai tindakan tidak adil, meskipun tidak pernah diucapkan secara langsung?",
+   "Seberapa pentingkah permintaan maaf formal setelah sebuah kesalahan sosial terjadi?",
+   "Apakah seseorang yang berbeda dari kelompoknya selalu akan menjadi korban prasangka?"
+ ],
+ ans:"Apakah kecurigaan tanpa bukti sudah cukup untuk dianggap sebagai tindakan tidak adil, meskipun tidak pernah diucapkan secara langsung?"},
+
+/* ── Tema 3: Mikroplastik ── */
+{id:7, cat:"Pemahaman Tekstual", type:"pg", score:1, stim:S.mikroplastik,
+ q:"Mengapa penulis menyebut situasi saat ini sebagai 'eksperimen berskala masif yang tidak pernah dirancang'?",
+ opt:[
+   "Karena para ilmuwan sedang sengaja melakukan percobaan untuk mengetahui dampak plastik pada tubuh manusia",
+   "Karena seluruh umat manusia saat ini secara tidak sengaja menjadi subjek dari konsekuensi pencemaran plastik yang belum diketahui sepenuhnya",
+   "Karena industri plastik sengaja menyembunyikan hasil penelitian tentang dampak produknya",
+   "Karena negara-negara di dunia sedang bereksperimen dengan berbagai kebijakan pengurangan plastik tanpa ada standar yang disepakati"
+ ],
+ ans:"Karena seluruh umat manusia saat ini secara tidak sengaja menjadi subjek dari konsekuensi pencemaran plastik yang belum diketahui sepenuhnya"},
+
+{id:8, cat:"Pemahaman Inferensial", type:"pgk-cat", score:2, stim:S.mikroplastik,
+ q:"Berdasarkan isi teks, tentukan apakah pernyataan berikut merupakan KESIMPULAN YANG VALID atau TIDAK VALID dari informasi yang tersedia!",
+ rows:[
+   "Fakta bahwa belum ada konsensus tentang ambang batas aman bukan berarti tidak ada risiko dari paparan mikroplastik.",
+   "Karena mikroplastik sudah ada di mana-mana, tidak ada tindakan individual yang dapat mengurangi paparannya secara berarti."
+ ],
+ cols:["Valid","Tidak Valid"],
+ ans:["Valid","Tidak Valid"]},
+
+{id:9, cat:"Evaluasi dan Apresiasi", type:"pg", score:1, stim:S.mikroplastik,
+ q:"Manakah dari pilihan berikut yang, jika terbukti benar, paling MELEMAHKAN tingkat kekhawatiran yang disampaikan dalam teks?",
+ opt:[
+   "Ditemukan bahwa produksi plastik global terus meningkat setiap tahun",
+   "Penelitian terbaru menunjukkan bahwa sistem imun manusia mampu memecah dan mengeluarkan partikel mikroplastik tertentu tanpa menimbulkan efek samping yang terdeteksi",
+   "Beberapa negara sudah melarang penggunaan plastik sekali pakai di supermarket",
+   "Konsentrasi mikroplastik dalam air laut terdeteksi lebih tinggi dari perkiraan awal"
+ ],
+ ans:"Penelitian terbaru menunjukkan bahwa sistem imun manusia mampu memecah dan mengeluarkan partikel mikroplastik tertentu tanpa menimbulkan efek samping yang terdeteksi"},
+
+/* ── Tema 4: Dua Pendapat ── */
+{id:10, cat:"Pemahaman Tekstual", type:"pg", score:1, stim:S.dua_pendapat,
+ q:"Apa yang menjadi dasar perbedaan mendasar antara posisi Dika dan posisi Rafi dalam debat ini?",
+ opt:[
+   "Dika tidak suka teknologi sedangkan Rafi sangat bergantung pada gawai untuk belajar",
+   "Dika mengutamakan ketertiban dan kesetaraan kondisi belajar, sementara Rafi mengutamakan akses terhadap sumber belajar dan pengembangan tanggung jawab",
+   "Dika berbicara dari sudut pandang guru sedangkan Rafi berbicara dari sudut pandang siswa",
+   "Dika khawatir tentang nilai akademis sedangkan Rafi lebih peduli pada keterampilan sosial"
+ ],
+ ans:"Dika mengutamakan ketertiban dan kesetaraan kondisi belajar, sementara Rafi mengutamakan akses terhadap sumber belajar dan pengembangan tanggung jawab"},
+
+{id:11, cat:"Pemahaman Inferensial", type:"pg", score:1, stim:S.dua_pendapat,
+ q:"Analogi Rafi — 'kalau kita melarang semua yang bisa disalahgunakan, kita juga harus melarang buku' — bertujuan untuk menunjukkan apa tentang argumen Dika?",
+ opt:[
+   "Bahwa Dika tidak konsisten karena ia tidak juga mengusulkan larangan terhadap buku pelajaran",
+   "Bahwa prinsip 'larang karena bisa disalahgunakan' jika diterapkan secara konsisten akan menghasilkan kesimpulan yang absurd, sehingga prinsip itu sendiri perlu dipertanyakan",
+   "Bahwa buku dan gawai pada dasarnya adalah alat belajar yang setara dan tidak perlu dibedakan",
+   "Bahwa masalah pelanggaran aturan di kelas bukan soal alatnya, melainkan soal karakter siswa"
+ ],
+ ans:"Bahwa prinsip 'larang karena bisa disalahgunakan' jika diterapkan secara konsisten akan menghasilkan kesimpulan yang absurd, sehingga prinsip itu sendiri perlu dipertanyakan"},
+
+{id:12, cat:"Evaluasi dan Apresiasi", type:"pgk", score:2, stim:S.dua_pendapat,
+ q:"Pilih DUA pernyataan yang paling tepat menggambarkan kualitas debat antara Dika dan Rafi!",
+ opt:[
+   "Kedua pihak saling mendengarkan dan bersedia mempertimbangkan argumen lawan, bukan hanya mempertahankan posisi awal",
+   "Rafi memenangkan debat karena argumennya lebih logis dan tidak bisa dibantah oleh Dika",
+   "Debat yang baik tidak selalu menghasilkan kesepakatan, tetapi bisa memperdalam pemahaman kedua pihak tentang isu yang dibahas",
+   "Dika bersikap tidak dewasa karena menertawakan argumen Rafi meski tidak setuju"
+ ],
+ ans:["Kedua pihak saling mendengarkan dan bersedia mempertimbangkan argumen lawan, bukan hanya mempertahankan posisi awal","Debat yang baik tidak selalu menghasilkan kesepakatan, tetapi bisa memperdalam pemahaman kedua pihak tentang isu yang dibahas"]},
+
+/* ── Tema 5: Bahasa Daerah ── */
+{id:13, cat:"Pemahaman Tekstual", type:"pg", score:1, stim:S.bahasa_daerah,
+ q:"Mengapa penulis menyebut 'tidak berguna secara praktis' sebagai penilaian yang dangkal terhadap bahasa daerah?",
+ opt:[
+   "Karena bahasa daerah sebenarnya sangat berguna dalam konteks perdagangan internasional",
+   "Karena nilai sebuah bahasa tidak hanya diukur dari kegunaan ekonomisnya, melainkan juga dari pengetahuan tentang ekosistem, obat tradisional, dan cara berpikir unik yang dikandungnya",
+   "Karena generasi muda yang meninggalkan bahasa daerah pada akhirnya akan menyesal ketika sudah tua",
+   "Karena bahasa daerah memiliki lebih banyak kata daripada bahasa nasional untuk mendeskripsikan kehidupan sehari-hari"
+ ],
+ ans:"Karena nilai sebuah bahasa tidak hanya diukur dari kegunaan ekonomisnya, melainkan juga dari pengetahuan tentang ekosistem, obat tradisional, dan cara berpikir unik yang dikandungnya"},
+
+{id:14, cat:"Pemahaman Inferensial", type:"pg", score:1, stim:S.bahasa_daerah,
+ q:"Contoh tentang bahasa Hopi yang memiliki konsep waktu berbeda berfungsi untuk mendukung argumen spesifik apa?",
+ opt:[
+   "Bahwa bahasa-bahasa di luar Asia dan Eropa lebih kaya secara linguistik",
+   "Bahwa kepunahan sebuah bahasa berarti hilangnya cara berpikir yang unik dan tidak bisa ditemukan di bahasa lain manapun",
+   "Bahwa perbedaan bahasa adalah penyebab utama kesulitan komunikasi antarbudaya",
+   "Bahwa sistem pendidikan harus mengajarkan filsafat waktu dari berbagai budaya kepada siswa"
+ ],
+ ans:"Bahwa kepunahan sebuah bahasa berarti hilangnya cara berpikir yang unik dan tidak bisa ditemukan di bahasa lain manapun"},
+
+{id:15, cat:"Evaluasi dan Apresiasi", type:"pgk-cat", score:2, stim:S.bahasa_daerah,
+ q:"Berdasarkan argumen dalam teks, tentukan apakah tindakan berikut KONSISTEN atau TIDAK KONSISTEN dengan solusi yang dianjurkan penulis!",
+ rows:[
+   "Mendokumentasikan kosakata bahasa daerah dalam kamus digital agar tidak terlupakan.",
+   "Mengizinkan anak-anak menggunakan bahasa daerah hanya untuk upacara adat, bukan dalam percakapan sehari-hari."
+ ],
+ cols:["Konsisten","Tidak Konsisten"],
+ ans:["Konsisten","Tidak Konsisten"]},
+
+/* ── Tema 6: Kepercayaan ── */
+{id:16, cat:"Pemahaman Tekstual", type:"pg", score:1, stim:S.kepercayaan,
+ q:"Apa kesamaan mendasar antara cara Nando merusak kepercayaan Citra dan cara ia mencoba membangunnya kembali?",
+ opt:[
+   "Keduanya melibatkan komunikasi verbal — pertama melalui gosip, kemudian melalui permintaan maaf",
+   "Keduanya terjadi tanpa saksi — kerusakan terjadi di belakang punggung Citra, dan pemulihan terjadi tanpa ada yang menyaksikan",
+   "Keduanya melibatkan barang milik Citra — rahasianya dan tasnya",
+   "Keduanya dimulai oleh tindakan tidak sengaja yang memiliki konsekuensi yang lebih besar dari yang diperkirakan"
+ ],
+ ans:"Keduanya terjadi tanpa saksi — kerusakan terjadi di belakang punggung Citra, dan pemulihan terjadi tanpa ada yang menyaksikan"},
+
+{id:17, cat:"Pemahaman Inferensial", type:"pg", score:1, stim:S.kepercayaan,
+ q:"Mengapa Citra mengatakan 'mungkin bisa dibangun kembali dengan tindakan' setelah melihat tasnya dikembalikan utuh — padahal sebelumnya ia mengatakan maaf tidak otomatis mengembalikan kepercayaan?",
+ opt:[
+   "Citra sudah melupakan kejadian sebelumnya karena sudah berlalu tiga bulan",
+   "Tindakan Nando menjaga tas tanpa membukanya membuktikan lewat perbuatan nyata — bukan kata-kata — bahwa ia mampu menghormati privasi Citra",
+   "Citra merasa kasihan kepada Nando karena ia sudah berusaha meminta maaf tiga kali",
+   "Citra menyadari bahwa tasnya memang tidak terlalu berisi sesuatu yang berharga"
+ ],
+ ans:"Tindakan Nando menjaga tas tanpa membukanya membuktikan lewat perbuatan nyata — bukan kata-kata — bahwa ia mampu menghormati privasi Citra"},
+
+{id:18, cat:"Evaluasi dan Apresiasi", type:"pg", score:1, stim:S.kepercayaan,
+ q:"Apa keterbatasan dari pernyataan Citra — 'kepercayaan bisa dibangun kembali dengan tindakan' — jika dijadikan prinsip universal?",
+ opt:[
+   "Pernyataan itu tidak berlaku karena tidak semua orang memiliki kesempatan untuk membuktikan diri melalui tindakan",
+   "Prinsip ini mengabaikan bahwa beberapa pelanggaran kepercayaan mungkin terlalu serius untuk dipulihkan hanya melalui tindakan baik tunggal",
+   "Pernyataan itu tidak adil karena menempatkan seluruh beban pemulihan pada pihak yang bersalah",
+   "Prinsip ini hanya berlaku dalam persahabatan anak-anak, tidak dalam hubungan orang dewasa yang lebih kompleks"
+ ],
+ ans:"Prinsip ini mengabaikan bahwa beberapa pelanggaran kepercayaan mungkin terlalu serius untuk dipulihkan hanya melalui tindakan baik tunggal"},
+
+/* ── Tema 7: Kecerdasan Buatan ── */
+{id:19, cat:"Pemahaman Tekstual", type:"pgk", score:2, stim:S.kecerdasan_buatan,
+ q:"Pilih DUA permasalahan utama AI yang dibahas secara spesifik beserta contohnya dalam teks!",
+ opt:[
+   "Algorithmic bias — sistem rekrutmen AI yang cenderung merekomendasikan kandidat berdasarkan pola historis yang tidak adil",
+   "Ketergantungan berlebih — melemahnya kemampuan manusia saat alat bantu AI tidak tersedia",
+   "Biaya tinggi — AI hanya dapat diakses oleh perusahaan besar dan tidak merata secara sosial",
+   "Privasi data — AI mengumpulkan informasi pribadi pengguna tanpa izin yang jelas"
+ ],
+ ans:["Algorithmic bias — sistem rekrutmen AI yang cenderung merekomendasikan kandidat berdasarkan pola historis yang tidak adil","Ketergantungan berlebih — melemahnya kemampuan manusia saat alat bantu AI tidak tersedia"]},
+
+{id:20, cat:"Pemahaman Inferensial", type:"pg", score:1, stim:S.kecerdasan_buatan,
+ q:"Asumsi apa yang mendasari pernyataan penulis bahwa 'manfaat atau bahayanya bergantung sepenuhnya pada siapa yang memegangnya dan dengan tujuan apa'?",
+ opt:[
+   "AI pada dasarnya netral secara moral dan tidak memiliki nilai atau bias bawaan apapun",
+   "Teknologi tidak sepenuhnya netral, tetapi arah dampaknya masih sangat ditentukan oleh pilihan manusia yang menggunakannya",
+   "Regulasi pemerintah adalah satu-satunya cara untuk memastikan AI digunakan dengan benar",
+   "Pengembang AI bertanggung jawab penuh atas segala konsekuensi dari teknologi yang mereka ciptakan"
+ ],
+ ans:"Teknologi tidak sepenuhnya netral, tetapi arah dampaknya masih sangat ditentukan oleh pilihan manusia yang menggunakannya"},
+
+{id:21, cat:"Evaluasi dan Apresiasi", type:"pg", score:1, stim:S.kecerdasan_buatan,
+ q:"Manakah yang merupakan KETERBATASAN dari solusi yang diusulkan penulis — yaitu 'kesadaran tentang cara kerja, batasan, dan nilai-nilai yang tertanam dalam AI'?",
+ opt:[
+   "Kesadaran saja tidak cukup jika tidak disertai dengan kemampuan teknis untuk membaca kode algoritma AI",
+   "Tidak semua pengguna memiliki akses atau kemampuan untuk memahami sistem AI yang kompleks, sehingga solusi ini lebih mudah diterapkan oleh kelompok berpendidikan tinggi",
+   "Penulis tidak menjelaskan cara spesifik untuk membangun kesadaran tersebut dalam sistem pendidikan",
+   "Kesadaran individual tidak berguna selama perusahaan teknologi tidak transparan tentang cara kerja algoritmanya"
+ ],
+ ans:"Tidak semua pengguna memiliki akses atau kemampuan untuk memahami sistem AI yang kompleks, sehingga solusi ini lebih mudah diterapkan oleh kelompok berpendidikan tinggi"},
+
+/* ── Tema 8: Tradisi & Modern ── */
+{id:22, cat:"Pemahaman Tekstual", type:"pg", score:1, stim:S.tradisi_modern,
+ q:"Apa perbedaan mendasar antara cara belajar dari Kakek dan cara belajar dari tutorial video yang dirasakan Farel?",
+ opt:[
+   "Tutorial video lebih lengkap materinya sedangkan Kakek hanya tahu lagu-lagu lama",
+   "Belajar dari Kakek bersifat lambat, langsung, dan hadir penuh — sementara video bisa dimanipulasi waktunya; keduanya menghasilkan jenis pengalaman belajar yang berbeda secara fundamental",
+   "Tutorial video menggunakan bahasa yang lebih mudah dipahami dibandingkan cara Kakek menjelaskan",
+   "Belajar dari Kakek lebih menyenangkan karena ada interaksi personal yang tidak bisa diberikan oleh video manapun"
+ ],
+ ans:"Belajar dari Kakek bersifat lambat, langsung, dan hadir penuh — sementara video bisa dimanipulasi waktunya; keduanya menghasilkan jenis pengalaman belajar yang berbeda secara fundamental"},
+
+{id:23, cat:"Pemahaman Inferensial", type:"pg", score:1, stim:S.tradisi_modern,
+ q:"Apa yang dimaksud Kakek dengan lagu yang 'tidak selesai' dan 'sedikit berbeda setiap kali dimainkan' justru membuatnya 'hidup'?",
+ opt:[
+   "Kakek belum pernah sempat menyelesaikan komposisi lagunya karena selalu sibuk",
+   "Sesuatu yang terus berkembang dan berubah sesuai momen memiliki vitalitas yang tidak dimiliki oleh sesuatu yang dibekukan menjadi bentuk final yang sempurna",
+   "Lagu yang tidak direkam lebih mudah diingat karena pendengar harus aktif merekonstruksinya sendiri",
+   "Tradisi musik lisan lebih unggul dari musik tertulis karena tidak memerlukan kemampuan membaca not balok"
+ ],
+ ans:"Sesuatu yang terus berkembang dan berubah sesuai momen memiliki vitalitas yang tidak dimiliki oleh sesuatu yang dibekukan menjadi bentuk final yang sempurna"},
+
+{id:24, cat:"Evaluasi dan Apresiasi", type:"pgk-cat", score:2, stim:S.tradisi_modern,
+ q:"Berdasarkan tema cerita, tentukan apakah pernyataan berikut SESUAI atau TIDAK SESUAI dengan wawasan yang diperoleh Farel di akhir cerita!",
+ rows:[
+   "Ada nilai tertentu yang hanya bisa diperoleh melalui proses langsung dan perlahan, yang tidak bisa sepenuhnya digantikan oleh kemudahan teknologi.",
+   "Pengetahuan tradisional selalu lebih berharga daripada pengetahuan yang diperoleh melalui media digital."
+ ],
+ cols:["Sesuai","Tidak Sesuai"],
+ ans:["Sesuai","Tidak Sesuai"]},
+
+/* ── Tema 9: Data & Tindakan ── */
+{id:25, cat:"Pemahaman Tekstual", type:"pg", score:1, stim:S.data_dan_tindakan,
+ q:"Manakah pernyataan yang paling akurat menggambarkan argumen inti paragraf kedua teks ini?",
+ opt:[
+   "Manusia pada dasarnya malas dan tidak mau berubah meskipun tahu apa yang benar",
+   "Perubahan perilaku lebih efektif didorong oleh faktor sosial, identitas, kemudahan, dan konsekuensi segera — bukan semata-mata oleh informasi tambahan",
+   "Kampanye kesehatan dan lingkungan harus menghindari penggunaan data dan statistik",
+   "Pengetahuan tentang bahaya sebuah perilaku selalu menjadi faktor pertama yang mengubah kebiasaan seseorang"
+ ],
+ ans:"Perubahan perilaku lebih efektif didorong oleh faktor sosial, identitas, kemudahan, dan konsekuensi segera — bukan semata-mata oleh informasi tambahan"},
+
+{id:26, cat:"Pemahaman Inferensial", type:"pg", score:1, stim:S.data_dan_tindakan,
+ q:"Mengapa kampanye perubahan iklim yang menampilkan tetangga dan teman yang sudah berubah perilakunya terbukti lebih efektif dari kampanye berbasis data?",
+ opt:[
+   "Karena orang tidak memahami data ilmiah tentang perubahan iklim",
+   "Karena manusia secara alami lebih tergerak oleh norma sosial kelompok terdekat — melihat orang yang dikenal berubah membuat perubahan terasa mungkin dan normal",
+   "Karena data perubahan iklim sering kali tidak akurat sehingga tidak dipercaya publik",
+   "Karena kampanye berbasis komunitas lebih murah diproduksi daripada kampanye berbasis data ilmiah"
+ ],
+ ans:"Karena manusia secara alami lebih tergerak oleh norma sosial kelompok terdekat — melihat orang yang dikenal berubah membuat perubahan terasa mungkin dan normal"},
+
+{id:27, cat:"Evaluasi dan Apresiasi", type:"pgk", score:2, stim:S.data_dan_tindakan,
+ q:"Pilih DUA implikasi praktis dari argumen teks ini bagi cara kita mendorong perubahan perilaku positif di sekolah!",
+ opt:[
+   "Menambahkan lebih banyak pelajaran tentang bahaya sampah plastik agar siswa memiliki informasi yang lebih lengkap",
+   "Menunjukkan kepada siswa bahwa teman-teman sebaya mereka sudah mulai melakukan kebiasaan positif tertentu",
+   "Membuat program lingkungan hidup semudah dan sesederhana mungkin agar tidak ada hambatan untuk berpartisipasi",
+   "Memberi hukuman yang lebih berat bagi siswa yang melanggar aturan kebersihan sekolah"
+ ],
+ ans:["Menunjukkan kepada siswa bahwa teman-teman sebaya mereka sudah mulai melakukan kebiasaan positif tertentu","Membuat program lingkungan hidup semudah dan sesederhana mungkin agar tidak ada hambatan untuk berpartisipasi"]},
+
+/* ── Tema 10: Harga Sebuah Pilihan ── */
+{id:28, cat:"Pemahaman Tekstual", type:"pg", score:1, stim:S.harga_sebuah_pilihan,
+ q:"Bagaimana cara Ibu mengungkapkan perasaannya tentang berhenti melukis — dan apa yang membuat cara itu terasa berbeda dari sekadar menyesal atau tidak menyesal?",
+ opt:[
+   "Ibu menyatakan penyesalannya secara langsung namun mencoba menyembunyikannya dari Dina",
+   "Ibu menggambarkan pilihannya sebagai pertukaran yang diterima sepenuhnya — bukan keluhan, tapi juga bukan penyangkalan bahwa ada yang dikorbankan",
+   "Ibu bersikap tidak jujur dengan Dina karena tidak mau membuatnya merasa bersalah",
+   "Ibu mengalihkan topik dengan pertanyaan balik agar Dina berhenti bertanya tentang masa lalunya"
+ ],
+ ans:"Ibu menggambarkan pilihannya sebagai pertukaran yang diterima sepenuhnya — bukan keluhan, tapi juga bukan penyangkalan bahwa ada yang dikorbankan"},
+
+{id:29, cat:"Pemahaman Inferensial", type:"pg", score:1, stim:S.harga_sebuah_pilihan,
+ q:"Pertanyaan Ibu kepada Dina — 'Menurutmu?' — di akhir percakapan paling tepat dipahami sebagai apa?",
+ opt:[
+   "Ibu meminta pendapat Dina tentang apakah keputusannya dulu sudah tepat",
+   "Ibu mengajak Dina untuk merefleksikan nilai dan prioritas dalam hidupnya sendiri kelak, menggunakan pilihan Ibu sebagai cermin",
+   "Ibu merasa tidak yakin dengan keputusannya dan berharap Dina bisa meyakinkannya",
+   "Ibu ingin tahu apakah Dina menghargai pengorbanan yang sudah dilakukan untuknya"
+ ],
+ ans:"Ibu mengajak Dina untuk merefleksikan nilai dan prioritas dalam hidupnya sendiri kelak, menggunakan pilihan Ibu sebagai cermin"},
+
+{id:30, cat:"Evaluasi dan Apresiasi", type:"pgk-cat", score:2, stim:S.harga_sebuah_pilihan,
+ q:"Berdasarkan refleksi yang terkandung dalam cerita, tentukan apakah pernyataan berikut SESUAI atau TIDAK SESUAI!",
+ rows:[
+   "Setiap pilihan besar dalam hidup mengandung pengorbanan — kedewasaan berarti menerimanya dengan sadar, bukan menyangkal atau meratapi.",
+   "Seseorang yang mengorbankan impiannya demi keluarga pasti memendam penyesalan yang dalam sepanjang hidupnya."
+ ],
+ cols:["Sesuai","Tidak Sesuai"],
+ ans:["Sesuai","Tidak Sesuai"]}
+];
+
+/* ══ APP ENGINE ══ */
+const App = {
+  state:{nama:'',kelas:'',email:'',answers:{},order:[]},
+  currIdx:0, timerInt:null, elapsed:0, fontMult:1,
+
+  init(){
+    this.fontMult=parseFloat(localStorage.getItem('tka_bi_font')||'1');
+    this.applyFont(this.fontMult);
+    emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+  },
+
+  login(){
+    const nama=document.getElementById('inp-nama').value.trim();
+    const kelas=document.getElementById('inp-kelas').value;
+    const email=document.getElementById('inp-email').value.trim();
+    if(!nama){alert('Nama siswa wajib diisi!');return;}
+    if(!kelas){alert('Kelas wajib dipilih!');return;}
+    if(!email||!email.includes('@')){alert('Format email orang tua tidak valid!');return;}
+    Object.assign(this.state,{nama,kelas,email});
+    this.showSlide('rules');
+  },
+
+  startExam(){
+    this.state.answers={};
+    this.state.order=Array.from({length:SOAL.length},(_,i)=>i);
+    for(let i=SOAL.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [this.state.order[i],this.state.order[j]]=[this.state.order[j],this.state.order[i]];
+    }
+    this.currIdx=0;this.elapsed=0;
+    clearInterval(this.timerInt);
+    this.timerInt=setInterval(()=>{
+      this.elapsed++;
+      const m=String(Math.floor(this.elapsed/60)).padStart(2,'0');
+      const s=String(this.elapsed%60).padStart(2,'0');
+      document.getElementById('timer-chip').textContent=`${m}:${s}`;
+    },1000);
+    document.getElementById('user-chip').textContent=this.state.nama;
+    document.getElementById('user-chip').style.display='block';
+    document.getElementById('timer-chip').style.display='block';
+    this.renderQuestions();
+    this.renderNavGrid();
+    this.showSlide('quiz');
+    this.goTo(0);
+  },
+
+  renderQuestions(){
+    const box=document.getElementById('quiz-container');
+    box.innerHTML='';
+    this.state.order.forEach((qi,i)=>{
+      const s=SOAL[qi];
+      let html=`<div id="qi-${i}" class="q-item" data-qid="${s.id}">
+        <span class="q-category">${s.cat}</span>
+        ${s.stim||''}
+        <p class="q-text">${i+1}. ${s.q}</p>`;
+      if(s.type==='pg'){
+        s.opt.forEach((o,oi)=>html+=`<label class="option-label"><input type="radio" name="a_${s.id}" value="${o}" onchange="App.saveAns(${s.id},${oi},${qi})"> ${o}</label>`);
+      }else if(s.type==='pgk'){
+        s.opt.forEach((o,oi)=>html+=`<label class="option-label"><input type="checkbox" name="a_${s.id}" value="${o}" onchange="App.saveMulti(${s.id},${oi},${qi})"> ${o}</label>`);
+      }else if(s.type==='pgk-cat'){
+        html+=`<table class="matrix-table"><tr><th style="text-align:left;">Pernyataan</th><th>${s.cols[0]}</th><th>${s.cols[1]}</th></tr>`;
+        s.rows.forEach((r,ri)=>html+=`<tr><td>${r}</td><td><input type="radio" name="mx_${s.id}_${ri}" onchange="App.saveMx(${s.id},${ri},'${s.cols[0]}')"></td><td><input type="radio" name="mx_${s.id}_${ri}" onchange="App.saveMx(${s.id},${ri},'${s.cols[1]}')"></td></tr>`);
+        html+=`</table>`;
+      }
+      html+=`</div>`;
+      box.innerHTML+=html;
+    });
+  },
+
+  renderNavGrid(){
+    const g=document.getElementById('nav-grid');
+    g.innerHTML='';
+    this.state.order.forEach((qi,i)=>g.innerHTML+=`<div id="nb-${i}" class="nav-btn" onclick="App.goTo(${i});App.closeDrawer();">${i+1}</div>`);
+    document.getElementById('answered-count').textContent=`0 / ${SOAL.length} dijawab`;
+  },
+
+  goTo(idx){
+    if(idx<0||idx>=SOAL.length)return;
+    this.currIdx=idx;
+    document.querySelectorAll('.q-item').forEach(e=>e.classList.remove('active-q'));
+    document.getElementById(`qi-${idx}`).classList.add('active-q');
+    document.getElementById('q-indicator').textContent=`Soal ${idx+1} / ${SOAL.length}`;
+    document.getElementById('btn-prev').disabled=(idx===0);
+    const nBtn=document.getElementById('btn-next');
+    if(idx===SOAL.length-1){
+      nBtn.textContent='✅ Selesai';nBtn.onclick=()=>this.confirmFinish();nBtn.className='btn btn-danger';
+    }else{
+      nBtn.textContent='Selanjutnya →';nBtn.onclick=()=>this.move(1);nBtn.className='btn btn-primary';
+    }
+    this.restoreVisual(idx);
+    this.updateNavUI();
+    const el=document.getElementById(`qi-${idx}`);
+    if(el){const top=el.getBoundingClientRect().top+window.scrollY-64;window.scrollTo({top:Math.max(0,top),behavior:'smooth'});}
+  },
+
+  move(step){this.goTo(this.currIdx+step);},
+
+  saveAns(qid,oi,qi){this.state.answers[qid]=SOAL[qi].opt[oi];this.updateNavUI();},
+  saveMulti(qid,oi,qi){
+    const val=SOAL[qi].opt[oi];
+    let c=this.state.answers[qid]||[];
+    c=c.includes(val)?c.filter(x=>x!==val):[...c,val];
+    this.state.answers[qid]=c;this.updateNavUI();
+  },
+  saveMx(qid,ri,val){
+    let c=this.state.answers[qid]||[];c[ri]=val;
+    this.state.answers[qid]=c;this.updateNavUI();
+  },
+
+  checkFilled(qid){
+    const v=this.state.answers[qid];
+    if(!v)return false;
+    return Array.isArray(v)?v.filter(Boolean).length>0:true;
+  },
+
+  restoreVisual(idx){
+    const s=SOAL[this.state.order[idx]];
+    const ans=this.state.answers[s.id];
+    if(!ans)return;
+    if(s.type==='pg'){
+      const el=document.querySelector(`input[name="a_${s.id}"][value="${CSS.escape(ans)}"]`);
+      if(el)el.checked=true;
+    }else if(s.type==='pgk'){
+      ans.forEach(v=>{const el=document.querySelector(`input[name="a_${s.id}"][value="${CSS.escape(v)}"]`);if(el)el.checked=true;});
+    }else if(s.type==='pgk-cat'){
+      ans.forEach((v,ri)=>{if(v){const el=document.querySelector(`input[name="mx_${s.id}_${ri}"][value="${v}"]`);if(el)el.checked=true;}});
+    }
+  },
+
+  updateNavUI(){
+    let answered=0;
+    this.state.order.forEach((qi,i)=>{
+      const filled=this.checkFilled(SOAL[qi].id);
+      if(filled)answered++;
+      const el=document.getElementById(`nb-${i}`);
+      if(el)el.className='nav-btn'+(i===this.currIdx?' current':'')+(filled?' answered':'');
+    });
+    const c=document.getElementById('answered-count');
+    if(c)c.textContent=`${answered} / ${SOAL.length} dijawab`;
+  },
+
+  openDrawer(){document.getElementById('nav-drawer').classList.add('open');document.getElementById('drawer-overlay').classList.add('show');},
+  closeDrawer(){document.getElementById('nav-drawer').classList.remove('open');document.getElementById('drawer-overlay').classList.remove('show');},
+
+  confirmFinish(){
+    const unanswered=SOAL.filter(s=>!this.checkFilled(s.id)).length;
+    document.getElementById('modal-confirm-text').textContent=unanswered>0
+      ?`Masih ada ${unanswered} soal yang belum dijawab. Yakin ingin mengumpulkan?`
+      :`Semua soal telah dijawab. Yakin ingin mengumpulkan?`;
+    document.getElementById('modal-confirm').style.display='flex';
+  },
+
+  submitExam(){
+    document.getElementById('modal-confirm').style.display='none';
+    document.getElementById('modal-loading').style.display='flex';
+    clearInterval(this.timerInt);
+    const stats={};let totS=0,totM=0;
+    SOAL.forEach(s=>{
+      if(!stats[s.cat])stats[s.cat]={s:0,m:0};
+      stats[s.cat].m+=s.score;totM+=s.score;
+      const u=this.state.answers[s.id];let pt=0;
+      if(u){
+        if(s.type==='pg'&&u===s.ans)pt=s.score;
+        else if(s.type==='pgk'&&JSON.stringify([...u].sort())===JSON.stringify([...s.ans].sort()))pt=s.score;
+        else if(s.type==='pgk-cat'){let m=0;s.ans.forEach((k,i)=>{if(u[i]===k)m++;});pt=(m/s.rows.length)*s.score;}
+      }
+      stats[s.cat].s+=pt;totS+=pt;
+    });
+    const final=Math.round((totS/totM)*100);
+    const tuntas=final>=70;
+    const kompData={};const notTuntas=[];
+    for(const cat in stats){
+      const p=stats[cat].m>0?Math.round((stats[cat].s/stats[cat].m)*100):0;
+      kompData[cat]={skor:p,tuntas:p>=70};
+      if(p<70)notTuntas.push(cat);
+    }
+    const desc=notTuntas.length===0
+      ?'🎉 Selamat! Kamu telah menguasai semua kompetensi.'
+      :'📌 Perlu bimbingan lebih lanjut pada: '+notTuntas.join(', ')+'.';
+    document.getElementById('modal-loading').style.display='none';
+    this.showResult(final,tuntas,desc,kompData);
+    this.sendEmail(final,tuntas,desc,kompData);
+  },
+
+  showResult(score,tuntas,desc,kompData){
+    this.showSlide('result');
+    window.scrollTo({top:0,behavior:'smooth'});
+    const circle=document.getElementById('score-circle');
+    circle.className='score-circle'+(tuntas?' lulus':'');
+    document.getElementById('score-num').textContent=score;
+    document.getElementById('result-status').textContent=tuntas?'🎉 Tuntas!':'📚 Perlu Bimbingan';
+    document.getElementById('result-desc').textContent=desc;
+    const em=Math.floor(this.elapsed/60),es=this.elapsed%60;
+    document.getElementById('result-meta').innerHTML=`
+      <div class="meta-box"><div class="meta-lbl">Siswa</div><div class="meta-val">${this.state.nama}</div></div>
+      <div class="meta-box"><div class="meta-lbl">Kelas</div><div class="meta-val">${this.state.kelas}</div></div>
+      <div class="meta-box"><div class="meta-lbl">Durasi</div><div class="meta-val">${em} mnt ${es} dtk</div></div>
+      <div class="meta-box"><div class="meta-lbl">Tanggal</div><div class="meta-val">${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})}</div></div>`;
+    let barsHTML='';
+    for(const cat in kompData){
+      const d=kompData[cat];
+      barsHTML+=`<div class="comp-bar">
+        <div class="comp-header">
+          <span class="comp-name">${cat}</span>
+          <span class="comp-score" style="color:${d.tuntas?'var(--success)':'var(--danger)'}">
+            ${d.skor}% — ${d.tuntas?'✅ Tuntas':'⚠️ Perlu Bimbingan'}
+          </span>
+        </div>
+        <div class="bar-track"><div class="bar-fill ${d.tuntas?'bar-tuntas':'bar-belum'}" style="width:0%" data-w="${d.skor}%"></div></div>
+      </div>`;
+    }
+    document.getElementById('result-bars').innerHTML=barsHTML;
+    setTimeout(()=>document.querySelectorAll('.bar-fill').forEach(el=>{el.style.width=el.dataset.w;}),200);
+  },
+
+  sendEmail(score,tuntas,desc,kompData){
+    const box=document.getElementById('email-status-box');
+    box.innerHTML=`<div class="email-status es-sending">✉️ Sedang mengirim laporan ke <strong>${this.state.email}</strong>...</div>`;
+    let rows='';
+    for(const cat in kompData){
+      const d=kompData[cat];
+      rows+=`<tr><td style="padding:8px 14px;border:1px solid #e5e7eb;">${cat}</td>
+        <td style="padding:8px 14px;border:1px solid #e5e7eb;text-align:center;font-weight:700;">${d.skor}%</td>
+        <td style="padding:8px 14px;border:1px solid #e5e7eb;text-align:center;color:${d.tuntas?'#057a55':'#e02424'};font-weight:700;">${d.tuntas?'✅ Tuntas':'⚠️ Perlu Bimbingan'}</td></tr>`;
+    }
+    const detailHtml=`<table style="width:100%;border-collapse:collapse;font-size:14px;">
+      <tr style="background:#1e3a8a;color:white;">
+        <th style="padding:10px 14px;text-align:left;">Kompetensi</th>
+        <th style="padding:10px;">Skor</th><th style="padding:10px;">Status</th>
+      </tr>${rows}</table>`;
+    const em=Math.floor(this.elapsed/60),es=this.elapsed%60;
+    emailjs.send(EMAILJS_CONFIG.SERVICE_ID,EMAILJS_CONFIG.TEMPLATE_ID,{
+      to_email:   this.state.email,
+      nama_siswa: this.state.nama,
+      kelas:      this.state.kelas,
+      skor:       score,
+      status:     tuntas?'TUNTAS ✅':'Perlu Bimbingan 📚',
+      tanggal:    new Date().toLocaleString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'}),
+      durasi:     `${em} menit ${es} detik`,
+      detail_html:detailHtml,
+      kesimpulan: desc
+    }).then(()=>{
+      box.innerHTML=`<div class="email-status es-sent">✅ Laporan berhasil dikirim ke <strong>${this.state.email}</strong>. Minta orang tua cek kotak masuk email.</div>`;
+    }).catch(err=>{
+      box.innerHTML=`<div class="email-status es-error">❌ Gagal mengirim email. Periksa koneksi internet.<br><small>${err.text||JSON.stringify(err)}</small></div>`;
+    });
+  },
+
+  retryExam(){this.state.answers={};this.showSlide('rules');window.scrollTo({top:0});},
+
+  showSlide(id){
+    document.querySelectorAll('.slide').forEach(e=>e.classList.remove('active'));
+    document.getElementById('slide-'+id).classList.add('active');
+    if(id!=='quiz'){document.getElementById('user-chip').style.display='none';document.getElementById('timer-chip').style.display='none';}
+    if(id==='login')clearInterval(this.timerInt);
+    window.scrollTo({top:0});
+  },
+
+  applyFont(m){
+    document.querySelectorAll('.stimulus,.q-text,.option-label,.matrix-table').forEach(el=>{el.style.fontSize=`${m}rem`;});
+  },
+  changeFontSize(step){
+    this.fontMult=Math.max(0.8,Math.min(1.6,this.fontMult+step*0.1));
+    this.applyFont(this.fontMult);
+    localStorage.setItem('tka_bi_font',this.fontMult);
+  }
+};
+
+window.onload=()=>App.init();
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&['u','s'].includes(e.key.toLowerCase()))e.preventDefault();});
+document.addEventListener('selectstart',e=>{if(!['INPUT','TEXTAREA'].includes(e.target.tagName)&&!e.target.classList.contains('allow-select'))e.preventDefault();});
+</script>
+</body>
+</html>
