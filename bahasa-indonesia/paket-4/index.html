@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan TKA Bahasa Indonesia – Paket 4</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+:root {
+  --primary:       #1a56db;
+  --primary-dark:  #1e429f;
+  --primary-light: #ebf5ff;
+  --success:       #057a55;
+  --success-light: #def7ec;
+  --danger:        #e02424;
+  --danger-light:  #fde8e8;
+  --text:          #1f2a37;
+  --text-muted:    #6b7280;
+  --bg:            #f0f4ff;
+  --white:         #ffffff;
+  --border:        #d1d5db;
+  --radius:        12px;
+  --shadow:        0 4px 20px rgba(0,0,0,0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: clamp(14px, 3.5vw, 16px); }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg); color: var(--text);
+  -webkit-user-select: none; user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+input, textarea, select, button, .allow-select { user-select: auto !important; }
+body *::selection { background: transparent; }
+
+.header {
+  position: sticky; top: 0; z-index: 100;
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: white; padding: 0 14px; height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 2px 10px rgba(26,86,219,0.4);
+}
+.header-brand { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.logo { font-size: 1.3rem; flex-shrink: 0; }
+.brand-name { font-family: 'Baloo 2', cursive; font-size: clamp(0.8rem,3vw,1rem); font-weight: 700; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sub-brand { font-size: clamp(0.6rem,2.2vw,0.7rem); opacity: 0.8; font-weight: 600; }
+.header-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.user-chip { display:none; background:rgba(255,255,255,0.15); padding:3px 10px; border-radius:20px; font-size:clamp(0.65rem,2.2vw,0.78rem); font-weight:700; border:1px solid rgba(255,255,255,0.25); max-width:110px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.timer-chip { display:none; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25); padding:3px 10px; border-radius:6px; font-family:monospace; font-weight:800; font-size:clamp(0.8rem,2.5vw,1rem); }
+.font-controls { display:flex; gap:3px; }
+.font-btn { background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); color:white; width:26px; height:26px; border-radius:5px; cursor:pointer; font-size:0.6rem; font-weight:800; display:flex; align-items:center; justify-content:center; }
+.font-btn:active { background:rgba(255,255,255,0.3); }
+
+.slide { display:none; }
+.slide.active { display:block; animation:fadeIn 0.25s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)} }
+
+.page { padding:16px; max-width:860px; margin:0 auto; }
+.page-narrow { padding:16px; max-width:560px; margin:0 auto; }
+
+.card { background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow); padding:clamp(16px,4vw,28px); border:1px solid rgba(209,213,219,0.6); margin-bottom:16px; }
+.card-header { font-family:'Baloo 2',cursive; font-size:clamp(1.2rem,4vw,1.5rem); font-weight:700; color:var(--primary-dark); margin-bottom:4px; }
+.card-sub { color:var(--text-muted); font-size:clamp(0.8rem,3vw,0.9rem); margin-bottom:20px; }
+
+.form-group { margin-bottom:14px; }
+.form-label { display:block; font-weight:700; font-size:clamp(0.8rem,3vw,0.9rem); margin-bottom:5px; }
+.form-label span { color:var(--danger); }
+.form-control { width:100%; padding:11px 14px; border:1.5px solid var(--border); border-radius:8px; font-family:'Nunito',sans-serif; font-size:clamp(0.85rem,3.5vw,1rem); color:var(--text); background:var(--white); -webkit-appearance:none; transition:border-color 0.15s; }
+.form-control:focus { border-color:var(--primary); outline:none; box-shadow:0 0 0 3px rgba(26,86,219,0.1); }
+.email-hint { background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:9px 12px; margin-top:6px; font-size:clamp(0.72rem,2.8vw,0.82rem); color:#92400e; line-height:1.5; }
+
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:11px 18px; border-radius:8px; border:none; font-family:'Nunito',sans-serif; font-weight:800; font-size:clamp(0.82rem,3vw,0.95rem); cursor:pointer; transition:all 0.15s; touch-action:manipulation; }
+.btn-primary { background:var(--primary); color:white; }
+.btn-primary:active { background:var(--primary-dark); }
+.btn-outline { background:white; border:1.5px solid var(--border); color:var(--text-muted); }
+.btn-outline:active { border-color:var(--primary); color:var(--primary); }
+.btn-danger { background:var(--danger); color:white; }
+.btn-danger:active { background:#c81e1e; }
+.btn-full { width:100%; }
+
+.rule-item { display:flex; gap:12px; padding:12px; background:var(--bg); border-radius:8px; margin-bottom:8px; }
+.rule-num { width:28px; height:28px; min-width:28px; background:var(--primary); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.8rem; }
+.rule-text { font-size:clamp(0.8rem,3vw,0.9rem); line-height:1.65; padding-top:3px; }
+.rule-text strong { color:var(--primary-dark); }
+
+.paket-badge { display:inline-block; background:var(--primary-light); color:var(--primary-dark); border:1px solid #bfdbfe; border-radius:6px; font-size:0.72rem; font-weight:800; padding:3px 10px; margin-bottom:12px; letter-spacing:0.5px; }
+
+/* Level kognitif badge */
+.level-badge { display:inline-block; background:#fef3c7; color:#92400e; border:1px solid #fde68a; border-radius:4px; font-size:0.65rem; font-weight:800; padding:2px 7px; margin-left:6px; vertical-align:middle; letter-spacing:0.3px; }
+
+.q-item { display:none; }
+.q-item.active-q { display:block; animation:qSlide 0.2s ease-out; }
+@keyframes qSlide { from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)} }
+
+.q-category { display:inline-block; font-size:clamp(0.65rem,2.5vw,0.75rem); background:var(--primary-light); color:var(--primary); padding:3px 10px; border-radius:20px; font-weight:800; margin-bottom:10px; }
+.stimulus { background:white; border:1px solid #e5e7eb; border-left:4px solid var(--primary); padding:clamp(12px,3vw,18px); margin-bottom:16px; border-radius:8px; line-height:1.75; font-size:clamp(0.82rem,3vw,0.93rem); }
+.stim-title { font-weight:800; color:var(--primary-dark); font-size:clamp(0.7rem,2.5vw,0.8rem); text-transform:uppercase; letter-spacing:0.4px; padding-bottom:8px; margin-bottom:12px; border-bottom:1.5px dashed #e5e7eb; }
+.stimulus p { margin-bottom:10px; }
+.stimulus p:last-child { margin-bottom:0; }
+.stimulus em { font-style:italic; color:#374151; }
+.stimulus strong { font-weight:800; }
+
+.q-text { font-size:clamp(0.9rem,3.5vw,1.05rem); font-weight:700; color:#111827; margin-bottom:14px; line-height:1.6; }
+.option-label { display:flex; align-items:flex-start; gap:10px; padding:12px 14px; background:white; border:1.5px solid var(--border); border-radius:8px; margin-bottom:8px; cursor:pointer; font-size:clamp(0.82rem,3vw,0.93rem); color:#374151; line-height:1.5; touch-action:manipulation; }
+.option-label:active { background:var(--primary-light); border-color:var(--primary); }
+.option-label input { margin-top:2px; transform:scale(1.15); flex-shrink:0; }
+.matrix-table { width:100%; border-collapse:collapse; margin-top:12px; border-radius:8px; overflow:hidden; border:1px solid var(--border); font-size:clamp(0.75rem,3vw,0.88rem); }
+.matrix-table th { background:#f3f4f6; padding:clamp(8px,2vw,12px); font-weight:800; }
+.matrix-table td { border:1px solid #e5e7eb; padding:clamp(8px,2vw,12px); text-align:center; line-height:1.4; }
+.matrix-table td:first-child { text-align:left; padding-left:clamp(10px,2.5vw,16px); }
+
+.quiz-nav-bar { position:sticky; bottom:0; background:white; border-top:1px solid var(--border); box-shadow:0 -3px 12px rgba(0,0,0,0.07); z-index:90; padding:10px 14px; }
+.quiz-nav-top { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+.q-indicator { font-weight:800; color:var(--primary); font-size:clamp(0.75rem,2.8vw,0.9rem); background:var(--primary-light); padding:5px 12px; border-radius:20px; white-space:nowrap; }
+.quiz-nav-bottom { display:flex; justify-content:space-between; align-items:center; margin-top:8px; padding-top:8px; border-top:1px solid #f3f4f6; }
+.nav-toggle-btn { display:flex; align-items:center; gap:6px; background:var(--primary-light); border:1px solid #bfdbfe; color:var(--primary); padding:6px 14px; border-radius:20px; font-weight:800; font-size:clamp(0.72rem,2.8vw,0.82rem); cursor:pointer; touch-action:manipulation; }
+.answered-count { font-size:clamp(0.7rem,2.8vw,0.8rem); color:var(--text-muted); font-weight:700; }
+
+.drawer-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:200; }
+.drawer-overlay.show { display:block; }
+.nav-drawer { position:fixed; bottom:0; left:0; right:0; background:white; border-radius:16px 16px 0 0; box-shadow:0 -8px 30px rgba(0,0,0,0.15); z-index:201; transform:translateY(100%); transition:transform 0.3s cubic-bezier(0.4,0,0.2,1); max-height:70vh; display:flex; flex-direction:column; }
+.nav-drawer.open { transform:translateY(0); }
+.drawer-handle { width:36px; height:4px; background:var(--border); border-radius:2px; margin:10px auto 0; flex-shrink:0; }
+.drawer-header { padding:10px 16px 8px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); flex-shrink:0; }
+.drawer-title { font-weight:800; font-size:0.9rem; }
+.drawer-close { background:var(--bg); border:none; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1rem; color:var(--text-muted); }
+.drawer-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(36px,1fr)); gap:6px; padding:10px 12px; overflow-y:auto; }
+.nav-btn { aspect-ratio:1; border:1.5px solid var(--border); border-radius:6px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.72rem; color:var(--text-muted); cursor:pointer; touch-action:manipulation; min-height:36px; max-height:40px; }
+.nav-btn:active { transform:scale(0.9); }
+.nav-btn.current { border:2.5px solid var(--primary); color:var(--primary); background:var(--primary-light); }
+.nav-btn.answered { background:var(--success); color:white; border-color:var(--success); }
+.nav-btn.answered.current { border:2.5px solid var(--primary-dark); }
+.drawer-footer { padding:10px 14px 14px; border-top:1px solid var(--border); flex-shrink:0; }
+
+.result-hero { text-align:center; padding:20px 16px; background:linear-gradient(135deg,var(--primary-light) 0%,white 80%); border-radius:var(--radius); margin-bottom:16px; }
+.score-circle { width:100px; height:100px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; margin:0 auto 14px; border:5px solid var(--primary); background:white; box-shadow:0 4px 16px rgba(26,86,219,0.15); }
+.score-circle.lulus { border-color:var(--success); }
+.score-num { font-family:'Baloo 2',cursive; font-size:clamp(1.8rem,6vw,2.4rem); font-weight:800; color:var(--primary-dark); line-height:1; }
+.score-circle.lulus .score-num { color:var(--success); }
+.score-lbl { font-size:0.65rem; font-weight:700; color:var(--text-muted); }
+.result-status { font-family:'Baloo 2',cursive; font-size:clamp(1.1rem,4vw,1.3rem); font-weight:700; }
+.result-desc { color:var(--text-muted); font-size:clamp(0.78rem,3vw,0.9rem); margin-top:6px; line-height:1.5; }
+.result-meta { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:16px; }
+.meta-box { background:var(--bg); padding:10px 12px; border-radius:8px; }
+.meta-lbl { font-size:0.68rem; color:var(--text-muted); margin-bottom:2px; }
+.meta-val { font-weight:800; font-size:clamp(0.82rem,3vw,0.92rem); }
+.comp-bar { margin-bottom:12px; }
+.comp-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:5px; gap:8px; }
+.comp-name { font-weight:700; font-size:clamp(0.75rem,3vw,0.85rem); flex:1; }
+.comp-score { font-weight:800; font-size:clamp(0.72rem,2.8vw,0.82rem); white-space:nowrap; }
+.bar-track { height:10px; background:#e5e7eb; border-radius:5px; overflow:hidden; }
+.bar-fill { height:100%; border-radius:5px; transition:width 1.2s cubic-bezier(0.25,1,0.5,1); }
+.bar-tuntas { background:linear-gradient(90deg,#059669,#34d399); }
+.bar-belum  { background:linear-gradient(90deg,#dc2626,#f87171); }
+.divider { height:1px; background:var(--border); margin:16px 0; }
+.section-title { font-family:'Baloo 2',cursive; font-size:clamp(0.95rem,3.5vw,1.05rem); color:var(--primary-dark); margin-bottom:12px; }
+.email-status { padding:12px 14px; border-radius:10px; margin-top:14px; font-size:clamp(0.78rem,3vw,0.88rem); font-weight:700; line-height:1.5; }
+.es-sending { background:#eff6ff; color:var(--primary); border:1px solid #bfdbfe; }
+.es-sent    { background:var(--success-light); color:var(--success); border:1px solid #a7f3d0; }
+.es-error   { background:var(--danger-light); color:var(--danger); border:1px solid #fca5a5; }
+
+.overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); backdrop-filter:blur(3px); align-items:center; justify-content:center; z-index:300; padding:16px; }
+.modal { background:white; border-radius:16px; padding:clamp(20px,5vw,28px); width:100%; max-width:360px; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.2); }
+.modal h3 { font-family:'Baloo 2',cursive; color:var(--primary-dark); margin-bottom:8px; font-size:clamp(1.1rem,4vw,1.25rem); }
+.modal p { color:var(--text-muted); margin-bottom:18px; line-height:1.6; font-size:clamp(0.82rem,3vw,0.93rem); }
+.modal-btns { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+.modal-btns .btn { flex:1; min-width:120px; }
+.spinner { width:40px; height:40px; border:4px solid #e5e7eb; border-top:4px solid var(--primary); border-radius:50%; margin:12px auto; animation:spin 0.8s linear infinite; }
+@keyframes spin { to{transform:rotate(360deg)} }
+@media (max-width:380px) { .sub-brand{display:none;} .font-controls{display:none;} }
+</style>
+</head>
+<body oncontextmenu="return false;" ondragstart="return false;">
+
+<div class="header">
+  <div class="header-brand">
+    <span class="logo">📖</span>
+    <div>
+      <div class="brand-name">Latihan TKA · Bahasa Indonesia</div>
+      <div class="sub-brand">SD Muhammadiyah 01 Kukusan · Kelas 6</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="user-chip"  id="user-chip"></div>
+    <div class="timer-chip" id="timer-chip">00:00</div>
+    <div class="font-controls">
+      <button class="font-btn" onclick="App.changeFontSize(-1)">A−</button>
+      <button class="font-btn" onclick="App.changeFontSize(1)">A+</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ LOGIN ══ -->
+<div id="slide-login" class="slide active">
+  <div class="page-narrow">
+    <div class="card" style="margin-top:8px;">
+      <div class="paket-badge">📖 Bahasa Indonesia · Paket 4</div>
+      <div class="card-header">Selamat Datang! 👋</div>
+      <div class="card-sub">Isi data berikut sebelum memulai latihan soal</div>
+      <div class="form-group">
+        <label class="form-label">Nama Lengkap Siswa <span>*</span></label>
+        <input type="text" id="inp-nama" class="form-control allow-select" placeholder="Tulis nama siswa...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Kelas <span>*</span></label>
+        <select id="inp-kelas" class="form-control allow-select">
+          <option value="">-- Pilih Kelas --</option>
+          <option value="6A">6A</option>
+          <option value="6B">6B</option>
+          <option value="6C">6C</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Orang Tua <span>*</span></label>
+        <input type="email" id="inp-email" class="form-control allow-select" placeholder="email@orangtua.com">
+        <div class="email-hint">📧 Laporan hasil latihan dikirim otomatis ke email ini setelah selesai.</div>
+      </div>
+      <button class="btn btn-primary btn-full" onclick="App.login()" style="margin-top:10px;">Lanjut ke Petunjuk →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PETUNJUK ══ -->
+<div id="slide-rules" class="slide">
+  <div class="page-narrow">
+    <div class="card" style="margin-top:8px;">
+      <div class="paket-badge">📖 Bahasa Indonesia · Paket 4</div>
+      <div class="card-header">📋 Petunjuk Pengerjaan</div>
+      <div class="card-sub">Bahasa Indonesia · 30 soal · Waktu bebas</div>
+      <div class="rule-item">
+        <div class="rule-num">1</div>
+        <div class="rule-text"><strong>Baca teks dengan seksama</strong> — Paket ini memuat soal yang membutuhkan pemahaman mendalam. Jangan terburu-buru menjawab sebelum membaca tuntas.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">2</div>
+        <div class="rule-text"><strong>Urutan soal diacak</strong> — Tiap sesi latihan, urutan soal akan berbeda secara otomatis.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">3</div>
+        <div class="rule-text"><strong>Navigasi soal</strong> — Ketuk <em>"Lihat Semua Soal"</em> di bagian bawah untuk melompat ke nomor mana saja. Kotak <span style="background:var(--success);color:white;padding:1px 7px;border-radius:4px;font-size:0.75rem;">hijau</span> = sudah dijawab.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">4</div>
+        <div class="rule-text"><strong>Laporan ke orang tua</strong> — Setelah klik "Kumpulkan", laporan nilai dikirim otomatis ke email orang tua.</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:20px;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-outline" onclick="App.showSlide('login')">← Kembali</button>
+        <button class="btn btn-primary" onclick="App.startExam()">Mulai Mengerjakan →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ QUIZ ══ -->
+<div id="slide-quiz" class="slide">
+  <div class="page" id="quiz-container" style="padding-bottom:4px;"></div>
+  <div class="quiz-nav-bar">
+    <div class="quiz-nav-top">
+      <button class="btn btn-outline" id="btn-prev" onclick="App.move(-1)">← Sebelumnya</button>
+      <div class="q-indicator" id="q-indicator">Soal 1 / 30</div>
+      <button class="btn btn-primary" id="btn-next" onclick="App.move(1)">Selanjutnya →</button>
+    </div>
+    <div class="quiz-nav-bottom">
+      <button class="nav-toggle-btn" onclick="App.openDrawer()">📋 Lihat Semua Soal</button>
+      <span class="answered-count" id="answered-count">0 / 30 dijawab</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ HASIL ══ -->
+<div id="slide-result" class="slide">
+  <div class="page-narrow">
+    <div class="card" style="margin-top:8px;">
+      <div class="result-hero">
+        <div class="score-circle" id="score-circle">
+          <div class="score-num" id="score-num">--</div>
+          <div class="score-lbl">NILAI</div>
+        </div>
+        <div class="result-status" id="result-status">Menghitung...</div>
+        <div class="result-desc"   id="result-desc"></div>
+      </div>
+      <div class="result-meta" id="result-meta"></div>
+      <div class="section-title">📊 Capaian per Kompetensi</div>
+      <div id="result-bars"></div>
+      <div id="email-status-box"></div>
+      <div class="divider"></div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn btn-outline" onclick="App.retryExam()">🔄 Coba Lagi</button>
+        <button class="btn btn-primary" onclick="App.showSlide('login')">📝 Mulai Baru</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="drawer-overlay" id="drawer-overlay" onclick="App.closeDrawer()"></div>
+<div class="nav-drawer" id="nav-drawer">
+  <div class="drawer-handle"></div>
+  <div class="drawer-header">
+    <span class="drawer-title">Navigasi Soal</span>
+    <button class="drawer-close" onclick="App.closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-grid" id="nav-grid"></div>
+  <div class="drawer-footer">
+    <button class="btn btn-danger btn-full" onclick="App.closeDrawer(); App.confirmFinish();">✅ Selesai & Kumpulkan</button>
+  </div>
+</div>
+
+<div class="overlay" id="modal-confirm" style="display:none;">
+  <div class="modal">
+    <h3>⚠️ Yakin Selesai?</h3>
+    <p id="modal-confirm-text"></p>
+    <div class="modal-btns">
+      <button class="btn btn-outline" onclick="document.getElementById('modal-confirm').style.display='none'">Periksa Lagi</button>
+      <button class="btn btn-danger" onclick="App.submitExam()">Ya, Kumpulkan!</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="modal-loading" style="display:none;">
+  <div class="modal">
+    <h3>⏳ Memproses Nilai...</h3>
+    <div class="spinner"></div>
+    <p>Jangan tutup halaman ini.</p>
+  </div>
+</div>
+
+<script>
+const EMAILJS_CONFIG = {
+  PUBLIC_KEY:  "xOghGdjMfoGLAB-CE",
+  SERVICE_ID:  "service_03pdwdr",
+  TEMPLATE_ID: "template_hi8a1k9"
+};
+
+/* ════════════════════════════════════════════════════════
+   STIMULUS — 10 tema baru, teks lebih panjang & kompleks
+   ════════════════════════════════════════════════════════ */
+const S = {
+
+dua_sisi: `<div class="stimulus"><div class="stim-title">Cerita Fiksi · Dua Sisi Cermin</div>
+<p>Sekolah mengumumkan bahwa hanya satu siswa yang akan mewakili kelas 6 dalam olimpiade sains. Nama yang terpilih adalah Reno. Di sudut ruangan, Gilang — yang selama ini belajar sama kerasnya dengan Reno — menunduk tanpa kata.</p>
+<p>Sepulang sekolah, Ibu bertanya tentang hari Gilang. "Reno yang dipilih, Bu. Bukan aku," jawabnya datar. Ibu duduk di sampingnya. "Kamu kecewa?" Gilang mengangguk. "Tapi kamu tahu apa yang aku lihat hari ini? Ketika namamu tidak disebut, kamu tidak mengusik kebahagiaan Reno. Itu bukan hal kecil."</p>
+<p>Gilang tidak langsung memahami kata-kata ibunya. Namun malamnya, ia merenung. Selama ini ia berpikir bahwa keberhasilan adalah sesuatu yang ia rebut dari tangan orang lain. Seolah langit hanya punya satu bintang yang bisa dimiliki. Padahal langit cukup luas untuk semua yang mau terbang.</p>
+<p>Keesokan harinya, Gilang menghampiri Reno. "Selamat. Aku tahu kamu sudah kerja keras untuk ini." Reno terkejut, lalu tersenyum lebar. "Terima kasih, Gil. Mau bantu aku latihan nanti sore?" Gilang tertawa kecil. Mungkin, pikirnya, kemenangan bisa dinikmati bersama — bahkan oleh mereka yang tidak ada di panggung.</p></div>`,
+
+migrasi_burung: `<div class="stimulus"><div class="stim-title">Teks Informasi · Navigasi Ajaib Para Pengembara Langit</div>
+<p>Setiap tahun, miliaran burung melakukan perjalanan migrasi — perpindahan musiman dari satu wilayah ke wilayah lain yang bisa mencakup ribuan kilometer. Burung Layang-layang Api (<em>Hirundo rustica</em>) terbang dari Eropa ke Afrika Selatan sejauh lebih dari 10.000 kilometer, hanya untuk kembali lagi ke sarang yang sama di musim semi berikutnya.</p>
+<p>Yang mengagumkan bukan hanya jarak tempuhnya, tetapi cara mereka menemukan arah. Burung migran menggunakan beragam sistem navigasi yang luar biasa: medan magnet bumi yang terdeteksi oleh sel-sel khusus di paruh mereka, posisi matahari dan bintang sebagai kompas alami, serta ingatan visual tentang lanskap yang mereka lewati. Beberapa spesies bahkan mampu merasakan perubahan tekanan udara untuk memprediksi cuaca.</p>
+<p>Perubahan iklim kini mengancam ritual kuno ini. Pergeseran musim membuat tanaman dan serangga — sumber makanan utama burung migran — berbunga dan berkembang biak di waktu yang berbeda dari biasanya. Ketika burung tiba di tujuan, makanan yang mereka butuhkan mungkin sudah tidak tersedia. Para ilmuwan menyebut fenomena ini sebagai <em>phenological mismatch</em> atau ketidakcocokan fenologis.</p>
+<p>Indonesia, sebagai negara dengan posisi geografis di jalur migrasi Asia-Australasia, menjadi tempat persinggahan penting bagi ratusan spesies burung migran. Menjaga ekosistem pesisir, lahan basah, dan hutan sebagai habitat persinggahan adalah kontribusi nyata Indonesia bagi kelangsungan hidup spesies-spesies ini.</p></div>`,
+
+dilema: `<div class="stimulus"><div class="stim-title">Cerita Fiksi · Pilihan di Persimpangan</div>
+<p>Di tengah ujian tengah semester, Bagas melihat lembar jawab Fikri — teman sebangkunya yang sedang sakit — terjatuh ke lantai. Fikri tidak menyadarinya, terlalu sibuk dengan soal yang tampaknya menyulitkannya. Bagas memungut kertas itu dan melirik sekilas: jawaban soal nomor 7 dan 9 terlihat jelas, tepat untuk soal yang juga sedang ia ragu-ragukan.</p>
+<p>Dalam hitungan detik, dua kemungkinan berkelebat: salin, dan nilai ujiannya aman. Atau kembalikan tanpa melihat, dan risiko nilai rendah tetap ada. Bagas menatap kertas itu lebih lama dari yang seharusnya.</p>
+<p>Namun kemudian ia teringat sesuatu — tiga bulan lalu, ia sendiri yang mengajari Fikri materi ini selama dua jam penuh karena Fikri tidak masuk pelajaran. Kalau Fikri bisa menjawab nomor 7 dan 9 itu, kemungkinan besar itu karena pelajaran mereka bersama. Nilai dalam kertas itu, dengan cara yang aneh, juga sedikit miliknya.</p>
+<p>Bagas melipat kertas itu rapi dan meletakkannya kembali di meja Fikri. "Kertasmu jatuh," bisiknya. Fikri mengangguk kecil tanpa menoleh. Bagas kembali ke lembar jawabannya sendiri dan mulai mengerjakan nomor 7 dari awal — kali ini dengan pikirannya sendiri.</p></div>`,
+
+jurnalisme: `<div class="stimulus"><div class="stim-title">Teks Informasi · Suara yang Harus Dipertanggungjawabkan</div>
+<p>Jurnalisme adalah profesi yang bertumpu pada satu prinsip utama: menyampaikan kebenaran kepada publik secara akurat, adil, dan bertanggung jawab. Seorang jurnalis bukan sekadar pencatat peristiwa — ia adalah penjaga kepentingan publik yang bekerja dengan standar etika ketat.</p>
+<p>Dalam praktiknya, jurnalis harus memverifikasi fakta dari minimal dua sumber yang berbeda dan independen sebelum sebuah informasi layak diterbitkan. Prinsip ini disebut <em>verifikasi ganda</em> dan menjadi benteng pertama melawan penyebaran berita yang tidak akurat. Selain itu, jurnalis dituntut untuk bersikap berimbang: menyajikan pandangan dari berbagai pihak yang terlibat dalam sebuah isu, bukan hanya sudut pandang satu kelompok.</p>
+<p>Di era media sosial, batas antara jurnalisme profesional dan siaran pribadi semakin kabur. Siapa saja kini bisa menjadi "pembuat konten berita" hanya dengan sebuah ponsel. Hal ini menciptakan tantangan baru: informasi yang belum terverifikasi menyebar jauh lebih cepat daripada kemampuan publik untuk memeriksanya. Penelitian menunjukkan bahwa sebuah hoaks rata-rata menyebar enam kali lebih cepat daripada berita yang benar di platform media sosial.</p>
+<p>Untuk itu, kemampuan berpikir kritis terhadap informasi yang kita terima bukan sekadar keterampilan pilihan — ia adalah kebutuhan dasar warga di abad ke-21. Sebelum berbagi sebuah informasi, tanyakan: siapa yang menulis ini, apa buktinya, dan apakah ada motif tersembunyi di baliknya?</p></div>`,
+
+warung_bu_siti: `<div class="stimulus"><div class="stim-title">Cerita Fiksi · Warung di Ujung Gang</div>
+<p>Warung Bu Siti tidak pernah ramai. Ia berdiri di ujung gang sempit yang jarang dilalui orang, menjual gorengan, es teh, dan beberapa jenis jajanan sederhana. Namun setiap sore, ada satu pelanggan tetap: Pak Darmo, tukang becak yang mangkal di depan sekolah.</p>
+<p>Bertahun-tahun, Pak Darmo selalu memesan dua pisang goreng dan satu es teh, membayar penuh, lalu pergi. Suatu hari, Bu Siti melihat Pak Darmo merogoh saku berulang kali dengan wajah pucat. "Maaf, Bu. Hari ini saya belum dapat penumpang. Besok saya bayar dua kali." Bu Siti menggeleng. "Sudah makan belum hari ini?" Pak Darmo terdiam. Bu Siti meletakkan bungkusan lebih besar di meja. "Bawa untuk pulang juga."</p>
+<p>Sebulan kemudian, Pak Darmo datang dengan amplop kecil. "Ini titipan dari saya dan beberapa teman tukang becak, Bu. Kami patungan." Di dalam amplop ada sejumlah uang — lebih dari sekadar harga dua pisang goreng dan es teh. "Jangan sampai warung ini tutup," kata Pak Darmo. "Di sini satu-satunya tempat kami tidak pernah merasa merepotkan."</p>
+<p>Bu Siti menerima amplop itu dengan tangan gemetar. Bukan karena uangnya, tetapi karena kalimat terakhir Pak Darmo — yang mengatakan lebih banyak tentang nilai sebuah kebaikan daripada apapun yang pernah ia pikirkan.</p></div>`,
+
+gula_darah: `<div class="stimulus"><div class="stim-title">Teks Informasi · Gula: Manis yang Menyimpan Risiko</div>
+<p>Gula adalah sumber energi utama bagi otak dan tubuh manusia. Tanpa glukosa — bentuk gula paling sederhana — sel-sel otak tidak dapat berfungsi optimal, dan kemampuan konsentrasi serta daya ingat akan menurun drastis. Itulah mengapa sarapan bergizi sebelum ujian lebih efektif daripada begadang semalam suntuk.</p>
+<p>Namun konsumsi gula berlebih menjadi masalah serius. Organisasi Kesehatan Dunia (WHO) merekomendasikan konsumsi gula tambahan tidak lebih dari 25 gram atau setara 6 sendok teh per hari untuk orang dewasa. Untuk anak-anak, batas yang disarankan bahkan lebih rendah. Sebagai perbandingan, satu kaleng minuman bersoda berisi sekitar 35–40 gram gula — jauh melampaui batas harian yang dianjurkan.</p>
+<p>Konsumsi gula berlebih dalam jangka panjang meningkatkan risiko diabetes tipe 2, kerusakan gigi, dan obesitas. Yang lebih mengkhawatirkan, gula dapat menimbulkan efek adiktif: semakin banyak dikonsumsi, semakin kuat keinginan untuk mengonsumsinya lagi. Mekanisme ini mirip dengan cara kerja beberapa zat adiktif lain pada otak.</p>
+<p>Solusinya bukan menghindari gula sepenuhnya, tetapi memilih sumber gula yang tepat. Gula alami dari buah-buahan, umbi-umbian, dan biji-bijian utuh dicerna lebih lambat oleh tubuh, memberikan energi yang stabil tanpa lonjakan gula darah yang tiba-tiba.</p></div>`,
+
+peran_ayah: `<div class="stimulus"><div class="stim-title">Cerita Fiksi · Jembatan yang Tak Terlihat</div>
+<p>Ayah Kira bekerja dari pukul enam pagi hingga larut malam. Setiap hari. Kira jarang melihatnya sarapan bersama, apalagi mengantar ke sekolah. Di hari ulang tahunnya yang ke-11, Kira menulis di buku hariannya: <em>"Aku punya ayah, tapi rasanya seperti tidak."</em></p>
+<p>Suatu malam, Kira terbangun karena haus dan melihat cahaya dari ruang kerja Ayah. Ia mengintip dari balik pintu: Ayah duduk membungkuk di meja, dikelilingi kertas-kertas, dengan kacamata yang sedikit miring. Di sudut meja, ada foto Kira saat masih kelas 2 — tersenyum dengan gigi ompong — yang ditempel dengan selotip.</p>
+<p>Kira tidak masuk. Ia hanya berdiri di sana cukup lama untuk menyadari sesuatu yang belum pernah ia pikirkan sebelumnya: bahwa ada banyak cara mencintai seseorang, dan tidak semuanya terlihat seperti yang ada di buku cerita. Ayah tidak hadir dalam momen-momen kecilnya, tapi kehadirannya ada di tempat lain — dalam tagihan sekolah yang terbayar, dalam sepatu baru yang selalu pas di kaki, dalam malam-malam yang bisa Kira habiskan dengan tenang karena ada seseorang yang tidak tidur demi itu semua.</p>
+<p>Keesokan paginya, Kira bangun lebih awal dan menyiapkan segelas teh untuk Ayah. Bukan karena semua rindunya terjawab — melainkan karena ia mulai belajar bahwa memahami orang yang kita cintai sering kali dimulai dari mau melihat lebih jauh dari yang tampak.</p></div>`,
+
+polusi_udara: `<div class="stimulus"><div class="stim-title">Teks Informasi · Udara yang Kita Hirup Tanpa Sadar</div>
+<p>Manusia bernapas rata-rata 22.000 kali sehari, menghirup sekitar 11.000 liter udara. Kita tidak pernah memikirkan ini — udara terasa ada begitu saja. Namun di banyak kota besar di dunia, termasuk Jakarta, kualitas udara yang dihirup itu jauh dari standar kesehatan yang aman.</p>
+<p>Polutan utama yang mengancam kesehatan pernafasan adalah partikel halus berdiameter kurang dari 2,5 mikrometer, dikenal sebagai PM2.5. Ukurannya 30 kali lebih kecil dari diameter rambut manusia, sehingga mampu menembus saluran pernafasan terdalam dan langsung masuk ke aliran darah. Paparan jangka panjang terhadap PM2.5 dikaitkan dengan peningkatan risiko penyakit jantung, stroke, kanker paru-paru, dan gangguan perkembangan otak pada anak.</p>
+<p>Sumber PM2.5 beragam: emisi kendaraan bermotor, pembakaran sampah, asap pabrik, dan bahkan debu konstruksi bangunan. Pada hari-hari dengan kualitas udara buruk, aktivitas di luar ruangan sebaiknya dikurangi, terutama untuk kelompok rentan seperti anak-anak, lansia, dan penderita asma.</p>
+<p>Menanam pohon dan tanaman di sekitar rumah terbukti membantu menyerap polutan. Tanaman seperti lidah mertua (<em>Sansevieria</em>), sirih gading, dan peace lily dikenal efektif menyerap berbagai jenis polutan udara di dalam ruangan. Memilih transportasi umum atau bersepeda untuk jarak dekat juga merupakan kontribusi nyata dalam mengurangi emisi di perkotaan.</p></div>`,
+
+buku_tua: `<div class="stimulus"><div class="stim-title">Cerita Fiksi · Buku yang Tidak Pernah Selesai</div>
+<p>Di sudut tertua perpustakaan sekolah, ada rak yang jarang disentuh. Di situlah Nia menemukan buku tanpa judul, sampulnya lusuh berwarna cokelat, dengan tulisan tangan yang rapi di setiap halamannya. Bukan cerita fiksi, bukan pelajaran — melainkan catatan harian seseorang yang tidak pernah menyelesaikan tulisannya.</p>
+<p>Entri terakhirnya berbunyi: <em>"Hari ini aku belajar bahwa gagal bukan berarti berhenti. Berhenti adalah ketika kamu memutuskan bahwa kegagalan adalah kata terakhir dari ceritamu."</em> Di bawah kalimat itu, halaman-halaman berikutnya kosong.</p>
+<p>Nia bertanya kepada Bu Lastri, pustakawan tua yang sudah dua puluh tahun menjaga ruangan itu. "Itu milik kepala sekolah pertama kita," jawab Bu Lastri. "Beliau menulis itu di tahun pertama sekolah ini berdiri, ketika hampir tidak ada murid yang mau mendaftar dan hampir tidak ada guru yang mau mengajar. Beliau terus menulis meski keadaan sulit. Dan beliau berhenti menulis ketika sekolah ini sudah penuh dengan anak-anak." Bu Lastri berhenti sejenak. "Mungkin karena ceritanya sudah dilanjutkan oleh orang lain."</p>
+<p>Nia menutup buku itu perlahan. Tiba-tiba ia mengerti mengapa halaman-halaman kosong itu terasa lebih berbicara daripada semua kata yang sudah tertulis.</p></div>`,
+
+ekonomi_kreatif: `<div class="stimulus"><div class="stim-title">Teks Informasi · Kreativitas sebagai Mesin Ekonomi</div>
+<p>Ekonomi kreatif adalah sistem ekonomi di mana nilai utama sebuah produk atau jasa bersumber dari ide, kreativitas, dan kekayaan intelektual manusia — bukan dari bahan baku fisik atau tenaga kerja semata. Indonesia telah menjadikan pengembangan ekonomi kreatif sebagai salah satu prioritas nasional, dengan 17 subsektor yang mencakup kuliner, fashion, kriya, musik, film, permainan, arsitektur, dan lain sebagainya.</p>
+<p>Kuliner adalah subsektor terbesar, menyumbang lebih dari 40% total produk domestik bruto ekonomi kreatif nasional. Di balik angka ini terdapat jutaan pelaku usaha rumahan, pedagang kaki lima, hingga restoran bintang lima yang masing-masing membawa nilai budaya lokal ke meja makan dunia. Batik, yang merupakan bagian dari subsektor kriya, telah diakui UNESCO sebagai Warisan Budaya Tak Benda sejak 2009 dan kini diekspor ke lebih dari 100 negara.</p>
+<p>Bagi siswa, memahami ekonomi kreatif membuka wawasan bahwa keterampilan yang tampak "tidak akademis" — menggambar, memasak, membuat kerajinan, bermain musik — memiliki nilai ekonomi yang sangat nyata. Kemampuan berpikir kreatif, problem-solving, dan komunikasi yang diasah sejak dini adalah bekal yang tidak kalah penting dari penguasaan rumus matematika.</p>
+<p>Di era otomasi dan kecerdasan buatan, pekerjaan-pekerjaan yang paling tahan terhadap penggantian mesin justru adalah pekerjaan yang membutuhkan kreativitas, empati, dan kemampuan berpikir kompleks — hal-hal yang hingga kini belum bisa sepenuhnya ditiru oleh mesin.</p></div>`
+};
+
+/* ════════════════════════════════════════════════════════
+   SOAL PAKET 4 — Level kognitif lebih tinggi:
+   · Soal tekstual menuntut pemahaman detail yang presisi
+   · Soal inferensial menuntut analisis hubungan sebab-akibat
+     dan membaca makna yang tidak dinyatakan secara langsung
+   · Soal evaluasi menuntut penilaian kritis & perbandingan nilai
+   ════════════════════════════════════════════════════════ */
+const SOAL = [
+
+/* ── Tema 1: Dua Sisi Cermin ── */
+{id:1, cat:"Pemahaman Tekstual", type:"pg", score:1, stim:S.dua_sisi,
+ q:"Apa yang diungkapkan oleh metafora 'langit cukup luas untuk semua yang mau terbang' dalam renungan Gilang?",
+ opt:[
+   "Keberhasilan hanya bisa diraih oleh orang-orang yang berani bermimpi besar",
+   "Kesempatan untuk sukses tidak terbatas dan tidak harus direbut dari orang lain",
+   "Persaingan di sekolah tidak sepenting persaingan di dunia nyata",
+   "Gilang berencana untuk berhenti berkompetisi dan menerima kekalahan"
+ ],
+ ans:"Kesempatan untuk sukses tidak terbatas dan tidak harus direbut dari orang lain"},
+
+{id:2, cat:"Pemahaman Inferensial", type:"pg", score:1, stim:S.dua_sisi,
+ q:"Mengapa Reno mengajak Gilang berlatih bersama setelah mendengar ucapan selamat dari Gilang?",
+ opt:[
+   "Reno merasa kasihan kepada Gilang yang tidak terpilih",
+   "Reno menyadari bahwa ketulusan Gilang menunjukkan ia adalah teman yang dapat dipercaya",
+   "Reno membutuhkan bantuan karena merasa kurang siap menghadapi olimpiade",
+   "Reno ingin membalas budi karena Gilang pernah membantunya sebelumnya"
+ ],
+ ans:"Reno menyadari bahwa ketulusan Gilang menunjukkan ia adalah teman yang dapat dipercaya"},
+
+{id:3, cat:"Evaluasi dan Apresiasi", type:"pgk", score:2, stim:S.dua_sisi,
+ q:"Pilih DUA pernyataan yang paling tepat menggambarkan perkembangan karakter Gilang sepanjang cerita!",
+ opt:[
+   "Gilang berubah dari seseorang yang melihat keberhasilan sebagai persaingan menjadi seseorang yang bisa berbagi kegembiraan",
+   "Gilang membuktikan bahwa kerendahan hati hanya dimiliki oleh orang yang tidak ambisius",
+   "Gilang belajar bahwa kebaikan yang tulus membuka peluang yang tidak terduga",
+   "Gilang menyimpulkan bahwa hasil ujian tidak sepenting hubungan pertemanan"
+ ],
+ ans:["Gilang berubah dari seseorang yang melihat keberhasilan sebagai persaingan menjadi seseorang yang bisa berbagi kegembiraan","Gilang belajar bahwa kebaikan yang tulus membuka peluang yang tidak terduga"]},
+
+/* ── Tema 2: Navigasi Burung ── */
+{id:4, cat:"Pemahaman Tekstual", type:"pg", score:1, stim:S.migrasi_burung,
+ q:"Apa yang dimaksud dengan istilah 'phenological mismatch' dalam teks?",
+ opt:[
+   "Kegagalan burung menemukan pasangan kawin di tempat tujuan migrasi",
+   "Ketidakcocokan waktu antara kedatangan burung migran dan ketersediaan makanan akibat pergeseran musim",
+   "Perbedaan rute migrasi yang ditempuh burung akibat perubahan arus udara",
+   "Ketidakmampuan burung membaca medan magnet bumi karena polusi elektromagnetik"
+ ],
+ ans:"Ketidakcocokan waktu antara kedatangan burung migran dan ketersediaan makanan akibat pergeseran musim"},
+
+{id:5, cat:"Pemahaman Inferensial", type:"pgk-cat", score:2, stim:S.migrasi_burung,
+ q:"Berdasarkan isi teks, tentukan apakah pernyataan berikut dapat DISIMPULKAN atau TIDAK DAPAT DISIMPULKAN dari informasi yang tersedia!",
+ rows:[
+   "Perubahan iklim tidak hanya mengancam hewan darat, tetapi juga mengganggu siklus alami hewan yang bermigrasi.",
+   "Indonesia tidak perlu menjaga ekosistem pesisirnya karena burung migran dapat mencari tempat lain."
+ ],
+ cols:["Dapat Disimpulkan","Tidak Dapat Disimpulkan"],
+ ans:["Dapat Disimpulkan","Tidak Dapat Disimpulkan"]},
+
+{id:6, cat:"Evaluasi dan Apresiasi", type:"pg", score:1, stim:S.migrasi_burung,
+ q:"Penulis menyebut burung migran sebagai 'pengembara langit' dalam judul. Apa tujuan penggunaan istilah ini dibandingkan sekadar menyebut 'burung yang berpindah tempat'?",
+ opt:[
+   "Untuk membuat teks terdengar lebih ilmiah dan akademis",
+   "Untuk membangkitkan rasa kagum pembaca terhadap perjalanan luar biasa yang dilakukan burung",
+   "Karena istilah ilmiah untuk migrasi burung terlalu sulit dipahami pembaca umum",
+   "Untuk membedakan burung migran dari jenis burung lainnya secara taksonomi"
+ ],
+ ans:"Untuk membangkitkan rasa kagum pembaca terhadap perjalanan luar biasa yang dilakukan burung"},
+
+/* ── Tema 3: Pilihan di Persimpangan ── */
+{id:7, cat:"Pemahaman Tekstual", type:"pg", score:1, stim:S.dilema,
+ q:"Apa alasan spesifik yang membuat Bagas akhirnya memilih untuk tidak menyalin jawaban Fikri?",
+ opt:[
+   "Ia takut ketahuan oleh pengawas ujian",
+   "Ia teringat bahwa ia sendiri yang mengajari Fikri materi tersebut, sehingga jawaban di kertas itu sebagian juga hasil belajar mereka bersama",
+   "Ia merasa nilai yang didapat dari menyalin tidak bermakna bagi masa depannya",
+   "Ia menyadari bahwa kertas itu sebenarnya adalah lembar soal, bukan lembar jawab"
+ ],
+ ans:"Ia teringat bahwa ia sendiri yang mengajari Fikri materi tersebut, sehingga jawaban di kertas itu sebagian juga hasil belajar mereka bersama"},
+
+{id:8, cat:"Pemahaman Inferensial", type:"pg", score:1, stim:S.dilema,
+ q:"Kalimat 'Bagas menatap kertas itu lebih lama dari yang seharusnya' mengisyaratkan apa tentang kondisi batin Bagas saat itu?",
+ opt:[
+   "Bagas sedang mencoba membaca tulisan Fikri yang tidak jelas",
+   "Bagas mengalami pergolakan batin antara kejujuran dan keinginan mendapat nilai baik",
+   "Bagas sedang menunggu agar tidak ada yang melihatnya memegang kertas milik Fikri",
+   "Bagas bingung apakah kertas itu memang milik Fikri atau bukan"
+ ],
+ ans:"Bagas mengalami pergolakan batin antara kejujuran dan keinginan mendapat nilai baik"},
+
+{id:9, cat:"Evaluasi dan Apresiasi", type:"pgk-cat", score:2, stim:S.dilema,
+ q:"Berdasarkan tindakan dan pemikiran Bagas, tentukan apakah pernyataan berikut SESUAI atau TIDAK SESUAI dengan nilai yang terkandung dalam cerita!",
+ rows:[
+   "Integritas adalah tetap memilih jalan yang benar meskipun tidak ada yang mengawasi.",
+   "Pilihan yang sulit menjadi lebih mudah ketika kita memikirkan keuntungan pribadi semata."
+ ],
+ cols:["Sesuai","Tidak Sesuai"],
+ ans:["Sesuai","Tidak Sesuai"]},
+
+/* ── Tema 4: Jurnalisme ── */
+{id:10, cat:"Pemahaman Tekstual", type:"pg", score:1, stim:S.jurnalisme,
+ q:"Apa yang dimaksud dengan prinsip 'verifikasi ganda' dalam jurnalisme menurut teks?",
+ opt:[
+   "Setiap artikel harus melewati pemeriksaan dua editor sebelum diterbitkan",
+   "Fakta harus dikonfirmasi dari minimal dua sumber yang berbeda dan independen sebelum diterbitkan",
+   "Berita harus diterbitkan dua kali — pertama sebagai draf, kemudian sebagai versi final",
+   "Jurnalis wajib mewawancarai dua narasumber dari pihak yang berlawanan untuk setiap berita"
+ ],
+ ans:"Fakta harus dikonfirmasi dari minimal dua sumber yang berbeda dan independen sebelum diterbitkan"},
+
+{id:11, cat:"Pemahaman Inferensial", type:"pg", score:1, stim:S.jurnalisme,
+ q:"Mengapa teks menyebut kemampuan berpikir kritis sebagai 'kebutuhan dasar warga di abad ke-21', bukan sekadar 'keterampilan tambahan yang berguna'?",
+ opt:[
+   "Karena sekolah-sekolah saat ini sudah tidak mengajarkan cara membaca dengan baik",
+   "Karena tanpa kemampuan ini, seseorang sangat rentan termanipulasi oleh informasi yang salah di tengah banjir konten digital",
+   "Karena berpikir kritis adalah persyaratan untuk bisa bekerja sebagai jurnalis profesional",
+   "Karena media sosial telah sepenuhnya menggantikan peran jurnalisme tradisional"
+ ],
+ ans:"Karena tanpa kemampuan ini, seseorang sangat rentan termanipulasi oleh informasi yang salah di tengah banjir konten digital"},
+
+{id:12, cat:"Evaluasi dan Apresiasi", type:"pgk", score:2, stim:S.jurnalisme,
+ q:"Pilih DUA pertanyaan kritis yang disarankan teks untuk diajukan sebelum membagikan sebuah informasi!",
+ opt:[
+   "Apakah informasi ini sudah disukai oleh banyak orang di media sosial?",
+   "Siapa yang menulis informasi ini dan apa bukti yang mendukungnya?",
+   "Apakah ada motif tersembunyi di balik informasi yang disebarkan?",
+   "Apakah bahasa yang digunakan dalam informasi tersebut mudah dipahami?"
+ ],
+ ans:["Siapa yang menulis informasi ini dan apa bukti yang mendukungnya?","Apakah ada motif tersembunyi di balik informasi yang disebarkan?"]},
+
+/* ── Tema 5: Warung Bu Siti ── */
+{id:13, cat:"Pemahaman Tekstual", type:"pg", score:1, stim:S.warung_bu_siti,
+ q:"Apa yang dimaksud Pak Darmo dengan kalimat 'Di sini satu-satunya tempat kami tidak pernah merasa merepotkan'?",
+ opt:[
+   "Warung Bu Siti adalah satu-satunya tempat yang menjual makanan murah di sekitar situ",
+   "Bu Siti memperlakukan pelanggannya dengan martabat dan kehangatan tanpa memandang status ekonomi mereka",
+   "Warung Bu Siti tidak pernah ramai sehingga para tukang becak bisa beristirahat dengan nyaman",
+   "Bu Siti tidak pernah menagih utang kepada para tukang becak meskipun mereka tidak membayar"
+ ],
+ ans:"Bu Siti memperlakukan pelanggannya dengan martabat dan kehangatan tanpa memandang status ekonomi mereka"},
+
+{id:14, cat:"Pemahaman Inferensial", type:"pg", score:1, stim:S.warung_bu_siti,
+ q:"Mengapa tangan Bu Siti gemetar saat menerima amplop dari Pak Darmo — padahal ia seorang pedagang yang menerima pembayaran setiap hari?",
+ opt:[
+   "Karena amplop itu berisi uang dalam jumlah yang sangat besar dan tidak terduga",
+   "Karena Bu Siti baru sadar bahwa kebaikannya selama ini telah menyentuh dan dikenang oleh banyak orang",
+   "Karena Bu Siti merasa tidak enak menerima uang yang dikumpulkan dari orang-orang yang tidak mampu",
+   "Karena Bu Siti sudah lama tidak menerima pelunasan utang dari para pelanggannya"
+ ],
+ ans:"Karena Bu Siti baru sadar bahwa kebaikannya selama ini telah menyentuh dan dikenang oleh banyak orang"},
+
+{id:15, cat:"Evaluasi dan Apresiasi", type:"pgk-cat", score:2, stim:S.warung_bu_siti,
+ q:"Berdasarkan nilai yang terkandung dalam cerita, tentukan apakah pernyataan berikut SESUAI atau TIDAK SESUAI!",
+ rows:[
+   "Kebaikan yang tulus, tanpa pamrih, pada akhirnya menciptakan ikatan yang lebih kuat dari sekadar transaksi jual beli.",
+   "Nilai sebuah tempat ditentukan oleh harga makanan yang ditawarkan, bukan oleh cara pemiliknya memperlakukan orang."
+ ],
+ cols:["Sesuai","Tidak Sesuai"],
+ ans:["Sesuai","Tidak Sesuai"]},
+
+/* ── Tema 6: Gula dan Kesehatan ── */
+{id:16, cat:"Pemahaman Tekstual", type:"pgk", score:2, stim:S.gula_darah,
+ q:"Pilih DUA fakta tentang gula yang disebutkan secara eksplisit dalam teks!",
+ opt:[
+   "WHO merekomendasikan konsumsi gula tambahan tidak lebih dari 25 gram per hari untuk orang dewasa",
+   "Konsumsi gula berlebih dapat menyebabkan kerusakan tulang belakang",
+   "Satu kaleng minuman bersoda mengandung sekitar 35–40 gram gula",
+   "Gula alami dari buah-buahan tidak mengandung kalori sama sekali"
+ ],
+ ans:["WHO merekomendasikan konsumsi gula tambahan tidak lebih dari 25 gram per hari untuk orang dewasa","Satu kaleng minuman bersoda mengandung sekitar 35–40 gram gula"]},
+
+{id:17, cat:"Pemahaman Inferensial", type:"pg", score:1, stim:S.gula_darah,
+ q:"Pernyataan 'sarapan bergizi lebih efektif daripada begadang semalam suntuk' didukung oleh gagasan apa dalam teks?",
+ opt:[
+   "Tidur yang cukup lebih penting daripada belajar untuk mendapatkan nilai baik",
+   "Otak membutuhkan glukosa yang cukup untuk bekerja optimal, dan sarapan memenuhi kebutuhan ini",
+   "Begadang menyebabkan stres yang mengurangi kemampuan mengingat materi pelajaran",
+   "Sarapan mengandung nutrisi yang tidak bisa didapat dari cara belajar manapun"
+ ],
+ ans:"Otak membutuhkan glukosa yang cukup untuk bekerja optimal, dan sarapan memenuhi kebutuhan ini"},
+
+{id:18, cat:"Evaluasi dan Apresiasi", type:"pg", score:1, stim:S.gula_darah,
+ q:"Mengapa teks menyarankan untuk memilih sumber gula yang tepat, bukan menghindari gula sepenuhnya?",
+ opt:[
+   "Karena menghindari gula sepenuhnya akan membuat makanan terasa tidak enak",
+   "Karena gula adalah sumber energi yang dibutuhkan otak dan tubuh, sehingga yang perlu dikendalikan adalah jenis dan jumlahnya",
+   "Karena industri makanan akan rugi jika semua orang berhenti mengonsumsi gula",
+   "Karena penelitian ilmiah belum membuktikan bahwa gula berbahaya jika dikonsumsi berlebih"
+ ],
+ ans:"Karena gula adalah sumber energi yang dibutuhkan otak dan tubuh, sehingga yang perlu dikendalikan adalah jenis dan jumlahnya"},
+
+/* ── Tema 7: Peran Ayah ── */
+{id:19, cat:"Pemahaman Tekstual", type:"pg", score:1, stim:S.peran_ayah,
+ q:"Apa detail kecil yang menjadi titik balik pemahaman Kira tentang ayahnya?",
+ opt:[
+   "Ayah membawa pulang hadiah ulang tahun yang selama ini Kira inginkan",
+   "Kira menemukan foto dirinya saat kelas 2 yang ditempel di sudut meja kerja Ayah",
+   "Ayah menghentikan pekerjaannya dan mengajak Kira bicara di malam itu",
+   "Kira membaca surat yang ditulis Ayah tentang betapa ia merindukannya"
+ ],
+ ans:"Kira menemukan foto dirinya saat kelas 2 yang ditempel di sudut meja kerja Ayah"},
+
+{id:20, cat:"Pemahaman Inferensial", type:"pg", score:1, stim:S.peran_ayah,
+ q:"Apa yang paling tepat menggambarkan perubahan cara pandang Kira terhadap ayahnya di akhir cerita?",
+ opt:[
+   "Kira memaafkan Ayah karena merasa kasihan melihat Ayah bekerja keras",
+   "Kira mulai memahami bahwa cinta dapat diwujudkan melalui pengorbanan yang tidak selalu terlihat secara langsung",
+   "Kira memutuskan untuk tidak lagi mengeluh tentang ketidakhadiran Ayah",
+   "Kira menyadari bahwa Ayah sebenarnya lebih suka bekerja daripada bersama keluarga"
+ ],
+ ans:"Kira mulai memahami bahwa cinta dapat diwujudkan melalui pengorbanan yang tidak selalu terlihat secara langsung"},
+
+{id:21, cat:"Evaluasi dan Apresiasi", type:"pgk-cat", score:2, stim:S.peran_ayah,
+ q:"Berdasarkan tema cerita, tentukan apakah pernyataan berikut SESUAI atau TIDAK SESUAI dengan pesan yang ingin disampaikan penulis!",
+ rows:[
+   "Memahami seseorang yang kita cintai sering membutuhkan kesediaan untuk melihat melampaui yang tampak di permukaan.",
+   "Kehadiran fisik adalah satu-satunya ukuran yang valid dari kasih sayang orang tua kepada anak."
+ ],
+ cols:["Sesuai","Tidak Sesuai"],
+ ans:["Sesuai","Tidak Sesuai"]},
+
+/* ── Tema 8: Polusi Udara ── */
+{id:22, cat:"Pemahaman Tekstual", type:"pg", score:1, stim:S.polusi_udara,
+ q:"Mengapa partikel PM2.5 lebih berbahaya dibandingkan polutan udara berukuran lebih besar?",
+ opt:[
+   "Karena PM2.5 mengandung racun kimia yang lebih kuat daripada polutan lain",
+   "Karena ukurannya yang sangat kecil memungkinkannya menembus saluran pernafasan terdalam dan masuk ke aliran darah",
+   "Karena PM2.5 hanya dihasilkan oleh pabrik besar yang sulit dikendalikan",
+   "Karena PM2.5 tidak terlihat sehingga orang tidak menyadari bahaya yang ditimbulkannya"
+ ],
+ ans:"Karena ukurannya yang sangat kecil memungkinkannya menembus saluran pernafasan terdalam dan masuk ke aliran darah"},
+
+{id:23, cat:"Pemahaman Inferensial", type:"pgk", score:2, stim:S.polusi_udara,
+ q:"Pilih DUA kesimpulan yang dapat ditarik dari isi teks tentang hubungan antara aktivitas manusia dan kualitas udara!",
+ opt:[
+   "Polusi udara di kota besar sebagian besar disebabkan oleh faktor alam yang tidak bisa dikendalikan manusia",
+   "Memilih transportasi umum atau sepeda dapat membantu mengurangi emisi kendaraan di kota",
+   "Menanam tanaman tertentu di rumah bisa membantu mengurangi polutan udara di dalam ruangan",
+   "Polusi udara hanya berbahaya bagi orang yang sudah memiliki penyakit pernafasan sebelumnya"
+ ],
+ ans:["Memilih transportasi umum atau sepeda dapat membantu mengurangi emisi kendaraan di kota","Menanam tanaman tertentu di rumah bisa membantu mengurangi polutan udara di dalam ruangan"]},
+
+{id:24, cat:"Evaluasi dan Apresiasi", type:"pg", score:1, stim:S.polusi_udara,
+ q:"Pernyataan 'kita tidak pernah memikirkan ini' di awal teks berfungsi untuk apa dalam keseluruhan tulisan?",
+ opt:[
+   "Menunjukkan bahwa manusia adalah makhluk yang tidak peduli lingkungan",
+   "Menciptakan kontras antara sesuatu yang dianggap biasa dengan ancaman yang sesungguhnya serius",
+   "Mengkritik masyarakat yang lebih mementingkan hal-hal lain daripada kesehatan",
+   "Memberikan data pembuka sebelum masuk ke penjelasan ilmiah yang lebih teknis"
+ ],
+ ans:"Menciptakan kontras antara sesuatu yang dianggap biasa dengan ancaman yang sesungguhnya serius"},
+
+/* ── Tema 9: Buku Tua ── */
+{id:25, cat:"Pemahaman Tekstual", type:"pg", score:1, stim:S.buku_tua,
+ q:"Menurut Bu Lastri, mengapa kepala sekolah pertama berhenti menulis buku hariannya?",
+ opt:[
+   "Karena beliau sakit dan tidak mampu lagi menulis",
+   "Karena buku itu sudah penuh dan tidak ada halaman tersisa",
+   "Karena cerita beliau sudah dilanjutkan oleh orang lain — sekolah yang beliau bangun sudah berhasil",
+   "Karena beliau merasa tulisannya tidak lagi relevan setelah sekolah berkembang"
+ ],
+ ans:"Karena cerita beliau sudah dilanjutkan oleh orang lain — sekolah yang beliau bangun sudah berhasil"},
+
+{id:26, cat:"Pemahaman Inferensial", type:"pg", score:1, stim:S.buku_tua,
+ q:"Mengapa 'halaman-halaman kosong terasa lebih berbicara daripada semua kata yang sudah tertulis' bagi Nia?",
+ opt:[
+   "Karena Nia tidak bisa membaca tulisan tangan yang ada di halaman sebelumnya",
+   "Karena kekosongan itu mewakili sebuah cerita yang belum selesai dan menunggu untuk dilanjutkan oleh generasi berikutnya",
+   "Karena Nia lebih menyukai buku bergambar daripada buku berisi tulisan",
+   "Karena halaman kosong memberi Nia kebebasan untuk berimajinasi sendiri"
+ ],
+ ans:"Karena kekosongan itu mewakili sebuah cerita yang belum selesai dan menunggu untuk dilanjutkan oleh generasi berikutnya"},
+
+{id:27, cat:"Evaluasi dan Apresiasi", type:"pgk", score:2, stim:S.buku_tua,
+ q:"Pilih DUA nilai yang paling kuat terkandung dalam keseluruhan cerita ini!",
+ opt:[
+   "Warisan terbesar yang bisa ditinggalkan seseorang adalah dampak nyata pada kehidupan orang lain",
+   "Menulis buku harian adalah cara terbaik untuk mengatasi kesulitan hidup",
+   "Kegagalan hanya menjadi akhir jika kita memutuskan untuk menyerah",
+   "Perpustakaan sekolah adalah tempat menyimpan kenangan terpenting dalam pendidikan"
+ ],
+ ans:["Warisan terbesar yang bisa ditinggalkan seseorang adalah dampak nyata pada kehidupan orang lain","Kegagalan hanya menjadi akhir jika kita memutuskan untuk menyerah"]},
+
+/* ── Tema 10: Ekonomi Kreatif ── */
+{id:28, cat:"Pemahaman Tekstual", type:"pgk-cat", score:2, stim:S.ekonomi_kreatif,
+ q:"Berdasarkan data dalam teks, tentukan apakah pernyataan berikut SESUAI atau TIDAK SESUAI!",
+ rows:[
+   "Kuliner menyumbang lebih dari 40% total PDB ekonomi kreatif nasional Indonesia.",
+   "Batik diakui UNESCO sebagai Warisan Budaya Tak Benda sejak tahun 2005."
+ ],
+ cols:["Sesuai","Tidak Sesuai"],
+ ans:["Sesuai","Tidak Sesuai"]},
+
+{id:29, cat:"Pemahaman Inferensial", type:"pg", score:1, stim:S.ekonomi_kreatif,
+ q:"Mengapa teks menyebutkan bahwa pekerjaan yang membutuhkan kreativitas dan empati 'paling tahan terhadap penggantian mesin'?",
+ opt:[
+   "Karena mesin tidak memiliki listrik yang cukup untuk melakukan pekerjaan kreatif yang rumit",
+   "Karena kreativitas, empati, dan berpikir kompleks adalah kemampuan khas manusia yang hingga kini belum sepenuhnya bisa ditiru kecerdasan buatan",
+   "Karena pemerintah melarang penggunaan kecerdasan buatan dalam industri kreatif",
+   "Karena pekerja kreatif memiliki serikat yang kuat sehingga tidak bisa digantikan oleh mesin"
+ ],
+ ans:"Karena kreativitas, empati, dan berpikir kompleks adalah kemampuan khas manusia yang hingga kini belum sepenuhnya bisa ditiru kecerdasan buatan"},
+
+{id:30, cat:"Evaluasi dan Apresiasi", type:"pg", score:1, stim:S.ekonomi_kreatif,
+ q:"Apa implikasi terpenting dari teks ini bagi cara siswa memandang pelajaran dan bakat yang mereka miliki?",
+ opt:[
+   "Siswa harus memilih antara belajar akademis atau mengembangkan bakat kreatif, tergantung cita-cita masing-masing",
+   "Semua keterampilan — akademis maupun kreatif — memiliki nilai, dan kemampuan berpikir kreatif adalah bekal penting di masa depan",
+   "Nilai rapor tidak relevan lagi karena dunia kerja masa depan hanya menghargai kreativitas",
+   "Siswa sebaiknya fokus pada satu bidang saja agar bisa menjadi ahli yang benar-benar unggul"
+ ],
+ ans:"Semua keterampilan — akademis maupun kreatif — memiliki nilai, dan kemampuan berpikir kreatif adalah bekal penting di masa depan"}
+];
+
+/* ══ APP ENGINE ══ */
+const App = {
+  state:{nama:'',kelas:'',email:'',answers:{},order:[]},
+  currIdx:0, timerInt:null, elapsed:0, fontMult:1,
+
+  init(){
+    this.fontMult = parseFloat(localStorage.getItem('tka_bi_font')||'1');
+    this.applyFont(this.fontMult);
+    emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+  },
+
+  login(){
+    const nama  = document.getElementById('inp-nama').value.trim();
+    const kelas = document.getElementById('inp-kelas').value;
+    const email = document.getElementById('inp-email').value.trim();
+    if(!nama)                         {alert('Nama siswa wajib diisi!');return;}
+    if(!kelas)                        {alert('Kelas wajib dipilih!');return;}
+    if(!email||!email.includes('@'))  {alert('Format email orang tua tidak valid!');return;}
+    Object.assign(this.state,{nama,kelas,email});
+    this.showSlide('rules');
+  },
+
+  startExam(){
+    this.state.answers={};
+    this.state.order=Array.from({length:SOAL.length},(_,i)=>i);
+    for(let i=SOAL.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [this.state.order[i],this.state.order[j]]=[this.state.order[j],this.state.order[i]];
+    }
+    this.currIdx=0;this.elapsed=0;
+    clearInterval(this.timerInt);
+    this.timerInt=setInterval(()=>{
+      this.elapsed++;
+      const m=String(Math.floor(this.elapsed/60)).padStart(2,'0');
+      const s=String(this.elapsed%60).padStart(2,'0');
+      document.getElementById('timer-chip').textContent=`${m}:${s}`;
+    },1000);
+    document.getElementById('user-chip').textContent=this.state.nama;
+    document.getElementById('user-chip').style.display='block';
+    document.getElementById('timer-chip').style.display='block';
+    this.renderQuestions();
+    this.renderNavGrid();
+    this.showSlide('quiz');
+    this.goTo(0);
+  },
+
+  renderQuestions(){
+    const box=document.getElementById('quiz-container');
+    box.innerHTML='';
+    this.state.order.forEach((qi,i)=>{
+      const s=SOAL[qi];
+      let html=`<div id="qi-${i}" class="q-item" data-qid="${s.id}">
+        <span class="q-category">${s.cat}</span>
+        ${s.stim||''}
+        <p class="q-text">${i+1}. ${s.q}</p>`;
+      if(s.type==='pg'){
+        s.opt.forEach((o,oi)=>
+          html+=`<label class="option-label"><input type="radio" name="a_${s.id}" value="${o}" onchange="App.saveAns(${s.id},${oi},${qi})"> ${o}</label>`
+        );
+      }else if(s.type==='pgk'){
+        s.opt.forEach((o,oi)=>
+          html+=`<label class="option-label"><input type="checkbox" name="a_${s.id}" value="${o}" onchange="App.saveMulti(${s.id},${oi},${qi})"> ${o}</label>`
+        );
+      }else if(s.type==='pgk-cat'){
+        html+=`<table class="matrix-table"><tr><th style="text-align:left;">Pernyataan</th><th>${s.cols[0]}</th><th>${s.cols[1]}</th></tr>`;
+        s.rows.forEach((r,ri)=>
+          html+=`<tr><td>${r}</td>
+            <td><input type="radio" name="mx_${s.id}_${ri}" onchange="App.saveMx(${s.id},${ri},'${s.cols[0]}')"></td>
+            <td><input type="radio" name="mx_${s.id}_${ri}" onchange="App.saveMx(${s.id},${ri},'${s.cols[1]}')"></td></tr>`
+        );
+        html+=`</table>`;
+      }
+      html+=`</div>`;
+      box.innerHTML+=html;
+    });
+  },
+
+  renderNavGrid(){
+    const g=document.getElementById('nav-grid');
+    g.innerHTML='';
+    this.state.order.forEach((qi,i)=>
+      g.innerHTML+=`<div id="nb-${i}" class="nav-btn" onclick="App.goTo(${i});App.closeDrawer();">${i+1}</div>`
+    );
+    document.getElementById('answered-count').textContent=`0 / ${SOAL.length} dijawab`;
+  },
+
+  goTo(idx){
+    if(idx<0||idx>=SOAL.length)return;
+    this.currIdx=idx;
+    document.querySelectorAll('.q-item').forEach(e=>e.classList.remove('active-q'));
+    document.getElementById(`qi-${idx}`).classList.add('active-q');
+    document.getElementById('q-indicator').textContent=`Soal ${idx+1} / ${SOAL.length}`;
+    document.getElementById('btn-prev').disabled=(idx===0);
+    const nBtn=document.getElementById('btn-next');
+    if(idx===SOAL.length-1){
+      nBtn.textContent='✅ Selesai';nBtn.onclick=()=>this.confirmFinish();nBtn.className='btn btn-danger';
+    }else{
+      nBtn.textContent='Selanjutnya →';nBtn.onclick=()=>this.move(1);nBtn.className='btn btn-primary';
+    }
+    this.restoreVisual(idx);
+    this.updateNavUI();
+    const el=document.getElementById(`qi-${idx}`);
+    if(el){const top=el.getBoundingClientRect().top+window.scrollY-64;window.scrollTo({top:Math.max(0,top),behavior:'smooth'});}
+  },
+
+  move(step){this.goTo(this.currIdx+step);},
+
+  saveAns(qid,oi,qi)  {this.state.answers[qid]=SOAL[qi].opt[oi];this.updateNavUI();},
+  saveMulti(qid,oi,qi){
+    const val=SOAL[qi].opt[oi];
+    let c=this.state.answers[qid]||[];
+    c=c.includes(val)?c.filter(x=>x!==val):[...c,val];
+    this.state.answers[qid]=c;this.updateNavUI();
+  },
+  saveMx(qid,ri,val){
+    let c=this.state.answers[qid]||[];c[ri]=val;
+    this.state.answers[qid]=c;this.updateNavUI();
+  },
+
+  checkFilled(qid){
+    const v=this.state.answers[qid];
+    if(!v)return false;
+    return Array.isArray(v)?v.filter(Boolean).length>0:true;
+  },
+
+  restoreVisual(idx){
+    const s=SOAL[this.state.order[idx]];
+    const ans=this.state.answers[s.id];
+    if(!ans)return;
+    if(s.type==='pg'){
+      const el=document.querySelector(`input[name="a_${s.id}"][value="${CSS.escape(ans)}"]`);
+      if(el)el.checked=true;
+    }else if(s.type==='pgk'){
+      ans.forEach(v=>{const el=document.querySelector(`input[name="a_${s.id}"][value="${CSS.escape(v)}"]`);if(el)el.checked=true;});
+    }else if(s.type==='pgk-cat'){
+      ans.forEach((v,ri)=>{if(v){const el=document.querySelector(`input[name="mx_${s.id}_${ri}"][value="${v}"]`);if(el)el.checked=true;}});
+    }
+  },
+
+  updateNavUI(){
+    let answered=0;
+    this.state.order.forEach((qi,i)=>{
+      const filled=this.checkFilled(SOAL[qi].id);
+      if(filled)answered++;
+      const el=document.getElementById(`nb-${i}`);
+      if(el)el.className='nav-btn'+(i===this.currIdx?' current':'')+(filled?' answered':'');
+    });
+    const c=document.getElementById('answered-count');
+    if(c)c.textContent=`${answered} / ${SOAL.length} dijawab`;
+  },
+
+  openDrawer(){document.getElementById('nav-drawer').classList.add('open');document.getElementById('drawer-overlay').classList.add('show');},
+  closeDrawer(){document.getElementById('nav-drawer').classList.remove('open');document.getElementById('drawer-overlay').classList.remove('show');},
+
+  confirmFinish(){
+    const unanswered=SOAL.filter(s=>!this.checkFilled(s.id)).length;
+    document.getElementById('modal-confirm-text').textContent=unanswered>0
+      ?`Masih ada ${unanswered} soal yang belum dijawab. Yakin ingin mengumpulkan?`
+      :`Semua soal telah dijawab. Yakin ingin mengumpulkan?`;
+    document.getElementById('modal-confirm').style.display='flex';
+  },
+
+  submitExam(){
+    document.getElementById('modal-confirm').style.display='none';
+    document.getElementById('modal-loading').style.display='flex';
+    clearInterval(this.timerInt);
+    const stats={};let totS=0,totM=0;
+    SOAL.forEach(s=>{
+      if(!stats[s.cat])stats[s.cat]={s:0,m:0};
+      stats[s.cat].m+=s.score;totM+=s.score;
+      const u=this.state.answers[s.id];let pt=0;
+      if(u){
+        if     (s.type==='pg'     &&u===s.ans)pt=s.score;
+        else if(s.type==='pgk'    &&JSON.stringify([...u].sort())===JSON.stringify([...s.ans].sort()))pt=s.score;
+        else if(s.type==='pgk-cat'){let m=0;s.ans.forEach((k,i)=>{if(u[i]===k)m++;});pt=(m/s.rows.length)*s.score;}
+      }
+      stats[s.cat].s+=pt;totS+=pt;
+    });
+    const final=Math.round((totS/totM)*100);
+    const tuntas=final>=70;
+    const kompData={};const notTuntas=[];
+    for(const cat in stats){
+      const p=stats[cat].m>0?Math.round((stats[cat].s/stats[cat].m)*100):0;
+      kompData[cat]={skor:p,tuntas:p>=70};
+      if(p<70)notTuntas.push(cat);
+    }
+    const desc=notTuntas.length===0
+      ?'🎉 Selamat! Kamu telah menguasai semua kompetensi.'
+      :'📌 Perlu bimbingan lebih lanjut pada: '+notTuntas.join(', ')+'.';
+    document.getElementById('modal-loading').style.display='none';
+    this.showResult(final,tuntas,desc,kompData);
+    this.sendEmail(final,tuntas,desc,kompData);
+  },
+
+  showResult(score,tuntas,desc,kompData){
+    this.showSlide('result');
+    window.scrollTo({top:0,behavior:'smooth'});
+    const circle=document.getElementById('score-circle');
+    circle.className='score-circle'+(tuntas?' lulus':'');
+    document.getElementById('score-num').textContent=score;
+    document.getElementById('result-status').textContent=tuntas?'🎉 Tuntas!':'📚 Perlu Bimbingan';
+    document.getElementById('result-desc').textContent=desc;
+    const em=Math.floor(this.elapsed/60),es=this.elapsed%60;
+    document.getElementById('result-meta').innerHTML=`
+      <div class="meta-box"><div class="meta-lbl">Siswa</div><div class="meta-val">${this.state.nama}</div></div>
+      <div class="meta-box"><div class="meta-lbl">Kelas</div><div class="meta-val">${this.state.kelas}</div></div>
+      <div class="meta-box"><div class="meta-lbl">Durasi</div><div class="meta-val">${em} mnt ${es} dtk</div></div>
+      <div class="meta-box"><div class="meta-lbl">Tanggal</div><div class="meta-val">${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})}</div></div>`;
+    let barsHTML='';
+    for(const cat in kompData){
+      const d=kompData[cat];
+      barsHTML+=`<div class="comp-bar">
+        <div class="comp-header">
+          <span class="comp-name">${cat}</span>
+          <span class="comp-score" style="color:${d.tuntas?'var(--success)':'var(--danger)'}">
+            ${d.skor}% — ${d.tuntas?'✅ Tuntas':'⚠️ Perlu Bimbingan'}
+          </span>
+        </div>
+        <div class="bar-track"><div class="bar-fill ${d.tuntas?'bar-tuntas':'bar-belum'}" style="width:0%" data-w="${d.skor}%"></div></div>
+      </div>`;
+    }
+    document.getElementById('result-bars').innerHTML=barsHTML;
+    setTimeout(()=>document.querySelectorAll('.bar-fill').forEach(el=>{el.style.width=el.dataset.w;}),200);
+  },
+
+  sendEmail(score,tuntas,desc,kompData){
+    const box=document.getElementById('email-status-box');
+    box.innerHTML=`<div class="email-status es-sending">✉️ Sedang mengirim laporan ke <strong>${this.state.email}</strong>...</div>`;
+    let rows='';
+    for(const cat in kompData){
+      const d=kompData[cat];
+      rows+=`<tr><td style="padding:8px 14px;border:1px solid #e5e7eb;">${cat}</td>
+        <td style="padding:8px 14px;border:1px solid #e5e7eb;text-align:center;font-weight:700;">${d.skor}%</td>
+        <td style="padding:8px 14px;border:1px solid #e5e7eb;text-align:center;color:${d.tuntas?'#057a55':'#e02424'};font-weight:700;">${d.tuntas?'✅ Tuntas':'⚠️ Perlu Bimbingan'}</td></tr>`;
+    }
+    const detailHtml=`<table style="width:100%;border-collapse:collapse;font-size:14px;">
+      <tr style="background:#1e3a8a;color:white;">
+        <th style="padding:10px 14px;text-align:left;">Kompetensi</th>
+        <th style="padding:10px;">Skor</th><th style="padding:10px;">Status</th>
+      </tr>${rows}</table>`;
+    const em=Math.floor(this.elapsed/60),es=this.elapsed%60;
+    emailjs.send(EMAILJS_CONFIG.SERVICE_ID,EMAILJS_CONFIG.TEMPLATE_ID,{
+      to_email:   this.state.email,
+      nama_siswa: this.state.nama,
+      kelas:      this.state.kelas,
+      skor:       score,
+      status:     tuntas?'TUNTAS ✅':'Perlu Bimbingan 📚',
+      tanggal:    new Date().toLocaleString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'}),
+      durasi:     `${em} menit ${es} detik`,
+      detail_html:detailHtml,
+      kesimpulan: desc
+    }).then(()=>{
+      box.innerHTML=`<div class="email-status es-sent">✅ Laporan berhasil dikirim ke <strong>${this.state.email}</strong>. Minta orang tua cek kotak masuk email.</div>`;
+    }).catch(err=>{
+      box.innerHTML=`<div class="email-status es-error">❌ Gagal mengirim email. Periksa koneksi internet.<br><small>${err.text||JSON.stringify(err)}</small></div>`;
+    });
+  },
+
+  retryExam(){this.state.answers={};this.showSlide('rules');window.scrollTo({top:0});},
+
+  showSlide(id){
+    document.querySelectorAll('.slide').forEach(e=>e.classList.remove('active'));
+    document.getElementById('slide-'+id).classList.add('active');
+    if(id!=='quiz'){document.getElementById('user-chip').style.display='none';document.getElementById('timer-chip').style.display='none';}
+    if(id==='login')clearInterval(this.timerInt);
+    window.scrollTo({top:0});
+  },
+
+  applyFont(m){
+    document.querySelectorAll('.stimulus,.q-text,.option-label,.matrix-table').forEach(el=>{el.style.fontSize=`${m}rem`;});
+  },
+  changeFontSize(step){
+    this.fontMult=Math.max(0.8,Math.min(1.6,this.fontMult+step*0.1));
+    this.applyFont(this.fontMult);
+    localStorage.setItem('tka_bi_font',this.fontMult);
+  }
+};
+
+window.onload=()=>App.init();
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&['u','s'].includes(e.key.toLowerCase()))e.preventDefault();});
+document.addEventListener('selectstart',e=>{if(!['INPUT','TEXTAREA'].includes(e.target.tagName)&&!e.target.classList.contains('allow-select'))e.preventDefault();});
+</script>
+</body>
+</html>
