@@ -1,1 +1,1490 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ujian Sekolah Al-Islam - SD Muhammadiyah 01 Kukusan</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'],['\\(','\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<style>
+/* ── VARIABLES ─────────────────────────────────────────── */
+:root {
+  --primary:       #1e3a8a;
+  --primary-light: #eff6ff;
+  --success:       #16a34a;
+  --danger:        #dc2626;
+  --text:          #334155;
+  --bg:            #f1f5f9;
+  --border:        #cbd5e1;
+}
 
+*, *::before, *::after { box-sizing: border-box; outline: none; }
+
+body {
+  margin: 0; padding: 0;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg); color: var(--text);
+  height: 100vh; overflow: hidden;
+}
+
+/* ── LAYOUT ────────────────────────────────────────────── */
+.app-container { display: flex; flex-direction: column; height: 100%; width: 100%; background: white; }
+
+/* HEADER */
+.header {
+  height: 64px; background: var(--primary); color: white;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+  z-index: 50; flex-shrink: 0;
+}
+.header-title { font-weight: 700; font-size: 1.2rem; }
+.timer-box {
+  background: rgba(255,255,255,.15); padding: 6px 16px; border-radius: 6px;
+  font-weight: 700; font-family: monospace; font-size: 1.25rem;
+  border: 1px solid rgba(255,255,255,.2);
+}
+
+/* WORKSPACE */
+.workspace { display: flex; flex: 1; overflow: hidden; position: relative; }
+.main-stage {
+  flex: 1; position: relative; background: var(--bg);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+
+/* ── SLIDES ────────────────────────────────────────────── */
+.slide { display: none !important; width: 100%; height: 100%; }
+.slide.active { display: flex !important; flex-direction: column; animation: fadeIn .4s ease; }
+
+.center-content-wrapper {
+  width: 100%; max-width: 800px; margin: 0 auto;
+  padding: 20px; overflow-y: auto; flex: 1;
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+.card {
+  background: white; border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,.1);
+  padding: 32px; margin-bottom: 20px;
+  border-top: 5px solid var(--primary);
+}
+
+/* ── KUIS ──────────────────────────────────────────────── */
+.quiz-scroll-area {
+  flex: 1; overflow-y: auto;
+  padding: 20px; padding-bottom: 80px;
+  width: 100%; max-width: 900px; margin: 0 auto;
+}
+
+.nav-bar-fixed {
+  flex-shrink: 0; background: white;
+  padding: 16px 24px;
+  border-top: 1px solid #e2e8f0;
+  box-shadow: 0 -4px 15px rgba(0,0,0,.05);
+  display: flex; justify-content: space-between; align-items: center;
+  z-index: 40;
+}
+
+/* ── SOAL ──────────────────────────────────────────────── */
+.question-item { display: none; }
+.question-item.active-q { display: block; animation: slideIn .3s ease-out; }
+@keyframes slideIn { from { opacity:0; transform:translateX(15px); } to { opacity:1; transform:translateX(0); } }
+
+.stimulus-box {
+  background: #fff; border: 1px solid #e2e8f0;
+  border-left: 5px solid var(--primary);
+  padding: 20px; margin-bottom: 24px; border-radius: 8px;
+}
+.stimulus-head {
+  font-weight: 800; color: var(--primary);
+  border-bottom: 2px dashed #e2e8f0;
+  padding-bottom: 10px; margin-bottom: 15px;
+  font-size: 1.1rem; text-transform: uppercase;
+}
+.visual-frame {
+  background: #f8fafc; border: 1px solid #e2e8f0;
+  border-radius: 8px; padding: 20px;
+  display: flex; justify-content: center; align-items: center;
+  margin: 15px 0; overflow: hidden;
+}
+.arabic-text {
+  font-size: 1.5rem;
+  font-family: 'Times New Roman', 'Scheherazade New', serif;
+  direction: rtl;
+  line-height: 2.2;
+  text-align: right;
+  color: #1e293b;
+  width: 100%;
+}
+
+.q-text { font-size: 1.15rem; font-weight: 600; color: #1e293b; margin-bottom: 20px; line-height: 1.6; }
+.tag-cat {
+  display: inline-block; font-size: .75rem;
+  background: #e0f2fe; color: #0369a1;
+  padding: 4px 10px; border-radius: 20px;
+  font-weight: bold; margin-bottom: 10px;
+}
+
+.opt-label {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 16px; background: white;
+  border: 1px solid #cbd5e1; border-radius: 8px;
+  margin-bottom: 12px; cursor: pointer;
+  transition: all .2s; font-size: 1rem; color: #475569;
+}
+.opt-label:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+.opt-label input { margin-top: 4px; transform: scale(1.2); flex-shrink: 0; }
+
+/* TABEL MATRIKS */
+.matrix-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.matrix-table { width: 100%; border-collapse: collapse; margin-top: 10px; min-width: 320px; }
+.matrix-table th, .matrix-table td { border: 1px solid #e2e8f0; padding: 12px; }
+.matrix-table th { background: #f1f5f9; text-align: center; font-size: .85rem; white-space: nowrap; }
+.matrix-table td { text-align: center; }
+.matrix-table td:first-child { text-align: left; font-weight: 500; }
+
+/* ── SIDEBAR ───────────────────────────────────────────── */
+.side-panel {
+  width: 300px; background: white;
+  border-left: 1px solid #e2e8f0;
+  display: flex; flex-direction: column;
+  flex-shrink: 0; z-index: 40;
+}
+.nav-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; padding: 20px; overflow-y: auto; }
+.nav-num {
+  aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+  border: 1px solid #cbd5e1; border-radius: 6px;
+  cursor: pointer; font-weight: 700; color: #64748b; transition: all .2s;
+}
+.nav-num:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+.nav-num.current { border: 2px solid var(--primary); transform: scale(1.1); box-shadow: 0 2px 8px rgba(0,0,0,.15); color: var(--primary); }
+.nav-num.filled { background-color: var(--success)!important; color: white!important; border-color: var(--success)!important; }
+.nav-num.filled.current { border: 3px solid #1e3a8a!important; }
+
+/* ── FORM INPUT ────────────────────────────────────────── */
+input[type="text"], select {
+  width: 100%; padding: 14px; margin: 8px 0 20px;
+  border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem;
+}
+
+/* ── TOMBOL ────────────────────────────────────────────── */
+.btn {
+  background: var(--primary); color: white; border: none;
+  padding: 12px 24px; border-radius: 8px; cursor: pointer;
+  font-weight: 700; font-size: 1rem;
+  display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+}
+.btn:hover { background: #172554; }
+.btn:disabled { background: #94a3b8; cursor: not-allowed; }
+.btn-outline { background: white; border: 1px solid #cbd5e1; color: #475569; }
+.btn-outline:hover { background: #f8fafc; }
+.btn-danger { background: var(--danger); }
+.btn-danger:hover { background: #b91c1c; }
+
+/* ── HASIL (CHART) ─────────────────────────────────────── */
+.chart-row { display: flex; align-items: center; margin-bottom: 12px; }
+.chart-lbl { width: 210px; font-size: .82rem; font-weight: 600; text-align: right; padding-right: 15px; flex-shrink: 0; }
+.chart-track { flex: 1; background: #e2e8f0; height: 16px; border-radius: 10px; overflow: hidden; }
+.chart-fill { height: 100%; transition: width 1s ease-out; }
+.chart-val { width: 50px; padding-left: 10px; font-weight: 700; }
+
+/* ── OVERLAY / MODAL ───────────────────────────────────── */
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.6); backdrop-filter: blur(4px);
+  display: none; justify-content: center; align-items: center;
+  z-index: 100;
+}
+.modal { background: white; padding: 30px; border-radius: 16px; width: 90%; max-width: 420px; text-align: center; }
+
+/* PIN INPUT */
+.pin-input-wrap { position: relative; margin-bottom: 10px; }
+.pin-input-wrap svg {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  color: #94a3b8; pointer-events: none;
+}
+#inp-pin {
+  width: 100%; padding: 14px 14px 14px 44px;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  font-size: 1.1rem; font-weight: 700; letter-spacing: .15em;
+  font-family: monospace; color: var(--text);
+  transition: border-color .2s;
+}
+#inp-pin:focus { border-color: var(--primary); }
+#inp-pin.error { border-color: #dc2626; animation: shake .3s ease; }
+#pin-err { font-size: .82rem; color: #dc2626; font-weight: 600; display: none; margin-bottom: 14px; }
+
+/* GAMBAR SOAL */
+.stimulus-img { max-width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+
+/* LOADING SPINNER */
+@keyframes spin  { 0%   { transform: rotate(0deg);   } 100% { transform: rotate(360deg); } }
+@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+
+/* ── RESPONSIVE ────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .workspace     { flex-direction: column; }
+  .side-panel    { width: 100%; height: auto; border-left: none; border-top: 1px solid #e2e8f0; order: 2; }
+  .nav-grid      { max-height: 120px; padding: 10px; }
+  .chart-lbl     { width: 140px; font-size: .75rem; }
+  .header-title  { font-size: 1rem; }
+}
+
+mjx-container { font-size: 1.1em !important; }
+</style>
+</head>
+<body>
+
+<div class="app-container">
+  <div class="header">
+    <div class="header-title">Ujian Sekolah Al-Islam</div>
+    <div style="display:flex;align-items:center;gap:15px;">
+      <div id="user-badge"
+           style="display:none;font-size:.85rem;background:rgba(255,255,255,.1);
+                  padding:5px 12px;border-radius:20px;"></div>
+      <div class="timer-box" id="timer-display">--:--</div>
+    </div>
+  </div>
+
+  <div class="workspace">
+    <div class="main-stage">
+
+      <!-- ① SLIDE PIN ──────────────────────────────────── -->
+      <div id="slide-pin" class="slide active">
+        <div class="center-content-wrapper">
+          <div class="card" style="max-width:420px;margin:0 auto;text-align:center;">
+            <div style="font-size:2.5rem;margin-bottom:12px;">🔐</div>
+            <h2 style="color:var(--primary);margin-top:0;">Masukkan PIN</h2>
+            <p style="color:#64748b;margin-bottom:24px;font-size:.95rem;">
+              Masukkan PIN dari guru untuk membuka<br>
+              <strong>Uji Coba Ujian Al-Islam</strong>
+            </p>
+            <div class="pin-input-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2.2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <input type="password" id="inp-pin"
+                     placeholder="PIN ujian…"
+                     maxlength="30" autocomplete="off"
+                     onkeydown="if(event.key==='Enter') app.checkPin()">
+            </div>
+            <div id="pin-err">❌ PIN salah. Coba lagi.</div>
+            <button class="btn" style="width:100%" onclick="app.checkPin()">
+              Buka Ujian →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ② SLIDE LOGIN ────────────────────────────────── -->
+      <div id="slide-login" class="slide">
+        <div class="center-content-wrapper">
+          <div class="card" style="max-width:450px;margin:0 auto;text-align:center;">
+            <h2 style="color:var(--primary);margin-top:0;">Selamat Datang</h2>
+            <p style="color:#64748b;margin-bottom:30px;">Uji Coba Ujian Sekolah Al-Islam (Fase C)</p>
+            <div style="text-align:left;">
+              <label>Nama Lengkap</label>
+              <input type="text" id="inpNama" placeholder="Masukkan nama lengkap…">
+              <label>Kelas</label>
+              <select id="inpKelas">
+                <option value="">-- Pilih Kelas --</option>
+                <option value="6A">Kelas 6A</option>
+                <option value="6B">Kelas 6B</option>
+              </select>
+            </div>
+            <button class="btn" style="width:100%" onclick="app.login()">
+              Masuk Ujian
+            </button>
+            <div id="resume-alert"
+                 style="display:none;margin-top:20px;padding:10px;
+                        background:#eff6ff;color:#1d4ed8;border-radius:8px;
+                        cursor:pointer;font-size:.9rem;"
+                 onclick="app.resume()">
+              🔄 <b>Sesi Tersimpan Ditemukan</b><br>Klik untuk melanjutkan
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ③ SLIDE PETUNJUK ─────────────────────────────── -->
+      <div id="slide-rules" class="slide">
+        <div class="center-content-wrapper">
+          <div class="card" style="max-width:700px;margin:0 auto;">
+            <h2 style="margin-top:0;border-bottom:1px solid #e2e8f0;
+                       padding-bottom:15px;color:var(--primary);">
+              Petunjuk Pengerjaan
+            </h2>
+            <div style="line-height:1.8;color:#334155;">
+              <p>1. <strong>Waktu:</strong> Waktu pengerjaan soal ujian adalah <strong>90 menit</strong>.</p>
+              <p>2. <strong>Soal:</strong> 40 butir soal Al-Islam (Al-Qur'an &amp; Hadis, Aqidah &amp; Akhlak, Fiqh, dan SKI).</p>
+              <p>3. <strong>Tipe soal:</strong> Pilihan Ganda (PG), Pilihan Ganda Kompleks, dan Menjodohkan/Kategori.</p>
+              <p>4. <strong>Tips:</strong> Untuk soal yang menampilkan teks Arab, baca dengan teliti sebelum menjawab.</p>
+              <p>5. <strong>Tips:</strong> Untuk soal Pilihan Ganda Kompleks, perhatikan bahwa lebih dari satu jawaban bisa benar.</p>
+              <p>6. <strong>Tips:</strong> Untuk soal menjodohkan/kategori, pastikan setiap baris sudah dipilih sebelum mengakhiri ujian.</p>
+            </div>
+            <div style="margin-top:30px;text-align:right;">
+              <button class="btn" onclick="app.startExam()">
+                Mulai Mengerjakan &#8594;
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ④ SLIDE KUIS ──────────────────────────────────── -->
+      <div id="slide-quiz" class="slide">
+        <div id="quiz-scroll" class="quiz-scroll-area">
+          <div id="quiz-container"></div>
+        </div>
+        <div class="nav-bar-fixed">
+          <button class="btn btn-outline" id="btn-prev" onclick="app.move(-1)">
+            &#8592; Sebelumnya
+          </button>
+          <span id="q-indicator" style="font-weight:700;color:var(--primary);">
+            Soal 1 / 40
+          </span>
+          <button class="btn" id="btn-next" onclick="app.move(1)">
+            Selanjutnya
+          </button>
+        </div>
+      </div>
+
+      <!-- ⑤ SLIDE HASIL ─────────────────────────────────── -->
+      <div id="slide-result" class="slide">
+        <div class="center-content-wrapper">
+          <div class="card" style="max-width:620px;margin:0 auto;text-align:center;">
+            <div style="font-size:4rem;margin-bottom:10px;">🎉</div>
+            <h2 style="color:var(--primary);margin:0;">Ujian Selesai!</h2>
+            <p style="color:#64748b;">Jawaban kamu telah kami terima.</p>
+            <div id="result-content"
+                 style="text-align:left;margin-top:30px;
+                        border-top:1px solid #e2e8f0;padding-top:20px;">
+              <p style="text-align:center;color:#64748b;">Sedang memproses nilai…</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /main-stage -->
+
+    <!-- SIDEBAR NAVIGASI ──────────────────────────────── -->
+    <div class="side-panel" id="sidebar" style="display:none;">
+      <div style="padding:15px 20px;font-weight:700;color:#334155;
+                  border-bottom:1px solid #e2e8f0;
+                  display:flex;justify-content:space-between;align-items:center;">
+        <span>Navigasi Soal</span>
+        <span style="font-size:.8rem;background:#e0f2fe;color:#0369a1;
+                     padding:2px 8px;border-radius:10px;">40 Butir</span>
+      </div>
+      <div class="nav-grid" id="nav-grid"></div>
+      <div style="padding:20px;border-top:1px solid #e2e8f0;
+                  margin-top:auto;background:#f8fafc;">
+        <button class="btn btn-danger" style="width:100%"
+                onclick="app.confirmFinish()">
+          Selesai Ujian
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /workspace -->
+</div><!-- /app-container -->
+
+<!-- MODAL KONFIRMASI ──────────────────────────────────── -->
+<div id="modal-confirm" class="overlay">
+  <div class="modal">
+    <h3 style="color:var(--primary);">Konfirmasi Pengumpulan</h3>
+    <p>Yakin ingin mengakhiri dan mengumpulkan ujian ini?</p>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:25px;">
+      <button class="btn btn-outline"
+              onclick="document.getElementById('modal-confirm').style.display='none'">
+        Cek Lagi
+      </button>
+      <button class="btn btn-danger" onclick="app.submitExam()">
+        Ya, Kumpulkan
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL LOADING ──────────────────────────────────────── -->
+<div id="modal-loading" class="overlay">
+  <div class="modal">
+    <h3 style="color:var(--primary);">Sedang Mengirim…</h3>
+    <div style="width:40px;height:40px;border:4px solid #e2e8f0;
+                border-top:4px solid var(--primary);border-radius:50%;
+                margin:10px auto;animation:spin 1s linear infinite;"></div>
+    <p>Mohon jangan tutup halaman ini.</p>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  KONFIGURASI
+//  PIN: Ai46JM  |  HASH: 8724d0ce9bc3f77e
+//  Untuk mengganti PIN, jalankan di browser console:
+//    hashPin("PIN_BARU").then(h => console.log(h))
+//  lalu salin hasilnya ke PIN_HASH.
+// ════════════════════════════════════════════════════════
+const CONFIG = {
+  SCRIPT_URL:  "https://script.google.com/macros/s/AKfycbwJveJtAISKhveIQ4wspAaeaUKLrqB_IBY55qhOqDOl649QSjqtBa2hYhOrx7UNs0GbdA/exec",
+  STORAGE_KEY: "US_2026_AL_ISLAM",
+  DURATION:    90 * 60,
+  PIN_HASH:    "8724d0ce9bc3f77e"  // PIN: Ai46JM
+};
+
+// ── Fungsi hash (SHA-256, 16 karakter) ──────────────────
+async function hashPin(pin) {
+  const enc = new TextEncoder().encode(pin.trim().toLowerCase());
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf))
+    .map(b => b.toString(16).padStart(2,'0'))
+    .join('').slice(0, 16);
+}
+window.hashPin = hashPin;
+
+// ── Aset Gambar ─────────────────────────────────────────
+// Kosongkan sementara — isi URL setelah gambar diunggah ke hosting
+// Contoh pengisian: "nama_kunci": "https://i.ibb.co.com/xxx/nama-file.png"
+const IMAGE_ASSETS = {
+  // "contoh": "https://..."
+};
+
+function getImg(key, alt = "Ilustrasi Soal") {
+  const url = IMAGE_ASSETS[key];
+  if (!url) return `<div style="background:#fef3c7;padding:15px;border-radius:8px;
+    text-align:center;border:1px solid #f59e0b;">⚠️ Gambar belum tersedia</div>`;
+  return `<img src="${url}" alt="${alt}" class="stimulus-img" loading="eager">`;
+}
+
+// ════════════════════════════════════════════════════════
+//  BANK SOAL — 40 butir
+//  Dipilih dari 50 soal naskah asli, dikurangi 10 soal
+//  yang kurang esensial / tumpang tindih.
+//  Beberapa soal dikonversi ke tipe PGK dan PGK-CAT.
+//
+//  Tipe:
+//    pg      = Pilihan Ganda biasa (skor 1)
+//    pgk     = PG Kompleks / MCMA (skor 2)
+//    pgk-cat = Menjodohkan / kategori (skor 2)
+//
+//  Kategori:
+//    "Al-Qur'an & Hadis"        (8 soal)
+//    "Aqidah & Akhlak"          (12 soal)
+//    "Fiqh"                     (12 soal)
+//    "Sejarah Kebudayaan Islam" (8 soal)
+// ════════════════════════════════════════════════════════
+const QUESTIONS = [
+
+  // ── AL-QUR'AN & HADIS (8 soal) ──────────────────────
+
+  {
+    id: 1, cat: "Al-Qur'an & Hadis", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Surah Al-Alaq</div>
+      <p>Surah Al-Alaq adalah surah yang pertama kali turun kepada Nabi Muhammad saw melalui
+      Malaikat Jibril di Gua Hira. Surah ini menjadi penanda awal kenabian Muhammad saw
+      dan mengandung pesan tentang pentingnya ilmu pengetahuan.</p>
+    </div>`,
+    q: "Arti dari nama Surah Al-Alaq adalah …",
+    opt: ["Segumpal darah", "Sapi betina", "Yang datang malam hari", "Pembukaan"],
+    ans: "Segumpal darah"
+  },
+
+  {
+    id: 2, cat: "Al-Qur'an & Hadis", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Ayat Pertama Surah Al-Alaq</div>
+      <div class='visual-frame'>
+        <div class='arabic-text'>اِقۡرَاۡ بِاسۡمِ رَبِّكَ الَّذِىۡ خَلَقَ</div>
+      </div>
+      <p>Perhatikan ayat di atas yang merupakan ayat pertama dari Surah Al-Alaq.</p>
+    </div>`,
+    q: "Ayat tersebut mengandung makna …",
+    opt: [
+      "Pembelajaran dengan pena",
+      "Penciptaan manusia",
+      "Kemuliaan Dzat Tuhan",
+      "Pentingnya membaca"
+    ],
+    ans: "Pentingnya membaca"
+  },
+
+  {
+    id: 3, cat: "Al-Qur'an & Hadis", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Birrul Walidain (Berbakti kepada Orang Tua)</div>
+      <div class='visual-frame'>
+        <div class='arabic-text'>وَوَصَّيۡنَا الۡاِنۡسٰنَ بِوَالِدَيۡهِ</div>
+      </div>
+      <p>Potongan ayat di atas merupakan bagian dari perintah Allah kepada manusia
+      tentang hubungannya dengan orang-orang terdekat.</p>
+    </div>`,
+    q: "Makna yang tepat untuk ayat di atas yaitu menuntut kita berlaku mulia kepada …",
+    opt: ["Guru", "Tamu", "Orangtua", "Tetangga"],
+    ans: "Orangtua"
+  },
+
+  {
+    id: 4, cat: "Al-Qur'an & Hadis", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Hadis tentang Tetangga (HR. Imam Al-Bukhari)</div>
+      <div class='visual-frame'>
+        <div class='arabic-text'>فُلاَنَةُ تُصَلِّي مَكْتُوبَةً، وَتَتَصَدَّقُ بِأَثْوَارٍ مِنَ الْأَقِطِ، وَلَا تُؤْذِي أَحَدً</div>
+      </div>
+      <p>Hadis di atas menceritakan tentang seorang perempuan salehah beserta
+      kebiasaan-kebiasaan mulia yang ia lakukan dalam keseharian hidupnya.</p>
+    </div>`,
+    q: "Pilih LEBIH DARI SATU perilaku mulia yang disebutkan secara langsung dalam hadis di atas!",
+    opt: [
+      "Melaksanakan shalat wajib",
+      "Bersedekah dengan beberapa potong keju",
+      "Tidak pernah menyakiti siapapun",
+      "Selalu membantu tetangga yang sakit"
+    ],
+    ans: ["Melaksanakan shalat wajib", "Bersedekah dengan beberapa potong keju", "Tidak pernah menyakiti siapapun"]
+  },
+
+  {
+    id: 5, cat: "Al-Qur'an & Hadis", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Nama-Nama Surah dalam Al-Quran</div>
+      <p>Dalam Al-Quran terdapat banyak surah dengan nama dan arti yang beragam.
+      Salah satunya adalah Surah Al-Thariq yang memiliki makna dengan tema
+      peristiwa yang terjadi pada waktu malam hari.</p>
+    </div>`,
+    q: "Arti dari nama Surah Al-Thariq adalah …",
+    opt: [
+      "Yang terbelah",
+      "Yang datang pada malam hari",
+      "Yang Maha Pengasih",
+      "Yang Maha Pengampun"
+    ],
+    ans: "Yang datang pada malam hari"
+  },
+
+  {
+    id: 6, cat: "Al-Qur'an & Hadis", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Surah Al-A'la Ayat 1</div>
+      <div class='visual-frame'>
+        <div class='arabic-text'>سَبِّحِ اسۡمَ رَبِّكَ الۡاَعۡلَىۙ</div>
+      </div>
+      <p>Perhatikan ayat pertama dari Surah Al-A'la di atas.</p>
+    </div>`,
+    q: "Pernyataan yang sesuai dengan ayat di atas adalah perintah untuk …",
+    opt: [
+      "Menggapai kelancaran untuk keberhasilan dalam hidup",
+      "Mendapatkan keberkahan dan perlindungan dari Allah swt",
+      "Memperlihatkan kehidupan dunia dan akhirat",
+      "Menyucikan nama Tuhan sebagai pencipta Yang Maha Tinggi"
+    ],
+    ans: "Menyucikan nama Tuhan sebagai pencipta Yang Maha Tinggi"
+  },
+
+  {
+    id: 7, cat: "Al-Qur'an & Hadis", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Al-Quran Surah Al-Hujurat Ayat 13</div>
+      <p>Surah Al-Hujurat ayat 13 membahas tentang kesetaraan derajat manusia di sisi
+      Allah swt. Ayat ini menjelaskan bahwa semua manusia berasal dari asal yang sama,
+      dan yang membedakan derajat mereka hanya satu hal.</p>
+    </div>`,
+    q: "Berdasarkan Surah Al-Hujurat ayat 13, manusia yang paling mulia ditunjukkan oleh …",
+    opt: [
+      "Ketakwaan kepada Allah swt",
+      "Kepentingan politik atau ekonomi",
+      "Latar belakang atau status sosialnya",
+      "Kekuatan fisik atau kekayaan materi"
+    ],
+    ans: "Ketakwaan kepada Allah swt"
+  },
+
+  {
+    id: 8, cat: "Al-Qur'an & Hadis", type: "pgk-cat", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Nama dan Arti Surah dalam Al-Quran</div>
+      <p>Al-Quran terdiri dari 114 surah yang masing-masing memiliki nama dan arti
+      tersendiri. Pemahaman terhadap nama dan arti surah merupakan bagian penting
+      dalam mempelajari Al-Quran.</p>
+    </div>`,
+    q: "Tentukan apakah pasangan nama surah dan artinya berikut ini TEPAT atau TIDAK TEPAT!",
+    rows: [
+      "Al-Alaq = Segumpal Darah",
+      "Al-Thariq = Yang Datang pada Malam Hari",
+      "Al-A'la = Pembukaan",
+      "Al-Baqarah = Sapi Betina"
+    ],
+    cols: ["Tepat", "Tidak Tepat"],
+    ans: ["Tepat", "Tepat", "Tidak Tepat", "Tepat"]
+  },
+
+  // ── AQIDAH & AKHLAK (12 soal) ───────────────────────
+
+  {
+    id: 9, cat: "Aqidah & Akhlak", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Asmaul Husna: Al-Qahar</div>
+      <p>Al-Qahar merupakan salah satu dari 99 Asmaul Husna Allah swt. Memahami
+      Asmaul Husna merupakan bagian dari iman kepada Allah swt dan dapat mempertebal
+      keyakinan seorang muslim.</p>
+    </div>`,
+    q: "Arti dari Asmaul Husna Al-Qahar adalah Allah Maha …",
+    opt: ["Mengetahui", "Pembuka", "Kuasa", "Memberi rezeki"],
+    ans: "Kuasa"
+  },
+
+  {
+    id: 10, cat: "Aqidah & Akhlak", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Asmaul Husna: Ar-Razzaq</div>
+      <p>Dia Allah yang mengatur rezeki dan memberikannya kepada seluruh makhluk-Nya.
+      Dia menciptakan sebab-sebab sehingga setiap makhluk-Nya dapat menerima rezeki
+      dari Allah dengan cara yang telah ditentukan-Nya.</p>
+    </div>`,
+    q: "Pernyataan di atas sesuai dengan Asmaul Husna …",
+    opt: ["Al-Qahar", "Ar-Razzaq", "Al-Wahhab", "Al-Fattah"],
+    ans: "Ar-Razzaq"
+  },
+
+  {
+    id: 11, cat: "Aqidah & Akhlak", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Asmaul Husna: Al-Wahhab</div>
+      <p>Allah swt memiliki Asmaul Husna Al-Wahhab yang berarti Maha Pemberi.
+      Segala nikmat dan pemberian yang kita terima dalam kehidupan merupakan
+      wujud nyata dari sifat Al-Wahhab Allah swt kepada makhluk-Nya.</p>
+    </div>`,
+    q: "Contoh perbuatan yang menunjukkan perilaku sifat Allah Al-Wahhab ialah …",
+    opt: ["Menjaga kesehatan", "Melihat ciptaan Allah swt", "Rajin berdoa", "Mendapat mainan baru"],
+    ans: "Mendapat mainan baru"
+  },
+
+  {
+    id: 12, cat: "Aqidah & Akhlak", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Asmaul Husna: Al-Ghaffar</div>
+      <p>Allah swt Maha Mengampuni dosa hamba-hamba-Nya karena kemurahan dan
+      anugerah-Nya yang tiada batas. Tidak ada dosa yang terlalu besar untuk
+      diampuni oleh Allah jika hamba-Nya sungguh-sungguh bertobat.</p>
+    </div>`,
+    q: "Ke-Maha Murahan Allah swt dalam mengampuni tersebut sesuai dengan Asmaul Husna …",
+    opt: ["Al-Alim", "Al-Wahid", "Al-Affuwu", "Al-Ghaffar"],
+    ans: "Al-Ghaffar"
+  },
+
+  {
+    id: 13, cat: "Aqidah & Akhlak", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Asmaul Husna: Al-Affuwu</div>
+      <p>Al-Affuwu merupakan salah satu Asmaul Husna yang menggambarkan sifat pemaaf
+      Allah swt. Asmaul Husna ini erat kaitannya dengan Al-Ghaffar, namun keduanya
+      memiliki nuansa makna yang sedikit berbeda.</p>
+    </div>`,
+    q: "Arti dari Asmaul Husna Al-Affuwu ialah Allah Maha …",
+    opt: ["Pemaaf kesalahan hamba-Nya", "Mengetahui", "Sempurna", "Esa"],
+    ans: "Pemaaf kesalahan hamba-Nya"
+  },
+
+  {
+    id: 14, cat: "Aqidah & Akhlak", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Asmaul Husna: Al-Wahid</div>
+      <p>Sebagai seorang muslim, kita meyakini bahwa Allah adalah satu-satunya Tuhan
+      yang berhak disembah. Keyakinan ini merupakan inti dari aqidah Islam yang disebut
+      tauhid, dan tidak boleh ada sesuatu pun yang disejajarkan dengan Allah.</p>
+    </div>`,
+    q: "Sebagai satu-satunya Tuhan yang kita sembah tanpa boleh kita menyekutukan-Nya adalah Asmaul Husna dari …",
+    opt: ["Al-Quddus", "Al-Ghaffar", "Al-Wahid", "Al-Affuwu"],
+    ans: "Al-Wahid"
+  },
+
+  {
+    id: 15, cat: "Aqidah & Akhlak", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Akhlak kepada Allah swt</div>
+      <p>Sebagai hamba Allah, manusia memiliki kewajiban untuk berakhlak baik kepada
+      Allah swt. Akhlak kepada Allah bukan sekadar tentang ibadah ritual, melainkan
+      mencakup seluruh sikap dan perilaku yang menunjukkan ketaatan kepada-Nya.</p>
+    </div>`,
+    q: "Makna yang paling tepat untuk mengartikan akhlak kepada Allah swt adalah …",
+    opt: [
+      "Sikap dan perilaku saat beribadah dan taat kepada-Nya",
+      "Keikhlasan dalam beribadah",
+      "Meningkatkan kepercayaan kepada Allah",
+      "Berdoa kepada Allah dengan tulus dan pasrah"
+    ],
+    ans: "Sikap dan perilaku saat beribadah dan taat kepada-Nya"
+  },
+
+  {
+    id: 16, cat: "Aqidah & Akhlak", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Makna Iman</div>
+      <p>Iman merupakan fondasi utama dalam kehidupan seorang muslim. Seluruh amal
+      ibadah dan perilaku seorang muslim didasarkan atas keimanan yang kuat kepada
+      Allah swt, malaikat, kitab, rasul, hari kiamat, dan qadha-qadar.</p>
+    </div>`,
+    q: "Secara bahasa, iman artinya …",
+    opt: [
+      "Kepercayaan dan keyakinan",
+      "Ketundukan dan kepasrahan",
+      "Yakin dan dapat dipercaya",
+      "Kepatuhan dan ketaatan diri"
+    ],
+    ans: "Kepercayaan dan keyakinan"
+  },
+
+  {
+    id: 17, cat: "Aqidah & Akhlak", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Hari Kiamat dan Balasan Amal</div>
+      <p>Iman kepada hari kiamat merupakan salah satu rukun iman yang wajib diyakini
+      setiap muslim. Pada saat kiamat terjadi, setiap manusia akan mempertanggung-
+      jawabkan seluruh amalannya selama hidup di dunia.</p>
+    </div>`,
+    q: "Orang-orang muslim yang selalu beramal saleh akan mendapatkan … dari Allah swt.",
+    opt: ["Ujian", "Kesulitan", "Perlindungan", "Permasalahan"],
+    ans: "Perlindungan"
+  },
+
+  {
+    id: 18, cat: "Aqidah & Akhlak", type: "pgk-cat", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Asmaul Husna dan Artinya</div>
+      <p>Asmaul Husna adalah 99 nama-nama terbaik yang dimiliki Allah swt. Memahami
+      arti dari setiap Asmaul Husna sangat penting dalam mempertebal keimanan dan
+      mengenal Allah swt lebih dalam.</p>
+    </div>`,
+    q: "Tentukan apakah pasangan Asmaul Husna dan artinya berikut ini SESUAI atau TIDAK SESUAI!",
+    rows: [
+      "Al-Ghaffar = Maha Pengampun",
+      "Al-Wahid = Maha Kuasa",
+      "Al-Affuwu = Maha Pemaaf",
+      "Ar-Razzaq = Maha Pemberi Rezeki"
+    ],
+    cols: ["Sesuai", "Tidak Sesuai"],
+    ans: ["Sesuai", "Tidak Sesuai", "Sesuai", "Sesuai"]
+  },
+
+  {
+    id: 19, cat: "Aqidah & Akhlak", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Qadha dan Qadar</div>
+      <p>Asep yang merupakan siswa SD Muhammadiyah sangat senang karena lolos seleksi
+      sebagai anggota Paskibra. Namun Asep menyadari bahwa keberhasilan itu bukan
+      hanya hasil usahanya sendiri, melainkan juga karunia dari Allah swt.</p>
+    </div>`,
+    q: "Sikap yang harus ditunjukkan oleh Asep sebagai seorang muslim yang beriman kepada Qadha dan Qadar adalah …",
+    opt: ["Tenang", "Ikhlas", "Sabar", "Syukur"],
+    ans: "Syukur"
+  },
+
+  {
+    id: 20, cat: "Aqidah & Akhlak", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Akhlak Mulia kepada Sesama</div>
+      <p>Islam mengajarkan umatnya untuk selalu berakhlak mulia dalam kehidupan
+      bermasyarakat. Akhlak mulia kepada sesama merupakan cerminan keimanan yang
+      sesungguhnya dalam diri seorang muslim.</p>
+    </div>`,
+    q: "Pilih LEBIH DARI SATU contoh perilaku yang mencerminkan akhlak mulia kepada sesama dalam kehidupan sehari-hari!",
+    opt: [
+      "Membela teman yang mendapat perlakuan buruk",
+      "Memberi contekan pada teman saat ulangan",
+      "Ikhlas membantu orang yang membutuhkan",
+      "Menghargai kelebihan orang lain"
+    ],
+    ans: ["Membela teman yang mendapat perlakuan buruk", "Ikhlas membantu orang yang membutuhkan", "Menghargai kelebihan orang lain"]
+  },
+
+  // ── FIQH (12 soal) ──────────────────────────────────
+
+  {
+    id: 21, cat: "Fiqh", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Baligh dalam Ajaran Islam</div>
+      <p>Dalam ajaran Islam, seseorang yang telah mencapai usia baligh memiliki
+      kewajiban penuh dalam menjalankan ibadah dan hukum Islam. Penentuan baligh
+      memiliki kriteria tersendiri yang bersumber dari Al-Quran dan hadis.</p>
+    </div>`,
+    q: "Dalam ajaran Islam, proses penentuan seseorang telah mencapai masa baligh ditetapkan berdasarkan …",
+    opt: [
+      "Pertimbangan dokter spesialis",
+      "Penetapan oleh keluarga terdekat",
+      "Tanda-tanda fisik dan perkembangan emosional",
+      "Tingkat usia"
+    ],
+    ans: "Tanda-tanda fisik dan perkembangan emosional"
+  },
+
+  {
+    id: 22, cat: "Fiqh", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Shalat Jumat</div>
+      <p>Shalat Jumat merupakan ibadah wajib bagi laki-laki muslim yang telah baligh.
+      Shalat ini memiliki ketentuan-ketentuan khusus yang membedakannya dari shalat
+      wajib lainnya, baik dari segi jumlah rakaat maupun tata caranya.</p>
+    </div>`,
+    q: "Pilih LEBIH DARI SATU pernyataan yang BENAR tentang pelaksanaan shalat Jumat!",
+    opt: [
+      "Berjumlah dua rakaat",
+      "Dilaksanakan pada waktu Dzuhur",
+      "Didahului dengan dua khutbah",
+      "Dilaksanakan sebelum khutbah"
+    ],
+    ans: ["Berjumlah dua rakaat", "Dilaksanakan pada waktu Dzuhur", "Didahului dengan dua khutbah"]
+  },
+
+  {
+    id: 23, cat: "Fiqh", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Infaq dalam Islam</div>
+      <p>Islam menganjurkan umatnya untuk senantiasa berbagi kepada sesama.
+      Salah satu bentuk berbagi dalam Islam adalah infaq, yaitu membelanjakan
+      harta di jalan Allah swt demi meraih ridha-Nya.</p>
+    </div>`,
+    q: "Kata 'infaq' berasal dari bahasa Arab yang artinya membelanjakan. Orang yang menginfaqkan sesuatu disebut …",
+    opt: ["Munfiq", "Muzakki", "Muallaf", "Muwaqif"],
+    ans: "Munfiq"
+  },
+
+  {
+    id: 24, cat: "Fiqh", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Sedekah, Infaq, dan Hadiah</div>
+      <p>Dalam Islam terdapat beberapa cara berbagi kepada sesama, di antaranya adalah
+      sedekah, infaq, dan hadiah. Ketiga bentuk berbagi ini memiliki karakteristik
+      yang berbeda-beda, khususnya dalam hal jenis pemberian dan cakupannya.</p>
+    </div>`,
+    q: "Sedekah memiliki cakupan yang lebih luas dibandingkan infaq dan hadiah karena sedekah …",
+    opt: [
+      "Bisa berupa materi dan non-materi seperti ilmu dan senyum",
+      "Diberikan pada saat tertentu",
+      "Hanya diberikan kepada keluarga dan kerabat dekat",
+      "Berupa materi"
+    ],
+    ans: "Bisa berupa materi dan non-materi seperti ilmu dan senyum"
+  },
+
+  {
+    id: 25, cat: "Fiqh", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Zakat Fitrah dan Zakat Maal</div>
+      <p>Zakat merupakan salah satu rukun Islam yang wajib dijalankan oleh setiap
+      muslim yang mampu. Secara umum zakat terbagi dua yaitu zakat Maal dan zakat
+      Fitrah, yang masing-masing memiliki waktu pengeluaran yang berbeda.</p>
+    </div>`,
+    q: "Adapun zakat fitrah dikeluarkan pada …",
+    opt: [
+      "Dari hasil pertanian",
+      "Setiap kali kita mendapatkan rezeki",
+      "Menjelang hari raya Idul Fitri",
+      "Saat mendapat untung besar"
+    ],
+    ans: "Menjelang hari raya Idul Fitri"
+  },
+
+  {
+    id: 26, cat: "Fiqh", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Mustahik Zakat</div>
+      <p>Zakat yang dikumpulkan dari umat Islam memiliki sasaran penerima yang
+      telah ditetapkan langsung oleh Allah swt dalam Al-Quran. Orang yang berhak
+      menerima zakat disebut mustahik.</p>
+    </div>`,
+    q: "Berdasarkan Al-Quran Surah At-Taubat ayat 60, jumlah golongan mustahik zakat sebanyak … golongan.",
+    opt: ["6", "7", "8", "9"],
+    ans: "8"
+  },
+
+  {
+    id: 27, cat: "Fiqh", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Istilah Penting dalam Zakat</div>
+      <p>Dalam ibadah zakat, terdapat beberapa istilah penting yang perlu dipahami
+      oleh seorang muslim. Salah satunya adalah "haul" yang berhubungan dengan
+      syarat waktu dalam pengeluaran zakat maal.</p>
+    </div>`,
+    q: "Arti dari istilah 'haul' dalam ibadah zakat adalah …",
+    opt: [
+      "Besaran zakat yang harus dikeluarkan",
+      "Jumlah harta yang dimiliki",
+      "Jenis harta yang dimiliki",
+      "Waktu kepemilikan harta selama satu tahun penuh"
+    ],
+    ans: "Waktu kepemilikan harta selama satu tahun penuh"
+  },
+
+  {
+    id: 28, cat: "Fiqh", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Zakat Hasil Pertanian</div>
+      <p>Seorang petani memiliki ladang pertanian yang menghasilkan panen setiap
+      enam bulan sekali. Hasil panennya selalu melebihi nisab yang ditetapkan
+      sehingga ia wajib mengeluarkan zakat maal.</p>
+    </div>`,
+    q: "Saat petani tersebut memperoleh hasil panen melimpah, zakat maal yang harus dikeluarkannya adalah … persen.",
+    opt: ["20", "5–10", "2,5", "12,5"],
+    ans: "5–10"
+  },
+
+  {
+    id: 29, cat: "Fiqh", type: "pgk-cat", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Zakat Fitrah vs. Zakat Maal</div>
+      <p>Zakat fitrah dan zakat maal memiliki ketentuan yang berbeda dalam hal
+      waktu pembayaran, bentuk/jenis harta, maupun syarat-syaratnya. Penting bagi
+      seorang muslim untuk memahami perbedaan antara kedua jenis zakat ini.</p>
+    </div>`,
+    q: "Tentukan apakah setiap pernyataan berikut ini termasuk ketentuan ZAKAT FITRAH atau ZAKAT MAAL!",
+    rows: [
+      "Dikeluarkan menjelang Idul Fitri",
+      "Dihitung berdasarkan nisab dan haul",
+      "Berupa bahan makanan pokok atau uang tunai",
+      "Wajib bagi pemilik harta yang telah mencapai nisab"
+    ],
+    cols: ["Zakat Fitrah", "Zakat Maal"],
+    ans: ["Zakat Fitrah", "Zakat Maal", "Zakat Fitrah", "Zakat Maal"]
+  },
+
+  {
+    id: 30, cat: "Fiqh", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Makanan yang Diharamkan (Surah Al-An'am/6:145)</div>
+      <p>Perhatikan pernyataan berikut:<br>
+      1) Bangkai<br>
+      2) Darah<br>
+      3) Binatang yang mati karena terjatuh<br>
+      4) Binatang yang disembelih dengan menyebut nama Allah</p>
+    </div>`,
+    q: "Pilih LEBIH DARI SATU yang termasuk makanan/binatang yang diharamkan berdasarkan Surah Al-An'am/6:145!",
+    opt: [
+      "Bangkai",
+      "Darah",
+      "Binatang yang mati karena terjatuh",
+      "Binatang yang disembelih dengan menyebut nama Allah"
+    ],
+    ans: ["Bangkai", "Darah", "Binatang yang mati karena terjatuh"]
+  },
+
+  {
+    id: 31, cat: "Fiqh", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Manfaat Makanan Halal dan Thayyiban</div>
+      <p>Sebagai muslim, kita dituntut untuk memilih makanan yang halal dan baik
+      (thayyiban). Kebiasaan memilih makanan yang halal membawa manfaat yang besar,
+      baik bagi kesehatan jasmani maupun rohani.</p>
+    </div>`,
+    q: "Di antara manfaat dari memilih makanan halal dan baik (thayyiban) adalah membuat kita memiliki gaya hidup yang …",
+    opt: ["Hemat", "Sehat", "Modern", "Sederhana"],
+    ans: "Sehat"
+  },
+
+  {
+    id: 32, cat: "Fiqh", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Hukum Makanan dalam Islam (Surah Al-Maidah Ayat 3)</div>
+      <p>Surah Al-Maidah ayat 3 secara rinci menyebutkan jenis-jenis makanan yang
+      diharamkan oleh Allah swt. Salah satunya berkaitan dengan kondisi kematian
+      hewan yang tidak disembelih secara syar'i.</p>
+    </div>`,
+    q: "Berdasarkan Surah Al-Maidah ayat 3, binatang yang mati karena diterkam binatang buas termasuk ke dalam makanan yang … dimakan.",
+    opt: ["Halal", "Makruh", "Haram", "Syubhat"],
+    ans: "Haram"
+  },
+
+  // ── SEJARAH KEBUDAYAAN ISLAM (8 soal) ────────────────
+
+  {
+    id: 33, cat: "Sejarah Kebudayaan Islam", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Dakwah Sembunyi-Sembunyi (Sir)</div>
+      <p>Pada awal periode Mekkah, Nabi Muhammad saw melakukan dakwah secara
+      sembunyi-sembunyi (Sir). Hal ini dilakukan untuk melindungi para sahabat
+      yang sudah lebih dahulu masuk Islam dari ancaman kaum Quraisy.</p>
+    </div>`,
+    q: "Dakwah secara sembunyi-sembunyi tersebut dilakukan selama … tahun.",
+    opt: ["5", "4", "3", "2"],
+    ans: "3"
+  },
+
+  {
+    id: 34, cat: "Sejarah Kebudayaan Islam", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Peristiwa Hijrah</div>
+      <p>Hijrah merupakan salah satu peristiwa terpenting dalam sejarah Islam,
+      yaitu perpindahan Nabi Muhammad saw dan para sahabatnya dari Makkah ke
+      Madinah. Perjalanan bersejarah ini penuh dengan risiko dan pengorbanan.</p>
+    </div>`,
+    q: "Saat perjalanan hijrah dari Makkah ke Madinah, Nabi Muhammad saw ditemani seorang sahabat yang bernama …",
+    opt: ["Usman bin Affan", "Umar bin Khattab", "Abu Bakar As-Shidiq", "Ali bin Abu Thalib"],
+    ans: "Abu Bakar As-Shidiq"
+  },
+
+  {
+    id: 35, cat: "Sejarah Kebudayaan Islam", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Penentang Dakwah Nabi saw</div>
+      <p>Dalam menyebarkan dakwah Islam di Makkah, Nabi Muhammad saw menghadapi
+      berbagai rintangan dari kaum Quraisy. Salah satu tokoh paling keras menentang
+      dakwah Nabi bahkan namanya diabadikan dalam Al-Quran.</p>
+    </div>`,
+    q: "Tokoh Quraisy yang menentang dakwah Nabi Muhammad saw hingga diabadikan Allah swt dalam Al-Quran bernama …",
+    opt: ["Abu Jahal", "Abu Lahab", "Abu Lu'lu", "Abu Shufyan"],
+    ans: "Abu Lahab"
+  },
+
+  {
+    id: 36, cat: "Sejarah Kebudayaan Islam", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Fathul Makkah</div>
+      <p>Pada tahun ke-8 hijriyah terjadi peristiwa besar yang dikenal sebagai
+      Fathul Makkah (pembebasan kota Makkah). Peristiwa ini menjadi tonggak sejarah
+      yang membuka jalan bagi penyebaran Islam ke seluruh penjuru dunia.</p>
+    </div>`,
+    q: "Dengan peristiwa Fathul Makkah, kaum muslimin dapat …",
+    opt: [
+      "Menguasai seluruh kota di Jazirah Arab",
+      "Membentuk aliansi dengan kaum Quraisy",
+      "Memperluas wilayah kekuasaan Islam",
+      "Melarang agama lain di Jazirah Arab"
+    ],
+    ans: "Memperluas wilayah kekuasaan Islam"
+  },
+
+  {
+    id: 37, cat: "Sejarah Kebudayaan Islam", type: "pgk", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Peran Khalifah Abu Bakar As-Shiddiq</div>
+      <p>Perhatikan pernyataan berikut:<br>
+      1) Memerangi nabi palsu<br>
+      2) Memerangi orang murtad<br>
+      3) Membebaskan Baitul Maqdis<br>
+      4) Mengumpulkan Al-Quran dalam satu mushaf</p>
+    </div>`,
+    q: "Pilih LEBIH DARI SATU peran Abu Bakar As-Shiddiq saat menjadi khalifah!",
+    opt: [
+      "Memerangi nabi palsu",
+      "Memerangi orang murtad",
+      "Membebaskan Baitul Maqdis",
+      "Mengumpulkan Al-Quran dalam satu mushaf"
+    ],
+    ans: ["Memerangi nabi palsu", "Memerangi orang murtad", "Mengumpulkan Al-Quran dalam satu mushaf"]
+  },
+
+  {
+    id: 38, cat: "Sejarah Kebudayaan Islam", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Khalifah Umar bin Khattab</div>
+      <p>Umar bin Khattab adalah khalifah kedua setelah Abu Bakar As-Shiddiq. Beliau
+      dikenal sebagai pemimpin yang tegas, adil, dan sederhana. Rasulullah saw
+      memberikan gelar khusus kepada Umar atas kemampuan yang luar biasa.</p>
+    </div>`,
+    q: "Umar bin Khattab mendapat gelar Al-Faruq dari Rasulullah saw. Arti dari gelar tersebut adalah …",
+    opt: ["Pemilik dua cahaya", "Pemberani", "Pembeda", "Perkasa"],
+    ans: "Pembeda"
+  },
+
+  {
+    id: 39, cat: "Sejarah Kebudayaan Islam", type: "pg", score: 1,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Gelar Karramallahu Wajhah</div>
+      <p>Di antara empat sahabat Khulafaurasyidin, terdapat seorang sahabat yang
+      mendapatkan gelar istimewa dari kalangan umat Islam. Gelar ini diberikan karena
+      keistimewaan akhlak dan kesungguhan beliau dalam menjaga kehormatan dirinya.</p>
+    </div>`,
+    q: "Sahabat yang mendapatkan gelar Karramallahu Wajhah karena selalu berusaha menjaga kehormatannya bernama …",
+    opt: ["Ali bin Abu Thalib", "Abu Bakar As-Siddiq", "Utsman bin Affan", "Umar bin Khattab"],
+    ans: "Ali bin Abu Thalib"
+  },
+
+  {
+    id: 40, cat: "Sejarah Kebudayaan Islam", type: "pgk-cat", score: 2,
+    stim: `<div class='stimulus-box'>
+      <div class='stimulus-head'>Khulafaurasyidin dan Prestasinya</div>
+      <p>Khulafaurasyidin adalah empat khalifah pertama yang memimpin umat Islam
+      setelah wafatnya Nabi Muhammad saw. Masing-masing khalifah memiliki prestasi
+      dan peran yang sangat penting dalam perkembangan Islam.</p>
+    </div>`,
+    q: "Tentukan apakah setiap pasangan khalifah dan keterangan berikut ini TEPAT atau TIDAK TEPAT!",
+    rows: [
+      "Abu Bakar – Mengumpulkan Al-Quran dalam satu mushaf",
+      "Umar bin Khattab – Mendapat gelar Al-Faruq (Pembeda)",
+      "Utsman bin Affan – Mendapat gelar Karramallahu Wajhah",
+      "Ali bin Abu Thalib – Menjadi khalifah pertama dalam Islam"
+    ],
+    cols: ["Tepat", "Tidak Tepat"],
+    ans: ["Tepat", "Tepat", "Tidak Tepat", "Tidak Tepat"]
+  }
+
+];
+
+// ════════════════════════════════════════════════════════
+//  APP
+// ════════════════════════════════════════════════════════
+const app = {
+  session:  { nama: "", kelas: "", answers: {}, startTime: 0 },
+  currIdx:  0,
+  timerInt: null,
+  _hasSavedSession: false,
+
+  // ── INIT ──────────────────────────────────────────────
+  init: function() {
+    this.showSlide('pin');
+    try {
+      if (localStorage.getItem(CONFIG.STORAGE_KEY)) this._hasSavedSession = true;
+    } catch(e) {}
+  },
+
+  // ── CEK PIN ───────────────────────────────────────────
+  checkPin: async function() {
+    const inp = document.getElementById('inp-pin');
+    const val = inp.value.trim();
+    if (!val) return;
+    const h = await hashPin(val);
+    if (h === CONFIG.PIN_HASH) {
+      this.showSlide('login');
+      if (this._hasSavedSession)
+        document.getElementById('resume-alert').style.display = 'block';
+    } else {
+      inp.classList.add('error');
+      document.getElementById('pin-err').style.display = 'block';
+      inp.value = '';
+      setTimeout(() => inp.classList.remove('error'), 400);
+    }
+  },
+
+  // ── LOGIN ─────────────────────────────────────────────
+  login: function() {
+    const n = document.getElementById('inpNama').value.trim();
+    const k = document.getElementById('inpKelas').value;
+    if (!n || !k) { alert("Harap isi nama lengkap dan pilih kelas!"); return; }
+    this.session.nama  = n;
+    this.session.kelas = k;
+    this.showSlide('rules');
+  },
+
+  // ── RESUME SESI TERSIMPAN ─────────────────────────────
+  resume: function() {
+    try {
+      this.session = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY));
+      this.renderSidebar();
+      this.startExam(true);
+    } catch(e) {
+      alert("Sesi tersimpan rusak. Silakan mulai ujian baru.");
+    }
+  },
+
+  // ── MULAI UJIAN ───────────────────────────────────────
+  startExam: function(isRes = false) {
+    if (!isRes) { this.session.startTime = Date.now(); this.save(); }
+    document.getElementById('user-badge').innerText  = this.session.nama;
+    document.getElementById('user-badge').style.display = 'block';
+    document.getElementById('sidebar').style.display    = 'flex';
+    this.renderQuestions();
+    this.renderSidebar();
+    this.showSlide('quiz');
+    this.goToQ(0);
+    this.startTimer();
+  },
+
+  // ── SHOW SLIDE ────────────────────────────────────────
+  showSlide: function(id) {
+    document.querySelectorAll('.slide').forEach(e => e.classList.remove('active'));
+    document.getElementById('slide-' + id).classList.add('active');
+  },
+
+  // ── RENDER SOAL ───────────────────────────────────────
+  renderQuestions: function() {
+    const box = document.getElementById('quiz-container');
+    box.innerHTML = "";
+    QUESTIONS.forEach((q, i) => {
+      let h = `<div id="q-item-${i}" class="question-item">
+        <div class="tag-cat">${q.cat}</div>
+        ${q.stim || ""}
+        <div class="q-text">${i + 1}. ${q.q}</div>`;
+
+      if (q.type === 'pg') {
+        q.opt.forEach((o, oi) =>
+          h += `<label class="opt-label">
+                  <input type="radio" name="ans_${q.id}" value="${oi}"
+                         onchange="app.saveAns(${q.id},${oi})"> ${o}
+                </label>`
+        );
+      } else if (q.type === 'pgk') {
+        h += `<p style="font-size:.82rem;color:#64748b;margin-bottom:10px;">
+                ☑ Boleh memilih lebih dari satu jawaban
+              </p>`;
+        q.opt.forEach((o, oi) =>
+          h += `<label class="opt-label">
+                  <input type="checkbox" value="${oi}"
+                         onchange="app.saveMulti(${q.id},${oi})"> ${o}
+                </label>`
+        );
+      } else if (q.type === 'pgk-cat') {
+        h += `<div class="matrix-wrapper"><table class="matrix-table">
+                <tr><th>Pernyataan</th>`;
+        q.cols.forEach(c => h += `<th>${c}</th>`);
+        h += `</tr>`;
+        q.rows.forEach((r, ri) => {
+          h += `<tr><td>${r}</td>`;
+          q.cols.forEach(c =>
+            h += `<td><input type="radio"
+                        name="mx_${q.id}_${ri}"
+                        value="${c}"
+                        onchange="app.saveMx(${q.id},${ri},'${c}')">
+                  </td>`
+          );
+          h += `</tr>`;
+        });
+        h += `</table></div>`;
+      }
+
+      h += `</div>`;
+      box.innerHTML += h;
+    });
+
+    if (window.MathJax && MathJax.typesetPromise)
+      MathJax.typesetPromise([box]).catch(() => {});
+  },
+
+  // ── NAVIGASI SOAL ─────────────────────────────────────
+  goToQ: function(idx) {
+    if (idx < 0 || idx >= QUESTIONS.length) return;
+    this.currIdx = idx;
+
+    const qs = document.getElementById('quiz-scroll');
+    if (qs) qs.scrollTop = 0;
+
+    document.querySelectorAll('.question-item').forEach(e => e.classList.remove('active-q'));
+    document.getElementById(`q-item-${idx}`).classList.add('active-q');
+    document.getElementById('q-indicator').innerText = `Soal ${idx + 1} / 40`;
+    document.getElementById('btn-prev').disabled = (idx === 0);
+
+    const nBtn = document.getElementById('btn-next');
+    if (idx === QUESTIONS.length - 1) {
+      nBtn.innerText = "Selesai";
+      nBtn.onclick   = () => this.confirmFinish();
+      nBtn.classList.add('btn-danger');
+    } else {
+      nBtn.innerText = "Selanjutnya";
+      nBtn.onclick   = () => this.move(1);
+      nBtn.classList.remove('btn-danger');
+    }
+
+    this.restoreVisual(idx);
+    this.updateSidebarUI();
+
+    if (window.MathJax && MathJax.typesetPromise) {
+      const el = document.getElementById(`q-item-${idx}`);
+      if (el) MathJax.typesetPromise([el]).catch(() => {});
+    }
+  },
+
+  move: function(step) { this.goToQ(this.currIdx + step); },
+
+  // ── SIMPAN JAWABAN ────────────────────────────────────
+  saveAns: function(qid, optIdx) {
+    this.session.answers[qid] = optIdx;
+    this.save(); this.updateSidebarUI();
+  },
+
+  saveMulti: function(qid, optIdx) {
+    let c = this.session.answers[qid] || [];
+    if (c.includes(optIdx)) c = c.filter(x => x !== optIdx);
+    else c.push(optIdx);
+    this.session.answers[qid] = c;
+    this.save(); this.updateSidebarUI();
+  },
+
+  saveMx: function(qid, rix, v) {
+    let c = this.session.answers[qid] || [];
+    c[rix] = v;
+    this.session.answers[qid] = c;
+    this.save(); this.updateSidebarUI();
+  },
+
+  save: function() {
+    try { localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(this.session)); } catch(e) {}
+  },
+
+  // ── SIDEBAR ───────────────────────────────────────────
+  renderSidebar: function() {
+    const g = document.getElementById('nav-grid');
+    g.innerHTML = "";
+    QUESTIONS.forEach((q, i) =>
+      g.innerHTML += `<div id="nav-num-${i}" class="nav-num"
+                           onclick="app.goToQ(${i})">${i + 1}</div>`
+    );
+  },
+
+  checkFilled: function(qid) {
+    const v = this.session.answers[qid];
+    if (v === undefined || v === null) return false;
+    if (Array.isArray(v)) return v.filter(x => x !== undefined && x !== null).length > 0;
+    return true;
+  },
+
+  updateSidebarUI: function() {
+    QUESTIONS.forEach((q, i) => {
+      const el = document.getElementById(`nav-num-${i}`);
+      if (!el) return;
+      if (i === this.currIdx) el.classList.add('current');
+      else el.classList.remove('current');
+      if (this.checkFilled(q.id)) el.classList.add('filled');
+      else el.classList.remove('filled');
+    });
+  },
+
+  // ── RESTORE VISUAL (setelah navigasi / resume) ────────
+  restoreVisual: function(idx) {
+    const q   = QUESTIONS[idx];
+    const ans = this.session.answers[q.id];
+    if (ans === undefined || ans === null) return;
+
+    if (q.type === 'pg') {
+      const el = document.querySelector(`input[name="ans_${q.id}"][value="${ans}"]`);
+      if (el) el.checked = true;
+    } else if (q.type === 'pgk' && Array.isArray(ans)) {
+      ans.forEach(v => {
+        const el = document.querySelector(`#q-item-${idx} input[value="${v}"]`);
+        if (el) el.checked = true;
+      });
+    } else if (q.type === 'pgk-cat' && Array.isArray(ans)) {
+      ans.forEach((v, ri) => {
+        if (!v) return;
+        const el = document.querySelector(`input[name="mx_${q.id}_${ri}"][value="${v}"]`);
+        if (el) el.checked = true;
+      });
+    }
+  },
+
+  // ── TIMER ─────────────────────────────────────────────
+  startTimer: function() {
+    clearInterval(this.timerInt);
+    this.timerInt = setInterval(() => {
+      const rem = CONFIG.DURATION -
+                  Math.floor((Date.now() - this.session.startTime) / 1000);
+      if (rem <= 0) { clearInterval(this.timerInt); this.submitExam(); return; }
+      const m = Math.floor(rem / 60).toString().padStart(2, '0');
+      const s = (rem % 60).toString().padStart(2, '0');
+      document.getElementById('timer-display').innerText = `${m}:${s}`;
+    }, 1000);
+  },
+
+  confirmFinish: function() {
+    document.getElementById('modal-confirm').style.display = 'flex';
+  },
+
+  // ── HITUNG & KIRIM NILAI ──────────────────────────────
+  submitExam: function() {
+    document.getElementById('modal-confirm').style.display = 'none';
+    document.getElementById('modal-loading').style.display = 'flex';
+    clearInterval(this.timerInt);
+
+    const cats = [
+      "Al-Qur'an & Hadis",
+      "Aqidah & Akhlak",
+      "Fiqh",
+      "Sejarah Kebudayaan Islam"
+    ];
+    const stats = {};
+    cats.forEach(c => { stats[c] = { s: 0, m: 0 }; });
+    let totS = 0, totM = 0;
+
+    QUESTIONS.forEach(q => {
+      stats[q.cat].m += q.score;
+      totM += q.score;
+      const u = this.session.answers[q.id];
+      let pt = 0;
+
+      if (u !== undefined && u !== null) {
+        if (q.type === 'pg') {
+          if (u == q.opt.indexOf(q.ans)) pt = q.score;
+        } else if (q.type === 'pgk' && Array.isArray(u) && Array.isArray(q.ans)) {
+          const userAns    = u.map(i => q.opt[i]).sort();
+          const correctAns = [...q.ans].sort();
+          if (JSON.stringify(userAns) === JSON.stringify(correctAns)) pt = q.score;
+        } else if (q.type === 'pgk-cat' && Array.isArray(u)) {
+          let match = 0;
+          q.ans.forEach((k, i) => { if (u[i] === k) match++; });
+          pt = (match / q.rows.length) * q.score;
+        }
+      }
+
+      stats[q.cat].s += pt;
+      totS += pt;
+    });
+
+    const final = Math.round((totS / totM) * 100);
+    let summ = {}, cht = "", nts = [];
+
+    cats.forEach(c => {
+      const p = stats[c].m > 0
+        ? Math.round((stats[c].s / stats[c].m) * 100) : 0;
+      summ[c] = { skor: p, tuntas: p >= 70,
+                  label: p >= 70 ? "Tuntas" : "Perlu Bimbingan" };
+      if (p < 70) nts.push(c);
+      cht += `<div class="chart-row">
+        <div class="chart-lbl">${c}</div>
+        <div class="chart-track">
+          <div class="chart-fill"
+               style="width:${p}%;background:${p >= 70 ? '#16a34a' : '#dc2626'}">
+          </div>
+        </div>
+        <div class="chart-val">${p}%</div>
+      </div>`;
+    });
+
+    const desc = nts.length === 0
+      ? "Selamat! Tuntas semua elemen."
+      : "Perlu belajar lagi di: " + nts.join(", ");
+
+    this.showSlide('result');
+    document.getElementById('modal-loading').style.display = 'none';
+    document.getElementById('result-content').innerHTML = `
+      <h3>Nilai Akhir:
+        <span style="color:var(--primary);font-size:2.5rem;">${final}</span>
+      </h3>
+      <div style="background:#f1f5f9;padding:15px;border-radius:8px;margin-bottom:20px;">
+        ${desc}
+      </div>
+      <h4>Capaian per Elemen:</h4>
+      ${cht}`;
+
+    fetch(CONFIG.SCRIPT_URL, {
+      method:  'POST',
+      mode:    'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({
+        action:         "submit_exam",
+        mapel:          "Al-Islam",
+        nama:           this.session.nama,
+        kelas:          this.session.kelas,
+        skor:           final,
+        deskripsi:      desc,
+        jawaban:        this.session.answers,
+        ringkasanNilai: summ
+      })
+    }).then(() => {
+      try { localStorage.removeItem(CONFIG.STORAGE_KEY); } catch(e) {}
+    });
+  }
+};
+
+window.onload = () => app.init();
+</script>
+</body>
+</html>
