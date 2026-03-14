@@ -1,1 +1,1469 @@
+<!DOCTYPE html>
+<html lang="id">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujian Sekolah Seni Budaya - SD Muhammadiyah 01 Kukusan</title>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [
+                    ['$', '$'],
+                    ['\\(', '\\)']
+                ]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* --- VARIABLES --- */
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --text: #334155;
+            --bg: #f1f5f9;
+            --border: #cbd5e1;
+        }
+
+        * {
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- LAYOUT --- */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            background: white;
+        }
+
+        /* HEADER */
+        .header {
+            height: 64px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            z-index: 50;
+            flex-shrink: 0;
+        }
+
+        .header-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .timer-box {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-family: monospace;
+            font-size: 1.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* WORKSPACE */
+        .workspace {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .main-stage {
+            flex: 1;
+            position: relative;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* SLIDES */
+        .slide {
+            display: none !important;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide.active {
+            display: flex !important;
+            flex-direction: column;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .center-content-wrapper {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 32px;
+            margin-bottom: 20px;
+            border-top: 5px solid var(--primary);
+        }
+
+        /* QUIZ AREA */
+        .quiz-scroll-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            padding-bottom: 80px;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .nav-bar-fixed {
+            flex-shrink: 0;
+            background: white;
+            padding: 16px 24px;
+            border-top: 1px solid #e2e8f0;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 40;
+        }
+
+        /* SOAL */
+        .question-item {
+            display: none;
+        }
+
+        .question-item.active-q {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .stimulus-box {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-left: 5px solid var(--primary);
+            padding: 20px;
+            margin-bottom: 24px;
+            border-radius: 8px;
+        }
+
+        .stimulus-head {
+            font-weight: 800;
+            color: var(--primary);
+            border-bottom: 2px dashed #e2e8f0;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+
+        .visual-frame {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .q-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .tag-cat {
+            display: inline-block;
+            font-size: 0.75rem;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .opt-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1rem;
+            color: #475569;
+        }
+
+        .opt-label:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .opt-label input {
+            margin-top: 4px;
+            transform: scale(1.2);
+            flex-shrink: 0;
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            min-width: 320px;
+        }
+
+        .matrix-table th,
+        .matrix-table td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+        }
+
+        .matrix-table th {
+            background: #f1f5f9;
+            text-align: center;
+        }
+
+        .matrix-table td {
+            text-align: center;
+        }
+
+        .matrix-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+        }
+
+        /* SIDEBAR */
+        .side-panel {
+            width: 300px;
+            background: white;
+            border-left: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            z-index: 40;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* TOMBOL NOMOR */
+        .nav-num {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+            color: #64748b;
+            transition: all 0.2s;
+        }
+
+        .nav-num:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        /* FIX: Current active (border biru) */
+        .nav-num.current {
+            border: 2px solid var(--primary);
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            color: var(--primary);
+        }
+
+        /* FIX: Filled (Warna Hijau Menang) */
+        .nav-num.filled {
+            background-color: var(--success) !important;
+            color: white !important;
+            border-color: var(--success) !important;
+        }
+
+        .nav-num.filled.current {
+            border: 3px solid #1e3a8a !important;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 14px;
+            margin: 8px 0 20px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .btn:hover {
+            background: #172554;
+        }
+
+        .btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .btn-outline {
+            background: white;
+            border: 1px solid #cbd5e1;
+            color: #475569;
+        }
+
+        .btn-outline:hover {
+            background: #f8fafc;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+        }
+
+        /* CHART */
+        .chart-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .chart-lbl {
+            width: 200px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: right;
+            padding-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .chart-track {
+            flex: 1;
+            background: #e2e8f0;
+            height: 16px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .chart-fill {
+            height: 100%;
+            transition: width 1s ease-out;
+        }
+
+        .chart-val {
+            width: 50px;
+            padding-left: 10px;
+            font-weight: 700;
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .modal {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+        }
+
+        /* PIN INPUT */
+        .pin-input-wrap { position: relative; margin-bottom: 10px; }
+        .pin-input-wrap svg {
+            position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+            color: #94a3b8; pointer-events: none;
+        }
+        #inp-pin {
+            width: 100%; padding: 14px 14px 14px 44px;
+            border: 1.5px solid var(--border); border-radius: 8px;
+            font-size: 1.1rem; font-weight: 700; letter-spacing: .15em;
+            font-family: monospace; color: var(--text);
+            transition: border-color .2s;
+        }
+        #inp-pin:focus { border-color: var(--primary); }
+        #inp-pin.error { border-color: #dc2626; animation: shake .3s ease; }
+        #pin-err { font-size: .82rem; color: #dc2626; font-weight: 600; display: none; margin-bottom: 14px; }
+
+        /* GAMBAR SOAL */
+        .stimulus-img { max-width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+
+        /* TABEL MATRIKS — wrapper scroll horizontal agar tidak overflow di HP */
+        .matrix-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+        /* LOADING SPINNER */
+        @keyframes spin  { 0%   { transform: rotate(0deg);   } 100% { transform: rotate(360deg); } }
+        @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+
+        @media (max-width: 768px) {
+            .workspace {
+                flex-direction: column;
+            }
+
+            .side-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #e2e8f0;
+                order: 2;
+            }
+
+            .nav-grid {
+                max-height: 120px;
+                padding: 10px;
+            }
+
+            .chart-lbl {
+                width: 130px;
+                font-size: 0.78rem;
+            }
+
+            .header-title {
+                font-size: 1rem;
+            }
+        }
+
+        /* MathJax specific */
+        mjx-container {
+            font-size: 1.1em !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <div class="header">
+            <div class="header-title">Ujian Sekolah Seni Budaya</div>
+            <div style="display:flex; align-items:center; gap:15px;">
+                <div id="user-badge" style="display:none; font-size:0.85rem; background:rgba(255,255,255,0.1); padding:5px 12px; border-radius:20px;">Siswa</div>
+                <div class="timer-box" id="timer-display">--:--</div>
+            </div>
+        </div>
+        <div class="workspace">
+            <div class="main-stage">
+                <!-- ① SLIDE PIN ──────────────────────────────────── -->
+                <div id="slide-pin" class="slide active">
+                    <div class="center-content-wrapper">
+                        <div class="card" style="max-width:420px;margin:0 auto;text-align:center;">
+                            <div style="font-size:2.5rem;margin-bottom:12px;">🔐</div>
+                            <h2 style="color:var(--primary);margin-top:0;">Masukkan PIN</h2>
+                            <p style="color:#64748b;margin-bottom:24px;font-size:.95rem;">
+                                Masukkan PIN dari guru untuk membuka<br>
+                                <strong>Uji Coba Ujian Seni Budaya</strong>
+                            </p>
+                            <div class="pin-input-wrap">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2.2"
+                                     stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                                <input type="password" id="inp-pin"
+                                       placeholder="PIN ujian…"
+                                       maxlength="30" autocomplete="off"
+                                       onkeydown="if(event.key==='Enter') app.checkPin()">
+                            </div>
+                            <div id="pin-err">❌ PIN salah. Coba lagi.</div>
+                            <button class="btn" style="width:100%" onclick="app.checkPin()">
+                                Buka Ujian →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ② SLIDE LOGIN ────────────────────────────────── -->
+                <div id="slide-login" class="slide">
+                    <div class="center-content-wrapper">
+                        <div class="card" style="max-width: 450px; margin: 0 auto; text-align: center;">
+                            <h2 style="color:var(--primary); margin-top:0;">Selamat Datang</h2>
+                            <p style="color:#64748b; margin-bottom:30px;">Ujian Sekolah Seni Budaya (Fase C)</p>
+                            <div style="text-align:left;">
+                                <label>Nama Lengkap</label>
+                                <input type="text" id="inpNama" placeholder="Masukkan nama lengkap...">
+                                <label>Kelas</label>
+                                <select id="inpKelas">
+                                    <option value="">-- Pilih Kelas --</option>
+                                    <option value="6A">Kelas 6A</option>
+                                    <option value="6B">Kelas 6B</option>
+                                </select>
+                            </div>
+                            <button class="btn" id="btn-login" style="width:100%" onclick="app.login()">Masuk Ujian</button>
+                            <div id="resume-alert" style="display:none; margin-top:20px; padding:10px; background:#eff6ff; color:#1d4ed8; border-radius:8px; cursor:pointer; font-size:0.9rem;" onclick="app.resume()">
+                                🔄 <b>Sesi Tersimpan Ditemukan</b><br>Klik untuk melanjutkan
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ③ SLIDE PETUNJUK ─────────────────────────────── -->
+                <div id="slide-rules" class="slide">
+                    <div class="center-content-wrapper">
+                        <div class="card" style="max-width: 700px; margin: 0 auto;">
+                            <h2 style="margin-top:0; border-bottom:1px solid #e2e8f0; padding-bottom:15px; color:var(--primary);">Petunjuk Pengerjaan</h2>
+                            <div style="line-height:1.8; color:#334155;">
+                                <p>1. <strong>Waktu:</strong> Waktu pengerjaan soal ujian adalah 90 Menit.</p>
+                                <p>2. <strong>Soal:</strong> 40 butir soal Seni Budaya (Seni Rupa & Seni Musik).</p>
+                                <p>3. <strong>Tips:</strong> Perhatikan gambar dengan teliti sebelum menjawab.</p>
+                                <p>4. <strong>Tips:</strong> Pilih jawaban yang paling sesuai dengan pengalaman seni kamu.</p>
+                            </div>
+                            <div style="margin-top:30px; text-align:right;">
+                                <button class="btn" onclick="app.startExam()">Mulai Mengerjakan &#8594;</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ④ SLIDE KUIS ──────────────────────────────────── -->
+                <div id="slide-quiz" class="slide">
+                    <div id="quiz-scroll" class="quiz-scroll-area">
+                        <div id="quiz-container"></div>
+                    </div>
+                    <div class="nav-bar-fixed">
+                        <button class="btn btn-outline" id="btn-prev" onclick="app.move(-1)">&#8592; Sebelumnya</button>
+                        <span class="q-indicator" id="q-indicator" style="font-weight:700; color:var(--primary);">Soal 1 / 40</span>
+                        <button class="btn" id="btn-next" onclick="app.move(1)">Selanjutnya</button>
+                    </div>
+                </div>
+                <!-- ⑤ SLIDE HASIL ─────────────────────────────────── -->
+                <div id="slide-result" class="slide">
+                    <div class="center-content-wrapper">
+                        <div class="card" style="max-width: 600px; margin: 0 auto; text-align:center;">
+                            <div style="font-size:4rem; margin-bottom:10px;">🎉</div>
+                            <h2 style="color:var(--primary); margin:0;">Ujian Selesai!</h2>
+                            <p style="color:#64748b;">Jawaban Anda telah kami terima.</p>
+                            <div id="result-content" style="text-align:left; margin-top:30px; border-top:1px solid #e2e8f0; padding-top:20px;">
+                                <p style="text-align:center; color:#64748b;">Sedang memproses nilai...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="side-panel" id="sidebar" style="display:none;">
+                <div style="padding:15px 20px; font-weight:700; color:#334155; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
+                    <span>Navigasi Soal</span>
+                    <span style="font-size:0.8rem; background:#e0f2fe; color:#0369a1; padding:2px 8px; border-radius:10px;">40 Butir</span>
+                </div>
+                <div class="nav-grid" id="nav-grid"></div>
+                <div style="padding:20px; border-top:1px solid #e2e8f0; margin-top:auto; background:#f8fafc;">
+                    <button class="btn btn-danger" style="width:100%" onclick="app.confirmFinish()">Selesai Ujian</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL KONFIRMASI ──────────────────────────────────── -->
+    <div id="modal-confirm" class="overlay">
+        <div class="modal">
+            <h3 style="color:var(--primary);">Konfirmasi Pengumpulan</h3>
+            <p>Yakin ingin mengakhiri dan mengumpulkan ujian ini?</p>
+            <div style="display:flex; gap:10px; justify-content:center; margin-top:25px;">
+                <button class="btn btn-outline" onclick="document.getElementById('modal-confirm').style.display='none'">Cek Lagi</button>
+                <button class="btn btn-danger" onclick="app.submitExam()">Ya, Kumpulkan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL LOADING ──────────────────────────────────────── -->
+    <div id="modal-loading" class="overlay">
+        <div class="modal">
+            <h3 style="color:var(--primary);">Sedang Mengirim…</h3>
+            <div style="width:40px; height:40px; border:4px solid #e2e8f0; border-top:4px solid var(--primary); border-radius:50%; margin:10px auto; animation:spin 1s linear infinite;"></div>
+            <p>Mohon jangan tutup halaman ini.</p>
+        </div>
+    </div>
+
+    <script>
+// ════════════════════════════════════════════════════════
+//  KONFIGURASI
+//  PIN: Sb37KL  |  HASH: 6a89308598b79608
+//  Untuk mengganti PIN, jalankan di browser console:
+//    hashPin("PIN_BARU").then(h => console.log(h))
+//  lalu salin hasilnya ke PIN_HASH.
+// ════════════════════════════════════════════════════════
+const CONFIG = {
+    SCRIPT_URL:  "https://script.google.com/macros/s/AKfycbwJveJtAISKhveIQ4wspAaeaUKLrqB_IBY55qhOqDOl649QSjqtBa2hYhOrx7UNs0GbdA/exec",
+    STORAGE_KEY: "US_2026_SENI_BUDAYA",
+    DURATION:    90 * 60,
+    PIN_HASH:    "6a89308598b79608"  // PIN: Sb37KL
+};
+
+// ── Fungsi hash (SHA-256, 16 karakter) ──────────────────
+async function hashPin(pin) {
+    const enc = new TextEncoder().encode(pin.trim().toLowerCase());
+    const buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf))
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('').slice(0, 16);
+}
+window.hashPin = hashPin; // expose ke console browser
+
+        // --- IMAGE_ASSETS ---
+        const IMAGE_ASSETS = {
+            "unsur_rupa_alam": "https://i.ibb.co.com/39bPbhz3/01-unsur-rupa-alam-25.png",
+            "campuran_warna": "https://i.ibb.co.com/N2Kh1p8C/02-campuran-warna-1-25.png",
+            "keseimbangan_karya": "https://i.ibb.co.com/TxVpJQrW/03-keseimbangan-karya-1-25.png",
+            "tekstur_permukaan": "https://i.ibb.co.com/fG0mXf2p/04-tekstur-permukaan-2-25.png",
+            "alat_seni_rupa": "https://i.ibb.co.com/QFyqFfH0/05-alat-seni-rupa-1-25.png",
+            "lingkungan_sekolah": "https://i.ibb.co.com/C3zqSq9Q/06-lingkungan-sekolah-1-25.png",
+            "notasi_ritme": "https://i.ibb.co.com/NgFNgPYr/07-notasi-ritme-1-25.png",
+            "alat_musik_tradisional": "https://i.ibb.co.com/XZdKwyC3/08-alat-musik-tradisional-1-25.png",
+            "simbol_dinamika": "https://i.ibb.co.com/x8gd2YMg/09-simbol-dinamika-1-25.png",
+            "ansambel_musik": "https://i.ibb.co.com/4Z4qTJNh/10-ansambel-musik-1-25.png",
+            "tekstur_permukaan_2": "https://i.ibb.co.com/hR3JykjV/11-tekstur-permukaan-1-25.png",
+            "batik": "https://i.ibb.co.com/yFKXw85y/12-batik-25.png",
+            "teknik_seni_rupa": "https://i.ibb.co.com/4wKc7Jn0/13-teknik-seni-rupa.png"
+        };
+
+        function getImg(key, altText = "Ilustrasi Soal") {
+            const url = IMAGE_ASSETS[key];
+            if (!url) return '<div class="no-img" style="background:#fef3c7; padding:15px; border-radius:8px; text-align:center; border:1px solid #f59e0b;">⚠️ Gambar tidak tersedia</div>';
+            return `<img src="${url}" alt="${altText}" class="stimulus-img" loading="eager">`;
+        }
+        // --- QUESTIONS ---
+        const QUESTIONS = [{
+                id: 1,
+                cat: "Seni Rupa",
+                type: "pg",
+                score: 1,
+                stim: '<div class=\'stimulus-box\'><div class=\'stimulus-head\'>Unsur Rupa Alam</div><div class=\'visual-frame\'>' + getImg("unsur_rupa_alam", "Unsur Rupa Alam") + '</div><p>Perhatikan gambar objek alam di atas (daun, batu, kayu). Setiap objek memiliki bentuk dan garis yang berbeda-beda.</p></div>',
+                q: "Unsur seni rupa apa yang paling terlihat jelas pada gambar daun tersebut?",
+                opt: ["Garis lengkung pada tulang daun", "Warna merah pada bunga", "Ukuran besar pada batu", "Tekstur kasar pada kayu"],
+                ans: "Garis lengkung pada tulang daun"
+            },
+            {
+                id: 2,
+                cat: "Seni Rupa",
+                type: "pg",
+                score: 1,
+                stim: '<div class=\'stimulus-box\'><div class=\'stimulus-head\'>Campuran Warna</div><div class=\'visual-frame\'>' + getImg("campuran_warna", "Campuran Warna") + '</div><p>Jika warna merah dicampur dengan warna kuning, akan menghasilkan warna baru.</p></div>',
+                q: "Warna apa yang dihasilkan dari campuran merah dan kuning?",
+                opt: ["Hijau", "Ungu", "Oranye", "Coklat"],
+                ans: "Oranye"
+            },
+            {
+                id: 3,
+                cat: "Seni Rupa",
+                type: "pg",
+                score: 1,
+                stim: '<div class=\'stimulus-box\'><div class=\'stimulus-head\'>Keseimbangan Karya</div><div class=\'visual-frame\'>' + getImg("keseimbangan_karya", "Keseimbangan Karya") + '</div><p>Perhatikan dua contoh karya seni di atas. Karya A memiliki bentuk yang sama antara kiri dan kanan. Karya B memiliki bentuk berbeda tetapi tetap terlihat seimbang.</p></div>',
+                q: "Karya mana yang menunjukkan keseimbangan simetris (sama kiri-kanan)?",
+                opt: ["Karya A", "Karya B", "Kedua karya", "Tidak ada yang simetris"],
+                ans: "Karya A"
+            },
+            {
+                id: 4,
+                cat: "Seni Rupa",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Kesatuan dalam Karya</div><p>Dua karya kolase dibuat dari potongan kertas. Karya pertama tersusun rapi dengan warna yang harmonis. Karya kedua tersusun acak tanpa pola yang jelas.</p></div>",
+                q: "Karya mana yang menunjukkan kesatuan yang lebih baik?",
+                opt: ["Karya pertama yang tersusun rapi", "Karya kedua yang tersusun acak", "Kedua karya sama baiknya", "Kedua karya tidak baik"],
+                ans: "Karya pertama yang tersusun rapi"
+            },
+            {
+                id: 5,
+                cat: "Seni Rupa",
+                type: "pg",
+                score: 1,
+                stim: '<div class=\'stimulus-box\'><div class=\'stimulus-head\'>Teknik Menggambar</div><div class=\'visual-frame\'>' + getImg("tekstur_permukaan", "Tekstur Permukaan") + '</div><p>Perhatikan gambar hasil karya menggambar dengan tekstur yang berbeda-beda.</p></div>',
+                q: "Teknik apa yang digunakan untuk membuat gambar dengan titik-titik kecil?",
+                opt: ["Teknik arsir (garis)", "Teknik dusel (gosok)", "Teknik pointilis (titik)", "Teknik aquarel (cat air)"],
+                ans: "Teknik pointilis (titik)"
+            },
+            {
+                id: 6,
+                cat: "Seni Rupa",
+                type: "pg",
+                score: 1,
+                stim: '<div class=\'stimulus-box\'><div class=\'stimulus-head\'>Alat Karya Seni</div><div class=\'visual-frame\'>' + getImg("alat_seni_rupa", "Alat Seni Rupa") + '</div><p>Perhatikan gambar beberapa alat untuk membuat karya seni di atas.</p></div>',
+                q: "Alat mana yang paling tepat untuk membuat karya cetak dengan cara mencukil?",
+                opt: ["Kuas cat", "Pahat atau alat cukil", "Jarum jahit", "Pensil warna"],
+                ans: "Pahat atau alat cukil"
+            },
+            {
+                id: 7,
+                cat: "Seni Rupa",
+                type: "pg",
+                score: 1,
+                stim: '<div class=\'stimulus-box\'><div class=\'stimulus-head\'>Ide dari Lingkungan</div><div class=\'visual-frame\'>' + getImg("lingkungan_sekolah", "Lingkungan Sekolah") + '</div><p>Perhatikan foto lingkungan sekolah di atas yang memiliki berbagai objek seperti taman, bangunan, dan pohon.</p></div>',
+                q: "Karya seni tiga dimensi apa yang paling cocok dibuat berdasarkan objek di foto tersebut?",
+                opt: ["Lukisan pemandangan sekolah", "Patung atau miniatur taman sekolah", "Foto hitam putih", "Gambar sketsa guru"],
+                ans: "Patung atau miniatur taman sekolah"
+            },
+            {
+                id: 8,
+                cat: "Seni Rupa",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Imajinasi dalam Karya</div><p>Sebuah gambar hewan kucing digambar dengan tambahan sayap seperti burung dan mahkota di kepalanya.</p></div>",
+                q: "Bagian mana yang merupakan hasil pengembangan imajinasi seniman?",
+                opt: ["Bentuk tubuh kucing", "Warna bulu kucing", "Sayap dan mahkota", "Kaki kucing"],
+                ans: "Sayap dan mahkota"
+            },
+            {
+                id: 9,
+                cat: "Seni Rupa",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Memberi Komentar Karya</div><p>Seorang siswa menunjukkan karya lukisannya kepada teman. Teman memberikan berbagai komentar tentang karya tersebut.</p></div>",
+                q: "Komentar mana yang paling baik dan membangun untuk karya teman?",
+                opt: ["Karyamu jelek sekali", "Warnanya cerah dan komposisinya seimbang", "Saya tidak suka sama sekali", "Lebih baik kamu berhenti melukis"],
+                ans: "Warnanya cerah dan komposisinya seimbang"
+            },
+            {
+                id: 10,
+                cat: "Seni Rupa",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Minat dan Karya Seni</div><p>Andi senang mengumpulkan botol plastik bekas dan membuatnya menjadi benda berguna.</p></div>",
+                q: "Jenis karya seni apa yang paling sesuai dengan minat Andi?",
+                opt: ["Lukisan cat minyak", "Karya daur ulang dari bahan bekas", "Patung tanah liat", "Gambar sketsa pensil"],
+                ans: "Karya daur ulang dari bahan bekas"
+            },
+            {
+                id: 11,
+                cat: "Seni Rupa",
+                type: "pgk",
+                score: 2,
+                stim: '<div class=\'stimulus-box\'><div class=\'stimulus-head\'>Tekstur Benda</div><div class=\'visual-frame\'>' + getImg("tekstur_permukaan_2", "Tekstur Permukaan 2") + '</div><p>Perhatikan gambar berbagai permukaan benda di atas.</p></div>',
+                q: "Pilih LEBIH DARI SATU gambar yang menunjukkan tekstur yang bisa dirasakan dengan diraba!",
+                opt: ["Permukaan kulit jeruk", "Permukaan kaca jendela", "Permukaan batu alam", "Permukaan air di kolam"],
+                ans: ["Permukaan kulit jeruk", "Permukaan batu alam"]
+            },
+            {
+                id: 12,
+                cat: "Seni Rupa",
+                type: "pgk",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Pola Hias Batik</div><div class='visual-frame'>${getImg("batik", "Pola Hias Batik")}</div><p>Perhatikan gambar pola hias batik di atas. Setiap pola memiliki pengulangan bentuk yang menciptakan irama visual.</p></div>`,
+                q: "Pilih LEBIH DARI SATU pola yang menunjukkan irama melalui pengulangan bentuk!",
+                opt: ["Pola garis zigzag berulang", "Pola bunga yang sama diulang", "Pola acak tanpa aturan", "Pola lingkaran berurutan"],
+                ans: ["Pola garis zigzag berulang", "Pola bunga yang sama diulang", "Pola lingkaran berurutan"]
+            },
+            {
+                id: 13,
+                cat: "Seni Rupa",
+                type: "pgk",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Teknik Karya 3 Dimensi</div><div class='visual-frame'>${getImg("teknik_seni_rupa", "Teknik Seni Rupa 3D")}</div><p>Perhatikan gambar berbagai karya seni rupa tiga dimensi di atas. Setiap karya dibuat dengan teknik yang berbeda-beda sesuai dengan bahan dan tujuan pembuatannya.</p></div>`,
+                q: "Pilih LEBIH DARI SATU karya yang menggunakan teknik merakit atau menyambung bahan!",
+                opt: ["Patung dari logam disambung", "Keramik dari tanah liat", "Anyaman dari bambu", "Lukisan di kanvas"],
+                ans: ["Patung dari logam disambung", "Anyaman dari bambu"]
+            },
+            {
+                id: 14,
+                cat: "Seni Rupa",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Bahan untuk Karya Seni</div><p>Berbagai bahan dapat digunakan untuk membuat karya seni rupa.</p></div>",
+                q: "Pilih LEBIH DARI SATU bahan alam yang dapat dimanfaatkan untuk karya seni!",
+                opt: ["Tanah liat untuk patung", "Plastik bekas untuk daur ulang", "Daun kering untuk kolase", "Kaca untuk jendela"],
+                ans: ["Tanah liat untuk patung", "Daun kering untuk kolase"]
+            },
+            {
+                id: 15,
+                cat: "Seni Rupa",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Tema Karya Seni</div><p>Siswa akan membuat karya seni dengan tema tertentu yang berkaitan dengan kehidupan sehari-hari.</p></div>",
+                q: "Pilih LEBIH DARI SATU tema yang sesuai dengan lingkungan sekitar siswa!",
+                opt: ["Keindahan alam sekitar", "Kehidupan di sekolah", "Tradisi budaya daerah", "Perang di negara lain"],
+                ans: ["Keindahan alam sekitar", "Kehidupan di sekolah", "Tradisi budaya daerah"]
+            },
+            {
+                id: 16,
+                cat: "Seni Rupa",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Istilah dalam Seni</div><p>Ketika membahas karya seni, ada beberapa istilah yang sering digunakan.</p></div>",
+                q: "Pilih LEBIH DARI SATU istilah yang tepat digunakan saat membahas keindahan karya seni!",
+                opt: ["Komposisi (susunan)", "Estetika (keindahan)", "Perspektif (sudut pandang)", "Matematika (hitungan)"],
+                ans: ["Komposisi (susunan)", "Estetika (keindahan)", "Perspektif (sudut pandang)"]
+            },
+            {
+                id: 17,
+                cat: "Seni Rupa",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Unsur Seni Rupa</div><p>Klasifikasikan setiap bentuk visual berikut.</p></div>",
+                q: "Klasifikasikan setiap bentuk apakah termasuk Unsur Garis atau Unsur Bidang!",
+                rows: ["Garis lurus", "Lingkaran", "Segitiga"],
+                cols: ["Unsur Garis", "Unsur Bidang"],
+                ans: ["Unsur Garis", "Unsur Bidang", "Unsur Bidang"]
+            },
+            {
+                id: 18,
+                cat: "Seni Rupa",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Teknik Berkarya</div><p>Klasifikasikan setiap teknik berdasarkan jenis karya yang dihasilkan.</p></div>",
+                q: "Klasifikasikan setiap teknik apakah cocok untuk karya 2 Dimensi atau 3 Dimensi!",
+                rows: ["Melukis di kanvas", "Memahat batu", "Menggambar di kertas"],
+                cols: ["2 Dimensi", "3 Dimensi"],
+                ans: ["2 Dimensi", "3 Dimensi", "2 Dimensi"]
+            },
+            {
+                id: 19,
+                cat: "Seni Rupa",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Fungsi Karya Seni</div><p>Klasifikasikan setiap benda hasil karya berdasarkan fungsinya.</p></div>",
+                q: "Klasifikasikan setiap benda apakah berfungsi sebagai Karya Pakai atau Karya Hias!",
+                rows: ["Vas bunga dari tanah liat", "Kursi ukir kayu", "Lukisan pemandangan"],
+                cols: ["Karya Pakai", "Karya Hias"],
+                ans: ["Karya Pakai", "Karya Pakai", "Karya Hias"]
+            },
+            {
+                id: 20,
+                cat: "Seni Rupa",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Komentar terhadap Karya</div><p>Klasifikasikan setiap komentar berdasarkan sifatnya.</p></div>",
+                q: "Klasifikasikan setiap komentar apakah Objektif (fakta) atau Subjektif (perasaan)!",
+                rows: ["Warnanya cerah", "Saya suka ini", "Komposisinya seimbang"],
+                cols: ["Objektif", "Subjektif"],
+                ans: ["Objektif", "Subjektif", "Objektif"]
+            },
+            {
+                id: 21,
+                cat: "Seni Musik",
+                type: "pg",
+                score: 1,
+                stim: '<div class=\'stimulus-box\'><div class=\'stimulus-head\'>Pola Ketukan</div><div class=\'visual-frame\'>' + getImg("notasi_ritme", "Notasi Ritme") + '</div><p>Perhatikan notasi ritme sederhana dengan tanda ketukan 4/4 di atas.</p></div>',
+                q: "Berapa ketukan dalam satu baris notasi tersebut?",
+                opt: ["2 ketukan", "3 ketukan", "4 ketukan", "5 ketukan"],
+                ans: "4 ketukan"
+            },
+            {
+                id: 22,
+                cat: "Seni Musik",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Kecepatan Lagu</div><p>Sebuah lagu ditulis dengan tanda tempo 'Allegro' di bagian atas partitur.</p></div>",
+                q: "Apa arti tempo Allegro untuk kecepatan lagu tersebut?",
+                opt: ["Dimainkan sangat lambat", "Dimainkan dengan kecepatan sedang", "Dimainkan dengan cepat dan riang", "Dimainkan tanpa tempo"],
+                ans: "Dimainkan dengan cepat dan riang"
+            },
+            {
+                id: 23,
+                cat: "Seni Musik",
+                type: "pg",
+                score: 1,
+                stim: '<div class=\'stimulus-box\'><div class=\'stimulus-head\'>Kekuatan Bunyi</div><div class=\'visual-frame\'>' + getImg("simbol_dinamika", "Simbol Dinamika") + '</div><p>Perhatikan simbol dinamika pada partitur musik di atas (f = keras, p = lembut).</p></div>',
+                q: "Jika ada simbol 'p' pada lagu, bagaimana cara menyanyikannya?",
+                opt: ["Dengan suara sangat keras", "Dengan suara lembut", "Dengan suara sedang", "Tanpa suara"],
+                ans: "Dengan suara lembut"
+            },
+            {
+                id: 24,
+                cat: "Seni Musik",
+                type: "pg",
+                score: 1,
+                stim: '<div class=\'stimulus-box\'><div class=\'stimulus-head\'>Cara Memainkan Alat Musik</div><div class=\'visual-frame\'>' + getImg("alat_musik_tradisional", "Alat Musik Tradisional") + '</div><p>Perhatikan gambar berbagai alat musik tradisional di atas.</p></div>',
+                q: "Bagaimana cara menghasilkan bunyi pada alat musik gitar?",
+                opt: ["Dipukul dengan tangan", "Dipetik dengan jari", "Ditiup dengan mulut", "Digoyangkan"],
+                ans: "Dipetik dengan jari"
+            },
+            {
+                id: 25,
+                cat: "Seni Musik",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Alat Musik dari Benda Sekitar</div><p>Berbagai benda di sekitar kita dapat dijadikan alat musik sederhana.</p></div>",
+                q: "Benda mana yang paling potensial dijadikan alat musik ritmis sederhana?",
+                opt: ["Botol kaca berisi air", "Buku tulis", "Bantal empuk", "Sendok plastik"],
+                ans: "Botol kaca berisi air"
+            },
+            {
+                id: 26,
+                cat: "Seni Musik",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Merawat Alat Musik</div><p>Setelah bermain alat musik, ada cara tertentu untuk merawatnya agar tetap baik.</p></div>",
+                q: "Apa yang harus dilakukan setelah bermain alat musik yang berkeringat?",
+                opt: ["Langsung disimpan tanpa dibersihkan", "Dilap dengan kain kering", "Dicuci dengan air", "Dibiarkan di tempat lembab"],
+                ans: "Dilap dengan kain kering"
+            },
+            {
+                id: 27,
+                cat: "Seni Musik",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Musik Daerah</div><p>Setiap daerah memiliki pola irama musik tradisional yang khas.</p></div>",
+                q: "Pola irama mana yang sesuai untuk mengiringi lagu daerah Jawa (Gamelan)?",
+                opt: ["Irama cepat seperti rock", "Irama sedang dengan gong", "Irama tanpa alat musik", "Irama seperti lagu pop"],
+                ans: "Irama sedang dengan gong"
+            },
+            {
+                id: 28,
+                cat: "Seni Musik",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Memberi Komentar Pertunjukan</div><p>Setelah menonton pertunjukan musik teman, kita dapat memberikan tanggapan.</p></div>",
+                q: "Tanggapan mana yang menggunakan istilah musik yang tepat dan santun?",
+                opt: ["Permainanmu buruk sekali", "Tempo lagu terlalu cepat di bagian tengah", "Saya tidak mau nonton lagi", "Kamu harus berhenti main musik"],
+                ans: "Tempo lagu terlalu cepat di bagian tengah"
+            },
+            {
+                id: 29,
+                cat: "Seni Musik",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Kegiatan Musik</div><p>Siswa memiliki minat berbeda terhadap kegiatan bermusik.</p></div>",
+                q: "Jika siswa suka mengetuk-ngetuk meja dan mengikuti irama, kegiatan musik apa yang cocok?",
+                opt: ["Paduan suara", "Grup perkusi (alat pukul)", "Orkestra biola", "Solo piano"],
+                ans: "Grup perkusi (alat pukul)"
+            },
+            {
+                id: 30,
+                cat: "Seni Musik",
+                type: "pg",
+                score: 1,
+                stim: '<div class=\'stimulus-box\'><div class=\'stimulus-head\'>Nilai Nada</div><div class=\'visual-frame\'>' + getImg("notasi_ritme", "Notasi Ritme") + '</div><p>Perhatikan gambar notasi balok di atas dengan berbagai bentuk not.</p></div>',
+                q: "Berapa ketukan untuk notasi balok berbentuk bulat penuh (not penuh)?",
+                opt: ["1 ketukan", "2 ketukan", "3 ketukan", "4 ketukan"],
+                ans: "4 ketukan"
+            },
+            {
+                id: 31,
+                cat: "Seni Musik",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Pola Melodi</div><p>Dengarkan atau perhatikan tiga potongan lagu sederhana berikut.</p></div>",
+                q: "Pilih LEBIH DARI SATU lagu yang memiliki pola melodi naik (nada semakin tinggi)!",
+                opt: ["Do-Re-Mi-Fa-Sol", "Sol-Fa-Mi-Re-Do", "Do-Mi-Sol (naik)", "Do-Sol-Mi (turun-naik)"],
+                ans: ["Do-Re-Mi-Fa-Sol", "Do-Mi-Sol (naik)"]
+            },
+            {
+                id: 32,
+                cat: "Seni Musik",
+                type: "pgk",
+                score: 2,
+                stim: '<div class=\'stimulus-box\'><div class=\'stimulus-head\'>Bermain Musik Bersama</div><div class=\'visual-frame\'>' + getImg("ansambel_musik", "Ansambel Musik") + '</div><p>Perhatikan gambar kelompok musik yang bermain bersama di atas.</p></div>',
+                q: "Pilih LEBIH DARI SATU peran yang wajib ada agar musik terdengar harmonis!",
+                opt: ["Pemain melodi (nada lagu)", "Pemain ritme (ketukan)", "Penonton saja", "Konduktor (pengatur tempo)"],
+                ans: ["Pemain melodi (nada lagu)", "Pemain ritme (ketukan)", "Konduktor (pengatur tempo)"]
+            },
+            {
+                id: 33,
+                cat: "Seni Musik",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Cara Memainkan Alat</div><p>Berbagai alat musik dimainkan dengan cara yang berbeda.</p></div>",
+                q: "Pilih LEBIH DARI SATU alat musik yang dimainkan dengan cara digesek atau ditiup!",
+                opt: ["Biola", "Drum", "Seruling ", "Gitar"],
+                ans: ["Biola", "Seruling"]
+            },
+            {
+                id: 34,
+                cat: "Seni Musik",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Musik dalam Kegiatan Adat</div><p>Musik tradisional sering mengiringi berbagai kegiatan adat di masyarakat.</p></div>",
+                q: "Pilih LEBIH DARI SATU kegiatan yang biasanya diiringi musik tradisional!",
+                opt: ["Upacara pernikahan adat", "Penyambutan tamu penting", "Tidur siang di rumah", "Festival budaya daerah"],
+                ans: ["Upacara pernikahan adat", "Penyambutan tamu penting", "Festival budaya daerah"]
+            },
+            {
+                id: 35,
+                cat: "Seni Musik",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Istilah dalam Musik</div><p>Ada beberapa istilah yang digunakan saat membahas musik.</p></div>",
+                q: "Pilih LEBIH DARI SATU istilah yang tepat digunakan saat membahas kecepatan dan kekuatan bunyi!",
+                opt: ["Tempo (kecepatan)", "Dinamika (kekuatan bunyi)", "Warna (cat)", "Birama (ketukan)"],
+                ans: ["Tempo (kecepatan)", "Dinamika (kekuatan bunyi)", "Birama (ketukan)"]
+            },
+            {
+                id: 36,
+                cat: "Seni Musik",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Sumber Bunyi</div><p>Bunyi dapat berasal dari berbagai sumber di sekitar kita.</p></div>",
+                q: "Pilih LEBIH DARI SATU sumber bunyi yang dapat diidentifikasi sebagai bunyi alam!",
+                opt: ["Suara hujan", "Petir menggelegar", "Klakson mobil", "Radio"],
+                ans: ["Suara hujan", "Petir menggelegar"]
+            },
+            {
+                id: 37,
+                cat: "Seni Musik",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Jenis Alat Musik</div><p>Klasifikasikan setiap alat musik berdasarkan fungsinya.</p></div>",
+                q: "Klasifikasikan setiap alat apakah termasuk Alat Musik Ritmis atau Alat Musik Melodis!",
+                rows: ["Tamborin", "Pianika", "Triangle"],
+                cols: ["Alat Musik Ritmis", "Alat Musik Melodis"],
+                ans: ["Alat Musik Ritmis", "Alat Musik Melodis", "Alat Musik Ritmis"]
+            },
+            {
+                id: 38,
+                cat: "Seni Musik",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Cara Memainkan</div><p>Klasifikasikan setiap alat musik berdasarkan cara memainkannya.</p></div>",
+                q: "Klasifikasikan setiap alat apakah dimainkan dengan cara Dipetik/Disentuh atau Ditiup!",
+                rows: ["Seruling", "Gitar", "Terompet"],
+                cols: ["Dipetik/Disentuh", "Ditiup"],
+                ans: ["Ditiup", "Dipetik/Disentuh", "Ditiup"]
+            },
+            {
+                id: 39,
+                cat: "Seni Musik",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Kecepatan Tempo</div><p>Klasifikasikan setiap istilah tempo berdasarkan kecepatannya.</p></div>",
+                q: "Klasifikasikan setiap istilah apakah termasuk kategori Cepat atau Lambat!",
+                rows: ["Presto (sangat cepat)", "Largo (sangat lambat)", "Andante (sedang)"],
+                cols: ["Cepat", "Lambat"],
+                ans: ["Cepat", "Lambat", "Cepat"]
+            },
+            {
+                id: 40,
+                cat: "Seni Musik",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Jenis Umpan Balik</div><p>Klasifikasikan setiap komentar terhadap pertunjukan musik.</p></div>",
+                q: "Klasifikasikan setiap komentar apakah Umpan Balik Teknis Musik atau Non-Teknis!",
+                rows: ["Nadanya fals", "Bajunya bagus", "Tempo terlalu cepat"],
+                cols: ["Umpan Balik Teknis Musik", "Non-Teknis"],
+                ans: ["Umpan Balik Teknis Musik", "Non-Teknis", "Umpan Balik Teknis Musik"]
+            }
+        ];
+        const app = {
+            session:  { nama: "", kelas: "", answers: {}, startTime: 0 },
+            currIdx:  0,
+            timerInt: null,
+            _hasSavedSession: false,
+
+            // ── INIT ──────────────────────────────────────────────
+            init: function() {
+                this.showSlide('pin');
+                try {
+                    if (localStorage.getItem(CONFIG.STORAGE_KEY)) this._hasSavedSession = true;
+                } catch(e) {}
+            },
+
+            // ── CEK PIN ───────────────────────────────────────────
+            checkPin: async function() {
+                const inp = document.getElementById('inp-pin');
+                const val = inp.value.trim();
+                if (!val) return;
+                const h = await hashPin(val);
+                if (h === CONFIG.PIN_HASH) {
+                    this.showSlide('login');
+                    if (this._hasSavedSession)
+                        document.getElementById('resume-alert').style.display = 'block';
+                } else {
+                    inp.classList.add('error');
+                    document.getElementById('pin-err').style.display = 'block';
+                    inp.value = '';
+                    setTimeout(() => inp.classList.remove('error'), 400);
+                }
+            },
+
+            // ── LOGIN ─────────────────────────────────────────────
+            login: function() {
+                const n = document.getElementById('inpNama').value.trim();
+                const k = document.getElementById('inpKelas').value;
+                if (!n || !k) { alert("Harap isi nama lengkap dan pilih kelas!"); return; }
+                this.session.nama  = n;
+                this.session.kelas = k;
+                this.showSlide('rules');
+            },
+
+            // ── RESUME SESI TERSIMPAN ─────────────────────────────
+            resume: function() {
+                try {
+                    this.session = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY));
+                    this.renderSidebar();
+                    this.startExam(true);
+                } catch(e) {
+                    alert("Sesi tersimpan rusak. Silakan mulai ujian baru.");
+                }
+            },
+
+            // ── MULAI UJIAN ───────────────────────────────────────
+            startExam: function(isRes = false) {
+                if (!isRes) { this.session.startTime = Date.now(); this.save(); }
+                document.getElementById('user-badge').innerText  = this.session.nama;
+                document.getElementById('user-badge').style.display = 'block';
+                document.getElementById('sidebar').style.display    = 'flex';
+                this.renderQuestions();
+                this.renderSidebar();
+                this.showSlide('quiz');
+                this.goToQ(0);
+                this.startTimer();
+            },
+
+            // ── SHOW SLIDE ────────────────────────────────────────
+            showSlide: function(id) {
+                document.querySelectorAll('.slide').forEach(e => e.classList.remove('active'));
+                document.getElementById('slide-' + id).classList.add('active');
+            },
+
+            // ── RENDER SOAL ───────────────────────────────────────
+            // pgk-cat: header dan radio button dibuat dinamis
+            // sesuai panjang q.cols (mendukung 2 dan 3 kolom)
+            renderQuestions: function() {
+                const box = document.getElementById('quiz-container');
+                box.innerHTML = "";
+                QUESTIONS.forEach((q, i) => {
+                    let h = `<div id="q-item-${i}" class="question-item">
+                        <div class="tag-cat">${q.cat}</div>
+                        ${q.stim || ""}
+                        <div class="q-text">${i + 1}. ${q.q}</div>`;
+
+                    if (q.type === 'pg') {
+                        q.opt.forEach((o, oi) =>
+                            h += `<label class="opt-label">
+                                    <input type="radio" name="ans_${q.id}" value="${oi}"
+                                           onchange="app.saveAns(${q.id},${oi})"> ${o}
+                                  </label>`
+                        );
+                    } else if (q.type === 'pgk') {
+                        h += `<p style="font-size:.82rem;color:#64748b;margin-bottom:10px;">
+                                ☑ Boleh memilih lebih dari satu jawaban
+                              </p>`;
+                        q.opt.forEach((o, oi) =>
+                            h += `<label class="opt-label">
+                                    <input type="checkbox" value="${oi}"
+                                           onchange="app.saveMulti(${q.id},${oi})"> ${o}
+                                  </label>`
+                        );
+                    } else if (q.type === 'pgk-cat') {
+                        h += `<div class="matrix-wrapper"><table class="matrix-table">
+                                <tr><th>Pernyataan</th>`;
+                        q.cols.forEach(c => h += `<th>${c}</th>`);
+                        h += `</tr>`;
+                        q.rows.forEach((r, ri) => {
+                            h += `<tr><td>${r}</td>`;
+                            q.cols.forEach(c =>
+                                h += `<td><input type="radio"
+                                            name="mx_${q.id}_${ri}"
+                                            value="${c}"
+                                            onchange="app.saveMx(${q.id},${ri},'${c}')">
+                                      </td>`
+                            );
+                            h += `</tr>`;
+                        });
+                        h += `</table></div>`;
+                    }
+
+                    h += `</div>`;
+                    box.innerHTML += h;
+                });
+
+                if (window.MathJax && MathJax.typesetPromise)
+                    MathJax.typesetPromise([box]).catch(() => {});
+            },
+
+            // ── NAVIGASI SOAL ─────────────────────────────────────
+            goToQ: function(idx) {
+                if (idx < 0 || idx >= QUESTIONS.length) return;
+                this.currIdx = idx;
+
+                // Scroll area ujian kembali ke atas
+                const qs = document.getElementById('quiz-scroll');
+                if (qs) qs.scrollTop = 0;
+
+                document.querySelectorAll('.question-item').forEach(e => e.classList.remove('active-q'));
+                document.getElementById(`q-item-${idx}`).classList.add('active-q');
+                document.getElementById('q-indicator').innerText = `Soal ${idx + 1} / 40`;
+                document.getElementById('btn-prev').disabled = (idx === 0);
+
+                const nBtn = document.getElementById('btn-next');
+                if (idx === QUESTIONS.length - 1) {
+                    nBtn.innerText = "Selesai";
+                    nBtn.onclick   = () => this.confirmFinish();
+                    nBtn.classList.add('btn-danger');
+                } else {
+                    nBtn.innerText = "Selanjutnya";
+                    nBtn.onclick   = () => this.move(1);
+                    nBtn.classList.remove('btn-danger');
+                }
+
+                this.restoreVisual(idx);
+                this.updateSidebarUI();
+
+                if (window.MathJax && MathJax.typesetPromise) {
+                    const el = document.getElementById(`q-item-${idx}`);
+                    if (el) MathJax.typesetPromise([el]).catch(() => {});
+                }
+            },
+
+            move: function(step) { this.goToQ(this.currIdx + step); },
+
+            // ── SIMPAN JAWABAN ────────────────────────────────────
+            saveAns: function(qid, optIdx) {
+                this.session.answers[qid] = optIdx;
+                this.save(); this.updateSidebarUI();
+            },
+            saveMulti: function(qid, optIdx) {
+                let c = this.session.answers[qid] || [];
+                if (c.includes(optIdx)) c = c.filter(x => x !== optIdx);
+                else c.push(optIdx);
+                this.session.answers[qid] = c;
+                this.save(); this.updateSidebarUI();
+            },
+            saveMx: function(qid, rix, v) {
+                let c = this.session.answers[qid] || [];
+                c[rix] = v;
+                this.session.answers[qid] = c;
+                this.save(); this.updateSidebarUI();
+            },
+            save: function() {
+                try { localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(this.session)); } catch(e) {}
+            },
+
+            // ── SIDEBAR ───────────────────────────────────────────
+            renderSidebar: function() {
+                const g = document.getElementById('nav-grid');
+                g.innerHTML = "";
+                QUESTIONS.forEach((q, i) =>
+                    g.innerHTML += `<div id="nav-num-${i}" class="nav-num"
+                                         onclick="app.goToQ(${i})">${i + 1}</div>`
+                );
+            },
+
+            checkFilled: function(qid) {
+                const v = this.session.answers[qid];
+                if (v === undefined || v === null) return false;
+                if (Array.isArray(v)) return v.filter(x => x !== undefined && x !== null).length > 0;
+                return true;
+            },
+
+            updateSidebarUI: function() {
+                QUESTIONS.forEach((q, i) => {
+                    const el = document.getElementById(`nav-num-${i}`);
+                    if (!el) return;
+                    if (i === this.currIdx) el.classList.add('current');
+                    else el.classList.remove('current');
+                    if (this.checkFilled(q.id)) el.classList.add('filled');
+                    else el.classList.remove('filled');
+                });
+            },
+
+            // ── RESTORE VISUAL (setelah navigasi / resume) ────────
+            restoreVisual: function(idx) {
+                const q   = QUESTIONS[idx];
+                const ans = this.session.answers[q.id];
+                if (ans === undefined || ans === null) return;
+
+                if (q.type === 'pg') {
+                    const el = document.querySelector(`input[name="ans_${q.id}"][value="${ans}"]`);
+                    if (el) el.checked = true;
+                } else if (q.type === 'pgk' && Array.isArray(ans)) {
+                    ans.forEach(v => {
+                        const el = document.querySelector(`#q-item-${idx} input[value="${v}"]`);
+                        if (el) el.checked = true;
+                    });
+                } else if (q.type === 'pgk-cat' && Array.isArray(ans)) {
+                    ans.forEach((v, ri) => {
+                        if (!v) return;
+                        const el = document.querySelector(`input[name="mx_${q.id}_${ri}"][value="${v}"]`);
+                        if (el) el.checked = true;
+                    });
+                }
+            },
+
+            // ── TIMER ─────────────────────────────────────────────
+            startTimer: function() {
+                clearInterval(this.timerInt);
+                this.timerInt = setInterval(() => {
+                    const rem = CONFIG.DURATION -
+                                Math.floor((Date.now() - this.session.startTime) / 1000);
+                    if (rem <= 0) { clearInterval(this.timerInt); this.submitExam(); return; }
+                    const m = Math.floor(rem / 60).toString().padStart(2, '0');
+                    const s = (rem % 60).toString().padStart(2, '0');
+                    document.getElementById('timer-display').innerText = `${m}:${s}`;
+                }, 1000);
+            },
+
+            confirmFinish: function() {
+                document.getElementById('modal-confirm').style.display = 'flex';
+            },
+
+            // ── HITUNG & KIRIM NILAI ──────────────────────────────
+            submitExam: function() {
+                document.getElementById('modal-confirm').style.display = 'none';
+                document.getElementById('modal-loading').style.display = 'flex';
+                clearInterval(this.timerInt);
+
+                const cats = ["Seni Rupa", "Seni Musik"];
+                const stats = {};
+                cats.forEach(c => { stats[c] = { s: 0, m: 0 }; });
+                let totS = 0, totM = 0;
+
+                QUESTIONS.forEach(q => {
+                    stats[q.cat].m += q.score;
+                    totM += q.score;
+                    const u = this.session.answers[q.id];
+                    let pt = 0;
+
+                    if (u !== undefined && u !== null) {
+                        if (q.type === 'pg') {
+                            if (u == q.opt.indexOf(q.ans)) pt = q.score;
+                        } else if (q.type === 'pgk' && Array.isArray(u) && Array.isArray(q.ans)) {
+                            const userAns    = u.map(i => q.opt[i]).sort();
+                            const correctAns = [...q.ans].sort();
+                            if (JSON.stringify(userAns) === JSON.stringify(correctAns)) pt = q.score;
+                        } else if (q.type === 'pgk-cat' && Array.isArray(u)) {
+                            let match = 0;
+                            q.ans.forEach((k, i) => { if (u[i] === k) match++; });
+                            pt = (match / q.rows.length) * q.score;
+                        }
+                    }
+
+                    stats[q.cat].s += pt;
+                    totS += pt;
+                });
+
+                const final = Math.round((totS / totM) * 100);
+                let summ = {}, cht = "", nts = [];
+
+                cats.forEach(c => {
+                    const p = stats[c].m > 0
+                        ? Math.round((stats[c].s / stats[c].m) * 100) : 0;
+                    summ[c] = { skor: p, tuntas: p >= 70,
+                                label: p >= 70 ? "Tuntas" : "Perlu Bimbingan" };
+                    if (p < 70) nts.push(c);
+                    cht += `<div class="chart-row">
+                        <div class="chart-lbl">${c}</div>
+                        <div class="chart-track">
+                            <div class="chart-fill"
+                                 style="width:${p}%;background:${p >= 70 ? '#16a34a' : '#dc2626'}">
+                            </div>
+                        </div>
+                        <div class="chart-val">${p}%</div>
+                    </div>`;
+                });
+
+                const desc = nts.length === 0
+                    ? "Selamat! Tuntas semua elemen."
+                    : "Perlu belajar lagi di: " + nts.join(", ");
+
+                this.showSlide('result');
+                document.getElementById('modal-loading').style.display = 'none';
+                document.getElementById('result-content').innerHTML = `
+                    <h3>Nilai Akhir:
+                        <span style="color:var(--primary);font-size:2.5rem;">${final}</span>
+                    </h3>
+                    <div style="background:#f1f5f9;padding:15px;border-radius:8px;margin-bottom:20px;">
+                        ${desc}
+                    </div>
+                    <h4>Capaian per Elemen:</h4>
+                    ${cht}`;
+
+                // Kirim ke Google Apps Script
+                fetch(CONFIG.SCRIPT_URL, {
+                    method:  'POST',
+                    mode:    'no-cors',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify({
+                        action:         "submit_exam",
+                        mapel:          "Seni Budaya",
+                        nama:           this.session.nama,
+                        kelas:          this.session.kelas,
+                        skor:           final,
+                        deskripsi:      desc,
+                        jawaban:        this.session.answers,
+                        ringkasanNilai: summ
+                    })
+                }).then(() => {
+                    try { localStorage.removeItem(CONFIG.STORAGE_KEY); } catch(e) {}
+                });
+            }
+        };
+
+        window.onload = () => app.init();
+    </script>
+</body>
+
+</html>
