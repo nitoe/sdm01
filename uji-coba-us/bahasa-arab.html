@@ -1,1 +1,781 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ujian Sekolah Bahasa Arab - SD Muhammadiyah 01 Kukusan</title>
+<!-- Google Fonts: Arabic (Scheherazade New) + UI Font -->
+<link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'],['\\(','\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+:root {
+  --primary: #1e3a8a;
+  --primary-light: #eff6ff;
+  --success: #16a34a;
+  --danger: #dc2626;
+  --text: #334155;
+  --bg: #f1f5f9;
+  --border: #cbd5e1;
+}
+*, *::before, *::after { box-sizing: border-box; outline: none; }
+body { margin:0; padding:0; font-family:'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); height:100vh; overflow:hidden; }
+.app-container { display:flex; flex-direction:column; height:100%; width:100%; background:white; }
 
+/* HEADER */
+.header { height:64px; background:var(--primary); color:white; display:flex; align-items:center; justify-content:space-between; padding:0 24px; box-shadow:0 2px 8px rgba(0,0,0,.15); z-index:50; flex-shrink:0; }
+.header-title { font-weight:700; font-size:1.2rem; }
+.timer-box { background:rgba(255,255,255,.15); padding:6px 16px; border-radius:6px; font-weight:700; font-family:monospace; font-size:1.25rem; border:1px solid rgba(255,255,255,.2); }
+
+/* WORKSPACE */
+.workspace { display:flex; flex:1; overflow:hidden; position:relative; }
+.main-stage { flex:1; position:relative; background:var(--bg); display:flex; flex-direction:column; overflow:hidden; }
+
+/* SLIDES */
+.slide { display:none !important; width:100%; height:100%; }
+.slide.active { display:flex !important; flex-direction:column; animation:fadeIn .4s ease; }
+.center-content-wrapper { width:100%; max-width:800px; margin:0 auto; padding:20px; overflow-y:auto; flex:1; display:flex; flex-direction:column; justify-content:center; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+.card { background:white; border-radius:12px; box-shadow:0 4px 6px -1px rgba(0,0,0,.1); padding:32px; margin-bottom:20px; border-top:5px solid var(--primary); }
+
+/* QUIZ */
+.quiz-scroll-area { flex:1; overflow-y:auto; padding:20px; padding-bottom:80px; width:100%; max-width:900px; margin:0 auto; }
+.nav-bar-fixed { flex-shrink:0; background:white; padding:16px 24px; border-top:1px solid #e2e8f0; box-shadow:0 -4px 15px rgba(0,0,0,.05); display:flex; justify-content:space-between; align-items:center; z-index:40; }
+
+/* SOAL */
+.question-item { display:none; }
+.question-item.active-q { display:block; animation:slideIn .3s ease-out; }
+@keyframes slideIn { from{opacity:0;transform:translateX(15px)} to{opacity:1;transform:translateX(0)} }
+
+.stimulus-box { background:#fff; border:1px solid #e2e8f0; border-left:5px solid var(--primary); padding:20px; margin-bottom:24px; border-radius:8px; }
+.stimulus-head { font-weight:800; color:var(--primary); border-bottom:2px dashed #e2e8f0; padding-bottom:10px; margin-bottom:15px; font-size:1.1rem; text-transform:uppercase; }
+.visual-frame { background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:20px; display:flex; flex-direction:column; justify-content:center; align-items:center; margin:15px 0; overflow:hidden; }
+.q-text { font-size:1.15rem; font-weight:600; color:#1e293b; margin-bottom:20px; line-height:1.6; }
+
+/* ── ARABIC FONT ── */
+/* Terapkan ke semua elemen yang mengandung teks Arab */
+.arabic-text, [lang="ar"], .opt-label-ar {
+  font-family: 'Scheherazade New', 'Traditional Arabic', 'Arabic Typesetting', serif;
+  font-size: 1.4rem;
+  direction: rtl;
+  line-height: 2.2;
+  text-align: right;
+}
+/* Override size khusus stimulus */
+.stimulus-box .arabic-text { font-size: 1.6rem; text-align: center; }
+
+/* Opsi pilihan: auto-detect arah teks */
+.opt-label {
+  display:flex; align-items:flex-start; gap:12px; padding:16px;
+  background:white; border:1px solid #cbd5e1; border-radius:8px;
+  margin-bottom:12px; cursor:pointer; transition:all .2s;
+  font-size:1rem; color:#475569;
+  font-family:'Scheherazade New','Traditional Arabic',serif; /* agar Arab tampil */
+}
+.opt-label .opt-text {
+  flex: 1;
+  direction: auto; /* browser deteksi otomatis RTL/LTR */
+  unicode-bidi: plaintext;
+  line-height: 1.9;
+  font-size: 1.05rem;
+}
+/* Jika opsi full Arab, besar sedikit */
+.opt-label .opt-text:is([dir="rtl"]) { font-size: 1.25rem; }
+
+.opt-label:hover { background:var(--primary-light); border-color:var(--primary); color:var(--primary); }
+.opt-label input { margin-top:6px; transform:scale(1.2); flex-shrink:0; }
+
+.tag-cat { display:inline-block; font-size:.75rem; background:#e0f2fe; color:#0369a1; padding:4px 10px; border-radius:20px; font-weight:bold; margin-bottom:10px; }
+
+/* SIDEBAR */
+.side-panel { width:300px; background:white; border-left:1px solid #e2e8f0; display:flex; flex-direction:column; flex-shrink:0; z-index:40; }
+.nav-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; padding:20px; overflow-y:auto; }
+.nav-num { aspect-ratio:1; display:flex; align-items:center; justify-content:center; border:1px solid #cbd5e1; border-radius:6px; cursor:pointer; font-weight:700; color:#64748b; transition:all .2s; }
+.nav-num:hover { border-color:var(--primary); color:var(--primary); background:var(--primary-light); }
+.nav-num.current { border:2px solid var(--primary); transform:scale(1.1); box-shadow:0 2px 8px rgba(0,0,0,.15); color:var(--primary); }
+.nav-num.filled { background-color:var(--success)!important; color:white!important; border-color:var(--success)!important; }
+.nav-num.filled.current { border:3px solid #1e3a8a!important; }
+
+input[type="text"], select { width:100%; padding:14px; margin:8px 0 20px; border:1px solid #cbd5e1; border-radius:8px; font-size:1rem; }
+.btn { background:var(--primary); color:white; border:none; padding:12px 24px; border-radius:8px; cursor:pointer; font-weight:700; font-size:1rem; display:inline-flex; align-items:center; gap:8px; justify-content:center; }
+.btn:hover { background:#172554; }
+.btn:disabled { background:#94a3b8; cursor:not-allowed; }
+.btn-outline { background:white; border:1px solid #cbd5e1; color:#475569; }
+.btn-outline:hover { background:#f8fafc; }
+.btn-danger { background:var(--danger); }
+
+/* CHART */
+.chart-row { display:flex; align-items:center; margin-bottom:12px; }
+.chart-lbl { width:160px; font-size:.9rem; font-weight:600; text-align:right; padding-right:15px; }
+.chart-track { flex:1; background:#e2e8f0; height:16px; border-radius:10px; overflow:hidden; }
+.chart-fill { height:100%; transition:width 1s ease-out; }
+.chart-val { width:50px; padding-left:10px; font-weight:700; }
+
+/* OVERLAY & MODAL */
+.overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.6); backdrop-filter:blur(4px); display:none; justify-content:center; align-items:center; z-index:100; }
+.modal { background:white; padding:30px; border-radius:16px; width:90%; max-width:420px; text-align:center; }
+
+/* PIN INPUT */
+.pin-input-wrap { position:relative; margin-bottom:10px; }
+.pin-input-wrap svg { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:#94a3b8; pointer-events:none; }
+#inp-pin {
+  width:100%; padding:14px 14px 14px 44px;
+  border:1.5px solid var(--border); border-radius:8px;
+  font-size:1.1rem; font-weight:700; letter-spacing:.15em;
+  font-family:monospace; color:var(--text);
+  transition:border-color .2s;
+}
+#inp-pin:focus { border-color:var(--primary); }
+#inp-pin.error { border-color:#dc2626; animation:shake .3s ease; }
+#pin-err { font-size:.82rem; color:#dc2626; font-weight:600; display:none; margin-bottom:14px; }
+
+/* STIMULUS IMAGE */
+.stimulus-img { max-width:100%; height:auto; display:block; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,.1); }
+
+@keyframes spin { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+
+@media (max-width:768px) {
+  .workspace { flex-direction:column; }
+  .side-panel { width:100%; height:auto; border-left:none; border-top:1px solid #e2e8f0; order:2; }
+  .nav-grid { max-height:120px; padding:10px; }
+  .chart-lbl { width:100px; font-size:.8rem; }
+}
+mjx-container { font-size:1.1em!important; }
+</style>
+</head>
+<body>
+<div class="app-container">
+  <div class="header">
+    <div class="header-title">Ujian Sekolah Bahasa Arab - ISMUBA</div>
+    <div style="display:flex;align-items:center;gap:15px;">
+      <div id="user-badge" style="display:none;font-size:.85rem;background:rgba(255,255,255,.1);padding:5px 12px;border-radius:20px;">Siswa</div>
+      <div class="timer-box" id="timer-display">--:--</div>
+    </div>
+  </div>
+  <div class="workspace">
+    <div class="main-stage">
+
+      <!-- ① SLIDE PIN (tampil pertama) -->
+      <div id="slide-pin" class="slide active">
+        <div class="center-content-wrapper">
+          <div class="card" style="max-width:420px;margin:0 auto;text-align:center;">
+            <div style="font-size:2.5rem;margin-bottom:12px;">🔐</div>
+            <h2 style="color:var(--primary);margin-top:0;">Masukkan PIN</h2>
+            <p style="color:#64748b;margin-bottom:24px;font-size:.95rem;">
+              Masukkan PIN dari guru untuk membuka<br><strong>Ujian Bahasa Arab - ISMUBA</strong>
+            </p>
+            <div class="pin-input-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="inp-pin" placeholder="PIN ujian..." maxlength="30" autocomplete="off"
+                onkeydown="if(event.key==='Enter') app.checkPin()">
+            </div>
+            <div id="pin-err">❌ PIN salah. Coba lagi.</div>
+            <button class="btn" style="width:100%" onclick="app.checkPin()">Buka Ujian →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ② SLIDE LOGIN -->
+      <div id="slide-login" class="slide">
+        <div class="center-content-wrapper">
+          <div class="card" style="max-width:450px;margin:0 auto;text-align:center;">
+            <h2 style="color:var(--primary);margin-top:0;">Selamat Datang</h2>
+            <p style="color:#64748b;margin-bottom:30px;">Ujian Sekolah Bahasa Arab - ISMUBA (Fase C)</p>
+            <div style="text-align:left;">
+              <label>Nama Lengkap</label>
+              <input type="text" id="inpNama" placeholder="Masukkan nama lengkap...">
+              <label>Kelas</label>
+              <select id="inpKelas">
+                <option value="">-- Pilih Kelas --</option>
+                <option value="6A">Kelas 6A</option>
+                <option value="6B">Kelas 6B</option>
+              </select>
+            </div>
+            <button class="btn" id="btn-login" style="width:100%" onclick="app.login()">Masuk Ujian</button>
+            <div id="resume-alert" style="display:none;margin-top:20px;padding:10px;background:#eff6ff;color:#1d4ed8;border-radius:8px;cursor:pointer;font-size:.9rem;" onclick="app.resume()">
+              🔄 <b>Sesi Tersimpan Ditemukan</b><br>Klik untuk melanjutkan
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ③ SLIDE PETUNJUK -->
+      <div id="slide-rules" class="slide">
+        <div class="center-content-wrapper">
+          <div class="card" style="max-width:700px;margin:0 auto;">
+            <h2 style="margin-top:0;border-bottom:1px solid #e2e8f0;padding-bottom:15px;color:var(--primary);">Petunjuk Pengerjaan</h2>
+            <div style="line-height:1.8;color:#334155;">
+              <p>1. <strong>Waktu:</strong> Waktu pengerjaan soal ujian adalah <strong>90 Menit</strong>.</p>
+              <p>2. <strong>Soal:</strong> 40 butir soal Pilihan Ganda Bahasa Arab - ISMUBA.</p>
+              <p>3. <strong>Tips:</strong> Baca teks Arab dengan cermat sebelum memilih jawaban.</p>
+              <p>4. <strong>Tips:</strong> Fokus pada pemahaman teks, kosakata, dan tata bahasa.</p>
+            </div>
+            <div style="margin-top:30px;text-align:right;">
+              <button class="btn" onclick="app.startExam()">Mulai Mengerjakan &#8594;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ④ SLIDE KUIS -->
+      <div id="slide-quiz" class="slide">
+        <div id="quiz-scroll" class="quiz-scroll-area">
+          <div id="quiz-container"></div>
+        </div>
+        <div class="nav-bar-fixed">
+          <button class="btn btn-outline" id="btn-prev" onclick="app.move(-1)">&#8592; Sebelumnya</button>
+          <span id="q-indicator" style="font-weight:700;color:var(--primary);">Soal 1 / 40</span>
+          <button class="btn" id="btn-next" onclick="app.move(1)">Selanjutnya</button>
+        </div>
+      </div>
+
+      <!-- ⑤ SLIDE HASIL -->
+      <div id="slide-result" class="slide">
+        <div class="center-content-wrapper">
+          <div class="card" style="max-width:600px;margin:0 auto;text-align:center;">
+            <div style="font-size:4rem;margin-bottom:10px;">🎉</div>
+            <h2 style="color:var(--primary);margin:0;">Ujian Selesai!</h2>
+            <p style="color:#64748b;">Jawaban kamu telah kami terima.</p>
+            <div id="result-content" style="text-align:left;margin-top:30px;border-top:1px solid #e2e8f0;padding-top:20px;">
+              <p style="text-align:center;color:#64748b;">Sedang memproses nilai...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /main-stage -->
+
+    <!-- SIDEBAR NAVIGASI -->
+    <div class="side-panel" id="sidebar" style="display:none;">
+      <div style="padding:15px 20px;font-weight:700;color:#334155;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;">
+        <span>Navigasi</span>
+        <span style="font-size:.8rem;background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:10px;">40 Butir</span>
+      </div>
+      <div class="nav-grid" id="nav-grid"></div>
+      <div style="padding:20px;border-top:1px solid #e2e8f0;margin-top:auto;background:#f8fafc;">
+        <button class="btn btn-danger" style="width:100%" onclick="app.confirmFinish()">Selesai Ujian</button>
+      </div>
+    </div>
+
+  </div><!-- /workspace -->
+</div><!-- /app-container -->
+
+<!-- MODAL KONFIRMASI -->
+<div id="modal-confirm" class="overlay">
+  <div class="modal">
+    <h3 style="color:var(--primary);">Konfirmasi</h3>
+    <p>Yakin ingin mengakhiri ujian ini?</p>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:25px;">
+      <button class="btn btn-outline" onclick="document.getElementById('modal-confirm').style.display='none'">Cek Lagi</button>
+      <button class="btn btn-danger" onclick="app.submitExam()">Ya, Kumpulkan</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL LOADING -->
+<div id="modal-loading" class="overlay">
+  <div class="modal">
+    <h3 style="color:var(--primary);">Sedang Mengirim...</h3>
+    <div style="width:40px;height:40px;border:4px solid #e2e8f0;border-top:4px solid var(--primary);border-radius:50%;margin:10px auto;animation:spin 1s linear infinite;"></div>
+    <p>Mohon jangan tutup halaman ini.</p>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  KONFIGURASI
+//  PIN_HASH : hash SHA-256 (16 karakter) dari PIN asli.
+//  PIN default: Arab2026
+//  Untuk mengganti PIN, jalankan di console browser:
+//    hashPin("PIN_BARU_KAMU").then(h => console.log(h))
+//  lalu salin hasilnya ke PIN_HASH di bawah.
+// ═══════════════════════════════════════════════════════
+const CONFIG = {
+  SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwJveJtAISKhveIQ4wspAaeaUKLrqB_IBY55qhOqDOl649QSjqtBa2hYhOrx7UNs0GbdA/exec",
+  STORAGE_KEY: "US_2026_BAHASA_ARAB",
+  DURATION: 90 * 60,
+  PIN_HASH: "50b09a993aa87a9a"   // PIN: bdU8FG
+};
+
+// ── HELPER HASH (bisa dipakai dari console) ──
+async function hashPin(pin) {
+  const enc = new TextEncoder().encode(pin.trim().toLowerCase());
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('').slice(0,16);
+}
+window.hashPin = hashPin; // expose ke console
+
+// ── GAMBAR SOAL ──
+const IMAGE_ASSETS = {
+  "ruang_kelas": "https://i.postimg.cc/R04HFJbf/20260309_2151_Image_Generation_simple_compose_01kk9h8jqkfjkrg1egz0aw5f4j.png",
+  "siswa_laki":  "https://i.postimg.cc/6pdZtfzY/20260309_2156_Image_Generation_simple_compose_01kk9hhaysfgb9mz10385jf9g9.png"
+};
+function getImg(key, alt="Ilustrasi Soal") {
+  const url = IMAGE_ASSETS[key];
+  if (!url) return '<div style="background:#fef3c7;padding:15px;border-radius:8px;text-align:center;border:1px solid #f59e0b;">⚠️ Gambar tidak tersedia</div>';
+  return '<img src="' + url + '" alt="' + alt + '" class="stimulus-img" loading="eager">';
+}
+
+// ═══════════════════════════════════════════════════════
+//  BANK SOAL — 40 butir, kunci jawaban terverifikasi
+// ═══════════════════════════════════════════════════════
+const QUESTIONS = [
+  // ── PEMAHAMAN TEKS ──────────────────────────────────
+  { id:1, cat:"Pemahaman Teks", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Ta'aruf (Perkenalan)</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.8rem;text-align:center;'>أَنَا أَحْمَد، أَنَا تِلْمِيْذٌ، أَنَا مِنْ جَاكَرْتَا</p></div></div>`,
+    q:"Siapakah yang memperkenalkan diri pada kalimat di atas?",
+    opt:["أَحْمَد","جَاكَرْتَا","تِلْمِيْذٌ","أَنَا"], ans:"أَحْمَد" },
+
+  { id:2, cat:"Pemahaman Teks", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Ta'aruf (Perkenalan)</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.8rem;text-align:center;'>أَنَا أَحْمَد، أَنَا تِلْمِيْذٌ، أَنَا مِنْ جَاكَرْتَا</p></div></div>`,
+    q:"هَلْ أَحْمَد تِلْمِيْذٌ؟ (Apakah Ahmad seorang siswa?)",
+    opt:["نَعَمْ أَحْمَد مُدَرِّسٌ","لَا أَحْمَد مُدَرِّسٌ","نَعَمْ أَحْمَد تِلْمِيْذٌ","لَا أَحْمَد مِنْ جَاكَرْتَا"], ans:"نَعَمْ أَحْمَد تِلْمِيْذٌ" },
+
+  { id:12, cat:"Pemahaman Teks", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Pertanyaan Tempat</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.3rem;text-align:center;'>1. أَيْنَ حَدِيْقَةُ الْحَيَوَانَاتِ؟<br/>2. أَيْنَ مَحَطَّةُ الْحَافِلَاتِ؟<br/>3. أَيْنَ الشَّارِعُ؟<br/>4. أَيْنَ السُّوْقُ؟</p></div></div>`,
+    q:"Kalimat yang artinya 'Di mana kebun binatang?' adalah...",
+    opt:["1","2","3","4"], ans:"1" },
+
+  { id:16, cat:"Pemahaman Teks", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Teks Pendek</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.4rem;text-align:center;'>أَنَا خَدِيْجَةُ. أَسْكُنُ فِي الْقَرْيَةِ.<br/>فِيْهَا مَسْجِدٌ وَمَدْرَسَةٌ وَمَلْعَبٌ.<br/>هُنَاكَ بَيْتِيْ</p></div></div>`,
+    q:"أَيْنَ تَسْكُنُ خَدِيْجَةُ؟ (Di mana Khadijah tinggal?)",
+    opt:["فِي الْقَرْيَةِ","فِي الْمَسْجِدِ","فِي الْمَدْرَسَةِ","فِي الْمَلْعَبِ"], ans:"فِي الْقَرْيَةِ" },
+
+  { id:17, cat:"Pemahaman Teks", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Teks Pendek</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.4rem;text-align:center;'>أَنَا خَدِيْجَةُ. أَسْكُنُ فِي الْقَرْيَةِ.<br/>فِيْهَا مَسْجِدٌ وَمَدْرَسَةٌ وَمَلْعَبٌ.<br/>هُنَاكَ بَيْتِيْ</p></div></div>`,
+    q:"مَا أَمَاكِنُ الَّتِي تُوجَدُ فِي الْقَرْيَةِ؟ (Apa saja tempat yang ada di desa?)",
+    opt:["مُسْتَشْفَى وَصَيْدَلِيَّةٌ وَمَدْرَسَةٌ","سُوْقٌ وَمَلْعَبٌ","شَارِعٌ وَمَحَطَّةٌ وَمَلْعَبٌ","مَسْجِدٌ وَمَدْرَسَةٌ وَمَلْعَبٌ"], ans:"مَسْجِدٌ وَمَدْرَسَةٌ وَمَلْعَبٌ" },
+
+  { id:18, cat:"Pemahaman Teks", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Teks Pendek</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.4rem;text-align:center;'>أَنَا خَدِيْجَةُ. أَسْكُنُ فِي الْقَرْيَةِ.<br/>فِيْهَا مَسْجِدٌ وَمَدْرَسَةٌ وَمَلْعَبٌ.<br/><u>هُنَاكَ بَيْتِيْ</u></p></div></div>`,
+    q:"Arti dari kata yang digaris bawahi adalah...",
+    opt:["di sini rumah saya","di sana rumah saya","ini rumahku","rumahku besar"], ans:"di sana rumah saya" },
+
+  { id:20, cat:"Pemahaman Teks", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Identitas Siswa</div><div class='visual-frame'><img src="https://i.postimg.cc/6pdZtfzY/20260309_2156_Image_Generation_simple_compose_01kk9hhaysfgb9mz10385jf9g9.png" alt="Siswa Laki-laki" class="stimulus-img" loading="eager"></div><p class='arabic-text' style='text-align:center;font-size:1.6rem;'>هَلْ هُوَ تِلْمِيْذٌ؟</p></div>`,
+    q:"Jawaban yang tepat untuk pertanyaan di atas adalah...",
+    opt:["نَعَمْ هُوَ أُسْتَاذٌ","نَعَمْ هُوَ تِلْمِيْذٌ","لَا هُوَ مُهَنْدِسٌ","لَا هُوَ خَيَّاطٌ"], ans:"نَعَمْ هُوَ تِلْمِيْذٌ" },
+
+  { id:27, cat:"Pemahaman Teks", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Teks Percakapan</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.4rem;text-align:center;'>حَسَنٌ : <u>فِي الْفَصْلِ</u> أُسْتَاذٌ وَتَلَامِيْذٌ</p></div></div>`,
+    q:"Arti dari kalimat yang digaris bawahi adalah...",
+    opt:["di dalam kelas","di luar kelas","di dalam sekolah","di samping sekolah"], ans:"di dalam kelas" },
+
+  { id:29, cat:"Pemahaman Teks", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Teks Deskripsi Kelas</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.3rem;text-align:center;'>هٰذَا فَصْلِي. فِي الْفَصْلِ أُسْتَاذٌ وَتَلَامِيْذٌ.<br/>الْمِرْوَحَةُ <u>بَيْنَ</u> السَّقْفِ وَالْبِلَاطِ</p></div></div>`,
+    q:"أَيْنَ الْمِرْوَحَةُ؟ الْمِرْوَحَةُ .... السَّقْفِ وَالْبِلَاطِ",
+    opt:["بَيْنَ","فِي","وَرَاءَ","فَوْقَ"], ans:"بَيْنَ" },
+
+  { id:30, cat:"Pemahaman Teks", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Teks Deskripsi Kelas</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.3rem;text-align:center;'>هٰذَا فَصْلِي. فِي الْفَصْلِ أُسْتَاذٌ وَتَلَامِيْذٌ.<br/>وَالْمِصْبَاحُ <u>فَوْقَ</u> الْمَكْتَبِ</p></div></div>`,
+    q:"مَاذَا فَوْقَ الْمَكْتَبِ؟ (Apa yang ada di atas meja?)",
+    opt:["الْبِلَاطُ","الْكُرْسِيُّ","الْمِصْبَاحُ","الْفَصْلُ"], ans:"الْمِصْبَاحُ" },
+
+  { id:40, cat:"Pemahaman Teks", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Jadwal Pelajaran</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.2rem;text-align:center;'>فِي يَوْمِ الْخَمِيْسِ دَرْسُ الرِّيَاضِيَّاتِ.<br/>الرِّيَاضِيَّاتُ فِي الدَّرْسِ الْأَوَّلِ.<br/>وَاللُّغَةُ الْعَرَبِيَّةُ فِي الدَّرْسِ الثَّالِثِ</p></div></div>`,
+    q:"مَتَى تَكُوْنُ اللُّغَةُ الْعَرَبِيَّةُ؟ هِيَ فِي...",
+    opt:["الدَّرْسُ الْأَوَّلُ","الدَّرْسُ الثَّانِي","الدَّرْسُ الثَّالِثُ","الدَّرْسُ الرَّابِعُ"], ans:"الدَّرْسُ الثَّالِثُ" },
+
+  // ── KOSAKATA ────────────────────────────────────────
+  { id:3, cat:"Kosakata", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Isim Isyarah (Kata Tunjuk)</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.8rem;text-align:center;'>مَاهٰذَا؟</p></div></div>`,
+    q:"Jawaban yang tepat untuk pertanyaan di atas adalah...",
+    opt:["هٰذَا كِتَابٌ","هٰذَا مَكْتَبٌ","هٰذَا كُرْسِيٌّ","هٰذَا مِصْبَاحٌ"], ans:"هٰذَا كِتَابٌ" },
+
+  { id:4, cat:"Kosakata", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Terjemahan Kata</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.8rem;text-align:center;'>هٰذِهِ خَرِيْطَةُ إِنْدُوْنِيْسِيَا</p></div></div>`,
+    q:"Arti dari kata خَرِيْطَة adalah...",
+    opt:["gambar","meja","kursi","peta"], ans:"peta" },
+
+  { id:10, cat:"Kosakata", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Profesi (Mihnah)</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.5rem;text-align:center;'>سَارَةُ : مَا مِهْنَةُ أَبِيْكِ؟<br/>مَارِيَةُ : أَبِيْ ......</p></div></div>`,
+    q:"Kata yang tepat untuk melengkapi jawaban tentang profesi ayah adalah...",
+    opt:["طَبِيْبٌ","مُدَرِّسٌ","صَيَّادٌ","مُهَنْدِسٌ"], ans:"طَبِيْبٌ" },
+
+  { id:11, cat:"Kosakata", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Profesi Perempuan</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.5rem;text-align:center;'>هِيَ أُمِّيْ وَهِيَ ......</p></div></div>`,
+    q:"Kata yang tepat untuk profesi ibu (perempuan) adalah...",
+    opt:["مُمَرِّضَةٌ","مُمَرِّضٌ","صَيَّادٌ","خَيَّاطٌ"], ans:"مُمَرِّضَةٌ" },
+
+  { id:13, cat:"Kosakata", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Tempat di Sekolah</div><div class='visual-frame'><img src="https://i.postimg.cc/R04HFJbf/20260309_2151_Image_Generation_simple_compose_01kk9h8jqkfjkrg1egz0aw5f4j.png" alt="Ruang Kelas" class="stimulus-img" loading="eager"></div></div>`,
+    q:"Kosa kata yang sesuai dengan gambar tersebut adalah...",
+    opt:["الْفَصْلِ","الْمَقْصَفِ","الْمَيْدَانِ","الشَّارِعِ"], ans:"الْفَصْلِ" },
+
+  { id:22, cat:"Kosakata", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Keterangan Tempat</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.5rem;text-align:center;'>التِّلْفَازُ <u>أَمَامَ</u> الْكُرْسِيِّ</p></div></div>`,
+    q:"Arti yang tepat untuk kata yang bergaris bawah tersebut adalah...",
+    opt:["di samping","di belakang","di depan","di dalam"], ans:"di depan" },
+
+  { id:25, cat:"Kosakata", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Keterangan Tempat</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.5rem;text-align:center;'>الْمِفْرَشُ <u>تَحْتَ</u> الزَّهْرِيَّةِ</p></div></div>`,
+    q:"Arti dari keterangan tempat تَحْتَ adalah...",
+    opt:["di atas","di bawah","di samping","di depan"], ans:"di bawah" },
+
+  // ── MUHADATSAH ───────────────────────────────────────
+  { id:5, cat:"Muhadatsah", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Percakapan Pagi Hari</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.5rem;text-align:center;'>أَحْمَدُ : صَبَاحُ الْخَيْرِ<br/>إِبْرَاهِيْمُ : ..........</p></div></div>`,
+    q:"Jawaban kalimat sapaan yang tepat pada percakapan tersebut adalah...",
+    opt:["صَبَاحُ النُّوْرِ","نَهَارُكَ سَعِيْدٌ","لَيْلَتُكَ سَعِيْدَةٌ","مَسَاءُ الْخَيْرِ"], ans:"صَبَاحُ النُّوْرِ" },
+
+  { id:6, cat:"Muhadatsah", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Menanyakan Nama</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.5rem;text-align:center;'>عَلِيٌّ : مَا اسْمُكَ؟<br/>مُحَمَّدٌ : ..........</p></div></div>`,
+    q:"Jawaban yang tepat untuk melengkapi percakapan di atas adalah...",
+    opt:["اِسْمُهُ عَلِيٌّ","اِسْمُهَا سِيْتِي","اِسْمُكَ مُحَمَّدٌ","اِسْمِيْ مُحَمَّدٌ"], ans:"اِسْمِيْ مُحَمَّدٌ" },
+
+  { id:7, cat:"Muhadatsah", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Menanyakan Kabar</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.5rem;text-align:center;'>أُسْتَاذٌ : .... حَالُكُمْ؟<br/>تَلَامِيْذٌ : بِخَيْرٍ وَالْحَمْدُ لِلّهِ</p></div></div>`,
+    q:"Kata tanya yang tepat untuk melengkapi pertanyaan di atas adalah...",
+    opt:["كَيْفَ","هَلْ","مَتَى","مَا"], ans:"كَيْفَ" },
+
+  { id:8, cat:"Muhadatsah", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Ucapan Selamat Datang</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.5rem;text-align:center;'>أَحْمَدُ : أَهْلًا وَسَهْلًا<br/>مُحَمَّدٌ : ..........</p></div></div>`,
+    q:"Jawaban yang tepat untuk merespon ucapan selamat datang adalah...",
+    opt:["بِخَيْرٍ وَالْحَمْدُ لِلّهِ","أَهْلًا بِكَ","كَيْفَ حَالُكَ","صَبَاحُ الْخَيْرِ"], ans:"أَهْلًا بِكَ" },
+
+  { id:9, cat:"Muhadatsah", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Ucapan Selamat Siang</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.5rem;text-align:center;'>فَاطِمَةُ : نَهَارُكَ سَعِيْدٌ<br/>مَرْيَمُ : ..........</p></div></div>`,
+    q:"Jawaban yang tepat untuk ucapan selamat siang di atas adalah...",
+    opt:["صَبَاحُ الْخَيْرِ","صَبَاحُ النُّوْرِ","سَعِيْدٌ مُبَارَكٌ","لَيْلَتُكَ سَعِيْدٌ"], ans:"سَعِيْدٌ مُبَارَكٌ" },
+
+  { id:14, cat:"Muhadatsah", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Ucapan Selamat Malam</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.8rem;text-align:center;'>مَسَاءُ الْخَيْرِ!</p></div></div>`,
+    q:"Jawaban dari kalimat sapaan tersebut adalah...",
+    opt:["نَهَارُكَ سَعِيْدٌ","مَسَاءُ النُّوْرِ","لَيْلَتُكَ سَعِيْدَةٌ","صَبَاحُ الْخَيْرِ"], ans:"مَسَاءُ النُّوْرِ" },
+
+  { id:15, cat:"Muhadatsah", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Ucapan Perpisahan</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.8rem;text-align:center;'>إِلَى اللِّقَاءِ!</p></div></div>`,
+    q:"Arti dari kalimat tersebut adalah...",
+    opt:["Sampai jumpa","Terima kasih!","Tidak apa-apa!","Maaf!"], ans:"Sampai jumpa" },
+
+  { id:19, cat:"Muhadatsah", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Ucapan Senang Bertemu</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.8rem;text-align:center;'>أَنَا سَعِيْدٌ بِهٰذَا اللِّقَاءِ!</p></div></div>`,
+    q:"Arti dari ungkapan tersebut adalah...",
+    opt:["Saya senang berjumpa denganmu","Saya juga begitu","Saya ucapkan terima kasih","Sampai jumpa besok"], ans:"Saya senang berjumpa denganmu" },
+
+  // ── TATA BAHASA ──────────────────────────────────────
+  { id:21, cat:"Tata Bahasa", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Dhamir (Kata Ganti)</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.5rem;text-align:center;'>تَذْهَبُ إِلَى الْمَدْرَسَةِ</p></div></div>`,
+    q:"Dhamir (kata ganti) untuk melengkapi kalimat tersebut adalah...",
+    opt:["أَنْتَ","أَنْتِ","أَنَا","نَحْنُ"], ans:"أَنْتِ" },
+
+  { id:23, cat:"Tata Bahasa", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Terjemahan Kalimat</div></div>`,
+    q:"'Meja itu di samping sofa.' Terjemahkan ke dalam Bahasa Arab kalimat di atas...",
+    opt:["الْكُرْسِيُّ أَمَامَ الْمَكْتَبِ","الْمَكْتَبُ وَرَاءَ الْكُرْسِيِّ","الْأَرِيْكَةُ فِي الْمَكْتَبِ","الْمَكْتَبُ جَانِبَ الْأَرِيْكَةِ"], ans:"الْمَكْتَبُ جَانِبَ الْأَرِيْكَةِ" },
+
+  { id:24, cat:"Tata Bahasa", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Susunan Kalimat</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.3rem;text-align:center;'>غُرْفَةِ الْعَائِلَةِ - جَمِيْلَةٌ - فِي - أَرِيْكَةٌ</p></div></div>`,
+    q:"Urutan kalimat yang benar adalah...",
+    opt:["فِي غُرْفَةِ الْعَائِلَةِ أَرِيْكَةٌ جَمِيْلَةٌ","فِي أَرِيْكَةٌ جَمِيْلَةٌ غُرْفَةِ الْعَائِلَةِ","أَرِيْكَةٌ غُرْفَةِ الْعَائِلَةِ جَمِيْلَةٌ فِي","جَمِيْلَةٌ فِي غُرْفَةِ الْعَائِلَةِ أَرِيْكَةٌ"], ans:"فِي غُرْفَةِ الْعَائِلَةِ أَرِيْكَةٌ جَمِيْلَةٌ" },
+
+  { id:26, cat:"Tata Bahasa", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Zharaf Makan</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.4rem;text-align:center;'>الأُسْتَاذُ : يَا حَسَنُ، أَيْنَ السَّاعَةُ؟<br/>حَسَنٌ : السَّاعَةُ <u>فَوْقَ</u> السَّبُّوْرَةِ</p></div></div>`,
+    q:"Zharaf makan (keterangan tempat) pada percakapan tersebut adalah...",
+    opt:["مَاذَا","فَوْقَ","أَيْنَ","سَقْفٌ"], ans:"فَوْقَ" },
+
+  { id:28, cat:"Tata Bahasa", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Terjemahan Kalimat</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.5rem;text-align:center;'>الْكِتَابُ جَانِبَ الْقَلَمِ</p></div></div>`,
+    q:"Terjemahan yang tepat untuk kalimat tersebut adalah...",
+    opt:["Buku itu di samping pulpen","Taplak itu di bawah buku","Buku itu di atas meja","Buku itu di dalam meja"], ans:"Buku itu di samping pulpen" },
+
+  { id:35, cat:"Tata Bahasa", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Susunan Kalimat</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.3rem;text-align:center;'>بَيْتِيْ - رَقْمُ - أَنَا - سَلْمَى - ثَلَاثَةَ عَشَرَ</p></div></div>`,
+    q:"Urutkanlah kata berikut ini menjadi sebuah kalimat yang tepat!",
+    opt:["بَيْتِيْ رَقْمُ أَنَا ثَلَاثَةَ عَشَرَ سَلْمَى","سَلْمَى أَنَا بَيْتِيْ ثَلَاثَةَ عَشَرَ رَقْمُ","أَنَا سَلْمَى رَقْمُ بَيْتِيْ ثَلَاثَةَ عَشَرَ","سَلْمَى أَنَا ثَلَاثَةَ عَشَرَ بَيْتِيْ رَقْمُ"], ans:"أَنَا سَلْمَى رَقْمُ بَيْتِيْ ثَلَاثَةَ عَشَرَ" },
+
+  // ── ANGKA ────────────────────────────────────────────
+  { id:31, cat:"Angka", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Angka Arab</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.5rem;text-align:center;'>هٰذَا بَيْتِيْ رَقْمُ بَيْتِيْ (٣)</p></div></div>`,
+    q:"Tulisan angka 3 dalam bahasa Arab adalah...",
+    opt:["ثَلَاثَةٌ","أَرْبَعَةٌ","خَمْسَةٌ","سِتَّةٌ"], ans:"ثَلَاثَةٌ" },
+
+  { id:32, cat:"Angka", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Angka Arab</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.5rem;text-align:center;'>هٰذَا بَيْتُ جَدِّيْ رَقْمُهُ (٨)</p></div></div>`,
+    q:"Tulisan angka 8 dalam bahasa Arab adalah...",
+    opt:["ثَلَاثَةٌ","أَرْبَعَةٌ","خَمْسَةٌ","ثَمَانِيَةٌ"], ans:"ثَمَانِيَةٌ" },
+
+  { id:33, cat:"Angka", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Terjemahan Angka</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.5rem;text-align:center;'>رَقْمُ مَدْرَسَتِيْ عِشْرُوْنَ</p></div></div>`,
+    q:"Terjemah yang tepat dari kalimat di atas adalah...",
+    opt:["Nomor rumahku tujuh belas","Nomor sekolahku delapan belas","Nomor rumahku sembilan belas","Nomor sekolahku dua puluh"], ans:"Nomor sekolahku dua puluh" },
+
+  { id:34, cat:"Angka", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Angka Arab</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.5rem;text-align:center;'>هٰذَا رَقْمُ <u>عَشَرَةٍ</u></p></div></div>`,
+    q:"Arti dari kata yang digaris bawahi adalah...",
+    opt:["tujuh","delapan","sembilan","sepuluh"], ans:"sepuluh" },
+
+  { id:36, cat:"Angka", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Angka Bertingkat</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.5rem;text-align:center;'>دَرْسُنَا الصَّفْحَةُ <u>الْأُوْلَى</u></p></div></div>`,
+    q:"Arti dari kata yang bergaris bawah adalah...",
+    opt:["ke satu","ke dua","ke tiga","ke empat"], ans:"ke satu" },
+
+  { id:37, cat:"Angka", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Angka Bertingkat</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.4rem;text-align:center;'>أَنَا مُحَمَّدٌ. أَنَا تِلْمِيْذٌ فِي الْفَصْلِ <u>السَّادِسِ</u></p></div></div>`,
+    q:"Arti dari kata yang bergaris bawah adalah...",
+    opt:["ke lima","ke enam","ke tujuh","ke delapan"], ans:"ke enam" },
+
+  { id:38, cat:"Angka", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Percakapan Pelajaran</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.4rem;text-align:center;'>عُثْمَانُ : مَا الدَّرْسُ الْخَامِسُ يَا عُمَرُ؟<br/>عُمَرُ : الدَّرْسُ .... اللُّغَةُ الْعَرَبِيَّةُ</p></div></div>`,
+    q:"Kata yang tepat untuk melengkapi percakapan tersebut adalah...",
+    opt:["الرَّابِعُ","الْخَامِسُ","السَّادِسُ","السَّابِعُ"], ans:"الْخَامِسُ" },
+
+  { id:39, cat:"Angka", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Percakapan Pelajaran</div><div class='visual-frame'><p class='arabic-text' style='font-size:1.4rem;text-align:center;'>عُثْمَانُ : هَلِ الْآنَ الدَّرْسُ السَّابِعُ يَا عُمَرُ؟<br/>عُمَرُ : نَعَمْ، الْآنَ الدَّرْسُ ......</p></div></div>`,
+    q:"Kata yang tepat untuk melengkapi jawaban di atas adalah...",
+    opt:["الرَّابِعُ","الْخَامِسُ","السَّادِسُ","السَّابِعُ"], ans:"السَّابِعُ" },
+];
+
+// ═══════════════════════════════════════════════════════
+//  APLIKASI
+// ═══════════════════════════════════════════════════════
+const app = {
+  session: { nama:"", kelas:"", answers:{}, startTime:0 },
+  currIdx: 0,
+  timerInt: null,
+
+  // ── INIT: tampilkan slide PIN ──
+  init: function() {
+    this.showSlide('pin');
+    try {
+      if (localStorage.getItem(CONFIG.STORAGE_KEY)) {
+        // simpan info resume, tampil setelah PIN diverifikasi
+        this._hasSavedSession = true;
+      }
+    } catch(e) {}
+  },
+
+  // ── CEK PIN ──
+  checkPin: async function() {
+    const inp = document.getElementById('inp-pin');
+    const val = inp.value.trim();
+    if (!val) return;
+    const h = await hashPin(val);
+    if (h === CONFIG.PIN_HASH) {
+      this.showSlide('login');
+      if (this._hasSavedSession) {
+        document.getElementById('resume-alert').style.display = 'block';
+      }
+    } else {
+      inp.classList.add('error');
+      document.getElementById('pin-err').style.display = 'block';
+      inp.value = '';
+      setTimeout(() => inp.classList.remove('error'), 400);
+    }
+  },
+
+  login: function() {
+    let n = document.getElementById('inpNama').value.trim();
+    let k = document.getElementById('inpKelas').value;
+    if (!n || !k) { alert("Harap isi nama lengkap dan pilih kelas!"); return; }
+    this.session.nama = n; this.session.kelas = k;
+    this.showSlide('rules');
+  },
+
+  resume: function() {
+    try {
+      this.session = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY));
+      this.renderSidebar();
+      this.startExam(true);
+    } catch(e) { alert("Sesi tersimpan rusak. Silakan mulai ujian baru."); }
+  },
+
+  startExam: function(isRes=false) {
+    if (!isRes) { this.session.startTime = Date.now(); this.save(); }
+    document.getElementById('user-badge').innerText = this.session.nama;
+    document.getElementById('user-badge').style.display = 'block';
+    document.getElementById('sidebar').style.display = 'flex';
+    this.renderQuestions();
+    this.renderSidebar();
+    this.showSlide('quiz');
+    this.goToQ(0);
+    this.startTimer();
+  },
+
+  showSlide: function(id) {
+    document.querySelectorAll('.slide').forEach(e => e.classList.remove('active'));
+    document.getElementById('slide-' + id).classList.add('active');
+  },
+
+  // ── RENDER SOAL (dengan opt-text wrapper agar arah teks auto) ──
+  renderQuestions: function() {
+    const box = document.getElementById('quiz-container');
+    box.innerHTML = "";
+    QUESTIONS.forEach((q, i) => {
+      let h = `<div id="q-item-${i}" class="question-item">
+        <div class="tag-cat">${q.cat}</div>
+        ${q.stim || ""}
+        <div class="q-text">${i+1}. ${q.q}</div>`;
+      if (q.type === 'pg') {
+        q.opt.forEach((o, oi) => {
+          h += `<label class="opt-label">
+            <input type="radio" name="ans_${q.id}" value="${oi}" onchange="app.saveAns(${q.id},${oi})">
+            <span class="opt-text">${o}</span>
+          </label>`;
+        });
+      }
+      h += `</div>`;
+      box.innerHTML += h;
+    });
+    // Replace gambar placeholder yang masih berupa string literal
+    box.querySelectorAll('.stimulus-img[src=""]').forEach(img => img.remove());
+    if (window.MathJax && MathJax.typesetPromise) {
+      MathJax.typesetPromise([box]).catch(e => console.log('MathJax:', e));
+    }
+  },
+
+  goToQ: function(idx) {
+    if (idx < 0 || idx >= QUESTIONS.length) return;
+    this.currIdx = idx;
+    document.querySelectorAll('.question-item').forEach(e => e.classList.remove('active-q'));
+    document.getElementById(`q-item-${idx}`).classList.add('active-q');
+    document.getElementById('q-indicator').innerText = `Soal ${idx+1} / 40`;
+    document.getElementById('btn-prev').disabled = (idx === 0);
+    let nBtn = document.getElementById('btn-next');
+    if (idx === QUESTIONS.length - 1) {
+      nBtn.innerText = "Selesai"; nBtn.onclick = () => this.confirmFinish(); nBtn.classList.add('btn-danger');
+    } else {
+      nBtn.innerText = "Selanjutnya"; nBtn.onclick = () => this.move(1); nBtn.classList.remove('btn-danger');
+    }
+    this.restoreVisual(idx);
+    this.updateSidebarUI();
+    if (window.MathJax && MathJax.typesetPromise) {
+      const el = document.getElementById(`q-item-${idx}`);
+      if (el) MathJax.typesetPromise([el]).catch(e => {});
+    }
+  },
+
+  move: function(step) { this.goToQ(this.currIdx + step); },
+
+  saveAns: function(qid, optIdx) {
+    this.session.answers[qid] = optIdx;
+    this.save(); this.updateSidebarUI();
+  },
+
+  save: function() {
+    try { localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(this.session)); } catch(e) {}
+  },
+
+  renderSidebar: function() {
+    let g = document.getElementById('nav-grid'); g.innerHTML = "";
+    QUESTIONS.forEach((q,i) => g.innerHTML += `<div id="nav-num-${i}" class="nav-num" onclick="app.goToQ(${i})">${i+1}</div>`);
+  },
+
+  checkFilled: function(qid) {
+    let v = this.session.answers[qid];
+    return v !== undefined && v !== null;
+  },
+
+  updateSidebarUI: function() {
+    QUESTIONS.forEach((q,i) => {
+      let el = document.getElementById(`nav-num-${i}`);
+      if (!el) return;
+      if (i === this.currIdx) el.classList.add('current'); else el.classList.remove('current');
+      if (this.checkFilled(q.id)) el.classList.add('filled'); else el.classList.remove('filled');
+    });
+  },
+
+  restoreVisual: function(idx) {
+    let q = QUESTIONS[idx], ans = this.session.answers[q.id];
+    if (ans === undefined || ans === null) return;
+    if (q.type === 'pg') {
+      let el = document.querySelector(`input[name="ans_${q.id}"][value="${ans}"]`);
+      if (el) el.checked = true;
+    }
+  },
+
+  startTimer: function() {
+    clearInterval(this.timerInt);
+    this.timerInt = setInterval(() => {
+      let rem = CONFIG.DURATION - Math.floor((Date.now() - this.session.startTime) / 1000);
+      if (rem <= 0) { clearInterval(this.timerInt); this.submitExam(); return; }
+      let m = Math.floor(rem/60).toString().padStart(2,'0');
+      let s = (rem%60).toString().padStart(2,'0');
+      document.getElementById('timer-display').innerText = `${m}:${s}`;
+    }, 1000);
+  },
+
+  confirmFinish: function() { document.getElementById('modal-confirm').style.display = 'flex'; },
+
+  submitExam: function() {
+    document.getElementById('modal-confirm').style.display = 'none';
+    document.getElementById('modal-loading').style.display = 'flex';
+    clearInterval(this.timerInt);
+
+    // ── HITUNG NILAI per kategori ──
+    let stats = {
+      "Pemahaman Teks": {s:0, m:0},
+      "Kosakata":        {s:0, m:0},
+      "Muhadatsah":      {s:0, m:0},
+      "Tata Bahasa":     {s:0, m:0},
+      "Angka":           {s:0, m:0}
+    };
+    let totS = 0, totM = 0;
+
+    QUESTIONS.forEach(q => {
+      stats[q.cat].m += q.score;
+      totM += q.score;
+      let u = this.session.answers[q.id], pt = 0;
+      if (u !== undefined && u !== null) {
+        // u = index pilihan, bandingkan dengan index jawaban benar
+        if (q.type === 'pg' && u == q.opt.indexOf(q.ans)) pt = q.score;
+      }
+      stats[q.cat].s += pt;
+      totS += pt;
+    });
+
+    let final = Math.round((totS / totM) * 100);
+    let summ = {}, cht = "", nts = [];
+    for (let c in stats) {
+      let p = stats[c].m > 0 ? Math.round((stats[c].s / stats[c].m) * 100) : 0;
+      summ[c] = { skor:p, tuntas:p>=70, label: p>=70 ? "Tuntas" : "Perlu Bimbingan" };
+      if (p < 70) nts.push(c);
+      cht += `<div class="chart-row">
+        <div class="chart-lbl">${c}</div>
+        <div class="chart-track"><div class="chart-fill" style="width:${p}%;background:${p>=70?'#16a34a':'#dc2626'}"></div></div>
+        <div class="chart-val">${p}%</div>
+      </div>`;
+    }
+    let desc = nts.length === 0 ? "Selamat! Tuntas semua elemen." : "Perlu belajar lagi di: " + nts.join(", ");
+
+    this.showSlide('result');
+    document.getElementById('modal-loading').style.display = 'none';
+    document.getElementById('result-content').innerHTML = `
+      <h3>Nilai Akhir: <span style="color:var(--primary);font-size:2.5rem;">${final}</span></h3>
+      <div style="background:#f1f5f9;padding:15px;border-radius:8px;margin-bottom:20px;">${desc}</div>
+      <h4>Capaian per Elemen:</h4>${cht}`;
+
+    // ── KIRIM KE GOOGLE APPS SCRIPT ──
+    fetch(CONFIG.SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({
+        action: "submit_exam",
+        mapel: "Bahasa Arab - ISMUBA",
+        nama: this.session.nama,
+        kelas: this.session.kelas,
+        skor: final,
+        deskripsi: desc,
+        jawaban: this.session.answers,
+        ringkasanNilai: summ
+      })
+    }).then(() => {
+      try { localStorage.removeItem(CONFIG.STORAGE_KEY); } catch(e) {}
+    });
+  }
+};
+
+window.onload = function() {
+  app.init();
+};
+</script>
+</body>
+</html>
