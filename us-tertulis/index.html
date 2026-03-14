@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ujian Sekolah Tertulis — SD Muhammadiyah 01 Kukusan</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary:   #065f46;
+  --primary-md:#047857;
+  --primary-lt:#ecfdf5;
+  --accent:    #f59e0b;
+  --success:   #16a34a;
+  --text:      #1e293b;
+  --muted:     #64748b;
+  --bg:        #f0faf6;
+  --card-bg:   #ffffff;
+  --border:    #e2e8f0;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, #0a3d2e 0%, #065f46 50%, #047857 100%);
+  position: relative;
+  overflow: hidden;
+  padding: 48px 24px 56px;
+  text-align: center;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 20% 50%, rgba(255,255,255,.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 80% at 80% 20%, rgba(245,158,11,.12) 0%, transparent 55%);
+  pointer-events: none;
+}
+.hero-dots {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(rgba(255,255,255,.1) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: .4;
+}
+.school-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.2);
+  color: #a7f3d0;
+  font-size: .78rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  padding: 6px 16px; border-radius: 99px;
+  margin-bottom: 20px;
+  animation: fadeDown .6s ease both;
+}
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 14px;
+  animation: fadeDown .6s .1s ease both;
+}
+.hero h1 span { color: var(--accent); font-style: italic; }
+.hero p {
+  color: #6ee7b7;
+  font-size: clamp(.9rem, 2vw, 1.05rem);
+  max-width: 480px; margin: 0 auto 28px;
+  line-height: 1.65;
+  animation: fadeDown .6s .2s ease both;
+}
+.hero-meta {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+  animation: fadeDown .6s .3s ease both;
+}
+.hero-pill {
+  display: flex; align-items: center; gap: 7px;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.15);
+  color: #d1fae5;
+  font-size: .82rem; font-weight: 500;
+  padding: 7px 16px; border-radius: 99px;
+}
+.hero-pill svg { opacity: .8; }
+
+/* ── SECTION ── */
+.section { max-width: 1000px; margin: 0 auto; padding: 48px 20px; }
+.section-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 28px;
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 14px;
+}
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.45rem; color: var(--primary);
+}
+.section-count {
+  font-size: .82rem; font-weight: 600; color: var(--muted);
+  background: var(--primary-lt);
+  padding: 4px 12px; border-radius: 99px;
+}
+
+/* ── GRID ── */
+.mapel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* ── CARD ── */
+.mapel-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  display: flex; flex-direction: column;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  animation: fadeUp .5s ease both;
+  cursor: pointer;
+}
+.mapel-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(6,95,70,.14);
+  border-color: var(--primary-md);
+}
+.card-top {
+  padding: 22px 22px 18px;
+  display: flex; align-items: flex-start; gap: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.card-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; flex-shrink: 0;
+}
+.card-name {
+  font-size: 1rem; font-weight: 700; color: var(--text);
+  margin-bottom: 4px; line-height: 1.3;
+}
+.card-sub {
+  font-size: .78rem; color: var(--muted); font-weight: 500;
+}
+.card-bottom {
+  padding: 14px 22px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.card-tag {
+  font-size: .74rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 6px;
+}
+.tag-ready   { background: #dcfce7; color: #166534; }
+.tag-soon    { background: #fef9c3; color: #854d0e; }
+.tag-uam     { background: #ede9fe; color: #5b21b6; }
+.card-arrow {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: var(--primary-lt);
+  color: var(--primary);
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s, color .2s;
+}
+.mapel-card:hover .card-arrow { background: var(--primary); color: #fff; }
+
+/* DISABLED card */
+.mapel-card.disabled {
+  pointer-events: none; opacity: .65;
+}
+.mapel-card.disabled .card-arrow { opacity: .4; }
+
+/* ── PIN MODAL ── */
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(15,23,42,.6);
+  backdrop-filter: blur(6px);
+  display: none; justify-content: center; align-items: center;
+  z-index: 200;
+}
+.overlay.show { display: flex; animation: fadeIn .2s ease; }
+.modal {
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px 32px;
+  width: 90%; max-width: 380px;
+  text-align: center;
+  box-shadow: 0 24px 64px rgba(0,0,0,.18);
+  animation: scaleIn .25s ease;
+}
+.modal-icon {
+  width: 56px; height: 56px; border-radius: 16px;
+  background: var(--primary-lt);
+  color: var(--primary);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; margin: 0 auto 18px;
+}
+.modal h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.3rem; color: var(--primary); margin-bottom: 6px;
+}
+.modal p { font-size: .88rem; color: var(--muted); margin-bottom: 22px; line-height: 1.55; }
+.pin-input-wrap { position: relative; margin-bottom: 16px; }
+.pin-input-wrap svg {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  color: var(--muted); pointer-events: none;
+}
+#pin-input {
+  width: 100%; padding: 13px 14px 13px 42px;
+  border: 1.5px solid var(--border); border-radius: 10px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1rem; font-weight: 600; letter-spacing: .12em;
+  color: var(--text); outline: none;
+  transition: border-color .2s;
+}
+#pin-input:focus { border-color: var(--primary); }
+#pin-input.error { border-color: #dc2626; animation: shake .3s ease; }
+#pin-error {
+  font-size: .8rem; color: #dc2626; font-weight: 600;
+  margin-bottom: 14px; display: none;
+}
+.modal-actions { display: flex; gap: 10px; }
+.btn {
+  flex: 1; padding: 12px; border-radius: 10px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700; font-size: .95rem; cursor: pointer; border: none;
+  transition: opacity .2s, transform .1s;
+}
+.btn:active { transform: scale(.97); }
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { opacity: .9; }
+.btn-ghost {
+  background: var(--bg); color: var(--muted);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover { background: var(--border); }
+
+/* ── FOOTER ── */
+footer {
+  text-align: center;
+  padding: 28px 20px 40px;
+  font-size: .8rem;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+}
+footer strong { color: var(--primary); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; } to { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  25%      { transform: translateX(-6px); }
+  75%      { transform: translateX(6px); }
+}
+
+/* ── DATE DIVIDER ── */
+.date-divider {
+  margin-bottom: 16px;
+}
+.date-divider:not(:first-child) { margin-top: 36px; }
+.date-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--primary);
+  color: #fff;
+  font-size: .8rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+  padding: 7px 16px; border-radius: 99px;
+}
+.date-label.uam {
+  background: #6d28d9;
+}
+
+@media (max-width: 480px) {
+  .mapel-grid { grid-template-columns: 1fr; }
+  .modal { padding: 28px 22px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-dots"></div>
+  <div class="school-badge">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+    SD Muhammadiyah 01 Kukusan
+  </div>
+  <h1>Ujian Sekolah<br><span>Tertulis</span></h1>
+  <p>Portal ujian tertulis Kelas 6. Pilih mata pelajaran sesuai jadwal, masukkan PIN dari guru, dan kerjakan soal di Lab Komputer.</p>
+  <div class="hero-meta">
+    <div class="hero-pill">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      4 – 13 Mei 2026
+    </div>
+    <div class="hero-pill">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+      Lab Komputer · 3 Sesi/Hari
+    </div>
+    <div class="hero-pill">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      40 Soal / Mata Pelajaran
+    </div>
+  </div>
+</header>
+
+<!-- SUBJECT GRID -->
+<main class="section">
+  <div class="section-header">
+    <h2 class="section-title">Pilih Mata Pelajaran</h2>
+    <span class="section-count" id="count-label">— Mapel</span>
+  </div>
+
+  <div id="mapel-container">
+    <!-- Diisi oleh JavaScript -->
+  </div>
+</main>
+
+<footer>
+  <p>Dibuat untuk <strong>SD Muhammadiyah 01 Kukusan</strong> &nbsp;·&nbsp; Ujian Sekolah Tertulis 2025/2026</p>
+</footer>
+
+<!-- PIN MODAL -->
+<div class="overlay" id="pin-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="pin-modal">
+    <div class="modal-icon" id="modal-icon">🔒</div>
+    <h3 id="modal-title">Masuk ke Ujian</h3>
+    <p id="modal-desc">Masukkan PIN yang diberikan guru untuk membuka ujian ini.</p>
+    <div class="pin-input-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <input type="password" id="pin-input" placeholder="Masukkan PIN..." maxlength="20" autocomplete="off" onkeydown="if(event.key==='Enter') checkPin()">
+    </div>
+    <div id="pin-error">PIN salah. Coba lagi.</div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Batal</button>
+      <button class="btn btn-primary" onclick="checkPin()">Masuk →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+//  KONFIGURASI MATA PELAJARAN — UJIAN SEKOLAH TERTULIS
+//  Jadwal sesuai jadwal resmi TP 2025/2026.
+//
+//  Untuk menghasilkan pin_hash:
+//    1. Buka browser console
+//    2. Jalankan: hashPin("PIN_KAMU_DI_SINI").then(h => console.log(h))
+//    3. Salin hasilnya ke pin_hash di bawah
+// ─────────────────────────────────────────────
+const MAPEL_GROUPS = [
+  {
+    tanggal: "Senin, 4 Mei 2026",
+    isUAM: false,
+    mapel: [
+      {
+        id: "pendidikan-pancasila",
+        nama: "Pendidikan Pancasila",
+        sub: "Pancasila & Kewarganegaraan",
+        icon: "🇮🇩",
+        color: "#ffe4e6",
+        file: "pendidikan-pancasila.html",
+        ready: false,
+        pin_hash: ""   // ← isi hash setelah PIN dibuat
+      },
+      {
+        id: "bahasa-inggris",
+        nama: "Bahasa Inggris",
+        sub: "Reading, Writing & Grammar",
+        icon: "🌐",
+        color: "#e0f2fe",
+        file: "bahasa-inggris.html",
+        ready: false,
+        pin_hash: ""   // ← isi hash setelah PIN dibuat
+      },
+    ]
+  },
+  {
+    tanggal: "Selasa, 5 Mei 2026",
+    isUAM: false,
+    mapel: [
+      {
+        id: "bahasa-indonesia",
+        nama: "Bahasa Indonesia",
+        sub: "Membaca, Menulis & Berbahasa",
+        icon: "📖",
+        color: "#fef9c3",
+        file: "bahasa-indonesia.html",
+        ready: false,
+        pin_hash: ""   // ← isi hash setelah PIN dibuat
+      },
+      {
+        id: "pjok",
+        nama: "PJOK",
+        sub: "Pendidikan Jasmani & Kesehatan",
+        icon: "⚽",
+        color: "#fff7ed",
+        file: "pjok.html",
+        ready: false,
+        pin_hash: ""   // ← isi hash setelah PIN dibuat
+      },
+    ]
+  },
+  {
+    tanggal: "Rabu, 6 Mei 2026",
+    isUAM: false,
+    mapel: [
+      {
+        id: "tik",
+        nama: "Informatika / TIK",
+        sub: "Teknologi Informasi & Komunikasi",
+        icon: "💻",
+        color: "#eff6ff",
+        file: "tik.html",
+        ready: false,
+        pin_hash: ""   // ← isi hash setelah PIN dibuat
+      },
+    ]
+  },
+  {
+    tanggal: "Kamis, 7 Mei 2026",
+    isUAM: false,
+    mapel: [
+      {
+        id: "ipas",
+        nama: "IPAS",
+        sub: "Ilmu Pengetahuan Alam & Sosial",
+        icon: "🔬",
+        color: "#dcfce7",
+        file: "ipas.html",
+        ready: false,
+        pin_hash: ""   // ← isi hash setelah PIN dibuat
+      },
+    ]
+  },
+  {
+    tanggal: "Jumat, 8 Mei 2026",
+    isUAM: false,
+    mapel: [
+      {
+        id: "matematika",
+        nama: "Matematika",
+        sub: "Bilangan, Aljabar & Geometri",
+        icon: "🔢",
+        color: "#fdf4ff",
+        file: "matematika.html",
+        ready: false,
+        pin_hash: ""   // ← isi hash setelah PIN dibuat
+      },
+    ]
+  },
+  {
+    tanggal: "Senin, 11 Mei 2026",
+    isUAM: false,
+    mapel: [
+      {
+        id: "bahasa-sunda",
+        nama: "Bahasa Sunda",
+        sub: "Maca, Nulis & Nyarita",
+        icon: "🌿",
+        color: "#ecfdf5",
+        file: "bahasa-sunda.html",
+        ready: false,
+        pin_hash: ""   // ← isi hash setelah PIN dibuat
+      },
+      {
+        id: "seni-budaya",
+        nama: "Seni Budaya",
+        sub: "Seni Rupa, Musik & Prakarya",
+        icon: "🎨",
+        color: "#faf5ff",
+        file: "seni-budaya.html",
+        ready: false,
+        pin_hash: ""   // ← isi hash setelah PIN dibuat
+      },
+    ]
+  },
+  {
+    tanggal: "Selasa, 12 Mei 2026 — Ujian Akhir Madrasah (UAM)",
+    isUAM: true,
+    mapel: [
+      {
+        id: "al-islam",
+        nama: "Al-Islam",
+        sub: "Al-Quran, Fiqih & Akidah",
+        icon: "🕌",
+        color: "#ecfdf5",
+        file: "al-islam.html",
+        ready: false,
+        pin_hash: ""   // ← isi hash setelah PIN dibuat
+      },
+      {
+        id: "kmdy",
+        nama: "Kemuhammadiyahan",
+        sub: "Sejarah & Gerakan Muhammadiyah",
+        icon: "☀️",
+        color: "#fef3c7",
+        file: "kmdy.html",
+        ready: false,
+        pin_hash: ""   // ← isi hash setelah PIN dibuat
+      },
+    ]
+  },
+  {
+    tanggal: "Rabu, 13 Mei 2026 — Ujian Akhir Madrasah (UAM)",
+    isUAM: true,
+    mapel: [
+      {
+        id: "bahasa-arab",
+        nama: "Bahasa Arab",
+        sub: "Mufradat, Qira'ah & Kitabah",
+        icon: "📜",
+        color: "#fef3c7",
+        file: "bahasa-arab.html",
+        ready: false,
+        pin_hash: ""   // ← isi hash setelah PIN dibuat
+      },
+    ]
+  },
+  {
+    tanggal: "Belum Dijadwalkan",
+    isUAM: false,
+    mapel: [
+      {
+        id: "kka",
+        nama: "KKA",
+        sub: "Koding & Kecerdasan Artifisial",
+        icon: "🤖",
+        color: "#f0f9ff",
+        file: "kka.html",
+        ready: false,
+        pin_hash: ""
+      },
+    ]
+  },
+];
+
+// Flatten untuk keperluan lain
+const MAPEL = MAPEL_GROUPS.flatMap(g => g.mapel);
+
+// ─────────────────────────────────────────────
+//  RENDER KARTU
+// ─────────────────────────────────────────────
+const container = document.getElementById('mapel-container');
+const countLabel = document.getElementById('count-label');
+const totalDays  = MAPEL_GROUPS.filter(g => g.mapel.length > 0 && g.tanggal !== "Belum Dijadwalkan").length;
+countLabel.textContent = `${MAPEL.length} Mapel · ${totalDays} Hari Ujian`;
+
+let cardIndex = 0;
+MAPEL_GROUPS.forEach(group => {
+  // Date divider
+  const divider = document.createElement('div');
+  divider.className = 'date-divider';
+  divider.innerHTML = `
+    <div class="date-label${group.isUAM ? ' uam' : ''}">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      ${group.tanggal}
+    </div>
+  `;
+  container.appendChild(divider);
+
+  // Grid untuk grup ini
+  const grid = document.createElement('div');
+  grid.className = 'mapel-grid';
+  container.appendChild(grid);
+
+  group.mapel.forEach(m => {
+    const delay = (cardIndex * 0.07).toFixed(2);
+    cardIndex++;
+    const card = document.createElement('div');
+    card.className = 'mapel-card' + (m.ready ? '' : ' disabled');
+    card.style.animationDelay = `${delay}s`;
+    card.dataset.id = m.id;
+
+    const tagClass = m.ready ? 'tag-ready' : (group.isUAM ? 'tag-uam' : 'tag-soon');
+    const tagText  = m.ready ? '✓ Siap Dikerjakan' : (group.isUAM ? '🕌 UAM' : '⏳ Segera Hadir');
+
+    card.innerHTML = `
+      <div class="card-top">
+        <div class="card-icon" style="background:${m.color}">${m.icon}</div>
+        <div>
+          <div class="card-name">${m.nama}</div>
+          <div class="card-sub">${m.sub}</div>
+        </div>
+      </div>
+      <div class="card-bottom">
+        <span class="card-tag ${tagClass}">
+          ${tagText}
+        </span>
+        <div class="card-arrow">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+    `;
+    if (m.ready) card.onclick = () => openModal(m);
+    grid.appendChild(card);
+  });
+});
+
+// ─────────────────────────────────────────────
+//  FUNGSI HASH PIN (SHA-256, ambil 16 karakter)
+// ─────────────────────────────────────────────
+async function hashPin(pin) {
+  const encoded = new TextEncoder().encode(pin.trim().toLowerCase());
+  const hashBuffer = await crypto.subtle.digest('SHA-256', encoded);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 16);
+}
+
+// Expose untuk kemudahan generate hash di console
+window.hashPin = hashPin;
+
+// ─────────────────────────────────────────────
+//  MODAL PIN
+// ─────────────────────────────────────────────
+let activeMapel = null;
+
+function openModal(mapel) {
+  activeMapel = mapel;
+  document.getElementById('modal-icon').textContent = mapel.icon;
+  document.getElementById('modal-title').textContent = mapel.nama;
+  document.getElementById('modal-desc').textContent =
+    `Masukkan PIN untuk membuka Ujian Sekolah ${mapel.nama}.`;
+  document.getElementById('pin-input').value = '';
+  document.getElementById('pin-input').classList.remove('error');
+  document.getElementById('pin-error').style.display = 'none';
+  document.getElementById('pin-overlay').classList.add('show');
+  setTimeout(() => document.getElementById('pin-input').focus(), 100);
+}
+
+function closeModal() {
+  document.getElementById('pin-overlay').classList.remove('show');
+  activeMapel = null;
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('pin-overlay')) closeModal();
+}
+
+async function checkPin() {
+  if (!activeMapel) return;
+  const input = document.getElementById('pin-input').value.trim();
+  if (!input) return;
+
+  // Jika pin_hash kosong → langsung buka (mode tanpa PIN)
+  if (!activeMapel.pin_hash) {
+    window.location.href = activeMapel.file;
+    return;
+  }
+
+  const inputHash = await hashPin(input);
+  if (inputHash === activeMapel.pin_hash) {
+    window.location.href = activeMapel.file;
+  } else {
+    const inp = document.getElementById('pin-input');
+    inp.classList.add('error');
+    document.getElementById('pin-error').style.display = 'block';
+    inp.value = '';
+    setTimeout(() => inp.classList.remove('error'), 400);
+  }
+}
+</script>
+</body>
+</html>
