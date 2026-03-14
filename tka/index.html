@@ -1,1 +1,323 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latihan TKA – Portal Soal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1a56db;
+      --primary-dark: #1e429f;
+      --primary-light: #ebf5ff;
+      --green: #057a55;
+      --green-light: #def7ec;
+      --green-dark: #046c4e;
+      --amber: #d97706;
+      --amber-light: #fef3c7;
+      --text: #1f2a37;
+      --text-muted: #6b7280;
+      --bg: #f0f4ff;
+      --white: #ffffff;
+      --border: #d1d5db;
+      --radius: 14px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
 
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: clamp(14px, 3.5vw, 16px); }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ─── HEADER ─── */
+    .header {
+      position: sticky; top: 0; z-index: 100;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: white;
+      padding: 0 20px;
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 2px 10px rgba(26,86,219,0.4);
+    }
+
+    .header-brand { display: flex; align-items: center; gap: 10px; }
+    .logo { font-size: 1.5rem; }
+    .brand-name {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(0.9rem, 3vw, 1.1rem);
+      font-weight: 800; line-height: 1.1;
+    }
+    .sub-brand { font-size: 0.68rem; opacity: 0.8; font-weight: 600; }
+
+    .header-right { display: flex; align-items: center; gap: 10px; }
+
+    .header-badge {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.5px;
+    }
+
+    .back-link {
+      color: rgba(255,255,255,0.85);
+      font-size: 0.72rem; font-weight: 700;
+      text-decoration: none;
+      display: flex; align-items: center; gap: 4px;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: white; }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: linear-gradient(160deg, var(--primary-dark) 0%, var(--primary) 60%, #3b82f6 100%);
+      color: white;
+      padding: 48px 20px 56px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .hero-emoji { font-size: 3.5rem; display: block; margin-bottom: 12px; animation: float 3s ease-in-out infinite; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .hero h1 {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-weight: 800; margin-bottom: 8px; position: relative;
+    }
+
+    .hero p {
+      font-size: clamp(0.85rem, 2.5vw, 1rem);
+      opacity: 0.88; font-weight: 600;
+      max-width: 480px; margin: 0 auto 24px; position: relative;
+    }
+
+    .hero-stats {
+      display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;
+      position: relative;
+    }
+
+    .stat-pill {
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 30px;
+      padding: 6px 16px;
+      font-size: 0.8rem; font-weight: 700;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* ─── MAIN CONTENT ─── */
+    .container {
+      max-width: 860px; margin: 0 auto;
+      padding: 32px 16px 48px;
+    }
+
+    /* ─── SUBJECT SECTION ─── */
+    .subject-section { margin-bottom: 40px; }
+
+    .section-header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid;
+    }
+
+    .section-header.math { border-color: var(--primary-light); }
+    .section-header.indo { border-color: var(--green-light); }
+
+    .section-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; flex-shrink: 0;
+    }
+
+    .section-icon.math { background: var(--primary-light); }
+    .section-icon.indo { background: var(--green-light); }
+
+    .section-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(1rem, 3.5vw, 1.25rem); font-weight: 800;
+    }
+
+    .section-title.math { color: var(--primary-dark); }
+    .section-title.indo { color: var(--green-dark); }
+
+    .section-subtitle { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; }
+
+    /* ─── CARDS GRID ─── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+    }
+
+    @media (min-width: 480px) {
+      .cards-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 2px solid transparent;
+      padding: 18px 14px;
+      text-decoration: none; color: var(--text);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      box-shadow: var(--shadow);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      cursor: pointer; position: relative; overflow: hidden; text-align: center;
+    }
+
+    .card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    }
+
+    .card.math::before { background: linear-gradient(90deg, var(--primary-dark), var(--primary)); }
+    .card.indo::before { background: linear-gradient(90deg, var(--green-dark), var(--green)); }
+
+    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.13); }
+    .card.math:hover { border-color: #bfdbfe; }
+    .card.indo:hover { border-color: #a7f3d0; }
+
+    .card-number {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.6rem; font-weight: 800; line-height: 1;
+    }
+
+    .card.math .card-number { color: var(--primary); }
+    .card.indo .card-number { color: var(--green); }
+
+    .card-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+    .card-tag { font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; }
+    .card.math .card-tag { background: var(--primary-light); color: var(--primary-dark); }
+    .card.indo .card-tag { background: var(--green-light); color: var(--green-dark); }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      text-align: center; padding: 24px 16px;
+      font-size: 0.78rem; color: var(--text-muted); font-weight: 600;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─── ANIMATIONS ─── */
+    .subject-section { animation: fadeUp 0.5s ease both; }
+    .subject-section:nth-child(2) { animation-delay: 0.1s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card { animation: fadeUp 0.4s ease both; }
+    .cards-grid .card:nth-child(1)  { animation-delay: 0.05s; }
+    .cards-grid .card:nth-child(2)  { animation-delay: 0.08s; }
+    .cards-grid .card:nth-child(3)  { animation-delay: 0.11s; }
+    .cards-grid .card:nth-child(4)  { animation-delay: 0.14s; }
+    .cards-grid .card:nth-child(5)  { animation-delay: 0.17s; }
+    .cards-grid .card:nth-child(6)  { animation-delay: 0.20s; }
+    .cards-grid .card:nth-child(7)  { animation-delay: 0.23s; }
+    .cards-grid .card:nth-child(8)  { animation-delay: 0.26s; }
+    .cards-grid .card:nth-child(9)  { animation-delay: 0.29s; }
+    .cards-grid .card:nth-child(10) { animation-delay: 0.32s; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-brand">
+      <span class="logo">📚</span>
+      <div>
+        <div class="brand-name">Portal Latihan TKA</div>
+        <div class="sub-brand">Seleksi Nasional Berdasarkan Prestasi</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <a class="back-link" href="../">← Kembali</a>
+      <div class="header-badge">SNBP 2025</div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="hero-emoji">🎯</span>
+    <h1>Latihan Soal TKA</h1>
+    <p>Pilih mata pelajaran dan paket soal yang ingin kamu kerjakan. Selamat berlatih!</p>
+    <div class="hero-stats">
+      <div class="stat-pill">📐 10 Paket Matematika</div>
+      <div class="stat-pill">📝 10 Paket Bahasa Indonesia</div>
+      <div class="stat-pill">⚡ Koreksi Otomatis</div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <main class="container">
+
+    <!-- MATEMATIKA -->
+    <section class="subject-section">
+      <div class="section-header math">
+        <div class="section-icon math">📐</div>
+        <div>
+          <div class="section-title math">Matematika</div>
+          <div class="section-subtitle">10 paket soal</div>
+        </div>
+      </div>
+      <div class="cards-grid">
+        <a class="card math" href="../matematika/paket-1/"><div class="card-number">01</div><div class="card-label">Paket Soal</div><div class="card-tag">Mulai →</div></a>
+        <a class="card math" href="../matematika/paket-2/"><div class="card-number">02</div><div class="card-label">Paket Soal</div><div class="card-tag">Mulai →</div></a>
+        <a class="card math" href="../matematika/paket-3/"><div class="card-number">03</div><div class="card-label">Paket Soal</div><div class="card-tag">Mulai →</div></a>
+        <a class="card math" href="../matematika/paket-4/"><div class="card-number">04</div><div class="card-label">Paket Soal</div><div class="card-tag">Mulai →</div></a>
+        <a class="card math" href="../matematika/paket-5/"><div class="card-number">05</div><div class="card-label">Paket Soal</div><div class="card-tag">Mulai →</div></a>
+        <a class="card math" href="../matematika/paket-6/"><div class="card-number">06</div><div class="card-label">Paket Soal</div><div class="card-tag">Mulai →</div></a>
+        <a class="card math" href="../matematika/paket-7/"><div class="card-number">07</div><div class="card-label">Paket Soal</div><div class="card-tag">Mulai →</div></a>
+        <a class="card math" href="../matematika/paket-8/"><div class="card-number">08</div><div class="card-label">Paket Soal</div><div class="card-tag">Mulai →</div></a>
+        <a class="card math" href="../matematika/paket-9/"><div class="card-number">09</div><div class="card-label">Paket Soal</div><div class="card-tag">Mulai →</div></a>
+        <a class="card math" href="../matematika/paket-10/"><div class="card-number">10</div><div class="card-label">Paket Soal</div><div class="card-tag">Mulai →</div></a>
+      </div>
+    </section>
+
+    <!-- BAHASA INDONESIA -->
+    <section class="subject-section">
+      <div class="section-header indo">
+        <div class="section-icon indo">📝</div>
+        <div>
+          <div class="section-title indo">Bahasa Indonesia</div>
+          <div class="section-subtitle">10 paket soal</div>
+        </div>
+      </div>
+      <div class="cards-grid">
+        <a class="card indo" href="../bahasa-indonesia/paket-1/"><div class="card-number">01</div><div class="card-label">Paket Soal</div><div class="card-tag">Mulai →</div></a>
+        <a class="card indo" href="../bahasa-indonesia/paket-2/"><div class="card-number">02</div><div class="card-label">Paket Soal</div><div class="card-tag">Mulai →</div></a>
+        <a class="card indo" href="../bahasa-indonesia/paket-3/"><div class="card-number">03</div><div class="card-label">Paket Soal</div><div class="card-tag">Mulai →</div></a>
+        <a class="card indo" href="../bahasa-indonesia/paket-4/"><div class="card-number">04</div><div class="card-label">Paket Soal</div><div class="card-tag">Mulai →</div></a>
+        <a class="card indo" href="../bahasa-indonesia/paket-5/"><div class="card-number">05</div><div class="card-label">Paket Soal</div><div class="card-tag">Mulai →</div></a>
+        <a class="card indo" href="../bahasa-indonesia/paket-6/"><div class="card-number">06</div><div class="card-label">Paket Soal</div><div class="card-tag">Mulai →</div></a>
+        <a class="card indo" href="../bahasa-indonesia/paket-7/"><div class="card-number">07</div><div class="card-label">Paket Soal</div><div class="card-tag">Mulai →</div></a>
+        <a class="card indo" href="../bahasa-indonesia/paket-8/"><div class="card-number">08</div><div class="card-label">Paket Soal</div><div class="card-tag">Mulai →</div></a>
+        <a class="card indo" href="../bahasa-indonesia/paket-9/"><div class="card-number">09</div><div class="card-label">Paket Soal</div><div class="card-tag">Mulai →</div></a>
+        <a class="card indo" href="../bahasa-indonesia/paket-10/"><div class="card-number">10</div><div class="card-label">Paket Soal</div><div class="card-tag">Mulai →</div></a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    Portal Latihan TKA · Semangat belajar dan raih impianmu! 🌟
+  </footer>
+
+</body>
+</html>
