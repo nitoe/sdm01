@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujian Sekolah Tertulis – Bahasa Indonesia · SD Muhammadiyah 01 Kukusan</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --text: #334155;
+            --bg: #f0f4ff;
+            --border: #cbd5e1;
+        }
+        * { box-sizing: border-box; outline: none; }
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; }
+        .app-container { display: flex; flex-direction: column; height: 100%; width: 100%; background: white; }
+        .header { height: 64px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); z-index: 50; flex-shrink: 0; }
+        .header-title { font-weight: 700; font-size: 1.15rem; }
+        .timer-box { background: rgba(255,255,255,0.15); padding: 6px 16px; border-radius: 6px; font-weight: 700; font-family: monospace; font-size: 1.25rem; border: 1px solid rgba(255,255,255,0.2); }
+        .workspace { display: flex; flex: 1; overflow: hidden; position: relative; }
+        .main-stage { flex: 1; position: relative; background: var(--bg); display: flex; flex-direction: column; overflow: hidden; }
+        .slide { display: none !important; width: 100%; height: 100%; }
+        .slide.active { display: flex !important; flex-direction: column; animation: fadeIn 0.4s ease; }
+        .center-content-wrapper { width: 100%; max-width: 800px; margin: 0 auto; padding: 20px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .card { background: white; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); padding: 32px; margin-bottom: 20px; border-top: 5px solid var(--primary); }
+        .quiz-scroll-area { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 80px; width: 100%; max-width: 900px; margin: 0 auto; }
+        .nav-bar-fixed { flex-shrink: 0; background: white; padding: 16px 24px; border-top: 1px solid #e2e8f0; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; z-index: 40; }
+        .question-item { display: none; }
+        .question-item.active-q { display: block; animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { opacity:0; transform:translateX(15px); } to { opacity:1; transform:translateX(0); } }
+        .stimulus-box { background: #ffffff; border: 1px solid #e2e8f0; border-left: 5px solid var(--primary); padding: 20px; margin-bottom: 24px; border-radius: 8px; }
+        .stimulus-head { font-weight: 800; color: var(--primary); border-bottom: 2px dashed #e2e8f0; padding-bottom: 10px; margin-bottom: 15px; font-size: 1.1rem; text-transform: uppercase; }
+        .visual-frame { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; display: flex; justify-content: center; align-items: center; margin: 15px 0; overflow: hidden; }
+        .q-text { font-size: 1.15rem; font-weight: 600; color: #1e293b; margin-bottom: 20px; line-height: 1.6; }
+        .tag-cat { display: inline-block; font-size: 0.75rem; background: #e0f2fe; color: #0369a1; padding: 4px 10px; border-radius: 20px; font-weight: bold; margin-bottom: 10px; }
+        .opt-label { display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: white; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 12px; cursor: pointer; transition: all 0.2s; font-size: 1rem; color: #475569; }
+        .opt-label:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+        .opt-label input { margin-top: 4px; transform: scale(1.2); flex-shrink: 0; }
+        .matrix-table { width: 100%; border-collapse: collapse; margin-top: 10px; min-width: 320px; }
+        .matrix-table th, .matrix-table td { border: 1px solid #e2e8f0; padding: 12px; }
+        .matrix-table th { background: #f1f5f9; text-align: center; }
+        .matrix-table td { text-align: center; }
+        .matrix-table td:first-child { text-align: left; font-weight: 500; }
+        .side-panel { width: 300px; background: white; border-left: 1px solid #e2e8f0; display: flex; flex-direction: column; flex-shrink: 0; z-index: 40; }
+        .nav-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 20px; overflow-y: auto; }
+        .nav-num { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; color: #64748b; transition: all 0.2s; }
+        .nav-num:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+        .nav-num.current { border: 2px solid var(--primary); transform: scale(1.1); box-shadow: 0 2px 8px rgba(0,0,0,0.15); color: var(--primary); }
+        .nav-num.filled { background-color: var(--success) !important; color: white !important; border-color: var(--success) !important; }
+        .nav-num.filled.current { border: 3px solid #1e3a8a !important; }
+        input[type="text"], select { width: 100%; padding: 14px; margin: 8px 0 20px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 1rem; display: inline-flex; align-items: center; gap: 8px; justify-content: center; }
+        .btn:hover { background: #172554; }
+        .btn:disabled { background: #94a3b8; cursor: not-allowed; }
+        .btn-outline { background: white; border: 1px solid #cbd5e1; color: #475569; }
+        .btn-outline:hover { background: #f8fafc; }
+        .btn-danger { background: var(--danger); }
+        .chart-row { display: flex; align-items: center; margin-bottom: 12px; }
+        .chart-lbl { width: 200px; font-size: 0.78rem; font-weight: 600; text-align: right; padding-right: 15px; flex-shrink: 0; }
+        .chart-track { flex: 1; background: #e2e8f0; height: 16px; border-radius: 10px; overflow: hidden; }
+        .chart-fill { height: 100%; transition: width 1s ease-out; }
+        .chart-val { width: 50px; padding-left: 10px; font-weight: 700; }
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 100; }
+        .modal { background: white; padding: 30px; border-radius: 16px; width: 90%; max-width: 420px; text-align: center; }
+        .pin-input-wrap { position: relative; margin-bottom: 10px; }
+        .pin-input-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; pointer-events: none; }
+        #inp-pin { width: 100%; padding: 14px 14px 14px 44px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 1.1rem; font-weight: 700; letter-spacing: .15em; font-family: monospace; color: var(--text); transition: border-color .2s; }
+        #inp-pin:focus { border-color: var(--primary); }
+        #inp-pin.error { border-color: #dc2626; animation: shake .3s ease; }
+        #pin-err { font-size: .82rem; color: #dc2626; font-weight: 600; display: none; margin-bottom: 14px; }
+        .stimulus-img { max-width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+        .matrix-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+        @media (max-width: 768px) {
+            .workspace { flex-direction: column; }
+            .side-panel { width: 100%; height: auto; border-left: none; border-top: 1px solid #e2e8f0; order: 2; }
+            .nav-grid { max-height: 120px; padding: 10px; }
+            .chart-lbl { width: 120px; font-size: 0.72rem; }
+            .header-title { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <div class="header">
+        <div class="header-title">Ujian Sekolah – Bahasa Indonesia</div>
+        <div style="display:flex;align-items:center;gap:15px;">
+            <div id="user-badge" style="display:none;font-size:0.85rem;background:rgba(255,255,255,0.1);padding:5px 12px;border-radius:20px;">Siswa</div>
+            <div class="timer-box" id="timer-display">--:--</div>
+        </div>
+    </div>
+    <div class="workspace">
+        <div class="main-stage">
+            <!-- ① SLIDE PIN -->
+            <div id="slide-pin" class="slide active">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:420px;margin:0 auto;text-align:center;">
+                        <div style="font-size:2.5rem;margin-bottom:12px;">🔐</div>
+                        <h2 style="color:var(--primary);margin-top:0;">Masukkan PIN</h2>
+                        <p style="color:#64748b;margin-bottom:24px;font-size:.95rem;">Masukkan PIN dari guru untuk membuka<br><strong>Ujian Sekolah Tertulis Bahasa Indonesia</strong></p>
+                        <div class="pin-input-wrap">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <input type="password" id="inp-pin" placeholder="PIN ujian…" maxlength="30" autocomplete="off" onkeydown="if(event.key==='Enter') app.checkPin()">
+                        </div>
+                        <div id="pin-err">❌ PIN salah. Coba lagi.</div>
+                        <button class="btn" style="width:100%" onclick="app.checkPin()">Buka Ujian →</button>
+                    </div>
+                </div>
+            </div>
+            <!-- ② SLIDE LOGIN -->
+            <div id="slide-login" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:450px;margin:0 auto;text-align:center;">
+                        <h2 style="color:var(--primary);margin-top:0;">Selamat Datang</h2>
+                        <p style="color:#64748b;margin-bottom:30px;">Ujian Sekolah Bahasa Indonesia (Fase C) — 4 Elemen</p>
+                        <div style="text-align:left;">
+                            <label>Nama Lengkap</label>
+                            <input type="text" id="inpNama" placeholder="Masukkan nama lengkap...">
+                            <label>Kelas</label>
+                            <select id="inpKelas">
+                                <option value="">-- Pilih Kelas --</option>
+                                <option value="6A">Kelas 6A</option>
+                                <option value="6B">Kelas 6B</option>
+                            </select>
+                        </div>
+                        <button class="btn" style="width:100%" onclick="app.login()">Masuk Ujian</button>
+                        <div id="resume-alert" style="display:none;margin-top:20px;padding:10px;background:#eff6ff;color:#1d4ed8;border-radius:8px;cursor:pointer;font-size:0.9rem;" onclick="app.resume()">
+                            🔄 <b>Sesi Tersimpan Ditemukan</b><br>Klik untuk melanjutkan
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ③ SLIDE PETUNJUK -->
+            <div id="slide-rules" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:700px;margin:0 auto;">
+                        <h2 style="margin-top:0;border-bottom:1px solid #e2e8f0;padding-bottom:15px;color:var(--primary);">Petunjuk Pengerjaan</h2>
+                        <div style="line-height:1.8;color:#334155;">
+                            <p>1. <strong>Waktu:</strong> <strong>90 Menit</strong>. Ujian dikumpulkan otomatis saat waktu habis.</p>
+                            <p>2. <strong>Soal:</strong> <strong>40 butir soal</strong> — mencakup 4 elemen: Membaca &amp; Memirsa, Menyimak, Berbicara &amp; Mempresentasikan, dan Menulis.</p>
+                            <p>3. <strong>Format:</strong> PG Tunggal, PG Kompleks (lebih dari satu jawaban), dan PG Kategori (menjodohkan).</p>
+                            <p>4. <strong>Tips:</strong> Bacalah stimulus (teks, transkrip, atau gambar) dengan cermat — semua jawaban bersumber dari teks, bukan pengetahuan umum di luar teks.</p>
+                            <p>5. <strong>Dilarang:</strong> Menutup atau me-refresh halaman selama ujian berlangsung.</p>
+                        </div>
+                        <div style="margin-top:30px;text-align:right;">
+                            <button class="btn" onclick="app.startExam()">Mulai Mengerjakan &#8594;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ④ SLIDE KUIS -->
+            <div id="slide-quiz" class="slide">
+                <div id="quiz-scroll" class="quiz-scroll-area">
+                    <div id="quiz-container"></div>
+                </div>
+                <div class="nav-bar-fixed">
+                    <button class="btn btn-outline" id="btn-prev" onclick="app.move(-1)">&#8592; Sebelumnya</button>
+                    <span id="q-indicator" style="font-weight:700;color:var(--primary);">Soal 1 / 40</span>
+                    <button class="btn" id="btn-next" onclick="app.move(1)">Selanjutnya</button>
+                </div>
+            </div>
+            <!-- ⑤ SLIDE HASIL -->
+            <div id="slide-result" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:600px;margin:0 auto;text-align:center;">
+                        <div style="font-size:4rem;margin-bottom:10px;">🎉</div>
+                        <h2 style="color:var(--primary);margin:0;">Ujian Selesai!</h2>
+                        <p style="color:#64748b;">Jawaban Anda telah kami terima.</p>
+                        <div id="result-content" style="text-align:left;margin-top:30px;border-top:1px solid #e2e8f0;padding-top:20px;">
+                            <p style="text-align:center;color:#64748b;">Sedang memproses nilai...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- SIDEBAR -->
+        <div class="side-panel" id="sidebar" style="display:none;">
+            <div style="padding:15px 20px;font-weight:700;color:#334155;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;">
+                <span>Navigasi Soal</span>
+                <span style="font-size:0.8rem;background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:10px;">40 Butir</span>
+            </div>
+            <div class="nav-grid" id="nav-grid"></div>
+            <div style="padding:20px;border-top:1px solid #e2e8f0;margin-top:auto;background:#f8fafc;">
+                <button class="btn btn-danger" style="width:100%" onclick="app.confirmFinish()">Selesai Ujian</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-confirm" class="overlay">
+    <div class="modal">
+        <h3 style="color:var(--primary);">Konfirmasi Pengumpulan</h3>
+        <p>Yakin ingin mengakhiri dan mengumpulkan ujian ini?</p>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:25px;">
+            <button class="btn btn-outline" onclick="document.getElementById('modal-confirm').style.display='none'">Cek Lagi</button>
+            <button class="btn btn-danger" onclick="app.submitExam()">Ya, Kumpulkan</button>
+        </div>
+    </div>
+</div>
+<div id="modal-loading" class="overlay">
+    <div class="modal">
+        <h3 style="color:var(--primary);">Sedang Mengirim…</h3>
+        <div style="width:40px;height:40px;border:4px solid #e2e8f0;border-top:4px solid var(--primary);border-radius:50%;margin:10px auto;animation:spin 1s linear infinite;"></div>
+        <p>Mohon jangan tutup halaman ini.</p>
+    </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  KONFIGURASI
+//  Untuk mengganti PIN: hashPin("PIN_BARU").then(h => console.log(h))
+// ════════════════════════════════════════════════════════
+const CONFIG = {
+    SCRIPT_URL:  "https://script.google.com/macros/s/AKfycbwJveJtAISKhveIQ4wspAaeaUKLrqB_IBY55qhOqDOl649QSjqtBa2hYhOrx7UNs0GbdA/exec",
+    STORAGE_KEY: "UST_2026_BAHASA_INDONESIA",
+    DURATION:    90 * 60,
+    PIN_HASH:    "43101267d3acf95d"
+};
+
+async function hashPin(pin) {
+    const enc = new TextEncoder().encode(pin.trim().toLowerCase());
+    const buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,16);
+}
+window.hashPin = hashPin;
+
+// ── Aset Gambar (Base64 — embedded langsung) ────────────────────────────────
+
+const IMAGE_ASSETS = {
+"grafik_minat_baca": "https://i.ibb.co.com/CpCCLpdj/grafik-minat-baca.png",
+"diagram_daur_ulang": "https://i.ibb.co.com/mVP9Vm7p/diagram-daur-ulang.png",
+"iklan_hemat_air": "https://i.ibb.co.com/99zPM56c/iklan-hemat-air.png",
+"slide_presentasi": "https://i.ibb.co.com/yBgtCYBK/slide-presentasi.png"
+};
+
+
+function getImg(key, alt="Ilustrasi Soal") {
+    const url = IMAGE_ASSETS[key];
+    if (!url) return `<div style="background:#fef3c7;padding:15px;border-radius:8px;text-align:center;border:1px solid #f59e0b;">⚠️ Gambar tidak tersedia</div>`;
+    return `<img src="${url}" alt="${alt}" class="stimulus-img" loading="eager">`;
+}
+
+// ════════════════════════════════════════════════════════
+//  BANK SOAL — 40 Butir
+//  Sesi 1 (1–20): Menyimak + Membaca & Memirsa
+//  Sesi 2 (21–40): Berbicara & Mempresentasikan + Menulis
+// ════════════════════════════════════════════════════════
+
+const QUESTIONS = [
+{ id:1, cat:"Membaca dan Memirsa", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 1: Jadwal dan Tata Tertib Ujian Sekolah</div><p>Ujian Sekolah bagi siswa kelas 6 SD Muhammadiyah 01 Kukusan akan segera dilaksanakan. Kegiatan ini merupakan agenda tahunan yang wajib diikuti oleh seluruh siswa sebagai syarat kelulusan. Berdasarkan kalender akademik tahun 2025/2026, ujian tertulis akan berlangsung selama enam hari, dimulai dari tanggal 15 Mei hingga 20 Mei 2026. Setiap harinya, siswa diwajibkan hadir di sekolah paling lambat pukul 07.00 WIB untuk mengikuti pengarahan sebelum ujian dimulai.</p><p>Mata pelajaran yang diujikan mencakup lima mata pelajaran utama, yaitu Bahasa Indonesia, Matematika, Ilmu Pengetahuan Alam dan Sosial (IPAS), Pendidikan Pancasila, dan Bahasa Inggris. Setiap sesi ujian berlangsung selama 90 menit dengan waktu istirahat 15 menit di antara sesi. Siswa diharapkan mempersiapkan diri dengan belajar secara mandiri di rumah dan menjaga kesehatan agar kondisi fisik tetap prima saat hari pelaksanaan. Selain itu, terdapat beberapa ketentuan khusus yang harus dipatuhi, seperti membawa alat tulis sendiri, kartu ujian, dan tidak diperbolehkan membawa alat komunikasi ke dalam ruang ujian.</p><p>Panitia ujian juga telah menyiapkan protokol kesehatan untuk memastikan kenyamanan semua peserta. Setiap ruang ujian akan diperiksa kebersihannya sebelum digunakan. Siswa yang mengalami gejala sakit diperbolehkan mengikuti ujian susulan dengan surat keterangan dokter. Hasil ujian akan diumumkan satu minggu setelah seluruh rangkaian kegiatan selesai dilaksanakan. Diharapkan seluruh siswa dapat mengikuti ujian dengan jujur dan disiplin untuk mencapai hasil terbaik.</p></div>", q:"Berdasarkan teks tersebut, apa ide pokok paragraf pertama?", opt:["Waktu dan ketentuan kehadiran siswa saat ujian", "Daftar mata pelajaran yang akan diujikan", "Protokol kesehatan selama ujian berlangsung", "Pengumuman hasil ujian sekolah"], ans:"Waktu dan ketentuan kehadiran siswa saat ujian" },
+{ id:2, cat:"Membaca dan Memirsa", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 1: Jadwal dan Tata Tertib Ujian Sekolah</div><p>Ujian Sekolah bagi siswa kelas 6 SD Muhammadiyah 01 Kukusan akan segera dilaksanakan. Kegiatan ini merupakan agenda tahunan yang wajib diikuti oleh seluruh siswa sebagai syarat kelulusan. Berdasarkan kalender akademik tahun 2025/2026, ujian tertulis akan berlangsung selama enam hari, dimulai dari tanggal 15 Mei hingga 20 Mei 2026. Setiap harinya, siswa diwajibkan hadir di sekolah paling lambat pukul 07.00 WIB untuk mengikuti pengarahan sebelum ujian dimulai.</p><p>Mata pelajaran yang diujikan mencakup lima mata pelajaran utama, yaitu Bahasa Indonesia, Matematika, Ilmu Pengetahuan Alam dan Sosial (IPAS), Pendidikan Pancasila, dan Bahasa Inggris. Setiap sesi ujian berlangsung selama 90 menit dengan waktu istirahat 15 menit di antara sesi. Siswa diharapkan mempersiapkan diri dengan belajar secara mandiri di rumah dan menjaga kesehatan agar kondisi fisik tetap prima saat hari pelaksanaan. Selain itu, terdapat beberapa ketentuan khusus yang harus dipatuhi, seperti membawa alat tulis sendiri, kartu ujian, dan tidak diperbolehkan membawa alat komunikasi ke dalam ruang ujian.</p><p>Panitia ujian juga telah menyiapkan protokol kesehatan untuk memastikan kenyamanan semua peserta. Setiap ruang ujian akan diperiksa kebersihannya sebelum digunakan. Siswa yang mengalami gejala sakit diperbolehkan mengikuti ujian susulan dengan surat keterangan dokter. Hasil ujian akan diumumkan satu minggu setelah seluruh rangkaian kegiatan selesai dilaksanakan. Diharapkan seluruh siswa dapat mengikuti ujian dengan jujur dan disiplin untuk mencapai hasil terbaik.</p></div>", q:"Apa akibatnya jika siswa membawa alat komunikasi ke dalam ruang ujian?", opt:["Siswa akan mendapat nilai tambahan", "Siswa akan dikenakan sanksi pelanggaran", "Siswa boleh menggunakannya saat istirahat", "Siswa harus menyerahkannya kepada teman"], ans:"Siswa akan dikenakan sanksi pelanggaran" },
+{ id:3, cat:"Membaca dan Memirsa", type:"pg", score:1, stim:`<div class='stimulus-box'><div class='stimulus-head'>Teks 2: Minat Baca Siswa SD Muhammadiyah 01 Kukusan</div><p>Perpustakaan sekolah telah melakukan survei minat baca siswa selama semester ganjil tahun 2025. Data yang dikumpulkan menunjukkan jumlah buku yang dipinjam oleh siswa dari masing-masing kelas. Hasil survei ini penting untuk mengetahui tingkat literasi siswa dan merencanakan program peningkatan minat baca di tahun berikutnya. Grafik berikut menampilkan data jumlah buku yang dipinjam per siswa dari kelas 4, 5, dan 6.</p><div class='visual-frame'>${getImg("grafik_minat_baca", "Grafik Minat Baca Siswa")}</div><p>Berdasarkan data tersebut, dapat dilihat bahwa siswa kelas 6 memiliki minat baca tertinggi dengan rata-rata 45 buku per bulan. Sementara itu, siswa kelas 4 masih perlu ditingkatkan minat bacanya dengan hanya 25 buku per bulan. Pihak sekolah berencana mengadakan program "Sabtu Membaca" untuk meningkatkan literasi siswa kelas bawah.</p></div>`, q:"Berdasarkan grafik tersebut, pernyataan mana yang sesuai?", opt:["Kelas 4 memiliki minat baca tertinggi", "Kelas 6 memiliki minat baca tertinggi", "Kelas 5 dan 6 memiliki minat baca sama", "Kelas 4 memiliki minat baca lebih tinggi dari Kelas 5"], ans:"Kelas 6 memiliki minat baca tertinggi" },
+{ id:4, cat:"Membaca dan Memirsa", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 3: Persahabatan di Bawah Pohon Rindang</div><p>Di sudut halaman sekolah, terdapat sebuah pohon beringin besar yang menjadi tempat favorit Rina dan Sinta untuk bercerita. Siang itu, matahari bersinar terik, namun di bawah naungan daun-daun hijau, udara terasa sejuk. Rina tampak murung sambil memeluk lututnya. Sinta yang menyadari perubahan sikap sahabatnya segera menghampiri dengan wajah penuh kekhawatiran. \"Ada apa, Rin? Kamu tampak tidak seperti biasanya,\" tanya Sinta lembut sambil duduk di samping Rina.</p><p>Rina menghela napas panjang sebelum akhirnya menceritakan masalahnya. \"Aku kehilangan uang saku yang diberikan Ibu pagi tadi. Aku takut dimarahi jika pulang tanpa uang,\" keluh Rina dengan suara bergetar. Sinta mendengarkan dengan saksama tanpa memotong pembicaraan. Setelah Rina selesai bercerita, Sinta tersenyum menenangkan. \"Jangan khawatir, Rin. Kita bisa cari bersama-sama di jalan pulang. Kalau tidak ketemu, aku akan pinjamkan uangku untukmu beli makan,\" ucap Sinta tulus.</p><p>Mendengar ucapan sahabatnya, hati Rina terasa lega. Ia menyadari bahwa memiliki teman yang peduli adalah harta yang tak ternilai. Mereka pun berjanji untuk saling menjaga dan membantu dalam suka maupun duka. Persahabatan mereka semakin erat berkat kejadian sederhana tersebut. Bagi mereka, kejujuran dan kepedulian adalah dasar utama dari sebuah persahabatan sejati yang harus dijaga sepanjang waktu.</p></div>", q:"Nilai moral yang terkandung dalam tindakan Sinta adalah...", opt:["Kejujuran dan tanggung jawab", "Kepedulian dan ketulusan", "Kepemimpinan dan keberanian", "Kedisiplinan dan ketepatan"], ans:"Kepedulian dan ketulusan" },
+{ id:5, cat:"Membaca dan Memirsa", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 3: Persahabatan di Bawah Pohon Rindang</div><p>Di sudut halaman sekolah, terdapat sebuah pohon beringin besar yang menjadi tempat favorit Rina dan Sinta untuk bercerita. Siang itu, matahari bersinar terik, namun di bawah naungan daun-daun hijau, udara terasa sejuk. Rina tampak murung sambil memeluk lututnya. Sinta yang menyadari perubahan sikap sahabatnya segera menghampiri dengan wajah penuh kekhawatiran. \"Ada apa, Rin? Kamu tampak tidak seperti biasanya,\" tanya Sinta lembut sambil duduk di samping Rina.</p><p>Rina menghela napas panjang sebelum akhirnya menceritakan masalahnya. \"Aku kehilangan uang saku yang diberikan Ibu pagi tadi. Aku takut dimarahi jika pulang tanpa uang,\" keluh Rina dengan suara bergetar. Sinta mendengarkan dengan saksama tanpa memotong pembicaraan. Setelah Rina selesai bercerita, Sinta tersenyum menenangkan. \"Jangan khawatir, Rin. Kita bisa cari bersama-sama di jalan pulang. Kalau tidak ketemu, aku akan pinjamkan uangku untukmu beli makan,\" ucap Sinta tulus.</p><p>Mendengar ucapan sahabatnya, hati Rina terasa lega. Ia menyadari bahwa memiliki teman yang peduli adalah harta yang tak ternilai. Mereka pun berjanji untuk saling menjaga dan membantu dalam suka maupun duka. Persahabatan mereka semakin erat berkat kejadian sederhana tersebut. Bagi mereka, kejujuran dan kepedulian adalah dasar utama dari sebuah persahabatan sejati yang harus dijaga sepanjang waktu.</p></div>", q:"Watak tokoh Sinta berdasarkan dialog dalam kutipan tersebut adalah...", opt:["Penyemangat dan peduli", "Sombong dan angkuh", "Pendiam dan pemalu", "Pemarah dan mudah tersinggung"], ans:"Penyemangat dan peduli" },
+{ id:6, cat:"Menyimak", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 4: Transkrip Pidato Kepala Sekolah</div><p>\"Assalamualaikum warahmatullahi wabarakatuh. Yang saya hormati Bapak dan Ibu guru, serta anak-anakku siswa kelas 6 yang saya banggakan. Pada kesempatan ini, saya ingin menyampaikan beberapa hal penting terkait persiapan ujian sekolah. Pertama, saya mengingatkan kembali pentingnya menjaga kebersihan lingkungan sekolah. Kelas yang bersih akan membuat kita nyaman saat belajar dan mengerjakan ujian. Kedua, mari kita bersama-sama menciptakan suasana kondusif dengan tidak membuat kegaduhan di area sekolah.</p><p>Ketiga, saya mengharapkan seluruh siswa dapat mengikuti aturan yang telah ditetapkan oleh panitia ujian. Ketepatan waktu dan kelengkapan alat tulis adalah kunci keberhasilan. Jangan lupa untuk berdoa sebelum memulai ujian agar diberikan kemudahan. Saya percaya, kalian semua telah belajar dengan giat dan akan mendapatkan hasil yang memuaskan. Terakhir, jagalah kesehatan kalian dengan makan makanan bergizi dan istirahat yang cukup. Terima kasih atas perhatian kalian. Wassalamualaikum warahmatullahi wabarakatuh.\"</p></div>", q:"Tujuan utama komunikasi dalam pidato tersebut adalah...", opt:["Mengumumkan jadwal libur sekolah", "Mengajak siswa menjaga kebersihan dan kedisiplinan", "Memberikan penghargaan kepada siswa berprestasi", "Menginformasikan perubahan kurikulum"], ans:"Mengajak siswa menjaga kebersihan dan kedisiplinan" },
+{ id:7, cat:"Menyimak", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 5: Puisi Untuk Ibu</div><p>Engkau laksana mentari pagi<br>Yang menerangi jalan hidupku<br>Hangat sinarmu mengusir sepi<br>Dalam setiap langkah kakiku<br><br>Engkau laksana bulan purnama<br>Yang menerangi malam gelisku<br>Tenang cahayamu menemani<br>Hilangkan ragu dalam hatiku<br><br>Terima kasih, Ibu<br>Atas segala kasih sayangmu<br>Tanpamu aku takkan berarti<br>Di dunia yang penuh warna ini</p></div>", q:"Perasaan penyair yang tergambar dalam puisi tersebut adalah...", opt:["Kasih sayang dan terima kasih kepada ibu", "Kesedihan karena kehilangan ibu", "Kebanggaan terhadap prestasi ibu", "Kerinduan pada kampung halaman"], ans:"Kasih sayang dan terima kasih kepada ibu" },
+{ id:8, cat:"Membaca dan Memirsa", type:"pg", score:1, stim:`<div class='stimulus-box'><div class='stimulus-head'>Teks 6: Iklan Layanan Masyarakat</div><div class='visual-frame'>${getImg("iklan_hemat_air", "Iklan Hemat Air")}</div><p>\"Air adalah sumber kehidupan. Tanpa air, manusia, hewan, dan tumbuhan tidak dapat bertahan hidup. Namun, ketersediaan air bersih semakin menipis akibat penggunaan yang boros dan pencemaran lingkungan. Banyak keran air yang dibiarkan mengalir sia-sia saat tidak digunakan. Sampah plastik yang dibuang sembarangan menyumbat aliran sungai dan merusak kualitas air.</p><p>Mari kita bersama-sama menghemat air mulai dari sekarang. Matikan keran setelah digunakan. Gunakan air secukupnya saat mandi dan mencuci. Jangan membuang sampah ke sungai. Hemat air hari ini untuk masa depan anak cucu kita. Ingat, setiap tetes air sangat berharga. Jangan biarkan air terakhir yang kita miliki adalah air mata. Ayo bergerak sekarang juga untuk menyelamatkan bumi kita!\"</p></div>`, q:"Kalimat persuasif yang paling tepat sesuai konteks iklan tersebut adalah...", opt:["Air sangat penting bagi kehidupan manusia", "Ayo bersama-sama hemat air untuk masa depan!", "Keran air harus selalu ditutup rapat", "Jangan membuang air secara sembarangan"], ans:"Ayo bersama-sama hemat air untuk masa depan!" },
+{ id:9, cat:"Membaca dan Memirsa", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 7: Berita Lingkungan</div><p>Hujan deras yang terjadi selama tiga hari berturut-turut di wilayah pegunungan menyebabkan terjadinya erosi tanah yang parah. Air hujan yang mengalir deras mengikis lapisan tanah atas sehingga struktur tanah menjadi tidak stabil. Akibatnya, beberapa wilayah mengalami longsor yang menutup akses jalan utama menuju desa. Warga setempat terpaksa harus mencari jalan memutar yang lebih jauh untuk beraktivitas.</p><p>Para ahli lingkungan menyatakan bahwa erosi ini diperparah oleh minimnya pepohonan di area tersebut. Akar pohon berfungsi untuk mengikat tanah agar tidak mudah terbawa aliran air. Oleh karena itu, program penanaman kembali atau reboisasi sangat diperlukan untuk mencegah bencana serupa di masa depan. Pemerintah daerah telah mengalokasikan dana untuk pembelian bibit pohon dan melibatkan masyarakat dalam kegiatan penghijauan.</p></div>", q:"Berdasarkan konteks kalimat, makna kata \"erosi\" adalah...", opt:["Pengikisan tanah oleh air", "Genangan air di permukaan", "Longsoran tanah dari bukit", "Banjir bandang yang besar"], ans:"Pengikisan tanah oleh air" },
+{ id:10, cat:"Membaca dan Memirsa", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 8: Prosedur Menggunakan Printer</div><p>Mencetak dokumen memerlukan langkah-langkah yang tepat agar hasil cetak maksimal. Pertama, pastikan printer dalam keadaan menyala dan terhubung dengan komputer. Kedua, periksa ketersediaan kertas di dalam tray printer. Jika kertas habis, segera isi dengan ukuran yang sesuai. Ketiga, buka dokumen yang akan dicetak pada layar komputer. Keempat, pilih menu print dan tentukan jumlah salinan yang diinginkan. Kelima, klik tombol print dan tunggu hingga proses selesai.</p><p>Jika salah satu langkah dilewati, misalnya langkah kedua tidak dilakukan, maka printer akan menarik kertas dari tray yang kosong. Hal ini dapat menyebabkan kertas terjepit atau printer mengeluarkan pesan error. Akibatnya, dokumen tidak dapat dicetak dan waktu menjadi terbuang percuma. Oleh karena itu, ketelitian dalam mengikuti prosedur sangat penting untuk menghindari kerusakan alat dan kegagalan proses cetak.</p></div>", q:"Jika langkah kedua dilewati, apa akibatnya?", opt:["Printer tidak akan menyala", "Dokumen tidak dapat dicetak karena tidak ada kertas", "Printer akan rusak permanen", "Hasil cetakan akan buram"], ans:"Dokumen tidak dapat dicetak karena tidak ada kertas" },
+{ id:11, cat:"Membaca dan Memirsa", type:"pgk", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 9: Penggunaan Gawai</div><p>Di era digital ini, penggunaan gawai atau perangkat elektronik sudah menjadi kebutuhan sehari-hari. Menurut penelitian terbaru, penggunaan gawai lebih dari 4 jam per hari dapat mengganggu kesehatan mata dan menyebabkan sakit kepala. Cahaya biru yang dipancarkan layar dapat mengganggu pola tidur jika digunakan sebelum tidur. Namun, di sisi lain, gawai juga memiliki manfaat besar untuk mengakses informasi dan berkomunikasi dengan jarak jauh.</p><p>Para ahli menyarankan penggunaan gawai secara bijak dengan batasan waktu yang jelas. Orang tua diharapkan dapat mengawasi penggunaan gawai pada anak-anak. Sekolah juga mulai menerapkan aturan penggunaan gawai di lingkungan kelas. Dengan demikian, kita dapat mengambil manfaat teknologi tanpa mengorbankan kesehatan fisik dan mental.</p></div>", q:"Pilih DUA kalimat yang merupakan FAKTA berdasarkan teks tersebut!", opt:["Penggunaan gawai lebih dari 4 jam per hari dapat mengganggu kesehatan mata", "Gawai bermanfaat untuk mengakses informasi", "Semua anak harus dilarang menggunakan gawai", "Gawai adalah penyebab utama penyakit mata"], ans:["Penggunaan gawai lebih dari 4 jam per hari dapat mengganggu kesehatan mata", "Gawai bermanfaat untuk mengakses informasi"] },
+{ id:12, cat:"Membaca dan Memirsa", type:"pgk", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 10: Cerita Rakyat Malin Kundang</div><p>Malin Kundang adalah seorang anak yang merantau ke negeri orang. Setelah bertahun-tahun, ia kembali ke kampung halamannya dengan kesuksesan dan kekayaan. Namun, ketika ibunya yang miskin dan tua menyapanya, ia malu mengakui ibunya sendiri di depan istri dan awak kapalnya. Ia bahkan mengusir ibunya karena merasa malu dengan kondisi ibunya yang kumuh.</p><p>Sang ibu yang sakit hati akhirnya berdoa kepada Tuhan agar Malin mendapat balasan atas perbuatannya. Tidak lama kemudian, badai besar datang dan menghancurkan kapal Malin. Ia terombang-ambing di laut dan akhirnya berubah menjadi batu. Cerita ini mengajarkan kita tentang pentingnya menghormati orang tua di mana pun kita berada.</p></div>", q:"Pilih DUA nilai kearifan lokal yang tercermin dalam cerita tersebut!", opt:["Hormat dan berbakti kepada orang tua", "Jangan malu mengakui asal-usul keluarga", "Kesuksesan materi adalah yang utama", "Harus meninggalkan kampung halaman"], ans:["Hormat dan berbakti kepada orang tua", "Jangan malu mengakui asal-usul keluarga"] },
+{ id:13, cat:"Menyimak", type:"pgk", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 11: Transkrip Pengumuman Lomba</div><p>\"Perhatian kepada seluruh siswa kelas 6. Akan diadakan lomba membaca puisi dalam rangka Hari Kemerdekaan. Syarat peserta adalah sebagai berikut. Pertama, peserta wajib siswa kelas 6. Kedua, pendaftaran ditutup tanggal 10 Mei. Ketiga, peserta harus membawa surat izin orang tua. Keempat, peserta hadir 30 menit sebelum acara dimulai. Hadiah menarik menanti para pemenang. Segera daftarkan dirimu ke ruang guru.\"</p></div>", q:"Pilih DUA syarat peserta yang disebutkan dalam pengumuman!", opt:["Siswa kelas 6", "Mendaftar sebelum tanggal 10 Mei", "Membawa kostum khusus", "Menghafal 5 puisi"], ans:["Siswa kelas 6", "Mendaftar sebelum tanggal 10 Mei"] },
+{ id:14, cat:"Membaca dan Memirsa", type:"pgk", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 12: Cerita Pendek Acak</div><p>(1) Akhirnya, Rina memutuskan untuk meminta maaf kepada Sinta. (2) Rina dan Sita bertengkar karena salah paham mengenai uang yang hilang. (3) Mereka pun kembali berteman seperti semula dengan hati lega. (4) Sita menerima permintaan maaf Rina dengan lapang dada dan memaafkannya.</p></div>", q:"Pilih DUA paragraf yang termasuk bagian RESOLUSI (penyelesaian)!", opt:["Akhirnya, Rina memutuskan untuk meminta maaf", "Sita menerima permintaan maaf Rina dengan lapang dada", "Rina dan Sita bertengkar karena salah paham", "Mereka pun kembali berteman seperti semula"], ans:["Sita menerima permintaan maaf Rina dengan lapang dada", "Mereka pun kembali berteman seperti semula"] },
+{ id:15, cat:"Membaca dan Memirsa", type:"pgk", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 13: Puisi Perjuangan</div><p>Merah darah para pahlawan<br>Mewarnai tanah pertiwi<br>Putih tulang mereka yang gugur<br>Menjadi pondasi negeri ini<br><br>Berkibarlah engkau wahai pusaka<br>Di angkasa negeri yang merdeka<br>Jangan pernah kau turun setengah tiang<br>Kecuali untuk mengenang jasa mereka</p></div>", q:"Pilih DUA kata yang memiliki makna SIMBOLIK dalam puisi tersebut!", opt:["Merah darah", "Putih tulang", "Berkibarlah", "Negeri"], ans:["Merah darah", "Putih tulang"] },
+{ id:16, cat:"Membaca dan Memirsa", type:"pgk-cat", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 14: Makna Kata \"Kepala\"</div><p>(1) Kepala sekolah menghadiri rapat dinas di kecamatan. (2) Jangan duduk di kepala meja saat acara formal. (3) Dia tetap kepala dingin meski diprovokasi oleh lawannya.</p></div>", q:"Tentukan makna DENOTATIF atau KONOTATIF untuk setiap kalimat!", rows:["Kalimat 1: Kepala sekolah", "Kalimat 2: Kepala meja", "Kalimat 3: Kepala dingin"], cols:["Denotatif","Konotatif"], ans:["Denotatif","Konotatif","Konotatif"] },
+{ id:17, cat:"Menyimak", type:"pgk-cat", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 15: Nada Teks Aural</div><p>(1) \"Kami berduka cita atas meninggalnya Bapak Guru.\" (2) \"Selamat! Kamu berhasil menjadi juara lomba!\" (3) \"Semua siswa wajib berkumpul di lapangan sekarang!\"</p></div>", q:"Tentukan NADA setiap kutipan teks aural!", rows:["Kutipan 1: Berita duka", "Kutipan 2: Berita juara", "Kutipan 3: Pengumuman"], cols:["Sedih","Gembira","Tegas"], ans:["Sedih","Gembira","Tegas"] },
+{ id:18, cat:"Membaca dan Memirsa", type:"pgk-cat", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 16: Jenis Teks</div><p>(1) Cerita Rakyat Timun Mas dari Jawa Tengah. (2) Berita Banjir di Koran Hari Ini. (3) Buku Ensiklopedia Hewan Langka.</p></div>", q:"Klasifikasikan setiap judul sebagai Teks Sastra (Fiksi) atau Teks Nonsastra (Nonfiksi)!", rows:["Cerita Rakyat Timun Mas", "Berita Banjir di Koran", "Buku Ensiklopedia Hewan"], cols:["Teks Sastra (Fiksi)","Teks Nonsastra (Nonfiksi)"], ans:["Teks Sastra (Fiksi)","Teks Nonsastra (Nonfiksi)","Teks Nonsastra (Nonfiksi)"] },
+{ id:19, cat:"Membaca dan Memirsa", type:"pgk-cat", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 17: Kalimat Efektif</div><p>(1) \"Siswa yang rajin belajar akan mendapatkan nilai baik.\" (2) \"Belajar yang rajin oleh siswa akan nilai baik didapatkan.\" (3) \"Rajin belajar siswa akan dapat nilai baik.\"</p></div>", q:"Klasifikasikan mana kalimat yang EFEKTIF dan TIDAK EFEKTIF!", rows:["Kalimat 1", "Kalimat 2", "Kalimat 3"], cols:["Efektif","Tidak Efektif"], ans:["Efektif","Tidak Efektif","Tidak Efektif"] },
+{ id:20, cat:"Menyimak", type:"pgk-cat", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 18: Tujuan Pesan Singkat</div><p>(1) \"Ayo kita bersama-sama membersihkan kelas!\" (2) \"Besok ada ujian matematika, jangan lupa belajar.\" (3) \"Kumpulkan tugas besok pagi sebelum jam 7!\"</p></div>", q:"Klasifikasikan tujuan setiap pesan!", rows:["Pesan 1: Ajakan bersih kelas", "Pesan 2: Info ujian", "Pesan 3: Perintah kumpul tugas"], cols:["Mengajak","Memberitahu","Memerintah"], ans:["Mengajak","Memberitahu","Memerintah"] },
+{ id:21, cat:"Berbicara dan Mempresentasikan", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 19: Naskah Pidato Acak</div><p>(A) \"Demikian pidato saya, mohon maaf jika ada kesalahan.\" (B) \"Assalamualaikum, yang saya hormati Bapak/Ibu guru...\" (C) \"Mari kita jaga kebersihan sekolah bersama-sama.\"</p></div>", q:"Urutan struktur pidato yang paling sistematis adalah...", opt:["B - C - A", "A - B - C", "C - B - A", "B - A - C"], ans:"B - C - A" },
+{ id:22, cat:"Berbicara dan Mempresentasikan", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 20: Situasi Presentasi</div><p>Andi akan mempresentasikan hasil penelitiannya di depan kelas. Ia ingin menekankan poin penting tentang dampak sampah plastik terhadap lingkungan laut. Ia membutuhkan teknik penyampaian yang efektif agar audiens memperhatikan poin tersebut.</p></div>", q:"Kalimat instruksi bahasa tubuh dan intonasi yang paling tepat adalah...", opt:["Naikkan volume suara dan gunakan gerakan tangan saat menyampaikan poin penting", "Berbicara pelan dan menunduk saat presentasi", "Duduk sambil membaca naskah tanpa kontak mata", "Berbicara cepat agar cepat selesai"], ans:"Naikkan volume suara dan gunakan gerakan tangan saat menyampaikan poin penting" },
+{ id:23, cat:"Berbicara dan Mempresentasikan", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 21: Kalimat Pembuka Presentasi</div><p>Variasi 1: \"Halo teman-teman, saya akan presentasi.\" Variasi 2: \"Selamat pagi! Pernahkah kalian berpikir berapa sampah yang kita hasilkan setiap hari?\"</p></div>", q:"Kalimat pembuka yang lebih efektif untuk menarik perhatian audiens adalah...", opt:["Variasi 2 karena menggunakan pertanyaan provokatif", "Variasi 1 karena lebih singkat dan jelas", "Kedua variasi sama efektifnya", "Variasi 1 karena lebih formal"], ans:"Variasi 2 karena menggunakan pertanyaan provokatif" },
+{ id:24, cat:"Berbicara dan Mempresentasikan", type:"pg", score:1, stim:`<div class='stimulus-box'><div class='stimulus-head'>Teks 22: Slide Presentasi</div><div class='visual-frame'>${getImg("slide_presentasi", "Slide Presentasi Padat Teks")}</div><p>Berdasarkan gambar slide presentasi di atas, dapat dilihat bahwa slide tersebut memuat terlalu banyak informasi dalam satu halaman. Prinsip presentasi efektif menyarankan bahwa slide harus mudah dibaca dalam waktu 30 detik. Teks yang terlalu padat akan membuat audiens kesulitan menangkap poin penting dan cenderung membaca slide daripada mendengarkan presenter.</p></div>`, q:"Berdasarkan prinsip presentasi efektif, kelemahan slide tersebut adalah...", opt:["Terlalu padat teks sehingga sulit dibaca audiens", "Warna background kurang menarik", "Judul slide terlalu pendek", "Tidak ada gambar sama sekali"], ans:"Terlalu padat teks sehingga sulit dibaca audiens" },
+{ id:25, cat:"Berbicara dan Mempresentasikan", type:"pgk", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 23: Situasi Tanya Jawab</div><p>Setelah presentasi, seorang audiens mengajukan pertanyaan yang kurang jelas. Sebagai presenter, bagaimana tanggapan yang santun dan profesional?</p></div>", q:"Pilih DUA kalimat tanggapan yang memenuhi kriteria kesantunan dan kejelasan!", opt:["\"Terima kasih atas pertanyaannya. Bisa Anda ulangi lebih jelas?\"", "\"Maaf, saya kurang memahami. Bisa dijelaskan lebih detail?\"", "\"Pertanyaan Anda tidak jelas, ulangi lagi!\"", "\"Saya tidak akan menjawab pertanyaan seperti itu.\""], ans:["\"Terima kasih atas pertanyaannya. Bisa Anda ulangi lebih jelas?\"", "\"Maaf, saya kurang memahami. Bisa dijelaskan lebih detail?\""] },
+{ id:26, cat:"Menulis", type:"pgk", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 24: Kalimat Tunggal</div><p>(1) Hujan turun sangat deras. (2) Jalan menjadi banjir. (3) Siswa terlambat ke sekolah. (4) Guru memberikan toleransi.</p></div>", q:"Pilih DUA gabungan kalimat kompleks yang menggunakan konjungsi SEBAB-AKIBAT secara tepat!", opt:["Hujan turun sangat deras sehingga jalan menjadi banjir.", "Karena hujan turun deras, siswa terlambat ke sekolah.", "Hujan turun deras dan jalan banjir.", "Siswa terlambat tetapi guru toleransi."], ans:["Hujan turun sangat deras sehingga jalan menjadi banjir.", "Karena hujan turun deras, siswa terlambat ke sekolah."] },
+{ id:27, cat:"Menulis", type:"pgk", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 25: Kutipan Puisi</div><p>Angin berbisik lembut di telinga<br>Membawa kabar dari negeri jauh<br>Bulan tersenyum manis menyapa<br>Menerangi malam yang sunyi senyap</p></div>", q:"Pilih DUA kata yang digunakan secara KREATIF untuk menggambarkan suasana!", opt:["Berbisik (angin)", "Tersenyum (bulan)", "Malam", "Jauh"], ans:["Berbisik (angin)", "Tersenyum (bulan)"] },
+{ id:28, cat:"Menulis", type:"pgk", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 26: Cerita Pendek</div><p>Bagian orientasi: Rina adalah siswa berprestasi. Bagian resolusi: Rina menerima piala dengan bangga. Cerita kehilangan satu bagian.</p></div>", q:"Pilih DUA paragraf yang cocok sebagai bagian KOMPLIKASI (masalah)!", opt:["Suatu hari, Rina sakit sehingga tidak bisa ikut lomba.", "Rina merasa sedih dan kecewa karena gagal.", "Rina adalah siswa berprestasi di sekolahnya.", "Rina menerima piala dengan bangga."], ans:["Suatu hari, Rina sakit sehingga tidak bisa ikut lomba.", "Rina merasa sedih dan kecewa karena gagal."] },
+{ id:29, cat:"Menulis", type:"pgk", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 27: Teks Prosedur Acak</div><p>(1) Sajikan nasi goreng di piring. (2) Tumis bumbu hingga harum. (3) Masukkan nasi dan aduk rata. (4) Siapkan bahan-bahan.</p></div>", q:"Pilih DUA langkah yang harus DITUKAR posisinya agar logis!", opt:["Langkah 1 dan 4", "Langkah 2 dan 4", "Langkah 3 dan 4", "Langkah 1 dan 3"], ans:["Langkah 1 dan 4", "Langkah 2 dan 4"] },
+{ id:30, cat:"Menulis", type:"pgk-cat", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 28: Pengembangan Paragraf</div><p>Ide Pokok: Manfaat olahraga pagi. Kalimat: (1) Olahraga pagi menyehatkan jantung. (2) Udara pagi masih segar. (3) Saya suka makan nasi goreng. (4) Olahraga meningkatkan stamina.</p></div>", q:"Klasifikasikan kalimat RELEVAN atau TIDAK RELEVAN terhadap ide pokok!", rows:["Kalimat 1: Olahraga pagi menyehatkan jantung", "Kalimat 2: Udara pagi masih segar", "Kalimat 3: Saya suka makan nasi goreng", "Kalimat 4: Olahraga meningkatkan stamina"], cols:["Relevan","Tidak Relevan"], ans:["Relevan","Relevan","Tidak Relevan","Relevan"] },
+{ id:31, cat:"Menulis", type:"pgk-cat", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 29: Ejaan dan Tanda Baca</div><p>(1) \"ibu pergi ke pasar.\" (2) \"Ibu pergi ke pasar.\" (3) \"Ibu Pergi Ke Pasar.\"</p></div>", q:"Klasifikasikan mana kalimat yang BENAR dan SALAH menurut EYD!", rows:["Kalimat 1", "Kalimat 2", "Kalimat 3"], cols:["Benar","Salah"], ans:["Salah","Benar","Salah"] },
+{ id:32, cat:"Menulis", type:"pgk-cat", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 30: Makna Kata \"Bunga\"</div><p>(1) Ayah menabung di bunga bank. (2) Ibu menanam bunga di taman. (3) Dia dianggap bunga desa di kampungnya.</p></div>", q:"Klasifikasikan makna DENOTATIF atau KONOTATIF untuk setiap kalimat!", rows:["Kalimat 1: Bunga bank", "Kalimat 2: Bunga taman", "Kalimat 3: Bunga desa"], cols:["Denotatif","Konotatif"], ans:["Konotatif","Denotatif","Konotatif"] },
+{ id:33, cat:"Menulis", type:"pgk-cat", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 31: Jenis Teks</div><p>(1) \"Rumah itu berwarna putih dengan taman luas di depan.\" (2) \"Menurut saya, pendidikan adalah kunci kesuksesan.\"</p></div>", q:"Klasifikasikan setiap kutipan sebagai Teks DESKRIPSI atau Teks EKSPOSISI!", rows:["Kutipan 1: Rumah berwarna putih", "Kutipan 2: Pendidikan kunci kesuksesan"], cols:["Teks Deskripsi","Teks Eksposisi"], ans:["Teks Deskripsi","Teks Eksposisi"] },
+{ id:34, cat:"Berbicara dan Mempresentasikan", type:"pgk-cat", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 32: Adaptasi Audiens</div><p>Situasi 1: Presentasi untuk teman sebaya. Situasi 2: Presentasi untuk guru dan kepala sekolah.</p></div>", q:"Klasifikasikan pilihan kata FORMAL atau NON-FORMAL sesuai audiens!", rows:["Situasi 1: Teman sebaya", "Situasi 2: Guru dan kepala sekolah"], cols:["Non-Formal","Formal"], ans:["Non-Formal","Formal"] },
+{ id:35, cat:"Menulis", type:"pgk-cat", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 33: Majas Personifikasi</div><p>(1) \"Angin membelai rambutku.\" (2) \"Dia berjalan ke sekolah.\" (3) \"Matahari tersenyum pagi ini.\"</p></div>", q:"Klasifikasikan mana yang menggunakan MAJAS PERSONIFIKASI dan mana KALIMAT BIASA!", rows:["Kalimat 1: Angin membelai", "Kalimat 2: Dia berjalan", "Kalimat 3: Matahari tersenyum"], cols:["Majas Personifikasi","Kalimat Biasa"], ans:["Majas Personifikasi","Kalimat Biasa","Majas Personifikasi"] },
+{ id:36, cat:"Membaca dan Memirsa", type:"pg", score:1, stim:`<div class='stimulus-box'><div class='stimulus-head'>Teks 34: Diagram Alur Daur Ulang</div><div class='visual-frame'>${getImg("diagram_daur_ulang", "Diagram Daur Ulang")}</div><p>Diagram di atas menunjukkan proses daur ulang sampah dari awal hingga menjadi produk baru. Proses ini terdiri dari empat tahapan utama yang harus dilalui secara berurutan. Tahap pertama adalah pengumpulan sampah dari sumbernya. Tahap kedua adalah pemilahan sampah berdasarkan jenisnya. Tahap ketiga adalah proses pengolahan sampah menjadi bahan baku. Tahap terakhir adalah pembuatan produk baru dari bahan daur ulang tersebut.</p></div>`, q:"Berdasarkan urutan logis diagram, langkah yang hilang pada kotak kuning adalah...", opt:["Kumpulkan", "Pilah", "Proseskan", "Produk"], ans:"Pilah" },
+{ id:37, cat:"Menyimak", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 35: Transkrip Percakapan Telepon</div><p>\"Halo, Bu? Ini Andi. Saya ingin memberitahu bahwa saya tidak bisa hadir di pertemuan besok karena sakit. Mohon maaf, Bu. Saya sudah minum obat dan akan istirahat. Terima kasih, Bu.\"</p></div>", q:"Tujuan utama panggilan telepon tersebut adalah...", opt:["Mengundang ibu ke pertemuan", "Memberitahu ketidakhadiran karena sakit", "Menanyakan jadwal pertemuan", "Meminta izin untuk sakit"], ans:"Memberitahu ketidakhadiran karena sakit" },
+{ id:38, cat:"Menulis", type:"pg", score:1, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 36: Dua Paragraf Terpisah</div><p>Paragraf 1: Olahraga sangat penting untuk kesehatan jantung dan paru-paru. Paragraf 2: Kita harus rutin berolahraga setiap hari minimal 30 menit.</p></div>", q:"Kalimat penghubung yang paling tepat untuk menyatukan kedua paragraf tersebut adalah...", opt:["Oleh karena itu,", "Namun,", "Tetapi,", "Sedangkan"], ans:"Oleh karena itu," },
+{ id:39, cat:"Berbicara dan Mempresentasikan", type:"pgk", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 37: Kasus Presentasi</div><p>Rina merasa gugup saat presentasi. Suaranya bergetar dan ia sering lupa isi materi. Apa strategi perbaikan yang tepat untuk presentasi berikutnya?</p></div>", q:"Pilih DUA strategi perbaikan yang tepat untuk presentasi berikutnya!", opt:["Berlatih lebih sering di depan cermin", "Menyiapkan catatan kecil sebagai pengingat", "Menghindari presentasi selamanya", "Berbicara sangat cepat agar cepat selesai"], ans:["Berlatih lebih sering di depan cermin", "Menyiapkan catatan kecil sebagai pengingat"] },
+{ id:40, cat:"Menulis", type:"pgk-cat", score:2, stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 38: Paragraf dengan Kesalahan</div><p>\"siswa yang rajin akan dapat nilai baik. mereka harus belajar setiap hari. guru memberikan tugas banyak.\"</p></div>", q:"Klasifikasikan setiap kesalahan sebagai EJAAAN, DIKSI, atau STRUKTUR!", rows:["\"siswa\" (huruf kapital)", "\"dapat\" (pilihan kata)", "\"guru memberikan tugas banyak\" (struktur)"], cols:["Ejaan","Diksi","Struktur"], ans:["Ejaan","Diksi","Struktur"] }
+];
+
+// ════════════════════════════════════════════════════════
+//  APP OBJECT
+// ════════════════════════════════════════════════════════
+const app = {
+    session: { nama:"", kelas:"", answers:{}, startTime:0 },
+    currIdx: 0, timerInt: null, _hasSavedSession: false,
+
+    init() { this.showSlide('pin'); try { if(localStorage.getItem(CONFIG.STORAGE_KEY)) this._hasSavedSession=true; } catch(e){} },
+
+    async checkPin() {
+        const inp=document.getElementById('inp-pin'), val=inp.value.trim();
+        if(!val) return;
+        const h=await hashPin(val);
+        if(h===CONFIG.PIN_HASH){ this.showSlide('login'); if(this._hasSavedSession) document.getElementById('resume-alert').style.display='block'; }
+        else { inp.classList.add('error'); document.getElementById('pin-err').style.display='block'; inp.value=''; setTimeout(()=>inp.classList.remove('error'),400); }
+    },
+
+    login() {
+        const n=document.getElementById('inpNama').value.trim(), k=document.getElementById('inpKelas').value;
+        if(!n||!k){alert("Harap isi nama lengkap dan pilih kelas!");return;}
+        this.session.nama=n; this.session.kelas=k; this.showSlide('rules');
+    },
+
+    resume() { try { this.session=JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY)); this.renderSidebar(); this.startExam(true); } catch(e){alert("Sesi tersimpan rusak. Silakan mulai ujian baru.");} },
+
+    startExam(isRes=false) {
+        if(!isRes){this.session.startTime=Date.now();this.save();}
+        document.getElementById('user-badge').innerText=this.session.nama;
+        document.getElementById('user-badge').style.display='block';
+        document.getElementById('sidebar').style.display='flex';
+        this.renderQuestions(); this.renderSidebar(); this.showSlide('quiz'); this.goToQ(0); this.startTimer();
+    },
+
+    showSlide(id) { document.querySelectorAll('.slide').forEach(e=>e.classList.remove('active')); document.getElementById('slide-'+id).classList.add('active'); },
+
+    renderQuestions() {
+        const box=document.getElementById('quiz-container'); box.innerHTML="";
+        QUESTIONS.forEach((q,i)=>{
+            let h=`<div id="q-item-${i}" class="question-item"><div class="tag-cat">${q.cat}</div>${q.stim||""}<div class="q-text">${i+1}. ${q.q}</div>`;
+            if(q.type==='pg') q.opt.forEach((o,oi)=>h+=`<label class="opt-label"><input type="radio" name="ans_${q.id}" value="${oi}" onchange="app.saveAns(${q.id},${oi})"> ${o}</label>`);
+            else if(q.type==='pgk'){
+                h+=`<p style="font-size:.82rem;color:#64748b;margin-bottom:10px;">☑ Boleh memilih lebih dari satu jawaban</p>`;
+                q.opt.forEach((o,oi)=>h+=`<label class="opt-label"><input type="checkbox" value="${oi}" onchange="app.saveMulti(${q.id},${oi})"> ${o}</label>`);
+            } else if(q.type==='pgk-cat'){
+                h+=`<div class="matrix-wrapper"><table class="matrix-table"><tr><th>Pernyataan</th>`;
+                q.cols.forEach(c=>h+=`<th>${c}</th>`); h+=`</tr>`;
+                q.rows.forEach((r,ri)=>{ h+=`<tr><td>${r}</td>`; q.cols.forEach(c=>h+=`<td><input type="radio" name="mx_${q.id}_${ri}" value="${c}" onchange="app.saveMx(${q.id},${ri},'${c}')"></td>`); h+=`</tr>`; });
+                h+=`</table></div>`;
+            }
+            h+=`</div>`; box.innerHTML+=h;
+        });
+    },
+
+    goToQ(idx) {
+        if(idx<0||idx>=QUESTIONS.length) return;
+        this.currIdx=idx;
+        const qs=document.getElementById('quiz-scroll'); if(qs) qs.scrollTop=0;
+        document.querySelectorAll('.question-item').forEach(e=>e.classList.remove('active-q'));
+        document.getElementById(`q-item-${idx}`).classList.add('active-q');
+        document.getElementById('q-indicator').innerText=`Soal ${idx+1} / 40`;
+        document.getElementById('btn-prev').disabled=(idx===0);
+        const nBtn=document.getElementById('btn-next');
+        if(idx===QUESTIONS.length-1){nBtn.innerText="Selesai";nBtn.onclick=()=>this.confirmFinish();nBtn.classList.add('btn-danger');}
+        else{nBtn.innerText="Selanjutnya";nBtn.onclick=()=>this.move(1);nBtn.classList.remove('btn-danger');}
+        this.restoreVisual(idx); this.updateSidebarUI();
+    },
+
+    move(step){this.goToQ(this.currIdx+step);},
+    saveAns(qid,v){this.session.answers[qid]=v;this.save();this.updateSidebarUI();},
+    saveMulti(qid,oi){let c=this.session.answers[qid]||[];if(c.includes(oi))c=c.filter(x=>x!==oi);else c.push(oi);this.session.answers[qid]=c;this.save();this.updateSidebarUI();},
+    saveMx(qid,ri,v){let c=this.session.answers[qid]||[];c[ri]=v;this.session.answers[qid]=c;this.save();this.updateSidebarUI();},
+    save(){try{localStorage.setItem(CONFIG.STORAGE_KEY,JSON.stringify(this.session));}catch(e){}},
+
+    renderSidebar(){const g=document.getElementById('nav-grid');g.innerHTML="";QUESTIONS.forEach((q,i)=>g.innerHTML+=`<div id="nav-num-${i}" class="nav-num" onclick="app.goToQ(${i})">${i+1}</div>`);},
+
+    checkFilled(qid){const v=this.session.answers[qid];if(v===undefined||v===null)return false;if(Array.isArray(v))return v.filter(x=>x!==undefined&&x!==null).length>0;return true;},
+
+    updateSidebarUI(){QUESTIONS.forEach((q,i)=>{const el=document.getElementById(`nav-num-${i}`);if(!el)return;if(i===this.currIdx)el.classList.add('current');else el.classList.remove('current');if(this.checkFilled(q.id))el.classList.add('filled');else el.classList.remove('filled');});},
+
+    restoreVisual(idx){
+        const q=QUESTIONS[idx],ans=this.session.answers[q.id];
+        if(ans===undefined||ans===null)return;
+        if(q.type==='pg'){const el=document.querySelector(`input[name="ans_${q.id}"][value="${ans}"]`);if(el)el.checked=true;}
+        else if(q.type==='pgk'&&Array.isArray(ans))ans.forEach(v=>{const el=document.querySelector(`#q-item-${idx} input[value="${v}"]`);if(el)el.checked=true;});
+        else if(q.type==='pgk-cat'&&Array.isArray(ans))ans.forEach((v,ri)=>{if(!v)return;const el=document.querySelector(`input[name="mx_${q.id}_${ri}"][value="${v}"]`);if(el)el.checked=true;});
+    },
+
+    startTimer(){
+        clearInterval(this.timerInt);
+        this.timerInt=setInterval(()=>{
+            const rem=CONFIG.DURATION-Math.floor((Date.now()-this.session.startTime)/1000);
+            if(rem<=0){clearInterval(this.timerInt);this.submitExam();return;}
+            document.getElementById('timer-display').innerText=`${Math.floor(rem/60).toString().padStart(2,'0')}:${(rem%60).toString().padStart(2,'0')}`;
+        },1000);
+    },
+
+    confirmFinish(){document.getElementById('modal-confirm').style.display='flex';},
+
+    submitExam(){
+        document.getElementById('modal-confirm').style.display='none';
+        document.getElementById('modal-loading').style.display='flex';
+        clearInterval(this.timerInt);
+
+        const stats={};let totS=0,totM=0;
+        QUESTIONS.forEach(q=>{
+            if(!stats[q.cat])stats[q.cat]={s:0,m:0};
+            stats[q.cat].m+=q.score; totM+=q.score;
+            const u=this.session.answers[q.id]; let pt=0;
+            if(u!==undefined&&u!==null){
+                if(q.type==='pg'){if(u==q.opt.indexOf(q.ans))pt=q.score;}
+                else if(q.type==='pgk'&&Array.isArray(u)&&Array.isArray(q.ans)){
+                    if(JSON.stringify(u.map(i=>q.opt[i]).sort())===JSON.stringify([...q.ans].sort()))pt=q.score;
+                } else if(q.type==='pgk-cat'&&Array.isArray(u)){
+                    let m=0; q.ans.forEach((k,i)=>{if(u[i]===k)m++;});
+                    pt=(m/q.rows.length)*q.score;
+                }
+            }
+            stats[q.cat].s+=pt; totS+=pt;
+        });
+
+        const final=Math.round((totS/totM)*100);
+        let summ={},cht="",nts=[];
+        Object.keys(stats).forEach(c=>{
+            const p=stats[c].m>0?Math.round((stats[c].s/stats[c].m)*100):0;
+            summ[c]={skor:p,tuntas:p>=70,label:p>=70?"Tuntas":"Perlu Bimbingan"};
+            if(p<70)nts.push(c);
+            cht+=`<div class="chart-row"><div class="chart-lbl">${c}</div><div class="chart-track"><div class="chart-fill" style="width:${p}%;background:${p>=70?'#16a34a':'#dc2626'}"></div></div><div class="chart-val">${p}%</div></div>`;
+        });
+
+        const desc=nts.length===0?"Selamat! Tuntas semua elemen.":"Perlu belajar lagi di: "+nts.join(", ");
+        this.showSlide('result');
+        document.getElementById('modal-loading').style.display='none';
+        document.getElementById('result-content').innerHTML=`<h3>Nilai Akhir: <span style="color:var(--primary);font-size:2.5rem;">${final}</span></h3><div style="background:#eff6ff;padding:15px;border-radius:8px;margin-bottom:20px;">${desc}</div><h4>Capaian per Elemen:</h4>${cht}`;
+
+        fetch(CONFIG.SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},
+            body:JSON.stringify({action:"submit_exam",mapel:"Bahasa Indonesia",nama:this.session.nama,kelas:this.session.kelas,skor:final,deskripsi:desc,jawaban:this.session.answers,ringkasanNilai:summ})
+        }).then(()=>{try{localStorage.removeItem(CONFIG.STORAGE_KEY);}catch(e){}});
+    }
+};
+window.onload=()=>app.init();
+</script>
+</body>
+</html>
