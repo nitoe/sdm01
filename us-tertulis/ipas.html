@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujian Sekolah Tertulis – IPAS · SD Muhammadiyah 01 Kukusan</title>
+    <style>
+        :root {
+            --primary: #0e7490;
+            --primary-light: #ecfeff;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --text: #334155;
+            --bg: #f0fbff;
+            --border: #cbd5e1;
+        }
+        * { box-sizing: border-box; outline: none; }
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; }
+        .app-container { display: flex; flex-direction: column; height: 100%; width: 100%; background: white; }
+        .header { height: 64px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); z-index: 50; flex-shrink: 0; }
+        .header-title { font-weight: 700; font-size: 1.2rem; }
+        .timer-box { background: rgba(255,255,255,0.15); padding: 6px 16px; border-radius: 6px; font-weight: 700; font-family: monospace; font-size: 1.25rem; border: 1px solid rgba(255,255,255,0.2); }
+        .workspace { display: flex; flex: 1; overflow: hidden; position: relative; }
+        .main-stage { flex: 1; position: relative; background: var(--bg); display: flex; flex-direction: column; overflow: hidden; }
+        .slide { display: none !important; width: 100%; height: 100%; }
+        .slide.active { display: flex !important; flex-direction: column; animation: fadeIn 0.4s ease; }
+        .center-content-wrapper { width: 100%; max-width: 800px; margin: 0 auto; padding: 20px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .card { background: white; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); padding: 32px; margin-bottom: 20px; border-top: 5px solid var(--primary); }
+        .quiz-scroll-area { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 80px; width: 100%; max-width: 900px; margin: 0 auto; }
+        .nav-bar-fixed { flex-shrink: 0; background: white; padding: 16px 24px; border-top: 1px solid #e2e8f0; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; z-index: 40; }
+        .question-item { display: none; }
+        .question-item.active-q { display: block; animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(15px); } to { opacity: 1; transform: translateX(0); } }
+        .stimulus-box { background: #ffffff; border: 1px solid #e2e8f0; border-left: 5px solid var(--primary); padding: 20px; margin-bottom: 24px; border-radius: 8px; }
+        .stimulus-head { font-weight: 800; color: var(--primary); border-bottom: 2px dashed #e2e8f0; padding-bottom: 10px; margin-bottom: 15px; font-size: 1.1rem; text-transform: uppercase; }
+        .visual-frame { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; display: flex; justify-content: center; align-items: center; margin: 15px 0; overflow: hidden; }
+        .q-text { font-size: 1.15rem; font-weight: 600; color: #1e293b; margin-bottom: 20px; line-height: 1.6; }
+        .tag-cat { display: inline-block; font-size: 0.75rem; background: #cffafe; color: #0e7490; padding: 4px 10px; border-radius: 20px; font-weight: bold; margin-bottom: 10px; }
+        .opt-label { display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: white; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 12px; cursor: pointer; transition: all 0.2s; font-size: 1rem; color: #475569; }
+        .opt-label:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+        .opt-label input { margin-top: 4px; transform: scale(1.2); flex-shrink: 0; }
+        .matrix-table { width: 100%; border-collapse: collapse; margin-top: 10px; min-width: 320px; }
+        .matrix-table th, .matrix-table td { border: 1px solid #e2e8f0; padding: 12px; }
+        .matrix-table th { background: #f1f5f9; text-align: center; }
+        .matrix-table td { text-align: center; }
+        .matrix-table td:first-child { text-align: left; font-weight: 500; }
+        .side-panel { width: 300px; background: white; border-left: 1px solid #e2e8f0; display: flex; flex-direction: column; flex-shrink: 0; z-index: 40; }
+        .nav-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 20px; overflow-y: auto; }
+        .nav-num { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; color: #64748b; transition: all 0.2s; }
+        .nav-num:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+        .nav-num.current { border: 2px solid var(--primary); transform: scale(1.1); box-shadow: 0 2px 8px rgba(0,0,0,0.15); color: var(--primary); }
+        .nav-num.filled { background-color: var(--success) !important; color: white !important; border-color: var(--success) !important; }
+        .nav-num.filled.current { border: 3px solid #0e7490 !important; }
+        input[type="text"], select { width: 100%; padding: 14px; margin: 8px 0 20px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 1rem; display: inline-flex; align-items: center; gap: 8px; justify-content: center; }
+        .btn:hover { background: #0a5f73; }
+        .btn:disabled { background: #94a3b8; cursor: not-allowed; }
+        .btn-outline { background: white; border: 1px solid #cbd5e1; color: #475569; }
+        .btn-outline:hover { background: #f8fafc; }
+        .btn-danger { background: var(--danger); }
+        .chart-row { display: flex; align-items: center; margin-bottom: 12px; }
+        .chart-lbl { width: 200px; font-size: 0.85rem; font-weight: 600; text-align: right; padding-right: 15px; flex-shrink: 0; }
+        .chart-track { flex: 1; background: #e2e8f0; height: 16px; border-radius: 10px; overflow: hidden; }
+        .chart-fill { height: 100%; transition: width 1s ease-out; }
+        .chart-val { width: 50px; padding-left: 10px; font-weight: 700; }
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 100; }
+        .modal { background: white; padding: 30px; border-radius: 16px; width: 90%; max-width: 420px; text-align: center; }
+        .pin-input-wrap { position: relative; margin-bottom: 10px; }
+        .pin-input-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; pointer-events: none; }
+        #inp-pin { width: 100%; padding: 14px 14px 14px 44px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 1.1rem; font-weight: 700; letter-spacing: .15em; font-family: monospace; color: var(--text); transition: border-color .2s; }
+        #inp-pin:focus { border-color: var(--primary); }
+        #inp-pin.error { border-color: #dc2626; animation: shake .3s ease; }
+        #pin-err { font-size: .82rem; color: #dc2626; font-weight: 600; display: none; margin-bottom: 14px; }
+        .stimulus-img { max-width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+        .matrix-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+        @media (max-width: 768px) {
+            .workspace { flex-direction: column; }
+            .side-panel { width: 100%; height: auto; border-left: none; border-top: 1px solid #e2e8f0; order: 2; }
+            .nav-grid { max-height: 120px; padding: 10px; }
+            .chart-lbl { width: 130px; font-size: 0.78rem; }
+            .header-title { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <div class="header">
+        <div class="header-title">Ujian Sekolah – IPAS (Ilmu Pengetahuan Alam & Sosial)</div>
+        <div style="display:flex;align-items:center;gap:15px;">
+            <div id="user-badge" style="display:none;font-size:0.85rem;background:rgba(255,255,255,0.1);padding:5px 12px;border-radius:20px;">Siswa</div>
+            <div class="timer-box" id="timer-display">--:--</div>
+        </div>
+    </div>
+    <div class="workspace">
+        <div class="main-stage">
+
+            <!-- ① SLIDE PIN -->
+            <div id="slide-pin" class="slide active">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:420px;margin:0 auto;text-align:center;">
+                        <div style="font-size:2.5rem;margin-bottom:12px;">🔐</div>
+                        <h2 style="color:var(--primary);margin-top:0;">Masukkan PIN</h2>
+                        <p style="color:#64748b;margin-bottom:24px;font-size:.95rem;">
+                            Masukkan PIN dari guru untuk membuka<br>
+                            <strong>Ujian Sekolah Tertulis IPAS</strong>
+                        </p>
+                        <div class="pin-input-wrap">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <input type="password" id="inp-pin" placeholder="PIN ujian…" maxlength="30" autocomplete="off" onkeydown="if(event.key==='Enter') app.checkPin()">
+                        </div>
+                        <div id="pin-err">❌ PIN salah. Coba lagi.</div>
+                        <button class="btn" style="width:100%" onclick="app.checkPin()">Buka Ujian →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ② SLIDE LOGIN -->
+            <div id="slide-login" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:450px;margin:0 auto;text-align:center;">
+                        <h2 style="color:var(--primary);margin-top:0;">Selamat Datang</h2>
+                        <p style="color:#64748b;margin-bottom:30px;">Ujian Sekolah Tertulis – IPAS (Fase C)</p>
+                        <div style="text-align:left;">
+                            <label>Nama Lengkap</label>
+                            <input type="text" id="inpNama" placeholder="Masukkan nama lengkap...">
+                            <label>Kelas</label>
+                            <select id="inpKelas">
+                                <option value="">-- Pilih Kelas --</option>
+                                <option value="6A">Kelas 6A</option>
+                                <option value="6B">Kelas 6B</option>
+                            </select>
+                        </div>
+                        <button class="btn" style="width:100%" onclick="app.login()">Masuk Ujian</button>
+                        <div id="resume-alert" style="display:none;margin-top:20px;padding:10px;background:#ecfeff;color:#0e7490;border-radius:8px;cursor:pointer;font-size:0.9rem;" onclick="app.resume()">
+                            🔄 <b>Sesi Tersimpan Ditemukan</b><br>Klik untuk melanjutkan
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ③ SLIDE PETUNJUK -->
+            <div id="slide-rules" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:700px;margin:0 auto;">
+                        <h2 style="margin-top:0;border-bottom:1px solid #e2e8f0;padding-bottom:15px;color:var(--primary);">Petunjuk Pengerjaan</h2>
+                        <div style="line-height:1.8;color:#334155;">
+                            <p>1. <strong>Waktu:</strong> Waktu pengerjaan adalah <strong>90 Menit</strong>. Ujian dikumpulkan otomatis saat waktu habis.</p>
+                            <p>2. <strong>Soal:</strong> Terdapat <strong>40 butir soal</strong> — PG Tunggal, PG Kompleks, dan PG Kategori.</p>
+                            <p>3. <strong>Navigasi:</strong> Gunakan panel kanan untuk berpindah antar soal. Soal yang sudah dijawab berwarna hijau.</p>
+                            <p>4. <strong>Petunjuk Soal:</strong> Baca setiap stimulus data, gambar, atau kasus dengan cermat sebelum menjawab.</p>
+                            <p>5. <strong>Dilarang:</strong> Menutup atau me-refresh halaman selama ujian berlangsung.</p>
+                        </div>
+                        <div style="margin-top:30px;text-align:right;">
+                            <button class="btn" onclick="app.startExam()">Mulai Mengerjakan &#8594;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ④ SLIDE KUIS -->
+            <div id="slide-quiz" class="slide">
+                <div id="quiz-scroll" class="quiz-scroll-area">
+                    <div id="quiz-container"></div>
+                </div>
+                <div class="nav-bar-fixed">
+                    <button class="btn btn-outline" id="btn-prev" onclick="app.move(-1)">&#8592; Sebelumnya</button>
+                    <span id="q-indicator" style="font-weight:700;color:var(--primary);">Soal 1 / 40</span>
+                    <button class="btn" id="btn-next" onclick="app.move(1)">Selanjutnya</button>
+                </div>
+            </div>
+
+            <!-- ⑤ SLIDE HASIL -->
+            <div id="slide-result" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:600px;margin:0 auto;text-align:center;">
+                        <div style="font-size:4rem;margin-bottom:10px;">🎉</div>
+                        <h2 style="color:var(--primary);margin:0;">Ujian Selesai!</h2>
+                        <p style="color:#64748b;">Jawaban Anda telah kami terima.</p>
+                        <div id="result-content" style="text-align:left;margin-top:30px;border-top:1px solid #e2e8f0;padding-top:20px;">
+                            <p style="text-align:center;color:#64748b;">Sedang memproses nilai...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="side-panel" id="sidebar" style="display:none;">
+            <div style="padding:15px 20px;font-weight:700;color:#334155;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;">
+                <span>Navigasi Soal</span>
+                <span style="font-size:0.8rem;background:#cffafe;color:#0e7490;padding:2px 8px;border-radius:10px;">40 Butir</span>
+            </div>
+            <div class="nav-grid" id="nav-grid"></div>
+            <div style="padding:20px;border-top:1px solid #e2e8f0;margin-top:auto;background:#f8fafc;">
+                <button class="btn btn-danger" style="width:100%" onclick="app.confirmFinish()">Selesai Ujian</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL KONFIRMASI -->
+<div id="modal-confirm" class="overlay">
+    <div class="modal">
+        <h3 style="color:var(--primary);">Konfirmasi Pengumpulan</h3>
+        <p>Yakin ingin mengakhiri dan mengumpulkan ujian ini?</p>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:25px;">
+            <button class="btn btn-outline" onclick="document.getElementById('modal-confirm').style.display='none'">Cek Lagi</button>
+            <button class="btn btn-danger" onclick="app.submitExam()">Ya, Kumpulkan</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL LOADING -->
+<div id="modal-loading" class="overlay">
+    <div class="modal">
+        <h3 style="color:var(--primary);">Sedang Mengirim…</h3>
+        <div style="width:40px;height:40px;border:4px solid #e2e8f0;border-top:4px solid var(--primary);border-radius:50%;margin:10px auto;animation:spin 1s linear infinite;"></div>
+        <p>Mohon jangan tutup halaman ini.</p>
+    </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  KONFIGURASI
+//  Untuk mengganti PIN, jalankan di browser console:
+//    hashPin("PIN_BARU").then(h => console.log(h))
+// ════════════════════════════════════════════════════════
+const CONFIG = {
+    SCRIPT_URL:  "https://script.google.com/macros/s/AKfycbwJveJtAISKhveIQ4wspAaeaUKLrqB_IBY55qhOqDOl649QSjqtBa2hYhOrx7UNs0GbdA/exec",
+    STORAGE_KEY: "UST_2026_IPAS",
+    DURATION:    90 * 60,
+    PIN_HASH:    "5df48b380a13af17"
+};
+
+async function hashPin(pin) {
+    const enc = new TextEncoder().encode(pin.trim().toLowerCase());
+    const buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('').slice(0, 16);
+}
+window.hashPin = hashPin;
+
+// ── Aset Gambar ─────────────────────────────────────────
+// Isi URL di antara tanda "" setelah gambar selesai dibuat dan di-upload.
+const IMAGE_ASSETS = {
+    // ── Q2:  Rantai makanan ekosistem sawah — REUSE dari uji-coba ────────
+    "ekosistem_sawah":        "https://i.ibb.co.com/KxQ6GVw5/01-ekosistem-sawah.png",
+
+    // ── Q6:  Peta Indonesia – X di Sulawesi Tengah — BUAT BARU ───────
+    "peta_indonesia_provinsi": "https://i.ibb.co.com/hxhTW4gM/peta-indonesia-provinsi.png",
+
+    // ── Q12: Lingkungan sekolah biotik/abiotik — REUSE dari uji-coba ──
+    "lingkungan_sekolah":     "https://i.ibb.co.com/RTkHhV2m/07-lingkungan-sekolah.png",
+
+    // ── Q21: Peta 3 wilayah geografis — REUSE dari uji-coba ───────────
+    "peta_kondisi_alam":      "https://i.ibb.co.com/Kc1Jdk6c/12-kenampakan-geografis.png",
+
+    // ── Q22: Monumen pahlawan daerah — REUSE dari uji-coba ────────────
+    "monumen_pahlawan":       "https://i.ibb.co.com/PvhyyzSm/08-monumen-pahlawan.png",
+
+    // ── Q28: Alat musik (gitar/seruling/drum/rebab) — BUAT BARU ───────
+    "alat_musik_bunyi":       "https://i.ibb.co.com/spHpjxm8/alat-musik-bunyi.png",
+
+    // ── Q31: Sistem organ + diafragma — BUAT BARU ─────────────────────
+    "sistem_organ_tubuh":     "https://i.ibb.co.com/zT9hwmqy/sistem-organ-tubuh.png",
+
+    // ── Q35: Tata surya + label Sabuk Asteroid — BUAT BARU ────────────
+    "tata_surya_planet":      "https://i.ibb.co.com/1YXH2vVn/tata-surya-planet.png",
+
+    // ── Q39: Keris/Prasasti/Buku catatan/Foto — BUAT BARU ─────────────
+    "sumber_sejarah_artefak": "https://i.ibb.co.com/TM5dZR2m/sumber-sejarah-artefak.png"
+};
+
+function getImg(key, alt = "Ilustrasi Soal") {
+    const url = IMAGE_ASSETS[key];
+    if (!url) return `<div style="background:#fef3c7;padding:15px;border-radius:8px;text-align:center;border:1px solid #f59e0b;">⚠️ Gambar belum tersedia — silakan isi URL pada IMAGE_ASSETS["${key}"]</div>`;
+    return `<img src="${url}" alt="${alt}" class="stimulus-img" loading="eager">`;
+}
+
+// ════════════════════════════════════════════════════════
+//  BANK SOAL — 40 Butir
+//  Elemen: Pengetahuan IPAS | Keterampilan Proses
+// ════════════════════════════════════════════════════════
+const QUESTIONS = [
+
+// ─── SESI 1: SOAL 1–20 ────────────────────────────────────────────────────────
+
+// ── Soal 1–10: PG Tunggal ─────────────────────────────────────────────────────
+
+{   id:1, cat:"Pengetahuan IPAS", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Data Rekam Medis Pak Rudi</div>
+    <p>Pak Rudi (45 tahun) menjalani pemeriksaan kesehatan tahunan. Catatan medis menunjukkan: merokok 10 batang/hari selama 20 tahun, tidak pernah berolahraga, mengonsumsi makanan tinggi lemak jenuh hampir setiap hari, tekanan darah 155/95 mmHg (di atas normal), dan kadar kolesterol darah tinggi. Bandingkan dengan tetangganya, Pak Ahmad (47 tahun), yang berolahraga 3x seminggu, tidak merokok, dan memiliki tekanan darah normal.</p></div>`,
+    q:"Berdasarkan seluruh data rekam medis Pak Rudi, sistem organ yang paling berisiko mengalami kerusakan serius dalam jangka panjang adalah...",
+    opt:["Sistem pencernaan dan sistem ekskresi, karena pola makan tinggi lemak merusak organ pencernaan","Sistem pernapasan dan sistem peredaran darah, karena rokok merusak paru-paru dan kolesterol tinggi menyumbat pembuluh darah jantung","Sistem saraf dan sistem endokrin, karena stres kerja mempengaruhi hormon dan fungsi otak","Sistem kerangka dan sistem otot, karena kurang gerak menyebabkan tulang keropos"],
+    ans:"Sistem pernapasan dan sistem peredaran darah, karena rokok merusak paru-paru dan kolesterol tinggi menyumbat pembuluh darah jantung"
+},
+
+{   id:2, cat:"Pengetahuan IPAS", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Ekosistem Sawah dan Rantai Makanan</div>
+    <div class='visual-frame'>${getImg("ekosistem_sawah","Rantai Makanan Ekosistem Sawah")}</div>
+    <p>Data populasi ekosistem sawah sebelum dan sesudah perburuan: Padi (10.000 rumpun), Belalang (800 ekor), Tikus (500 → meningkat), Ular (200 → turun menjadi 20 ekor akibat perburuan liar), Elang (20 ekor). Rantai makanan: Padi → Belalang → Katak → Ular → Elang, dan Padi → Tikus → Ular → Elang.</p></div>`,
+    q:"Berdasarkan data penurunan populasi ular dari 200 menjadi 20 ekor, dampak yang paling tepat terhadap keseimbangan ekosistem sawah adalah...",
+    opt:["Populasi elang meningkat drastis karena tidak ada kompetitor di puncak rantai makanan","Populasi tikus meningkat tak terkendali sehingga mengancam hasil panen padi secara langsung","Populasi belalang menurun karena kehilangan predator alami mereka","Decomposer berkurang karena berkurangnya bangkai hewan di sawah"],
+    ans:"Populasi tikus meningkat tak terkendali sehingga mengancam hasil panen padi secara langsung"
+},
+
+{   id:3, cat:"Pengetahuan IPAS", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Fenomena Cahaya di Sekitar Kita</div>
+    <p>Perhatikan empat fenomena berikut: <br>(1) Pensil yang dicelupkan ke dalam gelas berisi air tampak patah/bengkok di bagian yang terendam. <br>(2) Setelah hujan, langit cerah menampilkan busur pelangi berwarna-warni. <br>(3) Saat berdiri di bawah lampu sorot di malam hari, bayangan tubuh terbentuk di lantai. <br>(4) Saat bercermin, wajah kita terlihat jelas di permukaan cermin datar.</p></div>`,
+    q:"Di antara keempat fenomena di atas, peristiwa yang secara khusus membuktikan bahwa cahaya memiliki sifat dapat DIPANTULKAN adalah...",
+    opt:["Fenomena (1), karena cahaya berbelok saat memasuki medium yang berbeda kerapatannya","Fenomena (2), karena tetesan air hujan memecah cahaya putih menjadi spektrum warna","Fenomena (3), karena cahaya merambat lurus sehingga membentuk bayangan gelap","Fenomena (4), karena cahaya dari wajah kita dipantulkan kembali oleh permukaan cermin"],
+    ans:"Fenomena (4), karena cahaya dari wajah kita dipantulkan kembali oleh permukaan cermin"
+},
+
+{   id:4, cat:"Pengetahuan IPAS", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Kondisi Geografis Desa Pesisir</div>
+    <p>Desa Angin Ribut terletak di pesisir Selat Madura. Data lingkungan: kecepatan angin rata-rata 7–9 m/s sepanjang tahun (termasuk kategori baik untuk turbin angin), pantai terbuka tanpa penghalang tinggi, jauh dari sungai besar untuk PLTA, jarang mendung (rata-rata 8 jam sinar matahari/hari). Pemerintah daerah mengalokasikan dana untuk membangun satu jenis pembangkit energi terbarukan.</p></div>`,
+    q:"Berdasarkan seluruh data kondisi geografis Desa Angin Ribut, sumber energi alternatif yang paling optimal dan efisien untuk dikembangkan adalah...",
+    opt:["Panel surya (PLTS), karena Indonesia dikenal sebagai negara tropis dengan sinar matahari melimpah","Pembangkit listrik tenaga angin (PLTB), karena potensi angin pesisir yang kuat, konsisten, dan sesuai spesifikasi turbin","Pembangkit listrik tenaga air (PLTA), karena desa pesisir selalu dekat dengan sumber air","Energi biomassa, karena sampah organik dari aktivitas nelayan dapat dimanfaatkan"],
+    ans:"Pembangkit listrik tenaga angin (PLTB), karena potensi angin pesisir yang kuat, konsisten, dan sesuai spesifikasi turbin"
+},
+
+{   id:5, cat:"Pengetahuan IPAS", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Perbedaan Waktu Dua Kota</div>
+    <p>Pada saat yang bersamaan: Jakarta (Zona Waktu WIB, UTC+7) menunjukkan pukul 12.00 siang dan matahari bersinar terik di atas kepala, sementara kota Los Angeles, Amerika Serikat (Zona Waktu PST, UTC-8) menunjukkan pukul 21.00 malam dan langit gelap gulita. Perbedaan ini terjadi setiap hari secara teratur dan berulang.</p></div>`,
+    q:"Fenomena perbedaan siang dan malam serta zona waktu antara Jakarta dan Los Angeles disebabkan oleh...",
+    opt:["Revolusi bumi mengelilingi matahari yang memerlukan waktu 365,25 hari per putaran","Rotasi bumi pada porosnya sendiri yang menyebabkan setiap bagian permukaan bumi silih berganti menghadap dan membelakangi matahari","Perbedaan jarak kota Jakarta dan Los Angeles dari garis khatulistiwa bumi","Pergerakan bulan yang menghalangi cahaya matahari ke sebagian permukaan bumi"],
+    ans:"Rotasi bumi pada porosnya sendiri yang menyebabkan setiap bagian permukaan bumi silih berganti menghadap dan membelakangi matahari"
+},
+
+{   id:6, cat:"Pengetahuan IPAS", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Identifikasi Provinsi pada Peta Indonesia</div>
+    <div class='visual-frame'>${getImg("peta_indonesia_provinsi","Peta Indonesia – Identifikasi Provinsi")}</div>
+    <p>Perhatikan peta Indonesia di atas. Sebuah huruf <strong>X</strong> menandai satu provinsi yang terletak di bagian tengah Pulau Sulawesi, berbatasan dengan Sulawesi Utara di utara, Sulawesi Selatan dan Sulawesi Barat di selatan, serta Teluk Tomini di bagian timurnya.</p></div>`,
+    q:"Berdasarkan deskripsi letak geografis dan penanda huruf X pada peta, provinsi yang dimaksud adalah...",
+    opt:["Sulawesi Utara","Sulawesi Tengah","Sulawesi Selatan","Gorontalo"],
+    ans:"Sulawesi Tengah"
+},
+
+{   id:7, cat:"Pengetahuan IPAS", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Perjuangan Ki Hajar Dewantara</div>
+    <p>Ki Hajar Dewantara (1889–1959) mendirikan Taman Siswa pada tahun 1922 sebagai bentuk perjuangan melawan penjajahan melalui jalur pendidikan. Beliau dipecat dari sekolah kolonial karena tulisan-tulisannya yang kritis, namun tidak menyerah — justru mendirikan sekolah sendiri. Ajarannya yang terkenal: <em>"Ing ngarsa sung tuladha, ing madya mangun karsa, tut wuri handayani"</em> (di depan memberi teladan, di tengah membangun semangat, di belakang mendorong maju).</p></div>`,
+    q:"Nilai perjuangan Ki Hajar Dewantara yang paling relevan dan langsung dapat diterapkan oleh siswa kelas 6 dalam menghadapi ujian sekolah adalah...",
+    opt:["Meninggalkan sekolah negeri dan mendirikan kelompok belajar mandiri tanpa guru","Berjuang keras dalam belajar karena pendidikan adalah kunci kemajuan bangsa, dan tidak menyerah meskipun soal terasa sulit","Menulis surat protes kepada kepala sekolah jika merasa soal ujian terlalu sulit","Bergantung sepenuhnya pada bantuan teman saat menghadapi kesulitan soal"],
+    ans:"Berjuang keras dalam belajar karena pendidikan adalah kunci kemajuan bangsa, dan tidak menyerah meskipun soal terasa sulit"
+},
+
+{   id:8, cat:"Pengetahuan IPAS", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Kearifan Lokal Dayak: Tembawang dan Adat Bunu</div>
+    <p>Masyarakat adat Dayak di Kalimantan Tengah menerapkan dua sistem kearifan lokal: (1) <strong>Tembawang</strong> — hutan adat yang dikelola keluarga turun-temurun dengan larangan membabat habis dan kewajiban menjaga keanekaragaman tanaman, dan (2) <strong>Adat Bunu</strong> — aturan adat yang mewajibkan menanam minimal 5 pohon baru untuk setiap 1 pohon yang ditebang. Sistem ini telah berlangsung ratusan tahun sebelum konsep "pembangunan berkelanjutan" dikenal secara global.</p></div>`,
+    q:"Dampak positif jangka panjang dari penerapan kedua sistem kearifan lokal tersebut terhadap keseimbangan ekosistem hutan adalah...",
+    opt:["Mengurangi keanekaragaman hayati karena hutan dipenuhi satu jenis pohon buah yang sama","Mempertahankan tutupan hutan dan keanekaragaman hayati karena penebangan diimbangi penanaman berlipat","Meningkatkan produksi kayu komersial sehingga mendorong pertumbuhan ekonomi daerah","Mencegah bencana alam hanya di wilayah adat saja, tidak berpengaruh di luar wilayah tersebut"],
+    ans:"Mempertahankan tutupan hutan dan keanekaragaman hayati karena penebangan diimbangi penanaman berlipat"
+},
+
+{   id:9, cat:"Pengetahuan IPAS", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Aktivitas Ekonomi Ibu Sari dan Pak Joko</div>
+    <p>Ibu Sari seorang penjahit profesional: ia membeli kain dari toko, memotong, dan menjahitnya menjadi pakaian jadi sesuai pesanan pelanggan. Pak Joko bekerja sebagai pengemudi truk: setiap hari ia mengangkut sayuran segar dari petani di Lembang, Jawa Barat ke pasar-pasar besar di Jakarta. Pak Joko tidak mengubah atau mengolah sayuran tersebut — hanya memastikan sayuran sampai ke tujuan dalam kondisi baik.</p></div>`,
+    q:"Berdasarkan aktivitas masing-masing, kegiatan ekonomi Pak Joko paling tepat dikategorikan sebagai...",
+    opt:["Produksi, karena ia menghasilkan nilai tambah dengan menjaga kualitas sayuran selama perjalanan","Distribusi, karena ia memindahkan barang dari tempat produsen ke tempat konsumen tanpa mengubah wujudnya","Konsumsi, karena ia menggunakan bahan bakar dan tenaga untuk menjalankan truknya","Investasi, karena kepemilikan truk adalah aset yang menghasilkan pendapatan"],
+    ans:"Distribusi, karena ia memindahkan barang dari tempat produsen ke tempat konsumen tanpa mengubah wujudnya"
+},
+
+{   id:10, cat:"Keterampilan Proses", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Data Eksperimen: Pengaruh Jenis Pupuk terhadap Pertumbuhan Tanaman Kacang Hijau</div>
+    <div class='matrix-wrapper'>
+    <table class='matrix-table'>
+      <tr><th>Perlakuan</th><th>Tinggi Minggu 1 (cm)</th><th>Tinggi Minggu 2 (cm)</th><th>Tinggi Minggu 4 (cm)</th><th>Hasil Panen (gram)</th></tr>
+      <tr><td>Pupuk Organik</td><td>4</td><td>13</td><td>27</td><td>320</td></tr>
+      <tr><td>Pupuk Anorganik</td><td>5</td><td>16</td><td>25</td><td>280</td></tr>
+      <tr><td>Pupuk Organik+Anorganik</td><td>4</td><td>15</td><td>31</td><td>380</td></tr>
+      <tr><td>Tanpa Pupuk (Kontrol)</td><td>3</td><td>7</td><td>12</td><td>110</td></tr>
+    </table>
+    </div></div>`,
+    q:"Berdasarkan seluruh data dalam tabel di atas, kesimpulan yang paling tepat dan didukung oleh data adalah...",
+    opt:["Pupuk anorganik adalah yang paling efektif karena menunjukkan pertumbuhan tertinggi pada Minggu 1 dan 2","Kombinasi pupuk organik dan anorganik menghasilkan pertumbuhan tanaman tertinggi sekaligus panen terbesar dibanding perlakuan lainnya","Pupuk organik lebih baik dari pupuk anorganik dalam semua aspek pertumbuhan dan hasil panen","Tanaman tanpa pupuk tidak dapat menghasilkan panen sama sekali karena tidak ada pertumbuhan"],
+    ans:"Kombinasi pupuk organik dan anorganik menghasilkan pertumbuhan tanaman tertinggi sekaligus panen terbesar dibanding perlakuan lainnya"
+},
+
+// ── Soal 11–16: PG Kompleks ───────────────────────────────────────────────────
+
+{   id:11, cat:"Pengetahuan IPAS", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Penyakit Menular di Sekolah</div>
+    <p>Tiga penyakit yang paling sering menyebar di lingkungan sekolah adalah: (1) <strong>Flu/Influenza</strong> — menular melalui droplet udara saat batuk/bersin, (2) <strong>ISPA</strong> (Infeksi Saluran Pernapasan Atas) — menular lewat udara dan kontak langsung, (3) <strong>Diare</strong> — menular melalui makanan/minuman yang terkontaminasi bakteri atau virus. Ketiga penyakit ini dapat dicegah dengan perilaku hidup bersih dan sehat yang konsisten.</p></div>`,
+    q:"Pilih LEBIH DARI SATU perilaku yang secara langsung dan paling efektif mencegah penularan ketiga penyakit tersebut!",
+    opt:["Mencuci tangan dengan sabun mengalir sebelum makan, setelah ke toilet, dan setelah bersin","Menutup mulut dan hidung dengan tisu atau siku saat batuk atau bersin di tempat umum","Berolahraga rutin 3 kali seminggu untuk menjaga kebugaran fisik","Mengonsumsi suplemen vitamin setiap pagi sebelum berangkat sekolah"],
+    ans:["Mencuci tangan dengan sabun mengalir sebelum makan, setelah ke toilet, dan setelah bersin","Menutup mulut dan hidung dengan tisu atau siku saat batuk atau bersin di tempat umum"]
+},
+
+{   id:12, cat:"Pengetahuan IPAS", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Komponen di Lingkungan Sekolah</div>
+    <div class='visual-frame'>${getImg("lingkungan_sekolah","Komponen Biotik dan Abiotik di Lingkungan Sekolah")}</div>
+    <p>Gambar di atas menampilkan berbagai komponen yang ditemukan di lingkungan SD Muhammadiyah 01 Kukusan, antara lain: pohon mangga besar di halaman, batu hias, cacing tanah di kebun, kolam air, siswa yang sedang bermain, dan udara.</p></div>`,
+    q:"Berdasarkan gambar tersebut, pilih LEBIH DARI SATU komponen yang termasuk komponen BIOTIK (makhluk hidup)!",
+    opt:["Pohon mangga besar di halaman sekolah","Batu hias taman yang ditata rapi","Cacing tanah yang ditemukan di kebun sekolah","Kolam air di sudut taman"],
+    ans:["Pohon mangga besar di halaman sekolah","Cacing tanah yang ditemukan di kebun sekolah"]
+},
+
+{   id:13, cat:"Pengetahuan IPAS", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Lima Percobaan Gelombang Bunyi</div>
+    <p>Lima percobaan bunyi dilakukan oleh kelompok siswa: <br>(1) Menempelkan telinga ke ujung meja kayu, lalu ujung meja lainnya diketuk — bunyi terdengar jelas. <br>(2) Berenang di kolam renang dan mendengar ketukan pada dinding kolam di dalam air — bunyi terdengar. <br>(3) Berteriak di lapangan terbuka — suara terdengar memantul dari gedung bertingkat yang jauh. <br>(4) Mendengar musik keras dari speaker di ruangan sebelah melalui dinding bata. <br>(5) Dua siswa berkomunikasi menggunakan telepon kaleng yang dihubungkan benang terentang.</p></div>`,
+    q:"Pilih LEBIH DARI SATU percobaan yang KHUSUS membuktikan bahwa gelombang bunyi dapat merambat melalui benda PADAT!",
+    opt:["Percobaan (1): bunyi merambat melalui kayu meja yang padat","Percobaan (2): bunyi merambat melalui air kolam renang","Percobaan (3): bunyi merambat melalui udara kemudian dipantulkan gedung","Percobaan (5): bunyi merambat melalui benang yang terentang"],
+    ans:["Percobaan (1): bunyi merambat melalui kayu meja yang padat","Percobaan (5): bunyi merambat melalui benang yang terentang"]
+},
+
+{   id:14, cat:"Pengetahuan IPAS", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Program Hemat Energi Keluarga</div>
+    <p>Keluarga Pak Budi menerima tagihan listrik Rp 850.000/bulan — lebih tinggi dari rata-rata tetangga. Mereka berdiskusi untuk mengidentifikasi kebiasaan yang perlu diubah. Data penggunaan: AC menyala 12 jam/hari (konsumsi terbesar), lampu pijar 60W di 5 ruangan (hidup terus menerus), charger laptop dan HP dibiarkan tertancap 24 jam, dan mesin cuci digunakan setiap hari untuk jumlah pakaian sedikit.</p></div>`,
+    q:"Pilih LEBIH DARI SATU kebiasaan baru yang akan memberikan penghematan energi listrik paling signifikan!",
+    opt:["Mengganti seluruh lampu pijar 60W dengan lampu LED 9W yang setara terangnya","Mencabut charger laptop dan HP dari stopkontak ketika tidak digunakan (mencegah phantom load)","Mengatur suhu AC lebih tinggi (26–27°C) dan mematikan saat ruangan sudah dingin","Mengganti warna cat dinding rumah menjadi warna putih agar ruangan terasa lebih terang"],
+    ans:["Mengganti seluruh lampu pijar 60W dengan lampu LED 9W yang setara terangnya","Mencabut charger laptop dan HP dari stopkontak ketika tidak digunakan (mencegah phantom load)","Mengatur suhu AC lebih tinggi (26–27°C) dan mematikan saat ruangan sudah dingin"]
+},
+
+{   id:15, cat:"Pengetahuan IPAS", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Berbagai Fenomena Astronomi</div>
+    <p>Fenomena astronomi yang diamati manusia: <br>(1) Perbedaan zona waktu antarnegara (Indonesia WIB/WITA/WIT, Amerika PST/EST). <br>(2) Matahari tampak bergerak dari timur ke barat setiap harinya. <br>(3) Indonesia mengalami musim hujan dan musim kemarau yang berganti setiap tahun. <br>(4) Beberapa belahan bumi mengalami perbedaan panjang siang dan malam tergantung musim. <br>(5) Tokyo, Jepang mengalami malam ketika New York, Amerika sedang siang hari.</p></div>`,
+    q:"Pilih LEBIH DARI SATU fenomena yang disebabkan oleh ROTASI bumi pada porosnya!",
+    opt:["Fenomena (1): perbedaan zona waktu antarnegara","Fenomena (2): gerak semu harian matahari dari timur ke barat","Fenomena (3): pergantian musim hujan dan kemarau di Indonesia","Fenomena (5): perbedaan siang-malam antara Tokyo dan New York"],
+    ans:["Fenomena (1): perbedaan zona waktu antarnegara","Fenomena (2): gerak semu harian matahari dari timur ke barat","Fenomena (5): perbedaan siang-malam antara Tokyo dan New York"]
+},
+
+{   id:16, cat:"Keterampilan Proses", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Investigasi: Tanaman Layu Meskipun Disiram</div>
+    <p>Budi memiliki dua pot tanaman serupa: Pot A di dekat jendela (cukup cahaya, tanah gembur) — tumbuh sehat. Pot B di dalam lemari (gelap, tidak ada sirkulasi udara) — disiram sama banyaknya dengan Pot A, tetapi setelah 2 minggu daun menguning dan layu. Budi bingung karena sudah menyiram secara rutin namun tanaman tetap layu.</p></div>`,
+    q:"Pilih LEBIH DARI SATU pertanyaan investigasi yang tepat dan relevan untuk menyelidiki penyebab layu pada Pot B!",
+    opt:["Apakah ketiadaan cahaya menghalangi tanaman melakukan fotosintesis untuk menghasilkan energi?","Apakah sirkulasi udara yang sangat terbatas di dalam lemari mengakibatkan kadar CO₂ terlalu tinggi bagi tanaman?","Apakah warna pot Pot B mempengaruhi kemampuan tanaman menyerap air?","Apakah merk pupuk yang digunakan berbeda antara Pot A dan Pot B?"],
+    ans:["Apakah ketiadaan cahaya menghalangi tanaman melakukan fotosintesis untuk menghasilkan energi?","Apakah sirkulasi udara yang sangat terbatas di dalam lemari mengakibatkan kadar CO₂ terlalu tinggi bagi tanaman?"]
+},
+
+// ── Soal 17–20: PG Kategori ───────────────────────────────────────────────────
+
+{   id:17, cat:"Pengetahuan IPAS", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Klasifikasi Sumber Energi</div>
+    <p>Indonesia memiliki beragam sumber energi yang dimanfaatkan untuk kebutuhan listrik dan industri. Sumber energi dibedakan menjadi energi <strong>Terbarukan</strong> (dapat diperbaharui secara alami dalam waktu singkat) dan <strong>Tidak Terbarukan</strong> (terbentuk selama jutaan tahun dan akan habis bila terus dieksploitasi).</p></div>`,
+    q:"Klasifikasikan setiap sumber energi berikut ke dalam kategori yang tepat!",
+    rows:["Gas alam (LPG/LNG)","Energi panas bumi (Geothermal)","Minyak bumi (Petroleum)"],
+    cols:["Energi Terbarukan","Energi Tidak Terbarukan"],
+    ans:["Energi Tidak Terbarukan","Energi Terbarukan","Energi Tidak Terbarukan"]
+},
+
+{   id:18, cat:"Pengetahuan IPAS", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Tiga Jenis Kegiatan Ekonomi</div>
+    <p>Kegiatan ekonomi masyarakat dibedakan menjadi tiga jenis: <strong>Produksi</strong> (kegiatan menghasilkan barang/jasa), <strong>Distribusi</strong> (kegiatan menyalurkan/mengirimkan barang dari produsen ke konsumen), dan <strong>Konsumsi</strong> (kegiatan menggunakan/menghabiskan barang/jasa).</p></div>`,
+    q:"Klasifikasikan setiap aktivitas berikut ke dalam jenis kegiatan ekonomi yang paling tepat!",
+    rows:["Seorang petani memanen padi dari sawahnya","Seorang sopir truk mengangkut beras dari gudang ke supermarket","Seorang ibu memasak dan mengonsumsi nasi untuk keluarganya"],
+    cols:["Produksi","Distribusi","Konsumsi"],
+    ans:["Produksi","Distribusi","Konsumsi"]
+},
+
+{   id:19, cat:"Keterampilan Proses", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Evaluasi Langkah Penyelidikan Ilmiah</div>
+    <p>Dalam penyelidikan ilmiah yang baik, setiap langkah harus dapat dipertanggungjawabkan secara logis dan berdasarkan data. Tiga langkah berikut diambil oleh siswa dalam penyelidikan mereka. Tentukan apakah setiap langkah <strong>Sesuai</strong> atau <strong>Tidak Sesuai</strong> dengan prinsip keterampilan proses ilmiah yang benar.</p></div>`,
+    q:"Klasifikasikan setiap langkah apakah Sesuai atau Tidak Sesuai dengan prinsip ilmiah!",
+    rows:["Menyimpulkan bahwa faktor X berpengaruh meskipun tabel data menunjukkan tidak ada perbedaan yang signifikan antar kelompok","Setelah mendapat hasil yang tidak konsisten, mengulang eksperimen dengan alat ukur yang lebih akurat dan prosedur yang lebih ketat","Mengabaikan data yang berbeda jauh dari prediksi dengan alasan pasti ada 'kesalahan' pada data tersebut"],
+    cols:["Sesuai Prinsip Ilmiah","Tidak Sesuai Prinsip Ilmiah"],
+    ans:["Tidak Sesuai Prinsip Ilmiah","Sesuai Prinsip Ilmiah","Tidak Sesuai Prinsip Ilmiah"]
+},
+
+{   id:20, cat:"Keterampilan Proses", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Pemilihan Cara Penyajian Data</div>
+    <p>Seorang peneliti muda memiliki tiga set data berbeda dan harus memilih cara penyajian yang paling tepat. Setiap cara penyajian data memiliki keunggulan tersendiri: ada yang lebih baik untuk <strong>Membandingkan Data</strong> antara kelompok, dan ada yang lebih baik untuk <strong>Menunjukkan Tren</strong> (perubahan seiring waktu).</p></div>`,
+    q:"Klasifikasikan setiap cara penyajian data ke dalam fungsi yang paling sesuai!",
+    rows:["Diagram batang menampilkan jumlah siswa lulus di 5 kelas berbeda","Grafik garis menampilkan perubahan suhu harian selama 30 hari berturut-turut","Diagram batang menampilkan perbandingan tinggi tanaman setelah 4 jenis perlakuan pupuk"],
+    cols:["Membandingkan Data antar Kelompok","Menunjukkan Tren/Perubahan Waktu"],
+    ans:["Membandingkan Data antar Kelompok","Menunjukkan Tren/Perubahan Waktu","Membandingkan Data antar Kelompok"]
+},
+
+// ─── SESI 2: SOAL 21–40 ───────────────────────────────────────────────────────
+
+// ── Soal 21–25: PG Tunggal ────────────────────────────────────────────────────
+
+{   id:21, cat:"Pengetahuan IPAS", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Peta Kondisi Geografis Indonesia</div>
+    <div class='visual-frame'>${getImg("peta_kondisi_alam","Peta Kondisi Alam Indonesia: Tiga Wilayah Geografis")}</div>
+    <p>Perhatikan peta kondisi geografis di atas: <strong>Wilayah A</strong> — pegunungan tinggi dengan lereng curam, tanah vulkanik subur, suhu sejuk, akses transportasi terbatas. <strong>Wilayah B</strong> — pesisir pantai, dekat laut, ombak sedang. <strong>Wilayah C</strong> — dataran rendah yang luas dan sangat subur, dekat aliran sungai besar.</p></div>`,
+    q:"Berdasarkan karakteristik Wilayah A pada peta tersebut, mata pencaharian utama yang paling sesuai dengan kondisi geografisnya adalah...",
+    opt:["Nelayan dan pembudidaya tambak udang karena dekat dengan sumber air","Petani sayuran, buah-buahan, dan tanaman perkebunan seperti teh atau kopi karena tanahnya subur dan iklimnya sejuk","Buruh pabrik dan karyawan industri karena wilayah pegunungan cocok untuk kawasan industri","Penambang batu dan pasir dari dasar sungai karena topografi berlereng"],
+    ans:"Petani sayuran, buah-buahan, dan tanaman perkebunan seperti teh atau kopi karena tanahnya subur dan iklimnya sejuk"
+},
+
+{   id:22, cat:"Pengetahuan IPAS", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Monumen Pahlawan Daerah</div>
+    <div class='visual-frame'>${getImg("monumen_pahlawan","Monumen Pahlawan Daerah")}</div>
+    <p>Monumen pada gambar di atas mengenang perjuangan pahlawan lokal yang mempertahankan wilayahnya dari penjajah. Para pahlawan tersebut dikenal pantang menyerah meskipun menghadapi kekuatan musuh yang jauh lebih besar. Mereka berjuang bukan hanya dengan senjata, tetapi juga dengan strategi, kesatuan tekad, dan pengorbanan jiwa raga demi tanah air.</p></div>`,
+    q:"Nilai perjuangan yang paling relevan dari gambar monumen tersebut untuk diterapkan siswa dalam konteks kehidupan akademik di era digital saat ini adalah...",
+    opt:["Mencari cara pintas untuk mengerjakan tugas dengan memanfaatkan teknologi semaksimal mungkin","Pantang menyerah menghadapi kesulitan belajar dan terus berusaha keras meskipun soal terasa sulit","Mengandalkan kelompok belajar sepenuhnya dan tidak berusaha memahami materi sendiri","Menghindari tantangan akademik yang dirasa terlalu berat karena tidak sesuai kemampuan"],
+    ans:"Pantang menyerah menghadapi kesulitan belajar dan terus berusaha keras meskipun soal terasa sulit"
+},
+
+{   id:23, cat:"Pengetahuan IPAS", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Warisan Budaya Indonesia</div>
+    <p>Indonesia memiliki ribuan warisan budaya yang kaya. Beberapa di antaranya telah mendapat pengakuan internasional dari UNESCO sebagai Warisan Budaya Tak Benda Dunia. Pengakuan ini menunjukkan bahwa budaya tersebut memiliki nilai universal dan perlu dijaga kelestariannya dalam konteks kebhinekaan. Berikut beberapa contoh budaya Indonesia: Batik (motif kain tradisional Jawa), Tari Saman (tari massal dari Aceh), Upacara Ngaben (kremasi jenazah adat Bali), Wayang Kulit (pertunjukan seni bayangan dari Jawa).</p></div>`,
+    q:"Berdasarkan konteks kebhinekaan dan pengakuan UNESCO, budaya Indonesia yang telah resmi mendapat status Warisan Budaya Tak Benda Dunia termasuk...",
+    opt:["Hanya Batik, karena merupakan budaya yang paling dikenal di dunia internasional","Batik, Wayang Kulit, dan Tari Saman, yang ketiganya telah mendapat pengakuan UNESCO","Hanya Upacara Ngaben, karena merupakan tradisi paling unik di Asia Tenggara","Semua budaya di atas, karena setiap budaya daerah otomatis diakui UNESCO"],
+    ans:"Batik, Wayang Kulit, dan Tari Saman, yang ketiganya telah mendapat pengakuan UNESCO"
+},
+
+{   id:24, cat:"Pengetahuan IPAS", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Rantai Distribusi Beras dari Sawah ke Meja Makan</div>
+    <p>Perjalanan beras dari sawah hingga tiba di meja makan melibatkan banyak pelaku: (1) <strong>Petani</strong> menanam dan memanen gabah, (2) <strong>Pengepul desa</strong> membeli gabah dari petani dan menampungnya, (3) <strong>Pabrik penggilingan</strong> mengolah gabah menjadi beras putih siap jual, (4) <strong>Distributor grosir</strong> membeli beras dalam jumlah besar dari pabrik dan mendistribusikannya ke kota-kota, (5) <strong>Pedagang eceran</strong> di pasar menjual beras per kilogram kepada pembeli, (6) <strong>Konsumen</strong> memasak dan memakan nasi.</p></div>`,
+    q:"Dalam rantai tersebut, pelaku yang berperan paling tepat sebagai DISTRIBUTOR (penyalur barang dalam jumlah besar antara produsen dan pengecer) adalah...",
+    opt:["Petani, karena menghasilkan gabah yang menjadi bahan baku beras","Pabrik penggilingan, karena mengolah gabah menjadi produk beras siap jual","Distributor grosir, karena menyalurkan beras dalam jumlah besar dari pabrik ke berbagai pedagang eceran","Pedagang eceran, karena langsung berhadapan dengan konsumen akhir"],
+    ans:"Distributor grosir, karena menyalurkan beras dalam jumlah besar dari pabrik ke berbagai pedagang eceran"
+},
+
+{   id:25, cat:"Keterampilan Proses", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Perencanaan Eksperimen: Pengaruh Cahaya terhadap Pertumbuhan Tanaman</div>
+    <p>Dini ingin menguji pertanyaan: <em>"Apakah jumlah cahaya matahari mempengaruhi kecepatan tumbuh tanaman kacang hijau?"</em> Ia menyiapkan 3 pot tanaman kacang hijau yang bibitnya identik (jenis sama, berat sama): <strong>Pot 1</strong> = sinar matahari penuh (8 jam/hari), <strong>Pot 2</strong> = tempat teduh (2 jam/hari), <strong>Pot 3</strong> = dalam ruangan gelap (0 jam). Semua pot menggunakan tanah yang sama dan disiram air dengan jumlah yang sama setiap hari.</p></div>`,
+    q:"Dalam eksperimen Dini, variabel bebas (diubah-ubah), variabel terikat (yang diukur), dan variabel kontrol (dijaga tetap) secara berurutan adalah...",
+    opt:["Jumlah cahaya matahari — Tinggi/kecepatan tumbuh tanaman — Jumlah air dan jenis tanah","Tinggi tanaman — Jumlah cahaya matahari — Jenis bibit kacang hijau","Jumlah air — Jenis bibit kacang hijau — Jumlah cahaya matahari","Jenis tanah — Tinggi tanaman — Jumlah cahaya matahari"],
+    ans:"Jumlah cahaya matahari — Tinggi/kecepatan tumbuh tanaman — Jumlah air dan jenis tanah"
+},
+
+// ── Soal 26–30: PG Kompleks ───────────────────────────────────────────────────
+
+{   id:26, cat:"Pengetahuan IPAS", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Penyakit dan Penyebabnya</div>
+    <p>Empat penyakit berikut sering ditemukan pada anak usia sekolah: (1) <strong>Anemia</strong> — kekurangan sel darah merah, disebabkan kekurangan zat besi, vitamin B12, atau asam folat, (2) <strong>TBC</strong> (Tuberkulosis) — infeksi bakteri <em>Mycobacterium tuberculosis</em> yang menyebar melalui udara, (3) <strong>Diare</strong> — bisa disebabkan infeksi bakteri E.coli dari makanan/air kotor atau kekurangan sanitasi, (4) <strong>Rabun senja</strong> — penglihatan buruk di cahaya redup akibat kekurangan vitamin A.</p></div>`,
+    q:"Pilih LEBIH DARI SATU penyakit yang dapat dicegah atau dikurangi risikonya secara efektif melalui pola makan bergizi seimbang!",
+    opt:["Anemia, karena kecukupan zat besi dan vitamin B12 dari makanan bergizi mencegah kekurangan sel darah merah","TBC, karena nutrisi yang baik akan membunuh bakteri penyebab TBC secara langsung","Diare, karena makanan bergizi seimbang meningkatkan imunitas sehingga lebih tahan terhadap infeksi","Rabun senja, karena kecukupan vitamin A dari sayur dan buah berwarna mencegah gangguan penglihatan"],
+    ans:["Anemia, karena kecukupan zat besi dan vitamin B12 dari makanan bergizi mencegah kekurangan sel darah merah","Rabun senja, karena kecukupan vitamin A dari sayur dan buah berwarna mencegah gangguan penglihatan"]
+},
+
+{   id:27, cat:"Pengetahuan IPAS", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Dampak Tindakan Manusia terhadap Ekosistem</div>
+    <p>Para ilmuwan lingkungan mengevaluasi empat tindakan manusia yang berpotensi mempengaruhi keseimbangan ekosistem hutan tropis Indonesia: (1) Reboisasi lahan kritis menggunakan tanaman asli daerah setempat (bukan tanaman monokultur), (2) Konversi hutan menjadi perkebunan sawit monokultur skala besar, (3) Pembangunan koridor satwa liar yang menghubungkan dua hutan yang terfragmentasi oleh jalan raya, (4) Pembuangan limbah cair industri ke sungai yang mengalir melintasi kawasan hutan.</p></div>`,
+    q:"Pilih LEBIH DARI SATU tindakan yang memberikan dampak POSITIF dalam menjaga atau memulihkan keseimbangan ekosistem hutan!",
+    opt:["Reboisasi lahan kritis menggunakan tanaman asli daerah setempat","Konversi hutan menjadi perkebunan sawit monokultur skala besar","Pembangunan koridor satwa liar penghubung antarhutan yang terfragmentasi","Pembuangan limbah cair industri ke sungai kawasan hutan"],
+    ans:["Reboisasi lahan kritis menggunakan tanaman asli daerah setempat","Pembangunan koridor satwa liar penghubung antarhutan yang terfragmentasi"]
+},
+
+{   id:28, cat:"Pengetahuan IPAS", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Cara Alat Musik Menghasilkan Bunyi</div>
+    <div class='visual-frame'>${getImg("alat_musik_bunyi","Empat Alat Musik: Gitar, Seruling, Drum, Rebab")}</div>
+    <p>Gambar di atas menampilkan empat alat musik: Gitar (dipetik), Seruling bambu (ditiup), Drum (dipukul), dan Rebab (digesek). Setiap alat musik menghasilkan bunyi melalui cara yang berbeda: ada yang melalui getaran senar, getaran kolom udara dalam tabung, atau getaran membran/kulit.</p></div>`,
+    q:"Pilih LEBIH DARI SATU alat musik yang menghasilkan bunyi melalui GETARAN SENAR atau GETARAN KOLOM UDARA (bukan melalui membran/kulit)!",
+    opt:["Gitar, karena menghasilkan bunyi saat senarnya dipetik dan bergetar","Seruling, karena menghasilkan bunyi dari getaran kolom udara di dalam tabung bambu","Drum, karena menghasilkan bunyi saat membran/kulit dipukul","Rebab, karena menghasilkan bunyi saat senarnya digesek dan bergetar"],
+    ans:["Gitar, karena menghasilkan bunyi saat senarnya dipetik dan bergetar","Seruling, karena menghasilkan bunyi dari getaran kolom udara di dalam tabung bambu","Rebab, karena menghasilkan bunyi saat senarnya digesek dan bergetar"]
+},
+
+{   id:29, cat:"Pengetahuan IPAS", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Mitigasi Perubahan Iklim</div>
+    <p>Data NASA menunjukkan konsentrasi CO₂ atmosfer telah mencapai 421 ppm (2023) — tertinggi dalam 800.000 tahun. Perubahan iklim yang diakibatkannya berdampak pada cuaca ekstrem, kenaikan permukaan laut, dan ancaman ekosistem. Berbagai aktivitas dapat dilakukan mulai dari skala individu untuk membantu <strong>mitigasi</strong> (upaya mengurangi penyebab) perubahan iklim.</p></div>`,
+    q:"Pilih LEBIH DARI SATU aktivitas yang secara langsung berkontribusi pada mitigasi perubahan iklim dengan mengurangi emisi gas rumah kaca!",
+    opt:["Menanam pohon di lahan kosong dekat rumah untuk menyerap CO₂ dari udara","Mengganti perjalanan jarak dekat dengan sepeda atau berjalan kaki untuk mengurangi emisi kendaraan bermotor","Membakar sampah plastik dan organik di pekarangan untuk mengurangi volume sampah","Menggunakan kantong belanja kain yang dapat dipakai ulang untuk mengurangi produksi plastik sekali pakai"],
+    ans:["Menanam pohon di lahan kosong dekat rumah untuk menyerap CO₂ dari udara","Mengganti perjalanan jarak dekat dengan sepeda atau berjalan kaki untuk mengurangi emisi kendaraan bermotor","Menggunakan kantong belanja kain yang dapat dipakai ulang untuk mengurangi produksi plastik sekali pakai"]
+},
+
+{   id:30, cat:"Pengetahuan IPAS", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Praktik Kearifan Lokal Nusantara</div>
+    <p>Tiga sistem kearifan lokal dari berbagai daerah: (1) <strong>Sasi Laut</strong> (Maluku) — larangan mengambil hasil laut tertentu (ikan, kerang, teripang) selama periode penutupan yang ditetapkan secara adat, untuk memberi waktu bagi populasi laut pulih. (2) <strong>Subak</strong> (Bali) — sistem irigasi sawah yang mengelola distribusi air secara adil, berkelanjutan, dan berdasarkan kesepakatan komunal. (3) <strong>Ulos</strong> (Batak, Sumatera Utara) — kain tradisional sakral yang digunakan dalam upacara adat pernikahan, kelahiran, dan kematian sebagai simbol kehormatan dan hubungan sosial.</p></div>`,
+    q:"Pilih LEBIH DARI SATU praktik kearifan lokal yang berfungsi LANGSUNG sebagai mekanisme pelestarian sumber daya alam dan ekosistem!",
+    opt:["Sasi Laut, karena memberi jeda waktu bagi populasi biota laut untuk berkembang biak dan pulih","Subak, karena mengelola distribusi air irigasi secara berkelanjutan sehingga sawah tidak kekurangan air","Ulos, karena memperkuat ikatan sosial masyarakat Batak melalui nilai-nilai tradisional","Semua praktik di atas, karena semua kearifan lokal pasti berkaitan dengan alam"],
+    ans:["Sasi Laut, karena memberi jeda waktu bagi populasi biota laut untuk berkembang biak dan pulih","Subak, karena mengelola distribusi air irigasi secara berkelanjutan sehingga sawah tidak kekurangan air"]
+},
+
+// ── Soal 31–35: PG Kategori ───────────────────────────────────────────────────
+
+{   id:31, cat:"Pengetahuan IPAS", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Diagram Sistem Organ Tubuh Manusia</div>
+    <div class='visual-frame'>${getImg("sistem_organ_tubuh","Diagram Sistem Pernapasan dan Sistem Peredaran Darah")}</div>
+    <p>Perhatikan diagram organ tubuh manusia di atas. Dua sistem organ utama yang bekerja sama dalam menjaga kehidupan adalah <strong>Sistem Pernapasan</strong> dan <strong>Sistem Peredaran Darah</strong>. Kelasifikasikan organ-organ berikut ke dalam sistem yang benar.</p></div>`,
+    q:"Klasifikasikan setiap organ apakah termasuk Sistem Pernapasan atau Sistem Peredaran Darah!",
+    rows:["Paru-paru","Jantung","Diafragma"],
+    cols:["Sistem Pernapasan","Sistem Peredaran Darah"],
+    ans:["Sistem Pernapasan","Sistem Peredaran Darah","Sistem Pernapasan"]
+},
+
+{   id:32, cat:"Pengetahuan IPAS", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Sifat Cahaya pada Berbagai Benda</div>
+    <p>Ketika cahaya mengenai suatu permukaan benda, cahaya dapat dipantulkan (refleksi), diserap, atau diteruskan. Benda dengan permukaan halus dan mengkilap cenderung memantulkan cahaya dengan baik, sementara benda berwarna gelap atau kasar cenderung menyerap cahaya.</p></div>`,
+    q:"Klasifikasikan setiap benda berdasarkan kemampuannya terhadap cahaya!",
+    rows:["Permukaan cermin datar yang bersih","Batu hitam dengan permukaan kasar","Permukaan air kolam yang tenang dan jernih"],
+    cols:["Memantulkan Cahaya dengan Baik","Menyerap/Tidak Memantulkan Cahaya"],
+    ans:["Memantulkan Cahaya dengan Baik","Menyerap/Tidak Memantulkan Cahaya","Memantulkan Cahaya dengan Baik"]
+},
+
+{   id:33, cat:"Pengetahuan IPAS", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Pelaku Ekonomi: Produsen dan Konsumen</div>
+    <p>Dalam kegiatan ekonomi, <strong>Produsen</strong> adalah pihak yang menghasilkan barang atau jasa (termasuk yang memproses bahan mentah menjadi produk jadi), sedangkan <strong>Konsumen</strong> adalah pihak yang menggunakan atau menghabiskan barang dan jasa untuk memenuhi kebutuhannya.</p></div>`,
+    q:"Klasifikasikan setiap pelaku ekonomi berikut apakah termasuk Produsen atau Konsumen!",
+    rows:["Pengrajin batik yang membuat dan menjual kain batik tulis","Seorang siswa membeli dan memakai sepatu baru untuk sekolah","Pabrik sepatu memproduksi 1.000 pasang sepatu per hari"],
+    cols:["Produsen","Konsumen"],
+    ans:["Produsen","Konsumen","Produsen"]
+},
+
+{   id:34, cat:"Keterampilan Proses", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Metode Pencatatan Hasil Pengamatan</div>
+    <p>Kelompok riset siswa diminta mencatat hasil pengamatan pertumbuhan tanaman selama 4 minggu. Mereka mengusulkan tiga cara pencatatan yang berbeda. Tentukan apakah setiap cara <strong>Efektif</strong> atau <strong>Kurang Efektif</strong> untuk keperluan analisis data ilmiah.</p></div>`,
+    q:"Klasifikasikan setiap cara pencatatan apakah Efektif atau Kurang Efektif untuk analisis data ilmiah!",
+    rows:["Tabel terstruktur dengan kolom: Tanggal, Tinggi Tanaman (cm), Warna Daun, Kondisi Tanah","Sketsa kasar tanpa skala, ukuran, atau keterangan waktu yang spesifik","Rekaman video berdurasi penuh dari awal hingga akhir setiap sesi pengamatan"],
+    cols:["Efektif untuk Analisis Data","Kurang Efektif untuk Analisis Data"],
+    ans:["Efektif untuk Analisis Data","Kurang Efektif untuk Analisis Data","Efektif untuk Analisis Data"]
+},
+
+{   id:35, cat:"Pengetahuan IPAS", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Diagram Tata Surya</div>
+    <div class='visual-frame'>${getImg("tata_surya_planet","Diagram Tata Surya dengan Sabuk Asteroid")}</div>
+    <p>Perhatikan diagram tata surya di atas. Terdapat <strong>Sabuk Asteroid</strong> (Asteroid Belt) yang memisahkan planet-planet dalam (Planet Dalam) dari planet-planet luar (Planet Luar). Planet Dalam adalah planet yang orbitnya berada di antara Matahari dan Sabuk Asteroid, sedangkan Planet Luar berada di luar Sabuk Asteroid.</p></div>`,
+    q:"Berdasarkan posisinya terhadap Sabuk Asteroid, klasifikasikan setiap planet berikut!",
+    rows:["Merkurius","Saturnus","Mars"],
+    cols:["Planet Dalam (sebelum Sabuk Asteroid)","Planet Luar (setelah Sabuk Asteroid)"],
+    ans:["Planet Dalam (sebelum Sabuk Asteroid)","Planet Luar (setelah Sabuk Asteroid)","Planet Dalam (sebelum Sabuk Asteroid)"]
+},
+
+// ── Soal 36–40: Campuran ──────────────────────────────────────────────────────
+
+{   id:36, cat:"Keterampilan Proses", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Pemilihan Jenis Peta untuk Berbagai Kebutuhan</div>
+    <p>Guru IPAS memberikan tiga tugas berbeda yang memerlukan penggunaan peta: <br><strong>Tugas A:</strong> Mencari rute tercepat dari sekolah ke museum menggunakan transportasi umum. <br><strong>Tugas B:</strong> Mempelajari perubahan batas wilayah administratif Kabupaten Bogor sejak tahun 1950 berdasarkan arsip sejarah. <br><strong>Tugas C:</strong> Melihat gambaran ketinggian, kontur tanah, dan kemiringan lereng di wilayah pegunungan Jawa Barat.</p></div>`,
+    q:"Jenis peta yang paling tepat untuk menyelesaikan Tugas A adalah...",
+    opt:["Peta topografi konvensional, karena menampilkan informasi ketinggian dan kontur tanah secara akurat","Peta digital interaktif (seperti Google Maps), karena dapat memberikan informasi rute real-time dan jadwal transportasi umum","Atlas peta historis, karena berisi data wilayah dari berbagai periode waktu yang berbeda","Peta administrasi dinding kelas, karena mudah dibaca dan tersedia di setiap sekolah"],
+    ans:"Peta digital interaktif (seperti Google Maps), karena dapat memberikan informasi rute real-time dan jadwal transportasi umum"
+},
+
+{   id:37, cat:"Keterampilan Proses", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Mengomunikasikan Hasil Penyelidikan kepada Berbagai Audiens</div>
+    <p>Kelompok 5 telah menyelesaikan penyelidikan tentang pengaruh jenis pupuk terhadap pertumbuhan tanaman kacang hijau dan memiliki data lengkap. Mereka harus mempresentasikan hasil kepada tiga audiens: <br>(1) <strong>Warga sekitar sekolah</strong> (masyarakat umum, tidak berlatar belakang sains), <br>(2) <strong>Tim juri lomba ilmiah kota</strong> (ilmuwan dan guru berpengalaman), <br>(3) <strong>Siswa kelas 3</strong> (usia 8–9 tahun yang belum kenal konsep variabel).</p></div>`,
+    q:"Pilih LEBIH DARI SATU format komunikasi yang paling tepat untuk menyampaikan hasil kepada WARGA SEKITAR SEKOLAH (audiens umum)!",
+    opt:["Poster infografis berwarna dengan gambar yang menarik dan poin-poin ringkas yang mudah dipahami","Laporan ilmiah formal setebal 20 halaman dengan tabel statistik dan daftar pustaka lengkap","Video dokumenter pendek berdurasi 2–3 menit dengan narasi sederhana dan visual yang menarik","Presentasi PowerPoint penuh grafik dan data statistik yang detail untuk tim juri ilmiah"],
+    ans:["Poster infografis berwarna dengan gambar yang menarik dan poin-poin ringkas yang mudah dipahami","Video dokumenter pendek berdurasi 2–3 menit dengan narasi sederhana dan visual yang menarik"]
+},
+
+{   id:38, cat:"Pengetahuan IPAS", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Fenomena Ekonomi Menjelang Hari Raya</div>
+    <p>Menjelang Lebaran, harga daging sapi di pasar naik tajam dari Rp 120.000/kg menjadi Rp 180.000/kg dalam waktu dua minggu. Para pedagang menjelaskan bahwa pasokan sapi dari sentra peternakan lebih sedikit dari biasanya (karena sebagian peternak menahan sapi untuk keperluan kurban), sementara permintaan masyarakat meningkat drastis karena tradisi memasak hidangan spesial. Kepala Dinas Perdagangan menyebut fenomena ini sebagai masalah ekonomi yang berulang setiap tahun.</p></div>`,
+    q:"Istilah ekonomi yang paling tepat untuk menggambarkan kondisi ketidakseimbangan antara ketersediaan yang terbatas dengan permintaan yang tinggi pada kasus daging sapi tersebut adalah...",
+    opt:["Inflasi — kenaikan harga barang secara menyeluruh dalam perekonomian","Kelangkaan — kondisi di mana ketersediaan sumber daya (barang) tidak mencukupi untuk memenuhi kebutuhan yang ada","Deflasi — penurunan harga barang secara umum dalam jangka waktu tertentu","Surplus — kondisi kelebihan pasokan barang di atas kebutuhan masyarakat"],
+    ans:"Kelangkaan — kondisi di mana ketersediaan sumber daya (barang) tidak mencukupi untuk memenuhi kebutuhan yang ada"
+},
+
+{   id:39, cat:"Pengetahuan IPAS", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Berbagai Jenis Sumber Sejarah</div>
+    <div class='visual-frame'>${getImg("sumber_sejarah_artefak","Kolase Sumber Sejarah: Keris Kuno, Prasasti, Buku Catatan, Foto")}</div>
+    <p>Gambar di atas menampilkan empat benda yang dapat dijadikan sumber sejarah: (1) Keris kuno berukir, (2) Batu prasasti dengan tulisan kuno terpahat di permukaannya, (3) Buku catatan harian milik seorang pejuang kemerdekaan, (4) Foto hitam-putih yang menggambarkan peristiwa sejarah.</p></div>`,
+    q:"Pilih LEBIH DARI SATU benda yang termasuk kategori SUMBER SEJARAH TERTULIS (bukan sekadar artefak fisik tanpa teks)!",
+    opt:["Keris kuno berukir, karena merupakan benda bersejarah yang bernilai tinggi","Batu prasasti dengan tulisan kuno terpahat, karena mengandung teks/tulisan berisi informasi sejarah","Buku catatan harian pejuang kemerdekaan, karena berisi tulisan langsung dari pelaku sejarah","Foto hitam-putih peristiwa sejarah, karena merupakan dokumentasi visual masa lampau"],
+    ans:["Batu prasasti dengan tulisan kuno terpahat, karena mengandung teks/tulisan berisi informasi sejarah","Buku catatan harian pejuang kemerdekaan, karena berisi tulisan langsung dari pelaku sejarah"]
+},
+
+{   id:40, cat:"Keterampilan Proses", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Evaluasi Eksperimen yang Bermasalah</div>
+    <p>Kelompok Anisa menyelidiki pengaruh suhu air terhadap kecepatan melarutnya gula. Hasil: Air panas (80°C) → gula larut dalam 30 detik; Air hangat (50°C) → 2 menit; Air dingin (20°C) → 8 menit. Kesimpulan mereka: suhu berpengaruh positif terhadap kecepatan melarut. Namun kemudian disadari bahwa mereka menggunakan sendok pengaduk berbeda ukuran untuk tiap percobaan (panas: sendok besar, hangat: sendok sedang, dingin: sendok kecil), sehingga frekuensi dan kekuatan pengadukan tidak terkontrol. Hal ini membuat validitas kesimpulan diragukan.</p></div>`,
+    q:"Langkah refleksi dan perbaikan yang paling tepat untuk meningkatkan validitas eksperimen kelompok Anisa adalah...",
+    opt:["Mengabaikan perbedaan ukuran sendok karena hanya alat bantu dan tidak mempengaruhi hasil larutan","Mengulang eksperimen dengan menggunakan sendok yang sama ukuran dan jumlah adukannya sama untuk setiap kondisi suhu","Mengubah kesimpulan menjadi 'suhu tidak berpengaruh' karena ada kemungkinan pengadukan yang menyebabkan perbedaan","Menghilangkan data percobaan dengan sendok berbeda dan hanya menggunakan data yang dianggap benar"],
+    ans:"Mengulang eksperimen dengan menggunakan sendok yang sama ukuran dan jumlah adukannya sama untuk setiap kondisi suhu"
+}
+
+]; // ═══ END QUESTIONS ═══
+
+// ════════════════════════════════════════════════════════
+//  APP OBJECT
+// ════════════════════════════════════════════════════════
+const app = {
+    session: { nama:"", kelas:"", answers:{}, startTime:0 },
+    currIdx: 0,
+    timerInt: null,
+    _hasSavedSession: false,
+
+    init: function() {
+        this.showSlide('pin');
+        try { if (localStorage.getItem(CONFIG.STORAGE_KEY)) this._hasSavedSession = true; } catch(e) {}
+    },
+
+    checkPin: async function() {
+        const inp = document.getElementById('inp-pin');
+        const val = inp.value.trim();
+        if (!val) return;
+        const h = await hashPin(val);
+        if (h === CONFIG.PIN_HASH) {
+            this.showSlide('login');
+            if (this._hasSavedSession) document.getElementById('resume-alert').style.display = 'block';
+        } else {
+            inp.classList.add('error');
+            document.getElementById('pin-err').style.display = 'block';
+            inp.value = '';
+            setTimeout(() => inp.classList.remove('error'), 400);
+        }
+    },
+
+    login: function() {
+        const n = document.getElementById('inpNama').value.trim();
+        const k = document.getElementById('inpKelas').value;
+        if (!n || !k) { alert("Harap isi nama lengkap dan pilih kelas!"); return; }
+        this.session.nama  = n;
+        this.session.kelas = k;
+        this.showSlide('rules');
+    },
+
+    resume: function() {
+        try {
+            this.session = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY));
+            this.renderSidebar();
+            this.startExam(true);
+        } catch(e) { alert("Sesi tersimpan rusak. Silakan mulai ujian baru."); }
+    },
+
+    startExam: function(isRes = false) {
+        if (!isRes) { this.session.startTime = Date.now(); this.save(); }
+        document.getElementById('user-badge').innerText     = this.session.nama;
+        document.getElementById('user-badge').style.display = 'block';
+        document.getElementById('sidebar').style.display    = 'flex';
+        this.renderQuestions();
+        this.renderSidebar();
+        this.showSlide('quiz');
+        this.goToQ(0);
+        this.startTimer();
+    },
+
+    showSlide: function(id) {
+        document.querySelectorAll('.slide').forEach(e => e.classList.remove('active'));
+        document.getElementById('slide-' + id).classList.add('active');
+    },
+
+    renderQuestions: function() {
+        const box = document.getElementById('quiz-container');
+        box.innerHTML = "";
+        QUESTIONS.forEach((q, i) => {
+            let h = `<div id="q-item-${i}" class="question-item">
+                        <div class="tag-cat">${q.cat}</div>
+                        ${q.stim || ""}
+                        <div class="q-text">${i+1}. ${q.q}</div>`;
+            if (q.type === 'pg') {
+                q.opt.forEach((o, oi) =>
+                    h += `<label class="opt-label"><input type="radio" name="ans_${q.id}" value="${oi}" onchange="app.saveAns(${q.id},${oi})"> ${o}</label>`
+                );
+            } else if (q.type === 'pgk') {
+                h += `<p style="font-size:.82rem;color:#64748b;margin-bottom:10px;">☑ Boleh memilih lebih dari satu jawaban</p>`;
+                q.opt.forEach((o, oi) =>
+                    h += `<label class="opt-label"><input type="checkbox" value="${oi}" onchange="app.saveMulti(${q.id},${oi})"> ${o}</label>`
+                );
+            } else if (q.type === 'pgk-cat') {
+                h += `<div class="matrix-wrapper"><table class="matrix-table"><tr><th>Pernyataan</th>`;
+                q.cols.forEach(c => h += `<th>${c}</th>`);
+                h += `</tr>`;
+                q.rows.forEach((r, ri) => {
+                    h += `<tr><td>${r}</td>`;
+                    q.cols.forEach(c =>
+                        h += `<td><input type="radio" name="mx_${q.id}_${ri}" value="${c}" onchange="app.saveMx(${q.id},${ri},'${c}')"></td>`
+                    );
+                    h += `</tr>`;
+                });
+                h += `</table></div>`;
+            }
+            h += `</div>`;
+            box.innerHTML += h;
+        });
+    },
+
+    goToQ: function(idx) {
+        if (idx < 0 || idx >= QUESTIONS.length) return;
+        this.currIdx = idx;
+        const qs = document.getElementById('quiz-scroll');
+        if (qs) qs.scrollTop = 0;
+        document.querySelectorAll('.question-item').forEach(e => e.classList.remove('active-q'));
+        document.getElementById(`q-item-${idx}`).classList.add('active-q');
+        document.getElementById('q-indicator').innerText = `Soal ${idx+1} / 40`;
+        document.getElementById('btn-prev').disabled = (idx === 0);
+        const nBtn = document.getElementById('btn-next');
+        if (idx === QUESTIONS.length - 1) {
+            nBtn.innerText = "Selesai"; nBtn.onclick = () => this.confirmFinish(); nBtn.classList.add('btn-danger');
+        } else {
+            nBtn.innerText = "Selanjutnya"; nBtn.onclick = () => this.move(1); nBtn.classList.remove('btn-danger');
+        }
+        this.restoreVisual(idx);
+        this.updateSidebarUI();
+    },
+
+    move: function(step) { this.goToQ(this.currIdx + step); },
+
+    saveAns:   function(qid, v)    { this.session.answers[qid] = v;                                                this.save(); this.updateSidebarUI(); },
+    saveMulti: function(qid, oi)   { let c = this.session.answers[qid]||[]; if(c.includes(oi)) c=c.filter(x=>x!==oi); else c.push(oi); this.session.answers[qid]=c; this.save(); this.updateSidebarUI(); },
+    saveMx:    function(qid,ri,v)  { let c = this.session.answers[qid]||[]; c[ri]=v; this.session.answers[qid]=c; this.save(); this.updateSidebarUI(); },
+    save:      function()          { try { localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(this.session)); } catch(e) {} },
+
+    renderSidebar: function() {
+        const g = document.getElementById('nav-grid');
+        g.innerHTML = "";
+        QUESTIONS.forEach((q,i) => g.innerHTML += `<div id="nav-num-${i}" class="nav-num" onclick="app.goToQ(${i})">${i+1}</div>`);
+    },
+    checkFilled: function(qid) {
+        const v = this.session.answers[qid];
+        if (v===undefined||v===null) return false;
+        if (Array.isArray(v)) return v.filter(x=>x!==undefined&&x!==null).length>0;
+        return true;
+    },
+    updateSidebarUI: function() {
+        QUESTIONS.forEach((q,i) => {
+            const el = document.getElementById(`nav-num-${i}`);
+            if (!el) return;
+            if (i===this.currIdx) el.classList.add('current'); else el.classList.remove('current');
+            if (this.checkFilled(q.id)) el.classList.add('filled'); else el.classList.remove('filled');
+        });
+    },
+    restoreVisual: function(idx) {
+        const q = QUESTIONS[idx];
+        const ans = this.session.answers[q.id];
+        if (ans===undefined||ans===null) return;
+        if (q.type==='pg') {
+            const el = document.querySelector(`input[name="ans_${q.id}"][value="${ans}"]`);
+            if (el) el.checked = true;
+        } else if (q.type==='pgk' && Array.isArray(ans)) {
+            ans.forEach(v => { const el = document.querySelector(`#q-item-${idx} input[value="${v}"]`); if(el) el.checked=true; });
+        } else if (q.type==='pgk-cat' && Array.isArray(ans)) {
+            ans.forEach((v,ri) => { if(!v) return; const el = document.querySelector(`input[name="mx_${q.id}_${ri}"][value="${v}"]`); if(el) el.checked=true; });
+        }
+    },
+
+    startTimer: function() {
+        clearInterval(this.timerInt);
+        this.timerInt = setInterval(() => {
+            const rem = CONFIG.DURATION - Math.floor((Date.now()-this.session.startTime)/1000);
+            if (rem<=0) { clearInterval(this.timerInt); this.submitExam(); return; }
+            const m = Math.floor(rem/60).toString().padStart(2,'0');
+            const s = (rem%60).toString().padStart(2,'0');
+            document.getElementById('timer-display').innerText = `${m}:${s}`;
+        }, 1000);
+    },
+
+    confirmFinish: function() { document.getElementById('modal-confirm').style.display='flex'; },
+
+    submitExam: function() {
+        document.getElementById('modal-confirm').style.display = 'none';
+        document.getElementById('modal-loading').style.display = 'flex';
+        clearInterval(this.timerInt);
+
+        const stats = {};
+        let totS = 0, totM = 0;
+        QUESTIONS.forEach(q => {
+            if (!stats[q.cat]) stats[q.cat] = { s:0, m:0 };
+            stats[q.cat].m += q.score;
+            totM += q.score;
+            const u = this.session.answers[q.id];
+            let pt = 0;
+            if (u!==undefined && u!==null) {
+                if (q.type==='pg') {
+                    if (u == q.opt.indexOf(q.ans)) pt = q.score;
+                } else if (q.type==='pgk' && Array.isArray(u) && Array.isArray(q.ans)) {
+                    const ua = u.map(i=>q.opt[i]).sort();
+                    const ca = [...q.ans].sort();
+                    if (JSON.stringify(ua)===JSON.stringify(ca)) pt = q.score;
+                } else if (q.type==='pgk-cat' && Array.isArray(u)) {
+                    let match = 0;
+                    q.ans.forEach((k,i) => { if(u[i]===k) match++; });
+                    pt = (match/q.rows.length)*q.score;
+                }
+            }
+            stats[q.cat].s += pt;
+            totS += pt;
+        });
+
+        const final = Math.round((totS/totM)*100);
+        let summ={}, cht="", nts=[];
+        const catOrder = ["Pengetahuan IPAS","Keterampilan Proses"];
+        catOrder.forEach(c => {
+            if (!stats[c]) return;
+            const p = stats[c].m>0 ? Math.round((stats[c].s/stats[c].m)*100) : 0;
+            summ[c] = { skor:p, tuntas:p>=70, label:p>=70?"Tuntas":"Perlu Bimbingan" };
+            if (p<70) nts.push(c);
+            cht += `<div class="chart-row">
+                        <div class="chart-lbl">${c}</div>
+                        <div class="chart-track"><div class="chart-fill" style="width:${p}%;background:${p>=70?'#16a34a':'#dc2626'}"></div></div>
+                        <div class="chart-val">${p}%</div>
+                    </div>`;
+        });
+
+        const desc = nts.length===0 ? "Selamat! Tuntas semua elemen." : "Perlu belajar lagi di: "+nts.join(", ");
+
+        this.showSlide('result');
+        document.getElementById('modal-loading').style.display = 'none';
+        document.getElementById('result-content').innerHTML = `
+            <h3>Nilai Akhir: <span style="color:var(--primary);font-size:2.5rem;">${final}</span></h3>
+            <div style="background:#f0fbff;padding:15px;border-radius:8px;margin-bottom:20px;">${desc}</div>
+            <h4>Capaian per Elemen:</h4>${cht}`;
+
+        fetch(CONFIG.SCRIPT_URL, {
+            method:'POST', mode:'no-cors',
+            headers:{'Content-Type':'text/plain'},
+            body: JSON.stringify({
+                action:"submit_exam", mapel:"IPAS",
+                nama:this.session.nama, kelas:this.session.kelas,
+                skor:final, deskripsi:desc,
+                jawaban:this.session.answers, ringkasanNilai:summ
+            })
+        }).then(() => { try { localStorage.removeItem(CONFIG.STORAGE_KEY); } catch(e) {} });
+    }
+};
+window.onload = () => app.init();
+</script>
+</body>
+</html>
