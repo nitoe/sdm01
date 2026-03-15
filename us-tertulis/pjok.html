@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujian Sekolah Tertulis – PJOK · SD Muhammadiyah 01 Kukusan</title>
+    <style>
+        :root {
+            --primary: #15803d;
+            --primary-light: #f0fdf4;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --text: #334155;
+            --bg: #f0fdf4;
+            --border: #cbd5e1;
+        }
+        * { box-sizing: border-box; outline: none; }
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; }
+        .app-container { display: flex; flex-direction: column; height: 100%; width: 100%; background: white; }
+        .header { height: 64px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); z-index: 50; flex-shrink: 0; }
+        .header-title { font-weight: 700; font-size: 1.2rem; }
+        .timer-box { background: rgba(255,255,255,0.15); padding: 6px 16px; border-radius: 6px; font-weight: 700; font-family: monospace; font-size: 1.25rem; border: 1px solid rgba(255,255,255,0.2); }
+        .workspace { display: flex; flex: 1; overflow: hidden; position: relative; }
+        .main-stage { flex: 1; position: relative; background: var(--bg); display: flex; flex-direction: column; overflow: hidden; }
+        .slide { display: none !important; width: 100%; height: 100%; }
+        .slide.active { display: flex !important; flex-direction: column; animation: fadeIn 0.4s ease; }
+        .center-content-wrapper { width: 100%; max-width: 800px; margin: 0 auto; padding: 20px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .card { background: white; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); padding: 32px; margin-bottom: 20px; border-top: 5px solid var(--primary); }
+        .quiz-scroll-area { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 80px; width: 100%; max-width: 900px; margin: 0 auto; }
+        .nav-bar-fixed { flex-shrink: 0; background: white; padding: 16px 24px; border-top: 1px solid #e2e8f0; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; z-index: 40; }
+        .question-item { display: none; }
+        .question-item.active-q { display: block; animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(15px); } to { opacity: 1; transform: translateX(0); } }
+        .stimulus-box { background: #ffffff; border: 1px solid #e2e8f0; border-left: 5px solid var(--primary); padding: 20px; margin-bottom: 24px; border-radius: 8px; }
+        .stimulus-head { font-weight: 800; color: var(--primary); border-bottom: 2px dashed #e2e8f0; padding-bottom: 10px; margin-bottom: 15px; font-size: 1.1rem; text-transform: uppercase; }
+        .visual-frame { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; display: flex; justify-content: center; align-items: center; margin: 15px 0; overflow: hidden; }
+        .q-text { font-size: 1.15rem; font-weight: 600; color: #1e293b; margin-bottom: 20px; line-height: 1.6; }
+        .tag-cat { display: inline-block; font-size: 0.75rem; background: #dcfce7; color: #15803d; padding: 4px 10px; border-radius: 20px; font-weight: bold; margin-bottom: 10px; }
+        .opt-label { display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: white; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 12px; cursor: pointer; transition: all 0.2s; font-size: 1rem; color: #475569; }
+        .opt-label:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+        .opt-label input { margin-top: 4px; transform: scale(1.2); flex-shrink: 0; }
+        .matrix-table { width: 100%; border-collapse: collapse; margin-top: 10px; min-width: 320px; }
+        .matrix-table th, .matrix-table td { border: 1px solid #e2e8f0; padding: 12px; }
+        .matrix-table th { background: #f1f5f9; text-align: center; }
+        .matrix-table td { text-align: center; }
+        .matrix-table td:first-child { text-align: left; font-weight: 500; }
+        .side-panel { width: 300px; background: white; border-left: 1px solid #e2e8f0; display: flex; flex-direction: column; flex-shrink: 0; z-index: 40; }
+        .nav-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 20px; overflow-y: auto; }
+        .nav-num { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; color: #64748b; transition: all 0.2s; }
+        .nav-num:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+        .nav-num.current { border: 2px solid var(--primary); transform: scale(1.1); box-shadow: 0 2px 8px rgba(0,0,0,0.15); color: var(--primary); }
+        .nav-num.filled { background-color: var(--success) !important; color: white !important; border-color: var(--success) !important; }
+        .nav-num.filled.current { border: 3px solid #15803d !important; }
+        input[type="text"], select { width: 100%; padding: 14px; margin: 8px 0 20px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 1rem; display: inline-flex; align-items: center; gap: 8px; justify-content: center; }
+        .btn:hover { background: #166534; }
+        .btn:disabled { background: #94a3b8; cursor: not-allowed; }
+        .btn-outline { background: white; border: 1px solid #cbd5e1; color: #475569; }
+        .btn-outline:hover { background: #f8fafc; }
+        .btn-danger { background: var(--danger); }
+        .chart-row { display: flex; align-items: center; margin-bottom: 12px; }
+        .chart-lbl { width: 220px; font-size: 0.82rem; font-weight: 600; text-align: right; padding-right: 15px; flex-shrink: 0; }
+        .chart-track { flex: 1; background: #e2e8f0; height: 16px; border-radius: 10px; overflow: hidden; }
+        .chart-fill { height: 100%; transition: width 1s ease-out; }
+        .chart-val { width: 50px; padding-left: 10px; font-weight: 700; }
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 100; }
+        .modal { background: white; padding: 30px; border-radius: 16px; width: 90%; max-width: 420px; text-align: center; }
+        .pin-input-wrap { position: relative; margin-bottom: 10px; }
+        .pin-input-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; pointer-events: none; }
+        #inp-pin { width: 100%; padding: 14px 14px 14px 44px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 1.1rem; font-weight: 700; letter-spacing: .15em; font-family: monospace; color: var(--text); transition: border-color .2s; }
+        #inp-pin:focus { border-color: var(--primary); }
+        #inp-pin.error { border-color: #dc2626; animation: shake .3s ease; }
+        #pin-err { font-size: .82rem; color: #dc2626; font-weight: 600; display: none; margin-bottom: 14px; }
+        .stimulus-img { max-width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+        .matrix-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+        @media (max-width: 768px) {
+            .workspace { flex-direction: column; }
+            .side-panel { width: 100%; height: auto; border-left: none; border-top: 1px solid #e2e8f0; order: 2; }
+            .nav-grid { max-height: 120px; padding: 10px; }
+            .chart-lbl { width: 140px; font-size: 0.75rem; }
+            .header-title { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <div class="header">
+        <div class="header-title">Ujian Sekolah – PJOK (Pendidikan Jasmani, Olahraga, dan Kesehatan)</div>
+        <div style="display:flex;align-items:center;gap:15px;">
+            <div id="user-badge" style="display:none;font-size:0.85rem;background:rgba(255,255,255,0.1);padding:5px 12px;border-radius:20px;">Siswa</div>
+            <div class="timer-box" id="timer-display">--:--</div>
+        </div>
+    </div>
+    <div class="workspace">
+        <div class="main-stage">
+
+            <!-- ① SLIDE PIN -->
+            <div id="slide-pin" class="slide active">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:420px;margin:0 auto;text-align:center;">
+                        <div style="font-size:2.5rem;margin-bottom:12px;">🔐</div>
+                        <h2 style="color:var(--primary);margin-top:0;">Masukkan PIN</h2>
+                        <p style="color:#64748b;margin-bottom:24px;font-size:.95rem;">
+                            Masukkan PIN dari guru untuk membuka<br>
+                            <strong>Ujian Sekolah Tertulis PJOK</strong>
+                        </p>
+                        <div class="pin-input-wrap">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <input type="password" id="inp-pin" placeholder="PIN ujian…" maxlength="30" autocomplete="off" onkeydown="if(event.key==='Enter') app.checkPin()">
+                        </div>
+                        <div id="pin-err">❌ PIN salah. Coba lagi.</div>
+                        <button class="btn" style="width:100%" onclick="app.checkPin()">Buka Ujian →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ② SLIDE LOGIN -->
+            <div id="slide-login" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:450px;margin:0 auto;text-align:center;">
+                        <h2 style="color:var(--primary);margin-top:0;">Selamat Datang</h2>
+                        <p style="color:#64748b;margin-bottom:30px;">Ujian Sekolah Tertulis – PJOK (Fase C)</p>
+                        <div style="text-align:left;">
+                            <label>Nama Lengkap</label>
+                            <input type="text" id="inpNama" placeholder="Masukkan nama lengkap...">
+                            <label>Kelas</label>
+                            <select id="inpKelas">
+                                <option value="">-- Pilih Kelas --</option>
+                                <option value="6A">Kelas 6A</option>
+                                <option value="6B">Kelas 6B</option>
+                            </select>
+                        </div>
+                        <button class="btn" style="width:100%" onclick="app.login()">Masuk Ujian</button>
+                        <div id="resume-alert" style="display:none;margin-top:20px;padding:10px;background:#f0fdf4;color:#15803d;border-radius:8px;cursor:pointer;font-size:0.9rem;" onclick="app.resume()">
+                            🔄 <b>Sesi Tersimpan Ditemukan</b><br>Klik untuk melanjutkan
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ③ SLIDE PETUNJUK -->
+            <div id="slide-rules" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:700px;margin:0 auto;">
+                        <h2 style="margin-top:0;border-bottom:1px solid #e2e8f0;padding-bottom:15px;color:var(--primary);">Petunjuk Pengerjaan</h2>
+                        <div style="line-height:1.8;color:#334155;">
+                            <p>1. <strong>Waktu:</strong> Waktu pengerjaan adalah <strong>90 Menit</strong>. Ujian dikumpulkan otomatis saat waktu habis.</p>
+                            <p>2. <strong>Soal:</strong> Terdapat <strong>40 butir soal</strong> — PG Tunggal, PG Kompleks, dan PG Kategori.</p>
+                            <p>3. <strong>Navigasi:</strong> Gunakan panel kanan untuk berpindah antar soal. Soal yang sudah dijawab berwarna hijau.</p>
+                            <p>4. <strong>Tips:</strong> Baca setiap situasi dan diagram dengan cermat — soal mengukur keputusan strategis, bukan hafalan aturan.</p>
+                            <p>5. <strong>Dilarang:</strong> Menutup atau me-refresh halaman selama ujian berlangsung.</p>
+                        </div>
+                        <div style="margin-top:30px;text-align:right;">
+                            <button class="btn" onclick="app.startExam()">Mulai Mengerjakan &#8594;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ④ SLIDE KUIS -->
+            <div id="slide-quiz" class="slide">
+                <div id="quiz-scroll" class="quiz-scroll-area">
+                    <div id="quiz-container"></div>
+                </div>
+                <div class="nav-bar-fixed">
+                    <button class="btn btn-outline" id="btn-prev" onclick="app.move(-1)">&#8592; Sebelumnya</button>
+                    <span id="q-indicator" style="font-weight:700;color:var(--primary);">Soal 1 / 40</span>
+                    <button class="btn" id="btn-next" onclick="app.move(1)">Selanjutnya</button>
+                </div>
+            </div>
+
+            <!-- ⑤ SLIDE HASIL -->
+            <div id="slide-result" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:600px;margin:0 auto;text-align:center;">
+                        <div style="font-size:4rem;margin-bottom:10px;">🎉</div>
+                        <h2 style="color:var(--primary);margin:0;">Ujian Selesai!</h2>
+                        <p style="color:#64748b;">Jawaban Anda telah kami terima.</p>
+                        <div id="result-content" style="text-align:left;margin-top:30px;border-top:1px solid #e2e8f0;padding-top:20px;">
+                            <p style="text-align:center;color:#64748b;">Sedang memproses nilai...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="side-panel" id="sidebar" style="display:none;">
+            <div style="padding:15px 20px;font-weight:700;color:#334155;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;">
+                <span>Navigasi Soal</span>
+                <span style="font-size:0.8rem;background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:10px;">40 Butir</span>
+            </div>
+            <div class="nav-grid" id="nav-grid"></div>
+            <div style="padding:20px;border-top:1px solid #e2e8f0;margin-top:auto;background:#f8fafc;">
+                <button class="btn btn-danger" style="width:100%" onclick="app.confirmFinish()">Selesai Ujian</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL KONFIRMASI -->
+<div id="modal-confirm" class="overlay">
+    <div class="modal">
+        <h3 style="color:var(--primary);">Konfirmasi Pengumpulan</h3>
+        <p>Yakin ingin mengakhiri dan mengumpulkan ujian ini?</p>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:25px;">
+            <button class="btn btn-outline" onclick="document.getElementById('modal-confirm').style.display='none'">Cek Lagi</button>
+            <button class="btn btn-danger" onclick="app.submitExam()">Ya, Kumpulkan</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL LOADING -->
+<div id="modal-loading" class="overlay">
+    <div class="modal">
+        <h3 style="color:var(--primary);">Sedang Mengirim…</h3>
+        <div style="width:40px;height:40px;border:4px solid #e2e8f0;border-top:4px solid var(--primary);border-radius:50%;margin:10px auto;animation:spin 1s linear infinite;"></div>
+        <p>Mohon jangan tutup halaman ini.</p>
+    </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  KONFIGURASI
+//  Untuk mengganti PIN, jalankan di browser console:
+//    hashPin("PIN_BARU").then(h => console.log(h))
+// ════════════════════════════════════════════════════════
+const CONFIG = {
+    SCRIPT_URL:  "https://script.google.com/macros/s/AKfycbwJveJtAISKhveIQ4wspAaeaUKLrqB_IBY55qhOqDOl649QSjqtBa2hYhOrx7UNs0GbdA/exec",
+    STORAGE_KEY: "UST_2026_PJOK",
+    DURATION:    90 * 60,
+    PIN_HASH:    "107f673fb094f4b9"
+};
+
+async function hashPin(pin) {
+    const enc = new TextEncoder().encode(pin.trim().toLowerCase());
+    const buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('').slice(0, 16);
+}
+window.hashPin = hashPin;
+
+// ── Aset Gambar ─────────────────────────────────────────
+// REUSE = URL diisi dari aset uji-coba (konsep identik)
+// BARU  = URL kosong (""), isi setelah gambar di-upload
+const IMAGE_ASSETS = {
+    // ── Q1:  Diagram lapangan sepak bola situasi menyerang — REUSE ─────
+    "lapangan_sepakbola":   "https://i.ibb.co.com/bgRbSv8v/IMG-1-lapangan-sepakbola.png",
+
+    // ── Q2:  Sikap kapal terbang senam lantai — REUSE ──────────────────
+    "sikap_kapal_terbang":  "https://i.ibb.co.com/GvfdDqQW/IMG-2-sikap-kapal-terbang.jpg",
+
+    // ── Q19: Diagram lapangan dengan ruang kosong — REUSE ──────────────
+    "diagram_lapangan":     "https://i.ibb.co.com/6M2Qwtj/IMG-3-diagram-lapangan.png",
+
+    // ── Q26: Ilustrasi cedera ankle bengkak — REUSE ────────────────────
+    "cedera_olahraga":      "https://i.ibb.co.com/yBgnxF1h/IMG-5-cedera-olahraga.png",
+
+    // ── Q29: Diagram formasi bola voli — REUSE ─────────────────────────
+    "formasi_voli":         "https://i.ibb.co.com/Txn1yFZr/IMG-4-formasi-voli.png",
+
+    // ── Q32: Ilustrasi makanan sumber zat gizi — REUSE ─────────────────
+    "makanan_sehat":        "https://i.ibb.co.com/spFrWbFK/IMG-6-makanan-sehat.png",
+
+    // ── Q33: Diagram piring gizi seimbang "Isi Piringku" — BUAT BARU ───
+    "isi_piringku":         "https://i.ibb.co.com/m5k5CsVH/isi-piringku.png",
+
+    // ── Q23: Ilustrasi anak sedenter di depan layar — BUAT BARU ────────
+    "aktivitas_sedenter":   "https://i.ibb.co.com/TJwK3N6/aktivitas-sedenter.png"
+};
+
+function getImg(key, alt = "Ilustrasi Soal") {
+    const url = IMAGE_ASSETS[key];
+    if (!url) return `<div style="background:#fef3c7;padding:15px;border-radius:8px;text-align:center;border:1px solid #f59e0b;">⚠️ Gambar belum tersedia — isi URL pada IMAGE_ASSETS["${key}"]</div>`;
+    return `<img src="${url}" alt="${alt}" class="stimulus-img" loading="eager">`;
+}
+
+// ════════════════════════════════════════════════════════
+//  BANK SOAL — 40 Butir
+//  Elemen: Terampil Bergerak | Belajar Melalui Gerak |
+//          Bergaya Hidup Aktif | Memilih Hidup yang Menyehatkan
+// ════════════════════════════════════════════════════════
+const QUESTIONS = [
+
+// ─── SESI 1: SOAL 1–20 ────────────────────────────────────────────────────────
+
+// ── Soal 1–5: Terampil Bergerak (PG Tunggal) ─────────────────────────────────
+
+{   id:1, cat:"Terampil Bergerak", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Situasi Pertandingan Sepak Bola</div>
+    <div class='visual-frame'>${getImg("lapangan_sepakbola","Diagram Lapangan Sepak Bola")}</div>
+    <p>Perhatikan diagram lapangan di atas. Reza membawa bola di sayap kanan. Dua pemain lawan menutup ruang di depan dan di sisi kanannya. Namun ada satu teman satu tim yang berdiri bebas tanpa penjagaan di sisi kiri lapangan dekat kotak penalti. Waktu tersisa 5 menit dan skor masih imbang.</p></div>`,
+    q:"Berdasarkan situasi di atas, keputusan gerak yang paling tepat sekaligus efektif bagi Reza adalah...",
+    opt:["Terus menggiring bola ke depan dengan cepat meski dihadang dua lawan sekaligus","Mengoper bola ke teman yang bebas di sisi kiri agar peluang mencetak gol tetap terbuka","Menendang bola sekuat tenaga ke arah gawang dari posisi sayap yang sempit","Menahan bola di tempat sambil menunggu lawan mendekat"],
+    ans:"Mengoper bola ke teman yang bebas di sisi kiri agar peluang mencetak gol tetap terbuka"
+},
+
+{   id:2, cat:"Terampil Bergerak", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Gerakan Senam Lantai: Sikap Kapal Terbang</div>
+    <div class='visual-frame'>${getImg("sikap_kapal_terbang","Sikap Kapal Terbang Senam Lantai")}</div>
+    <p>Perhatikan gambar sikap kapal terbang di atas. Dalam gerakan ini, siswa berdiri dengan satu kaki sebagai tumpuan, satu kaki diangkat lurus ke belakang sejajar lantai, dan kedua lengan dibentangkan ke samping. Dua siswa melakukan gerakan yang sama — yang satu berhasil stabil selama 10 detik, yang lain hanya 2 detik sebelum kehilangan keseimbangan.</p></div>`,
+    q:"Berdasarkan prinsip keseimbangan tubuh, faktor yang paling menentukan keberhasilan mempertahankan sikap kapal terbang tersebut adalah...",
+    opt:["Tinggi badan dan berat badan siswa yang bersangkutan","Pandangan mata yang terfokus ke satu titik di depan dan titik pusat massa tubuh yang terjaga","Ukuran panjang lengan yang direntangkan ke samping","Ketebalan alas matras yang digunakan saat berlatih"],
+    ans:"Pandangan mata yang terfokus ke satu titik di depan dan titik pusat massa tubuh yang terjaga"
+},
+
+{   id:3, cat:"Terampil Bergerak", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Transfer Keterampilan Antar Olahraga</div>
+    <p>Nadia adalah pemain bulu tangkis berpengalaman yang sudah berlatih 3 tahun. Ia mahir dalam gerakan footwork cepat, memperkirakan arah kok, dan mengatur ayunan raket. Pada Pekan Olahraga Sekolah, Nadia pertama kali mencoba tenis meja. Meski belum pernah berlatih, ia segera bisa merasakan beberapa aspek yang serupa dengan bulu tangkis — namun ada juga perbedaan yang membuat ia harus beradaptasi.</p></div>`,
+    q:"Keterampilan dari bulu tangkis yang paling mudah ditransfer dan langsung berguna saat Nadia bermain tenis meja adalah...",
+    opt:["Teknik servis melambung tinggi, karena dalam tenis meja servis juga dilakukan dari atas","Kemampuan membaca arah bola dan timing pukulan, karena kedua olahraga menuntut reaksi cepat terhadap bola yang datang","Teknik melompat smash, karena tenis meja juga memerlukan loncatan tinggi untuk mematikan lawan","Kemampuan berlari jarak jauh mengelilingi lapangan untuk mempertahankan stamina"],
+    ans:"Kemampuan membaca arah bola dan timing pukulan, karena kedua olahraga menuntut reaksi cepat terhadap bola yang datang"
+},
+
+{   id:4, cat:"Terampil Bergerak", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Investigasi Teknik Lemparan Bola</div>
+    <p>Dalam pelajaran PJOK, guru meminta dua siswa melempar bola ke sasaran yang sama. <strong>Teknik A:</strong> Aldi melangkahkan kaki berlawanan (kaki kiri maju saat tangan kanan melempar), memutar badan dari pinggang, dan meluruskan lengan penuh saat melepas bola. <strong>Teknik B:</strong> Bima berdiri tegak tanpa langkah kaki, hanya menggerakkan lengan dari siku ke atas tanpa rotasi badan. Hasil pengukuran: Teknik A rata-rata 18 meter, Teknik B rata-rata 9 meter.</p></div>`,
+    q:"Berdasarkan data hasil pengukuran dan prinsip biomekanika, alasan utama mengapa Teknik A menghasilkan lemparan dua kali lebih jauh adalah...",
+    opt:["Teknik A menggunakan bola yang lebih ringan sehingga lebih mudah dilempar jauh","Teknik A melibatkan lebih banyak segmen tubuh secara berantai (kaki–pinggang–bahu–lengan) sehingga menghasilkan gaya dorong yang lebih besar","Teknik B salah karena siku tidak boleh ditekuk saat melempar bola","Teknik A lebih mudah dilakukan sehingga tidak menguras tenaga pemain"],
+    ans:"Teknik A melibatkan lebih banyak segmen tubuh secara berantai (kaki–pinggang–bahu–lengan) sehingga menghasilkan gaya dorong yang lebih besar"
+},
+
+{   id:5, cat:"Terampil Bergerak", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Gerak Dasar dalam Permainan Tradisional</div>
+    <p>Permainan gobak sodor dimainkan di lapangan berbentuk persegi panjang yang dibagi menjadi kotak-kotak oleh garis horizontal dan vertikal. Tim penyerang berusaha melewati seluruh garis pertahanan dan kembali ke titik awal, sementara tim penjaga berusaha menyentuh pemain lawan. Pemain penyerang harus terus bergerak, mengecoh, dan berganti arah dengan cepat untuk menghindari sentuhan.</p></div>`,
+    q:"Kombinasi gerak dasar yang paling dominan dan paling sering digunakan oleh pemain penyerang dalam permainan gobak sodor adalah...",
+    opt:["Melempar dan menangkap bola, karena diperlukan untuk mengoper antar pemain","Berlari dan mengubah arah secara tiba-tiba, karena diperlukan untuk melewati penjaga dan menghindari sentuhan","Melompat dan berguling, karena diperlukan untuk melewati garis pertahanan yang rendah","Berjalan dan merangkak, karena kecepatan rendah lebih mudah dikendalikan"],
+    ans:"Berlari dan mengubah arah secara tiba-tiba, karena diperlukan untuk melewati penjaga dan menghindari sentuhan"
+},
+
+// ── Soal 6–9, 20: Belajar Melalui Gerak (PG Tunggal) ────────────────────────
+
+{   id:6, cat:"Belajar Melalui Gerak", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Evaluasi Strategi: Tim Bola Basket Kelas 6</div>
+    <p>Dalam 3 pertandingan terakhir, tim basket kelas 6A selalu kalah di menit-menit akhir meski sempat unggul. Analisis pertandingan menunjukkan pola yang sama: saat memimpin skor, seluruh pemain maju menyerang serentak dan tidak ada pemain yang bertahan. Lawan kemudian melakukan serangan balik cepat yang tidak bisa dibendung karena area pertahanan kosong.</p></div>`,
+    q:"Berdasarkan analisis tersebut, perubahan strategi yang paling tepat untuk mencegah kekalahan serupa adalah...",
+    opt:["Menambah jumlah pemain yang boleh berada di lapangan melebihi aturan","Memastikan ada 1–2 pemain yang tetap di posisi bertahan saat tim sedang menyerang","Memerintahkan seluruh pemain berhenti menyerang dan hanya bertahan sepanjang sisa waktu","Mengganti semua pemain dengan pemain cadangan agar lebih segar di menit-menit akhir"],
+    ans:"Memastikan ada 1–2 pemain yang tetap di posisi bertahan saat tim sedang menyerang"
+},
+
+{   id:7, cat:"Belajar Melalui Gerak", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Modifikasi Permainan di Lapangan Sempit</div>
+    <p>Kelas 6 akan bermain sepak bola, tetapi lapangan yang tersedia hanya sepertiga ukuran standar karena sebagian lapangan sedang diperbaiki. Jumlah siswa yang akan bermain tetap 20 orang (10 vs 10). Guru PJOK ingin memodifikasi permainan agar tetap berlangsung dengan aman, adil, dan semua siswa aktif bergerak.</p></div>`,
+    q:"Dari pilihan modifikasi di bawah ini, yang paling tepat untuk menyesuaikan permainan dengan kondisi lapangan yang lebih kecil adalah...",
+    opt:["Tetap bermain 10 vs 10 namun menambah gawang agar lebih banyak gol tercipta","Mengurangi pemain menjadi 5 vs 5 agar ruang gerak per pemain tetap cukup dan permainan tidak terlalu padat","Memperbesar ukuran bola agar lebih mudah dilihat di lapangan yang sempit","Menambah durasi permainan menjadi dua kali lebih lama sebagai kompensasi lapangan kecil"],
+    ans:"Mengurangi pemain menjadi 5 vs 5 agar ruang gerak per pemain tetap cukup dan permainan tidak terlalu padat"
+},
+
+{   id:8, cat:"Belajar Melalui Gerak", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Konflik dalam Tim Bola Voli</div>
+    <p>Di pertengahan pertandingan bola voli antar kelas, dua pemain terbaik tim — Hendra dan Fikri — terlibat pertengkaran di lapangan. Hendra merasa Fikri terlalu egois dan selalu ingin memukul bola sendiri tanpa mengoper. Fikri merasa Hendra lambat dan tidak bisa diandalkan. Suasana tim menjadi tegang, konsentrasi pemain lain terganggu, dan tim mulai tertinggal skor.</p></div>`,
+    q:"Sebagai kapten tim yang bijak, tindakan yang paling tepat untuk segera menangani situasi ini adalah...",
+    opt:["Memihak Hendra karena ia adalah pemain yang lebih senior di tim","Mengeluarkan Fikri dari lapangan karena ia yang memulai egoisnya","Meminta time-out, memisahkan keduanya sejenak, lalu mengajak diskusi singkat untuk menemukan solusi bersama demi kepentingan tim","Membiarkan konflik berlanjut karena urusan pribadi tidak boleh dicampuri kapten"],
+    ans:"Meminta time-out, memisahkan keduanya sejenak, lalu mengajak diskusi singkat untuk menemukan solusi bersama demi kepentingan tim"
+},
+
+{   id:9, cat:"Belajar Melalui Gerak", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Keputusan Wasit yang Kontroversial</div>
+    <p>Di menit ke-80 pertandingan sepak bola final antar sekolah dengan skor 1–1, wasit memberikan penalti untuk tim lawan yang dianggap tidak wajar oleh tim Dika. Video replay kemudian menunjukkan keputusan wasit memang meragukan. Tim lawan berhasil mencetak gol dari penalti itu dan akhirnya menang. Beberapa pemain tim Dika marah besar dan hendak mengkonfrontasi wasit.</p></div>`,
+    q:"Sikap yang paling mencerminkan sportivitas dan fair play dalam situasi tersebut adalah...",
+    opt:["Mengejar wasit dan berteriak protes keras agar keputusan diubah","Mengajak seluruh tim meninggalkan lapangan sebagai bentuk protes","Menerima hasil pertandingan dengan lapang dada, menegur teman yang akan berbuat anarkis, dan melaporkan keberatan secara resmi lewat jalur yang benar","Merusak fasilitas lapangan sebagai ekspresi kekecewaan yang sah"],
+    ans:"Menerima hasil pertandingan dengan lapang dada, menegur teman yang akan berbuat anarkis, dan melaporkan keberatan secara resmi lewat jalur yang benar"
+},
+
+{   id:20, cat:"Belajar Melalui Gerak", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Permainan Tanpa Wasit dan Tanpa Aturan</div>
+    <p>Kelompok siswa mencoba bermain futsal tanpa wasit dan tanpa menyepakati aturan terlebih dahulu. Dalam 10 menit pertama saja terjadi 3 kali perselisihan: siapa yang terakhir menyentuh bola sebelum keluar, apakah gol sah atau tidak, dan siapa yang curang. Permainan akhirnya terhenti karena tidak ada yang bisa menyelesaikan perselisihan secara adil.</p></div>`,
+    q:"Berdasarkan pengalaman tersebut, fungsi utama peraturan dan wasit dalam olahraga beregu yang paling tepat adalah...",
+    opt:["Agar pertandingan terkesan lebih profesional dan resmi di mata penonton","Agar setiap tim memiliki kesempatan menang yang sama melalui mekanisme pengambilan keputusan yang diakui semua pihak","Agar wasit mendapat peran penting dalam kegiatan olahraga sekolah","Agar permainan selesai lebih cepat dan tidak membuang waktu"],
+    ans:"Agar setiap tim memiliki kesempatan menang yang sama melalui mekanisme pengambilan keputusan yang diakui semua pihak"
+},
+
+// ── Soal 10, 19: Belajar Melalui Gerak + Terampil Bergerak ──────────────────
+
+{   id:10, cat:"Belajar Melalui Gerak", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Perilaku Pemain dalam Pertandingan Beregu</div>
+    <p>Dalam pertandingan kasti antar kelas yang berlangsung ketat, tim kelas 6A menghadapi situasi sulit — tertinggal 5 poin di inning terakhir. Terdapat berbagai perilaku yang muncul dari anggota tim 6A dalam situasi tertekan tersebut.</p></div>`,
+    q:"Pilih LEBIH DARI SATU perilaku yang secara langsung mendukung peluang keberhasilan tim di sisa pertandingan!",
+    opt:["Saling mengingatkan strategi dan posisi antar pemain dengan tenang","Tetap fokus dan memberikan semangat kepada pemukul yang sedang mendapat giliran","Menyalahkan pemain yang sudah melakukan kesalahan di inning sebelumnya","Bermain tanpa koordinasi karena merasa pertandingan sudah tidak bisa dimenangkan"],
+    ans:["Saling mengingatkan strategi dan posisi antar pemain dengan tenang","Tetap fokus dan memberikan semangat kepada pemukul yang sedang mendapat giliran"]
+},
+
+{   id:19, cat:"Terampil Bergerak", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Diagram Lapangan: Membaca Ruang dan Arah</div>
+    <div class='visual-frame'>${getImg("diagram_lapangan","Diagram Lapangan Permainan dengan Penanda Ruang")}</div>
+    <p>Perhatikan diagram lapangan di atas. Pemain X membawa bola di tengah. Area sebelah kiri lapangan kosong tanpa penjaga. Di tengah dan kanan sudah dijaga ketat oleh tiga pemain lawan yang berjejer menutup ruang. Teman satu tim berdiri di sudut kiri atas lapangan.</p></div>`,
+    q:"Berdasarkan prinsip memanfaatkan ruang kosong dalam permainan, keputusan arah gerak yang paling efektif bagi pemain X adalah...",
+    opt:["Bergerak ke tengah lapangan karena posisi tengah selalu paling kuat secara taktis","Bergerak ke sisi kiri yang kosong untuk membuka peluang serangan dari sudut yang tidak dijaga","Bergerak mundur ke pertahanan sendiri untuk menghindari tekanan lawan","Berhenti di tempat sambil menunggu salah satu pemain lawan lengah"],
+    ans:"Bergerak ke sisi kiri yang kosong untuk membuka peluang serangan dari sudut yang tidak dijaga"
+},
+
+// ── Soal 11–15: Bergaya Hidup Aktif ─────────────────────────────────────────
+
+{   id:11, cat:"Bergaya Hidup Aktif", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Perbandingan Data Kesehatan Dua Siswa</div>
+    <p>Berikut data kesehatan dua siswa kelas 6 setelah pemeriksaan rutin: <strong>Rendi</strong> berolahraga 4 kali seminggu (lari, renang, bersepeda), tidur 8 jam, dan jarang sakit. <strong>Ferdi</strong> hampir tidak pernah berolahraga, sering duduk bermain gadget 6+ jam, mudah kelelahan, dan sudah 3 kali absen sakit dalam satu semester.</p></div>`,
+    q:"Pilih LEBIH DARI SATU perbedaan kondisi kesehatan yang paling mungkin terjadi antara Rendi dan Ferdi berdasarkan perbedaan kebiasaan aktivitas fisik mereka!",
+    opt:["Rendi memiliki kapasitas paru-paru dan daya tahan jantung yang lebih baik karena terbiasa latihan kardio","Ferdi lebih mudah mengalami kelebihan berat badan karena kalori tidak terbakar melalui aktivitas fisik","Rendi memiliki sistem kekebalan tubuh yang lebih lemah karena terlalu banyak berolahraga","Ferdi memiliki kepadatan tulang lebih tinggi karena aktivitas fisik membebani dan memperkuat tulang"],
+    ans:["Rendi memiliki kapasitas paru-paru dan daya tahan jantung yang lebih baik karena terbiasa latihan kardio","Ferdi lebih mudah mengalami kelebihan berat badan karena kalori tidak terbakar melalui aktivitas fisik"]
+},
+
+{   id:12, cat:"Bergaya Hidup Aktif", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Jadwal Kegiatan Harian Seorang Siswa</div>
+    <p>Berikut jadwal harian Bagas pada hari libur: 07.00 bangun dan sarapan, 08.00–12.00 bermain game online di depan komputer (4 jam), 12.00 makan siang, 13.00–15.00 menonton serial TV di sofa, 15.30 mengerjakan PR sambil duduk di meja belajar hingga 17.30, 18.00 makan malam dan nonton TV lagi hingga 21.00, lalu tidur.</p></div>`,
+    q:"Pilih LEBIH DARI SATU kegiatan dalam jadwal Bagas yang termasuk perilaku SEDENTER dan sebaiknya dikurangi atau diselingi dengan gerakan aktif!",
+    opt:["Bermain game online di depan komputer selama 4 jam berturut-turut tanpa jeda gerak","Menonton serial TV di sofa selama 2 jam berturut-turut","Mengerjakan PR di meja belajar selama 2 jam tanpa berdiri atau bergerak sama sekali","Tidur malam selama 8 jam karena tubuh membutuhkan istirahat"],
+    ans:["Bermain game online di depan komputer selama 4 jam berturut-turut tanpa jeda gerak","Menonton serial TV di sofa selama 2 jam berturut-turut","Mengerjakan PR di meja belajar selama 2 jam tanpa berdiri atau bergerak sama sekali"]
+},
+
+{   id:13, cat:"Bergaya Hidup Aktif", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Pilihan Aktivitas Fisik untuk Siswa SD</div>
+    <p>Dokter anak merekomendasikan bahwa anak usia 6–12 tahun sebaiknya melakukan aktivitas fisik minimal 60 menit per hari dengan intensitas sedang hingga berat. Rekomendasi ini bertujuan untuk mendukung perkembangan fisik, menjaga berat badan ideal, dan memperkuat tulang serta otot. Tidak semua jenis aktivitas fisik sama-sama sesuai untuk anak usia SD.</p></div>`,
+    q:"Pilih LEBIH DARI SATU aktivitas fisik yang paling direkomendasikan dan sesuai untuk mendukung kesehatan siswa kelas 6 SD!",
+    opt:["Lari santai atau jogging 30 menit di pagi hari","Renang gaya bebas 2–3 kali seminggu","Angkat beban berat di gym setiap hari untuk membentuk otot","Bersepeda bersama teman di sekitar lingkungan rumah"],
+    ans:["Lari santai atau jogging 30 menit di pagi hari","Renang gaya bebas 2–3 kali seminggu","Bersepeda bersama teman di sekitar lingkungan rumah"]
+},
+
+{   id:14, cat:"Bergaya Hidup Aktif", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Manfaat Olahraga Lebih dari Sekadar Fisik</div>
+    <p>Penelitian kesehatan menunjukkan bahwa manfaat olahraga teratur tidak hanya terbatas pada kesehatan fisik (otot, tulang, jantung), tetapi juga memberikan dampak signifikan pada aspek mental dan sosial. Hal ini menjadi dasar mengapa WHO merekomendasikan aktivitas fisik sebagai bagian dari gaya hidup sehat secara holistik.</p></div>`,
+    q:"Pilih LEBIH DARI SATU manfaat olahraga yang berkaitan langsung dengan kesehatan MENTAL dan SOSIAL!",
+    opt:["Mengurangi kadar hormon stres (kortisol) dan meningkatkan hormon kebahagiaan (endorfin)","Memberi kesempatan bersosialisasi dan membangun persahabatan melalui olahraga tim","Meningkatkan massa dan kekuatan otot sehingga penampilan fisik lebih ideal","Mempertebal lapisan pelindung pada tulang sehingga tidak mudah patah"],
+    ans:["Mengurangi kadar hormon stres (kortisol) dan meningkatkan hormon kebahagiaan (endorfin)","Memberi kesempatan bersosialisasi dan membangun persahabatan melalui olahraga tim"]
+},
+
+{   id:15, cat:"Bergaya Hidup Aktif", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Klasifikasi Aktivitas: Aerobik vs Anaerobik</div>
+    <p>Aktivitas fisik dibedakan berdasarkan sistem energi yang dominan digunakan: <strong>Aerobik</strong> — menggunakan oksigen, berlangsung dalam durasi panjang dengan intensitas sedang, dan melatih daya tahan kardiovaskular. <strong>Anaerobik</strong> — tidak bergantung pada oksigen, berlangsung dalam durasi singkat dengan intensitas sangat tinggi, dan melatih kekuatan atau kecepatan maksimal.</p></div>`,
+    q:"Klasifikasikan setiap aktivitas fisik berikut ke dalam sistem energi yang dominan!",
+    rows:["Lari maraton 42 km dalam waktu beberapa jam","Lompat jauh dengan awalan dan tolakan sekuat tenaga","Senam aerobik 45 menit dengan irama musik sedang"],
+    cols:["Aerobik","Anaerobik"],
+    ans:["Aerobik","Anaerobik","Aerobik"]
+},
+
+// ── Soal 16–18: Memilih Hidup yang Menyehatkan (PG Kategori) ─────────────────
+
+{   id:16, cat:"Memilih Hidup yang Menyehatkan", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Kebiasaan Sehari-hari dan Risiko Penyakit Tidak Menular</div>
+    <p>Penyakit tidak menular (PTM) seperti diabetes, hipertensi, dan penyakit jantung sebagian besar dipengaruhi oleh gaya hidup. Badan Kesehatan Dunia (WHO) menegaskan bahwa kebiasaan sehari-hari merupakan faktor risiko yang paling dapat dikendalikan untuk mencegah PTM tersebut.</p></div>`,
+    q:"Klasifikasikan setiap kebiasaan berikut apakah Meningkatkan atau Menurunkan risiko penyakit tidak menular!",
+    rows:["Merokok 1 bungkus per hari","Tidur cukup 8–9 jam setiap malam","Mengonsumsi makanan tinggi gula dan garam setiap hari"],
+    cols:["Meningkatkan Risiko","Menurunkan Risiko"],
+    ans:["Meningkatkan Risiko","Menurunkan Risiko","Meningkatkan Risiko"]
+},
+
+{   id:17, cat:"Memilih Hidup yang Menyehatkan", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Fungsi Zat Gizi dalam Makanan</div>
+    <p>Setiap makanan mengandung zat gizi yang memiliki fungsi berbeda bagi tubuh atlet atau siswa yang aktif berolahraga. Tiga fungsi utama zat gizi adalah: <strong>Sumber Energi</strong> (bahan bakar untuk aktivitas), <strong>Zat Pembangun</strong> (membangun dan memperbaiki otot/jaringan), dan <strong>Zat Pengatur</strong> (mengatur proses metabolisme dan menjaga kesehatan organ).</p></div>`,
+    q:"Klasifikasikan setiap makanan berikut berdasarkan fungsi utama zat gizinya bagi tubuh yang aktif berolahraga!",
+    rows:["Nasi merah dan ubi jalar","Telur dan tahu tempe","Bayam, wortel, dan jeruk"],
+    cols:["Sumber Energi","Zat Pembangun","Zat Pengatur"],
+    ans:["Sumber Energi","Zat Pembangun","Zat Pengatur"]
+},
+
+{   id:18, cat:"Memilih Hidup yang Menyehatkan", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Penanganan Cedera: Prinsip RICE</div>
+    <p>Prinsip <strong>RICE</strong> (Rest–Ice–Compression–Elevation) adalah panduan internasional pertolongan pertama untuk cedera jaringan lunak (otot, ligamen, tendon). Menerapkan langkah yang salah justru dapat memperlambat penyembuhan atau memperparah cedera.</p></div>`,
+    q:"Klasifikasikan setiap tindakan berikut apakah Tepat (sesuai RICE) atau Tidak Tepat saat menangani cedera keseleo pergelangan kaki!",
+    rows:["Segera mengistirahatkan kaki yang cedera dan menghindari beban berat","Mengompres area bengkak dengan es yang dibungkus kain selama 15–20 menit","Memijat dan menggosok keras area yang bengkak agar cepat kempes"],
+    cols:["Tepat","Tidak Tepat"],
+    ans:["Tepat","Tepat","Tidak Tepat"]
+},
+
+// ─── SESI 2: SOAL 21–40 ───────────────────────────────────────────────────────
+
+// ── Soal 21–25: Bergaya Hidup Aktif + Memilih Hidup Menyehatkan (PG Tunggal) ─
+
+{   id:21, cat:"Bergaya Hidup Aktif", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Rekomendasi Aktivitas Fisik Anak Usia Sekolah</div>
+    <p>Kementerian Kesehatan RI bersama WHO mengeluarkan panduan aktivitas fisik untuk anak usia 5–17 tahun. Panduan ini menyebutkan bahwa aktivitas fisik yang tidak mencukupi merupakan salah satu faktor risiko kesehatan terbesar pada anak usia sekolah, setara dengan dampak merokok pada orang dewasa.</p></div>`,
+    q:"Berdasarkan rekomendasi resmi Kementerian Kesehatan, frekuensi dan durasi minimal aktivitas fisik untuk menjaga kebugaran anak usia sekolah dasar adalah...",
+    opt:["Cukup 1 kali seminggu dengan durasi minimal 2 jam non-stop","Minimal 60 menit aktivitas fisik intensitas sedang hingga berat setiap hari atau setidaknya 5 kali seminggu","10 menit jogging ringan setiap pagi sudah cukup untuk memenuhi kebutuhan gerak harian","Tidak ada rekomendasi khusus, yang penting anak bergerak kapan saja bila ingin"],
+    ans:"Minimal 60 menit aktivitas fisik intensitas sedang hingga berat setiap hari atau setidaknya 5 kali seminggu"
+},
+
+{   id:22, cat:"Bergaya Hidup Aktif", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Komponen Kebugaran Jasmani</div>
+    <p>Pelatih kebugaran menjelaskan bahwa kebugaran jasmani terdiri dari beberapa komponen yang perlu dilatih secara berbeda: daya tahan kardiovaskular, kekuatan otot, kelenturan (fleksibilitas), kecepatan, dan keseimbangan. Setiap jenis latihan memiliki efek utama pada komponen kebugaran yang berbeda.</p></div>`,
+    q:"Dari tiga jenis latihan berikut — (1) lari jarak jauh 5 km, (2) push-up 3 set × 20 repetisi, (3) peregangan/stretching selama 20 menit — komponen kebugaran yang paling dominan dilatih oleh masing-masing secara berurutan adalah...",
+    opt:["Kekuatan otot — Daya tahan kardio — Kelenturan","Daya tahan kardiovaskular — Kekuatan otot — Kelenturan","Kelenturan — Kecepatan — Kekuatan otot","Daya tahan kardio — Kelenturan — Kecepatan reaksi"],
+    ans:"Daya tahan kardiovaskular — Kekuatan otot — Kelenturan"
+},
+
+{   id:23, cat:"Bergaya Hidup Aktif", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Dampak Jangka Panjang Gaya Hidup Sedenter</div>
+    <div class='visual-frame'>${getImg("aktivitas_sedenter","Ilustrasi Anak Sedenter di Depan Layar")}</div>
+    <p>Perhatikan gambar di atas. Seorang anak menghabiskan rata-rata 7 jam per hari di depan layar (ponsel, tablet, TV, komputer) tanpa melakukan aktivitas fisik berarti. Kondisi ini telah berlangsung selama 2 tahun sejak kelas 4 SD. Ia jarang bermain di luar, tidak ikut olahraga apapun, dan hampir selalu duduk atau berbaring saat di rumah.</p></div>`,
+    q:"Berdasarkan pola kebiasaan tersebut, risiko kesehatan jangka panjang yang paling mungkin dialami anak ini adalah...",
+    opt:["Tinggi badan akan jauh melampaui teman sebayanya karena beristirahat lebih banyak","Obesitas dan penurunan daya tahan tubuh akibat penumpukan kalori yang tidak terbakar dan melemahnya sistem kardiovaskular","Kekuatan otot akan meningkat secara alami karena tubuh beradaptasi terhadap aktivitas minim","Penglihatan akan semakin tajam karena mata terlatih melihat layar berjam-jam setiap hari"],
+    ans:"Obesitas dan penurunan daya tahan tubuh akibat penumpukan kalori yang tidak terbakar dan melemahnya sistem kardiovaskular"
+},
+
+{   id:24, cat:"Memilih Hidup yang Menyehatkan", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Nutrisi Optimal Sebelum Pertandingan</div>
+    <p>Dara akan mengikuti lomba lari 800 meter di Olimpiade Olahraga Siswa (O2SN) tingkat kecamatan besok pagi pukul 08.00. Ia bertanya kepada pelatihnya tentang makanan terbaik yang harus dikonsumsi malam sebelumnya dan 1–2 jam sebelum berlari. Pelatih menjelaskan bahwa pilihan makanan yang salah dapat membuat perut tidak nyaman saat berlari atau kekurangan energi di tengah lomba.</p></div>`,
+    q:"Jenis makanan yang paling tepat dikonsumsi 1–2 jam sebelum lomba lari untuk memberikan energi optimal tanpa mengganggu kenyamanan lambung adalah...",
+    opt:["Makanan berlemak tinggi seperti gorengan dan ayam goreng tepung karena mengandung banyak kalori","Nasi putih atau roti dengan lauk ringan dan buah pisang karena memberikan karbohidrat yang mudah dicerna menjadi energi cepat","Minuman bersoda manis karena memberikan energi instan dari gula","Sayuran mentah dan salad karena ringan di perut dan kaya serat"],
+    ans:"Nasi putih atau roti dengan lauk ringan dan buah pisang karena memberikan karbohidrat yang mudah dicerna menjadi energi cepat"
+},
+
+{   id:25, cat:"Memilih Hidup yang Menyehatkan", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Hidrasi yang Tepat Saat Berolahraga</div>
+    <p>Setelah bermain futsal selama 1 jam di bawah terik matahari, Doni kehilangan banyak cairan melalui keringat. Ia sangat haus dan mempertimbangkan antara minum air putih, minuman bersoda dingin, atau minuman isotonik. Temannya menyarankan minuman bersoda karena "lebih segar dan memberi tenaga", tetapi pelatih melarangnya.</p></div>`,
+    q:"Alasan paling tepat mengapa pelatih melarang Doni minum minuman bersoda setelah berolahraga intens adalah...",
+    opt:["Minuman bersoda terlalu mahal dibandingkan air putih biasa","Kandungan gula tinggi dan karbonasi dalam minuman bersoda justru memperlambat penyerapan cairan dan dapat menyebabkan kembung, sehingga tidak efektif menggantikan cairan yang hilang","Minuman bersoda hanya boleh diminum oleh atlet profesional, bukan siswa SD","Minuman bersoda tidak tersedia di kantin sekolah setelah jam pelajaran PJOK"],
+    ans:"Kandungan gula tinggi dan karbonasi dalam minuman bersoda justru memperlambat penyerapan cairan dan dapat menyebabkan kembung, sehingga tidak efektif menggantikan cairan yang hilang"
+},
+
+// ── Soal 26–28, 30: Memilih Hidup Menyehatkan + Belajar Melalui Gerak ────────
+
+{   id:26, cat:"Memilih Hidup yang Menyehatkan", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Mengidentifikasi Jenis Cedera Olahraga</div>
+    <div class='visual-frame'>${getImg("cedera_olahraga","Ilustrasi Cedera Ankle Saat Bermain Bola")}</div>
+    <p>Perhatikan ilustrasi di atas. Saat bermain sepak bola, kaki Farel terpelintir ke dalam saat mendarat setelah melompat. Segera setelahnya, pergelangan kakinya terasa nyeri tajam, membengkak, dan Farel kesulitan untuk menapakkan kaki. Tidak ada terdengar suara "krak" dan posisi tulang tidak terlihat berubah secara drastis.</p></div>`,
+    q:"Berdasarkan gejala yang ditampilkan, jenis cedera yang paling mungkin dialami Farel adalah...",
+    opt:["Patah tulang (fraktur), karena kaki terpelintir saat mendarat dari lompatan","Keseleo/sprain ligamen, karena ada pembengkakan dan nyeri pada pergelangan kaki tanpa deformitas tulang yang jelas","Kram otot, karena nyeri muncul tiba-tiba saat aktivitas fisik intens","Memar biasa, karena tidak ada luka terbuka pada kulit pergelangan kaki"],
+    ans:"Keseleo/sprain ligamen, karena ada pembengkakan dan nyeri pada pergelangan kaki tanpa deformitas tulang yang jelas"
+},
+
+{   id:27, cat:"Memilih Hidup yang Menyehatkan", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Urutan Penanganan Cedera Otot: Prinsip RICE</div>
+    <p>Saat latihan lari, Wina mengalami keseleo pada pergelangan kaki kiri. Teman-temannya panik dan masing-masing mengusulkan tindakan berbeda: ada yang menyarankan dipijat, ada yang menyarankan dibawa lari ke UKS, dan ada yang sudah tahu prinsip RICE. Penanganan yang cepat dan tepat dalam 20 menit pertama sangat krusial untuk mencegah pembengkakan yang lebih parah.</p></div>`,
+    q:"Urutan tindakan pertolongan pertama yang paling tepat sesuai prinsip RICE untuk cedera keseleo Wina adalah...",
+    opt:["Elevation → Rest → Ice → Compression (angkat kaki dulu agar darah tidak mengalir ke area cedera)","Rest → Ice → Compression → Elevation (istirahat → kompres es → balut → angkat kaki)","Ice → Massage → Rest → Compression (kompres es → pijat → istirahat → balut)","Compression → Rest → Run slowly → Ice (balut → istirahat → coba jalan perlahan → kompres)"],
+    ans:"Rest → Ice → Compression → Elevation (istirahat → kompres es → balut → angkat kaki)"
+},
+
+{   id:28, cat:"Memilih Hidup yang Menyehatkan", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Olahraga sebagai Cara Mengelola Stres</div>
+    <p>Dua minggu menjelang Ujian Sekolah, banyak siswa kelas 6 mengalami kecemasan berlebihan, sulit berkonsentrasi, dan gangguan tidur. Psikolog sekolah memberikan rekomendasi kepada para siswa bahwa ada cara alami yang terbukti secara ilmiah dapat menurunkan kadar kortisol (hormon stres) dan meningkatkan produksi endorfin (hormon kebahagiaan) tanpa efek samping.</p></div>`,
+    q:"Berdasarkan rekomendasi psikolog dan bukti ilmiah tentang hubungan aktivitas fisik dengan kesehatan mental, pilihan yang paling tepat untuk membantu mengurangi stres menghadapi ujian adalah...",
+    opt:["Bermain game online berjam-jam karena mengalihkan pikiran dari rasa cemas ujian","Melakukan aktivitas fisik ringan–sedang seperti jalan cepat atau jogging 20–30 menit setiap hari","Tidur sepanjang hari untuk mengumpulkan energi dan menghindari pikiran tentang ujian","Makan sebanyak-banyaknya terutama makanan manis untuk memberi rasa senang sementara"],
+    ans:"Melakukan aktivitas fisik ringan–sedang seperti jalan cepat atau jogging 20–30 menit setiap hari"
+},
+
+{   id:29, cat:"Belajar Melalui Gerak", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Membaca Diagram Formasi Bola Voli</div>
+    <div class='visual-frame'>${getImg("formasi_voli","Diagram Formasi Tim Bola Voli")}</div>
+    <p>Perhatikan diagram formasi tim bola voli di atas. Tim sedang dalam posisi menerima servis lawan. Bola hasil penerimaan sudah diarahkan ke setter di posisi tengah depan. Setter siap mengumpan. Lawan sedang mempersiapkan blok di sisi kanan net.</p></div>`,
+    q:"Berdasarkan situasi formasi tersebut, posisi pemain yang paling strategis untuk menerima umpan setter dan melakukan smash adalah...",
+    opt:["Pemain yang berdiri di belakang garis servis, karena posisi jauh memberikan sudut yang lebih baik","Pemain yang berdiri di sisi kiri depan dekat net, karena lawan belum menyiapkan blok di sisi tersebut","Pemain yang berdiri di sisi kanan depan, karena selalu menjadi posisi terkuat dalam serangan voli","Pemain yang berdiri di tengah lapangan paling belakang, karena mudah melihat seluruh lapangan lawan"],
+    ans:"Pemain yang berdiri di sisi kiri depan dekat net, karena lawan belum menyiapkan blok di sisi tersebut"
+},
+
+{   id:30, cat:"Belajar Melalui Gerak", type:"pg", score:1,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Modifikasi Permainan untuk Inklusi</div>
+    <p>Di kelas 6B terdapat Bayu, seorang siswa yang menggunakan kursi roda akibat cedera kaki. Guru PJOK ingin memastikan Bayu dapat berpartisipasi aktif dalam permainan bola kasti yang sedang diajarkan, bukan sekadar menjadi penonton. Beberapa teman mengusulkan agar Bayu "tidak perlu ikut saja", namun guru menolak dan justru merancang modifikasi yang inklusif.</p></div>`,
+    q:"Modifikasi peraturan yang paling tepat agar Bayu dapat berpartisipasi secara bermakna dan adil dalam permainan kasti adalah...",
+    opt:["Meminta Bayu hanya bertugas sebagai pencatat skor karena tidak bisa berlari","Bayu diperbolehkan menggunakan kursi rodanya, dengan aturan jarak lari yang disesuaikan dan posisi pemukul yang dipermudah agar ia tetap menjadi pemain aktif","Membatalkan pelajaran kasti dan mengganti dengan olahraga lain yang bisa diikuti semua siswa tanpa modifikasi","Meminta Bayu menonton dan memberikan semangat dari pinggir lapangan karena itulah peran yang paling realistis"],
+    ans:"Bayu diperbolehkan menggunakan kursi rodanya, dengan aturan jarak lari yang disesuaikan dan posisi pemukul yang dipermudah agar ia tetap menjadi pemain aktif"
+},
+
+// ── Soal 31–35: PG Kompleks ───────────────────────────────────────────────────
+
+{   id:31, cat:"Bergaya Hidup Aktif", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Manfaat Olahraga Teratur: Lebih dari Sekadar Fisik</div>
+    <p>Laporan WHO menyatakan bahwa ketidakaktifan fisik menjadi penyebab kematian keempat terbesar di dunia. Sebaliknya, olahraga teratur terbukti memberikan manfaat yang jauh melampaui penampilan fisik — mencakup dimensi mental, emosional, dan sosial yang sangat penting bagi perkembangan anak usia sekolah.</p></div>`,
+    q:"Pilih LEBIH DARI SATU pernyataan yang benar tentang manfaat olahraga teratur untuk kesehatan MENTAL dan SOSIAL siswa!",
+    opt:["Olahraga meningkatkan produksi neurotransmiter serotonin yang berperan dalam mengatur suasana hati dan mengurangi gejala depresi","Bergabung dalam tim olahraga mengajarkan kerja sama, komunikasi, dan mengelola kemenangan maupun kekalahan dengan dewasa","Olahraga teratur secara otomatis menjamin nilai akademik siswa akan meningkat setiap semester","Anak yang berolahraga rutin tidak pernah mengalami konflik dengan teman sebaya"],
+    ans:["Olahraga meningkatkan produksi neurotransmiter serotonin yang berperan dalam mengatur suasana hati dan mengurangi gejala depresi","Bergabung dalam tim olahraga mengajarkan kerja sama, komunikasi, dan mengelola kemenangan maupun kekalahan dengan dewasa"]
+},
+
+{   id:32, cat:"Memilih Hidup yang Menyehatkan", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Sumber Energi untuk Aktivitas Fisik Intens</div>
+    <div class='visual-frame'>${getImg("makanan_sehat","Berbagai Jenis Makanan Bergizi")}</div>
+    <p>Perhatikan gambar berbagai makanan di atas. Seorang atlet muda membutuhkan asupan yang tepat untuk mendukung sesi latihan intens selama 2 jam. Nutrisionis tim menjelaskan bahwa tidak semua makanan memberikan energi yang efisien untuk aktivitas fisik — beberapa berfungsi sebagai bahan bakar cepat, beberapa sebagai pembangun otot, dan beberapa sebagai pengatur metabolisme.</p></div>`,
+    q:"Pilih LEBIH DARI SATU makanan dari gambar yang paling efektif sebagai SUMBER ENERGI UTAMA untuk mendukung aktivitas fisik intens!",
+    opt:["Nasi putih dan roti gandum, karena mengandung karbohidrat kompleks yang menjadi bahan bakar utama otot","Pisang, karena mengandung gula alami (fruktosa dan glukosa) yang cepat diserap sebagai energi siap pakai","Ikan dan daging tanpa lemak, karena mengandung protein tinggi untuk membangun dan memperbaiki otot","Air putih, karena menghidrasi tubuh dan memperlancar reaksi metabolisme energi"],
+    ans:["Nasi putih dan roti gandum, karena mengandung karbohidrat kompleks yang menjadi bahan bakar utama otot","Pisang, karena mengandung gula alami (fruktosa dan glukosa) yang cepat diserap sebagai energi siap pakai"]
+},
+
+{   id:33, cat:"Memilih Hidup yang Menyehatkan", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Gizi Seimbang: Panduan "Isi Piringku"</div>
+    <div class='visual-frame'>${getImg("isi_piringku","Diagram Panduan Gizi Seimbang Isi Piringku")}</div>
+    <p>Perhatikan diagram panduan "Isi Piringku" dari Kementerian Kesehatan RI di atas. Panduan ini menggantikan konsep "4 Sehat 5 Sempurna" dan memberikan visualisasi komposisi makanan yang dianjurkan dalam satu piring makan untuk mendukung gizi seimbang.</p></div>`,
+    q:"Berdasarkan panduan Isi Piringku, pilih LEBIH DARI SATU komposisi atau prinsip yang sesuai dengan anjuran gizi seimbang untuk anak usia sekolah yang aktif berolahraga!",
+    opt:["Setengah piring diisi sayuran dan buah-buahan beraneka warna sebagai sumber vitamin, mineral, dan serat","Seperempat piring diisi makanan pokok (nasi, jagung, atau umbi) sebagai sumber karbohidrat dan energi","Seluruh piring diisi daging dan protein hewani karena siswa yang aktif berolahraga membutuhkan protein sebanyak-banyaknya","Minum segelas air putih bersama setiap kali makan untuk membantu penyerapan nutrisi"],
+    ans:["Setengah piring diisi sayuran dan buah-buahan beraneka warna sebagai sumber vitamin, mineral, dan serat","Seperempat piring diisi makanan pokok (nasi, jagung, atau umbi) sebagai sumber karbohidrat dan energi"]
+},
+
+{   id:34, cat:"Memilih Hidup yang Menyehatkan", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Tindakan yang Memperparah Cedera</div>
+    <p>Ketika seorang pemain mengalami cedera otot betis saat berlari sprint, reaksi pertama yang diambil sangat menentukan kecepatan pemulihan. Sayangnya, banyak orang justru melakukan tindakan yang secara medis terbukti memperlambat penyembuhan atau bahkan memperparah kerusakan jaringan yang sudah cedera.</p></div>`,
+    q:"Pilih LEBIH DARI SATU tindakan yang harus DIHINDARI karena dapat memperparah cedera otot atau keseleo!",
+    opt:["Memijat dan menggosok keras area yang bengkak dan nyeri segera setelah cedera terjadi","Memaksa menggerakkan atau meregangkan bagian tubuh yang cedera agar tidak kaku","Mengompres area cedera dengan es yang dibungkus kain tipis selama 15–20 menit","Meneruskan aktivitas fisik berat karena merasa sakit akan hilang sendiri jika dipaksakan"],
+    ans:["Memijat dan menggosok keras area yang bengkak dan nyeri segera setelah cedera terjadi","Memaksa menggerakkan atau meregangkan bagian tubuh yang cedera agar tidak kaku","Meneruskan aktivitas fisik berat karena merasa sakit akan hilang sendiri jika dipaksakan"]
+},
+
+{   id:35, cat:"Belajar Melalui Gerak", type:"pgk", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Pembagian Peran dalam Pertandingan Olahraga</div>
+    <p>Pertandingan bola basket antar kelas memerlukan beberapa orang dalam peran berbeda agar berjalan tertib dan fair. Terdapat pemain, kapten tim, wasit, pencatat skor, dan pelatih. Setiap peran memiliki tanggung jawab yang spesifik dan tidak boleh dicampuradukkan demi menjaga integritas pertandingan.</p></div>`,
+    q:"Pilih LEBIH DARI SATU tugas yang merupakan tanggung jawab WASIT atau ofisial pertandingan (bukan tugas kapten tim atau pelatih)!",
+    opt:["Meniup peluit dan menentukan apakah suatu pelanggaran terjadi berdasarkan aturan permainan","Mencatat skor, foul, dan timeout setiap tim secara akurat selama pertandingan berlangsung","Memberikan instruksi strategi dan taktik permainan kepada pemain dari pinggir lapangan","Mewakili tim dalam diskusi dengan wasit jika ada protes terkait keputusan pertandingan"],
+    ans:["Meniup peluit dan menentukan apakah suatu pelanggaran terjadi berdasarkan aturan permainan","Mencatat skor, foul, dan timeout setiap tim secara akurat selama pertandingan berlangsung"]
+},
+
+// ── Soal 36–40: PG Kategori ───────────────────────────────────────────────────
+
+{   id:36, cat:"Bergaya Hidup Aktif", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Klasifikasi Intensitas Aktivitas Fisik</div>
+    <p>Intensitas aktivitas fisik dibedakan menjadi tiga tingkatan berdasarkan seberapa besar aktivitas tersebut meningkatkan detak jantung dan laju pernapasan: <strong>Ringan</strong> (detak jantung sedikit meningkat, bisa berbicara normal), <strong>Sedang</strong> (detak jantung meningkat cukup, napas agak cepat tetapi masih bisa bicara), dan <strong>Berat</strong> (detak jantung sangat tinggi, sulit berbicara penuh kalimat).</p></div>`,
+    q:"Klasifikasikan setiap aktivitas fisik berikut ke dalam tingkat intensitas yang tepat!",
+    rows:["Berjalan santai keliling kompleks perumahan","Bermain bulu tangkis dengan teman secara kompetitif","Berlari sprint 100 meter sekuat tenaga"],
+    cols:["Ringan","Sedang","Berat"],
+    ans:["Ringan","Sedang","Berat"]
+},
+
+{   id:37, cat:"Memilih Hidup yang Menyehatkan", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Makronutrien dan Mikronutrien</div>
+    <p>Zat gizi dibedakan berdasarkan jumlah yang dibutuhkan tubuh: <strong>Makronutrien</strong> dibutuhkan dalam jumlah besar (gram) karena menjadi bahan utama energi dan struktur tubuh, sedangkan <strong>Mikronutrien</strong> dibutuhkan dalam jumlah sangat kecil (miligram atau mikrogram) namun esensial untuk mengatur proses metabolisme.</p></div>`,
+    q:"Klasifikasikan setiap zat gizi berikut apakah termasuk Makronutrien atau Mikronutrien!",
+    rows:["Karbohidrat (misalnya dari nasi dan roti)","Zat besi (Fe) untuk pembentukan hemoglobin","Lemak (misalnya dari minyak dan alpukat)"],
+    cols:["Makronutrien","Mikronutrien"],
+    ans:["Makronutrien","Mikronutrien","Makronutrien"]
+},
+
+{   id:38, cat:"Memilih Hidup yang Menyehatkan", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Klasifikasi Tingkat Keparahan Cedera dan Penanganannya</div>
+    <p>Tidak semua cedera dapat ditangani sendiri dengan pertolongan pertama. Penting bagi siswa untuk dapat membedakan cedera yang dapat ditangani di sekolah/rumah dari cedera yang memerlukan bantuan tenaga medis profesional segera agar tidak memperburuk kondisi.</p></div>`,
+    q:"Klasifikasikan setiap cedera berikut apakah cukup dengan Pertolongan Pertama atau memerlukan Bantuan Medis Profesional segera!",
+    rows:["Lecet ringan di lutut akibat terjatuh di lapangan beton","Tulang yang menonjol keluar dari kulit setelah benturan keras","Keseleo pergelangan kaki yang bengkak namun tidak ada tulang yang berubah posisi"],
+    cols:["Pertolongan Pertama","Bantuan Medis Profesional"],
+    ans:["Pertolongan Pertama","Bantuan Medis Profesional","Pertolongan Pertama"]
+},
+
+{   id:39, cat:"Belajar Melalui Gerak", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Klasifikasi Jenis Permainan Olahraga</div>
+    <p>Permainan olahraga diklasifikasikan berdasarkan tujuan dan cara bermainnya: <strong>Permainan Invasi</strong> — memasuki wilayah lawan untuk mencetak angka (gol/poin) ke target lawan. <strong>Permainan Net/Dinding</strong> — memukul bola melewati net atau dinding ke sisi lawan tanpa bisa diblok langsung. <strong>Permainan Fielding</strong> — tim pemukul berusaha berlari antar base/pos sementara tim lapangan berusaha mematikan pemukul.</p></div>`,
+    q:"Klasifikasikan setiap olahraga berikut ke dalam jenis permainan yang tepat!",
+    rows:["Sepak Bola","Bulu Tangkis","Kasti"],
+    cols:["Invasi","Net","Fielding"],
+    ans:["Invasi","Net","Fielding"]
+},
+
+{   id:40, cat:"Bergaya Hidup Aktif", type:"pgk-cat", score:2,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Klasifikasi Kebiasaan: Mendukung atau Tidak Mendukung Gaya Hidup Aktif?</div>
+    <p>Gaya hidup aktif dan sehat adalah pola hidup yang secara konsisten mencakup aktivitas fisik cukup, nutrisi baik, istirahat memadai, dan menghindari kebiasaan yang merugikan kesehatan. Siswa perlu mampu membedakan kebiasaan mana yang mendukung dan mana yang bertentangan dengan prinsip ini.</p></div>`,
+    q:"Klasifikasikan setiap kebiasaan berikut apakah Mendukung atau Tidak Mendukung gaya hidup aktif dan sehat!",
+    rows:["Rutin berolahraga minimal 3–5 kali seminggu dengan durasi 30–60 menit","Mengonsumsi minuman bersoda dan makanan cepat saji sebagai makanan pokok setiap hari","Tidur teratur 8–9 jam setiap malam dan menghindari begadang"],
+    cols:["Mendukung","Tidak Mendukung"],
+    ans:["Mendukung","Tidak Mendukung","Mendukung"]
+}
+
+]; // ═══ END QUESTIONS ═══
+
+// ════════════════════════════════════════════════════════
+//  APP OBJECT
+// ════════════════════════════════════════════════════════
+const app = {
+    session: { nama:"", kelas:"", answers:{}, startTime:0 },
+    currIdx: 0,
+    timerInt: null,
+    _hasSavedSession: false,
+
+    init: function() {
+        this.showSlide('pin');
+        try { if (localStorage.getItem(CONFIG.STORAGE_KEY)) this._hasSavedSession = true; } catch(e) {}
+    },
+
+    checkPin: async function() {
+        const inp = document.getElementById('inp-pin');
+        const val = inp.value.trim();
+        if (!val) return;
+        const h = await hashPin(val);
+        if (h === CONFIG.PIN_HASH) {
+            this.showSlide('login');
+            if (this._hasSavedSession) document.getElementById('resume-alert').style.display = 'block';
+        } else {
+            inp.classList.add('error');
+            document.getElementById('pin-err').style.display = 'block';
+            inp.value = '';
+            setTimeout(() => inp.classList.remove('error'), 400);
+        }
+    },
+
+    login: function() {
+        const n = document.getElementById('inpNama').value.trim();
+        const k = document.getElementById('inpKelas').value;
+        if (!n || !k) { alert("Harap isi nama lengkap dan pilih kelas!"); return; }
+        this.session.nama  = n;
+        this.session.kelas = k;
+        this.showSlide('rules');
+    },
+
+    resume: function() {
+        try {
+            this.session = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY));
+            this.renderSidebar();
+            this.startExam(true);
+        } catch(e) { alert("Sesi tersimpan rusak. Silakan mulai ujian baru."); }
+    },
+
+    startExam: function(isRes = false) {
+        if (!isRes) { this.session.startTime = Date.now(); this.save(); }
+        document.getElementById('user-badge').innerText     = this.session.nama;
+        document.getElementById('user-badge').style.display = 'block';
+        document.getElementById('sidebar').style.display    = 'flex';
+        this.renderQuestions();
+        this.renderSidebar();
+        this.showSlide('quiz');
+        this.goToQ(0);
+        this.startTimer();
+    },
+
+    showSlide: function(id) {
+        document.querySelectorAll('.slide').forEach(e => e.classList.remove('active'));
+        document.getElementById('slide-' + id).classList.add('active');
+    },
+
+    renderQuestions: function() {
+        const box = document.getElementById('quiz-container');
+        box.innerHTML = "";
+        QUESTIONS.forEach((q, i) => {
+            let h = `<div id="q-item-${i}" class="question-item">
+                        <div class="tag-cat">${q.cat}</div>
+                        ${q.stim || ""}
+                        <div class="q-text">${i+1}. ${q.q}</div>`;
+            if (q.type === 'pg') {
+                q.opt.forEach((o, oi) =>
+                    h += `<label class="opt-label"><input type="radio" name="ans_${q.id}" value="${oi}" onchange="app.saveAns(${q.id},${oi})"> ${o}</label>`
+                );
+            } else if (q.type === 'pgk') {
+                h += `<p style="font-size:.82rem;color:#64748b;margin-bottom:10px;">☑ Boleh memilih lebih dari satu jawaban</p>`;
+                q.opt.forEach((o, oi) =>
+                    h += `<label class="opt-label"><input type="checkbox" value="${oi}" onchange="app.saveMulti(${q.id},${oi})"> ${o}</label>`
+                );
+            } else if (q.type === 'pgk-cat') {
+                h += `<div class="matrix-wrapper"><table class="matrix-table"><tr><th>Pernyataan</th>`;
+                q.cols.forEach(c => h += `<th>${c}</th>`);
+                h += `</tr>`;
+                q.rows.forEach((r, ri) => {
+                    h += `<tr><td>${r}</td>`;
+                    q.cols.forEach(c =>
+                        h += `<td><input type="radio" name="mx_${q.id}_${ri}" value="${c}" onchange="app.saveMx(${q.id},${ri},'${c}')"></td>`
+                    );
+                    h += `</tr>`;
+                });
+                h += `</table></div>`;
+            }
+            h += `</div>`;
+            box.innerHTML += h;
+        });
+    },
+
+    goToQ: function(idx) {
+        if (idx < 0 || idx >= QUESTIONS.length) return;
+        this.currIdx = idx;
+        const qs = document.getElementById('quiz-scroll');
+        if (qs) qs.scrollTop = 0;
+        document.querySelectorAll('.question-item').forEach(e => e.classList.remove('active-q'));
+        document.getElementById(`q-item-${idx}`).classList.add('active-q');
+        document.getElementById('q-indicator').innerText = `Soal ${idx+1} / 40`;
+        document.getElementById('btn-prev').disabled = (idx === 0);
+        const nBtn = document.getElementById('btn-next');
+        if (idx === QUESTIONS.length - 1) {
+            nBtn.innerText = "Selesai"; nBtn.onclick = () => this.confirmFinish(); nBtn.classList.add('btn-danger');
+        } else {
+            nBtn.innerText = "Selanjutnya"; nBtn.onclick = () => this.move(1); nBtn.classList.remove('btn-danger');
+        }
+        this.restoreVisual(idx);
+        this.updateSidebarUI();
+    },
+
+    move: function(step) { this.goToQ(this.currIdx + step); },
+
+    saveAns:   function(qid, v)   { this.session.answers[qid] = v;                                                    this.save(); this.updateSidebarUI(); },
+    saveMulti: function(qid, oi)  { let c=this.session.answers[qid]||[]; if(c.includes(oi)) c=c.filter(x=>x!==oi); else c.push(oi); this.session.answers[qid]=c; this.save(); this.updateSidebarUI(); },
+    saveMx:    function(qid,ri,v) { let c=this.session.answers[qid]||[]; c[ri]=v; this.session.answers[qid]=c;        this.save(); this.updateSidebarUI(); },
+    save:      function()         { try { localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(this.session)); } catch(e) {} },
+
+    renderSidebar: function() {
+        const g = document.getElementById('nav-grid');
+        g.innerHTML = "";
+        QUESTIONS.forEach((q,i) => g.innerHTML += `<div id="nav-num-${i}" class="nav-num" onclick="app.goToQ(${i})">${i+1}</div>`);
+    },
+
+    checkFilled: function(qid) {
+        const v = this.session.answers[qid];
+        if (v===undefined||v===null) return false;
+        if (Array.isArray(v)) return v.filter(x=>x!==undefined&&x!==null).length>0;
+        return true;
+    },
+
+    updateSidebarUI: function() {
+        QUESTIONS.forEach((q,i) => {
+            const el = document.getElementById(`nav-num-${i}`);
+            if (!el) return;
+            if (i===this.currIdx) el.classList.add('current'); else el.classList.remove('current');
+            if (this.checkFilled(q.id)) el.classList.add('filled'); else el.classList.remove('filled');
+        });
+    },
+
+    restoreVisual: function(idx) {
+        const q   = QUESTIONS[idx];
+        const ans = this.session.answers[q.id];
+        if (ans===undefined||ans===null) return;
+        if (q.type==='pg') {
+            const el = document.querySelector(`input[name="ans_${q.id}"][value="${ans}"]`);
+            if (el) el.checked = true;
+        } else if (q.type==='pgk' && Array.isArray(ans)) {
+            ans.forEach(v => { const el = document.querySelector(`#q-item-${idx} input[value="${v}"]`); if(el) el.checked=true; });
+        } else if (q.type==='pgk-cat' && Array.isArray(ans)) {
+            ans.forEach((v,ri) => { if(!v) return; const el = document.querySelector(`input[name="mx_${q.id}_${ri}"][value="${v}"]`); if(el) el.checked=true; });
+        }
+    },
+
+    startTimer: function() {
+        clearInterval(this.timerInt);
+        this.timerInt = setInterval(() => {
+            const rem = CONFIG.DURATION - Math.floor((Date.now()-this.session.startTime)/1000);
+            if (rem<=0) { clearInterval(this.timerInt); this.submitExam(); return; }
+            const m = Math.floor(rem/60).toString().padStart(2,'0');
+            const s = (rem%60).toString().padStart(2,'0');
+            document.getElementById('timer-display').innerText = `${m}:${s}`;
+        }, 1000);
+    },
+
+    confirmFinish: function() { document.getElementById('modal-confirm').style.display='flex'; },
+
+    submitExam: function() {
+        document.getElementById('modal-confirm').style.display = 'none';
+        document.getElementById('modal-loading').style.display = 'flex';
+        clearInterval(this.timerInt);
+
+        const stats = {};
+        let totS = 0, totM = 0;
+        QUESTIONS.forEach(q => {
+            if (!stats[q.cat]) stats[q.cat] = { s:0, m:0 };
+            stats[q.cat].m += q.score;
+            totM += q.score;
+            const u = this.session.answers[q.id];
+            let pt = 0;
+            if (u!==undefined && u!==null) {
+                if (q.type==='pg') {
+                    if (u == q.opt.indexOf(q.ans)) pt = q.score;
+                } else if (q.type==='pgk' && Array.isArray(u) && Array.isArray(q.ans)) {
+                    const ua = u.map(i=>q.opt[i]).sort();
+                    const ca = [...q.ans].sort();
+                    if (JSON.stringify(ua)===JSON.stringify(ca)) pt = q.score;
+                } else if (q.type==='pgk-cat' && Array.isArray(u)) {
+                    let match = 0;
+                    q.ans.forEach((k,i) => { if(u[i]===k) match++; });
+                    pt = (match/q.rows.length)*q.score;
+                }
+            }
+            stats[q.cat].s += pt;
+            totS += pt;
+        });
+
+        const final = Math.round((totS/totM)*100);
+        let summ={}, cht="", nts=[];
+        const catOrder = ["Terampil Bergerak","Belajar Melalui Gerak","Bergaya Hidup Aktif","Memilih Hidup yang Menyehatkan"];
+        catOrder.forEach(c => {
+            if (!stats[c]) return;
+            const p = stats[c].m>0 ? Math.round((stats[c].s/stats[c].m)*100) : 0;
+            summ[c] = { skor:p, tuntas:p>=70, label:p>=70?"Tuntas":"Perlu Bimbingan" };
+            if (p<70) nts.push(c);
+            cht += `<div class="chart-row">
+                        <div class="chart-lbl">${c}</div>
+                        <div class="chart-track"><div class="chart-fill" style="width:${p}%;background:${p>=70?'#16a34a':'#dc2626'}"></div></div>
+                        <div class="chart-val">${p}%</div>
+                    </div>`;
+        });
+
+        const desc = nts.length===0 ? "Selamat! Tuntas semua elemen." : "Perlu belajar lagi di: "+nts.join(", ");
+
+        this.showSlide('result');
+        document.getElementById('modal-loading').style.display = 'none';
+        document.getElementById('result-content').innerHTML = `
+            <h3>Nilai Akhir: <span style="color:var(--primary);font-size:2.5rem;">${final}</span></h3>
+            <div style="background:#f0fdf4;padding:15px;border-radius:8px;margin-bottom:20px;">${desc}</div>
+            <h4>Capaian per Elemen:</h4>${cht}`;
+
+        fetch(CONFIG.SCRIPT_URL, {
+            method:'POST', mode:'no-cors',
+            headers:{'Content-Type':'text/plain'},
+            body: JSON.stringify({
+                action:"submit_exam", mapel:"PJOK",
+                nama:this.session.nama, kelas:this.session.kelas,
+                skor:final, deskripsi:desc,
+                jawaban:this.session.answers, ringkasanNilai:summ
+            })
+        }).then(() => { try { localStorage.removeItem(CONFIG.STORAGE_KEY); } catch(e) {} });
+    }
+};
+window.onload = () => app.init();
+</script>
+</body>
+</html>
