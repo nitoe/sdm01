@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujian Sekolah Tertulis – Bahasa Sunda · SD Muhammadiyah 01 Kukusan</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --text: #334155;
+            --bg: #f0f4ff;
+            --border: #cbd5e1;
+        }
+        * { box-sizing: border-box; outline: none; }
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; }
+        .app-container { display: flex; flex-direction: column; height: 100%; width: 100%; background: white; }
+        .header { height: 64px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); z-index: 50; flex-shrink: 0; }
+        .header-title { font-weight: 700; font-size: 1.15rem; }
+        .timer-box { background: rgba(255,255,255,0.15); padding: 6px 16px; border-radius: 6px; font-weight: 700; font-family: monospace; font-size: 1.25rem; border: 1px solid rgba(255,255,255,0.2); }
+        .workspace { display: flex; flex: 1; overflow: hidden; position: relative; }
+        .main-stage { flex: 1; position: relative; background: var(--bg); display: flex; flex-direction: column; overflow: hidden; }
+        .slide { display: none !important; width: 100%; height: 100%; }
+        .slide.active { display: flex !important; flex-direction: column; animation: fadeIn 0.4s ease; }
+        .center-content-wrapper { width: 100%; max-width: 800px; margin: 0 auto; padding: 20px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .card { background: white; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); padding: 32px; margin-bottom: 20px; border-top: 5px solid var(--primary); }
+        .quiz-scroll-area { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 80px; width: 100%; max-width: 900px; margin: 0 auto; }
+        .nav-bar-fixed { flex-shrink: 0; background: white; padding: 16px 24px; border-top: 1px solid #e2e8f0; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; z-index: 40; }
+        .question-item { display: none; }
+        .question-item.active-q { display: block; animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { opacity:0; transform:translateX(15px); } to { opacity:1; transform:translateX(0); } }
+        .stimulus-box { background: #ffffff; border: 1px solid #e2e8f0; border-left: 5px solid var(--primary); padding: 20px; margin-bottom: 24px; border-radius: 8px; }
+        .stimulus-head { font-weight: 800; color: var(--primary); border-bottom: 2px dashed #e2e8f0; padding-bottom: 10px; margin-bottom: 15px; font-size: 1.1rem; text-transform: uppercase; }
+        .visual-frame { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; display: flex; justify-content: center; align-items: center; margin: 15px 0; overflow: hidden; }
+        .q-text { font-size: 1.15rem; font-weight: 600; color: #1e293b; margin-bottom: 20px; line-height: 1.6; }
+        .tag-cat { display: inline-block; font-size: 0.75rem; background: #e0f2fe; color: #0369a1; padding: 4px 10px; border-radius: 20px; font-weight: bold; margin-bottom: 10px; }
+        .opt-label { display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: white; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 12px; cursor: pointer; transition: all 0.2s; font-size: 1rem; color: #475569; }
+        .opt-label:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+        .opt-label input { margin-top: 4px; transform: scale(1.2); flex-shrink: 0; }
+        .matrix-table { width: 100%; border-collapse: collapse; margin-top: 10px; min-width: 320px; }
+        .matrix-table th, .matrix-table td { border: 1px solid #e2e8f0; padding: 12px; }
+        .matrix-table th { background: #f1f5f9; text-align: center; }
+        .matrix-table td { text-align: center; }
+        .matrix-table td:first-child { text-align: left; font-weight: 500; }
+        .side-panel { width: 300px; background: white; border-left: 1px solid #e2e8f0; display: flex; flex-direction: column; flex-shrink: 0; z-index: 40; }
+        .nav-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 20px; overflow-y: auto; }
+        .nav-num { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; color: #64748b; transition: all 0.2s; }
+        .nav-num:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+        .nav-num.current { border: 2px solid var(--primary); transform: scale(1.1); box-shadow: 0 2px 8px rgba(0,0,0,0.15); color: var(--primary); }
+        .nav-num.filled { background-color: var(--success) !important; color: white !important; border-color: var(--success) !important; }
+        .nav-num.filled.current { border: 3px solid #1e3a8a !important; }
+        input[type="text"], select { width: 100%; padding: 14px; margin: 8px 0 20px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 1rem; display: inline-flex; align-items: center; gap: 8px; justify-content: center; }
+        .btn:hover { background: #172554; }
+        .btn:disabled { background: #94a3b8; cursor: not-allowed; }
+        .btn-outline { background: white; border: 1px solid #cbd5e1; color: #475569; }
+        .btn-outline:hover { background: #f8fafc; }
+        .btn-danger { background: var(--danger); }
+        .chart-row { display: flex; align-items: center; margin-bottom: 12px; }
+        .chart-lbl { width: 200px; font-size: 0.78rem; font-weight: 600; text-align: right; padding-right: 15px; flex-shrink: 0; }
+        .chart-track { flex: 1; background: #e2e8f0; height: 16px; border-radius: 10px; overflow: hidden; }
+        .chart-fill { height: 100%; transition: width 1s ease-out; }
+        .chart-val { width: 50px; padding-left: 10px; font-weight: 700; }
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 100; }
+        .modal { background: white; padding: 30px; border-radius: 16px; width: 90%; max-width: 420px; text-align: center; }
+        .pin-input-wrap { position: relative; margin-bottom: 10px; }
+        .pin-input-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; pointer-events: none; }
+        #inp-pin { width: 100%; padding: 14px 14px 14px 44px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 1.1rem; font-weight: 700; letter-spacing: .15em; font-family: monospace; color: var(--text); transition: border-color .2s; }
+        #inp-pin:focus { border-color: var(--primary); }
+        #inp-pin.error { border-color: #dc2626; animation: shake .3s ease; }
+        #pin-err { font-size: .82rem; color: #dc2626; font-weight: 600; display: none; margin-bottom: 14px; }
+        .stimulus-img { max-width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+        .matrix-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+        @media (max-width: 768px) {
+            .workspace { flex-direction: column; }
+            .side-panel { width: 100%; height: auto; border-left: none; border-top: 1px solid #e2e8f0; order: 2; }
+            .nav-grid { max-height: 120px; padding: 10px; }
+            .chart-lbl { width: 120px; font-size: 0.72rem; }
+            .header-title { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <div class="header">
+        <div class="header-title">Ujian Sekolah – Bahasa Sunda</div>
+        <div style="display:flex;align-items:center;gap:15px;">
+            <div id="user-badge" style="display:none;font-size:0.85rem;background:rgba(255,255,255,0.1);padding:5px 12px;border-radius:20px;">Siswa</div>
+            <div class="timer-box" id="timer-display">--:--</div>
+        </div>
+    </div>
+    <div class="workspace">
+        <div class="main-stage">
+            <!-- ① SLIDE PIN -->
+            <div id="slide-pin" class="slide active">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:420px;margin:0 auto;text-align:center;">
+                        <div style="font-size:2.5rem;margin-bottom:12px;">🔐</div>
+                        <h2 style="color:var(--primary);margin-top:0;">Masukkan PIN</h2>
+                        <p style="color:#64748b;margin-bottom:24px;font-size:.95rem;">Masukkan PIN dari guru untuk membuka<br><strong>Ujian Sekolah Tertulis Bahasa Sunda</strong></p>
+                        <div class="pin-input-wrap">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <input type="password" id="inp-pin" placeholder="PIN ujian…" maxlength="30" autocomplete="off" onkeydown="if(event.key==='Enter') app.checkPin()">
+                        </div>
+                        <div id="pin-err">❌ PIN salah. Coba lagi.</div>
+                        <button class="btn" style="width:100%" onclick="app.checkPin()">Buka Ujian →</button>
+                    </div>
+                </div>
+            </div>
+            <!-- ② SLIDE LOGIN -->
+            <div id="slide-login" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:450px;margin:0 auto;text-align:center;">
+                        <h2 style="color:var(--primary);margin-top:0;">Selamat Datang</h2>
+                        <p style="color:#64748b;margin-bottom:30px;">Ujian Sekolah Bahasa Sunda (Fase C) — 3 Elemen</p>
+                        <div style="text-align:left;">
+                            <label>Nama Lengkap</label>
+                            <input type="text" id="inpNama" placeholder="Masukkan nama lengkap...">
+                            <label>Kelas</label>
+                            <select id="inpKelas">
+                                <option value="">-- Pilih Kelas --</option>
+                                <option value="6A">Kelas 6A</option>
+                                <option value="6B">Kelas 6B</option>
+                            </select>
+                        </div>
+                        <button class="btn" style="width:100%" onclick="app.login()">Masuk Ujian</button>
+                        <div id="resume-alert" style="display:none;margin-top:20px;padding:10px;background:#eff6ff;color:#1d4ed8;border-radius:8px;cursor:pointer;font-size:0.9rem;" onclick="app.resume()">
+                            🔄 <b>Sesi Tersimpan Ditemukan</b><br>Klik untuk melanjutkan
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ③ SLIDE PETUNJUK -->
+            <div id="slide-rules" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:700px;margin:0 auto;">
+                        <h2 style="margin-top:0;border-bottom:1px solid #e2e8f0;padding-bottom:15px;color:var(--primary);">Petunjuk Pengerjaan</h2>
+                        <div style="line-height:1.8;color:#334155;">
+                            <p>1. <strong>Waktu:</strong> <strong>90 Menit</strong>. Ujian dikumpulkan otomatis saat waktu habis.</p>
+                            <p>2. <strong>Soal:</strong> <strong>40 butir soal</strong> — mencakup 3 elemen: Maca &amp; Ngartos, Élmu Basa, dan Sastra Sunda.</p>
+                            <p>3. <strong>Format:</strong> PG Tunggal, PG Kompleks (lebih dari satu jawaban), dan PG Kategori (menjodohkan).</p>
+                            <p>4. <strong>Tips:</strong> Baca stimulus teks kalawan taliti — jawab dumasar kana eusi teks jeung pangaweruh basa Sunda.</p>
+                            <p>5. <strong>Dilarang:</strong> Menutup atau me-refresh halaman selama ujian berlangsung.</p>
+                        </div>
+                        <div style="margin-top:30px;text-align:right;">
+                            <button class="btn" onclick="app.startExam()">Mulai Mengerjakan &#8594;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ④ SLIDE KUIS -->
+            <div id="slide-quiz" class="slide">
+                <div id="quiz-scroll" class="quiz-scroll-area">
+                    <div id="quiz-container"></div>
+                </div>
+                <div class="nav-bar-fixed">
+                    <button class="btn btn-outline" id="btn-prev" onclick="app.move(-1)">&#8592; Sebelumnya</button>
+                    <span id="q-indicator" style="font-weight:700;color:var(--primary);">Soal 1 / 40</span>
+                    <button class="btn" id="btn-next" onclick="app.move(1)">Selanjutnya</button>
+                </div>
+            </div>
+            <!-- ⑤ SLIDE HASIL -->
+            <div id="slide-result" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:600px;margin:0 auto;text-align:center;">
+                        <div style="font-size:4rem;margin-bottom:10px;">🎉</div>
+                        <h2 style="color:var(--primary);margin:0;">Ujian Selesai!</h2>
+                        <p style="color:#64748b;">Jawaban Anda telah kami terima.</p>
+                        <div id="result-content" style="text-align:left;margin-top:30px;border-top:1px solid #e2e8f0;padding-top:20px;">
+                            <p style="text-align:center;color:#64748b;">Sedang memproses nilai...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- SIDEBAR -->
+        <div class="side-panel" id="sidebar" style="display:none;">
+            <div style="padding:15px 20px;font-weight:700;color:#334155;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;">
+                <span>Navigasi Soal</span>
+                <span style="font-size:0.8rem;background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:10px;">40 Butir</span>
+            </div>
+            <div class="nav-grid" id="nav-grid"></div>
+            <div style="padding:20px;border-top:1px solid #e2e8f0;margin-top:auto;background:#f8fafc;">
+                <button class="btn btn-danger" style="width:100%" onclick="app.confirmFinish()">Selesai Ujian</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-confirm" class="overlay">
+    <div class="modal">
+        <h3 style="color:var(--primary);">Konfirmasi Pengumpulan</h3>
+        <p>Yakin ingin mengakhiri dan mengumpulkan ujian ini?</p>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:25px;">
+            <button class="btn btn-outline" onclick="document.getElementById('modal-confirm').style.display='none'">Cek Lagi</button>
+            <button class="btn btn-danger" onclick="app.submitExam()">Ya, Kumpulkan</button>
+        </div>
+    </div>
+</div>
+<div id="modal-loading" class="overlay">
+    <div class="modal">
+        <h3 style="color:var(--primary);">Sedang Mengirim…</h3>
+        <div style="width:40px;height:40px;border:4px solid #e2e8f0;border-top:4px solid var(--primary);border-radius:50%;margin:10px auto;animation:spin 1s linear infinite;"></div>
+        <p>Mohon jangan tutup halaman ini.</p>
+    </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  KONFIGURASI
+//  Untuk mengganti PIN: hashPin("PIN_BARU").then(h => console.log(h))
+// ════════════════════════════════════════════════════════
+const CONFIG = {
+    SCRIPT_URL:  "https://script.google.com/macros/s/AKfycbwJveJtAISKhveIQ4wspAaeaUKLrqB_IBY55qhOqDOl649QSjqtBa2hYhOrx7UNs0GbdA/exec",
+    STORAGE_KEY: "UST_2026_BAHASA_SUNDA",
+    DURATION:    90 * 60,
+    PIN_HASH:    "d6bb813a092fa936"
+};
+
+async function hashPin(pin) {
+    const enc = new TextEncoder().encode(pin.trim().toLowerCase());
+    const buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,16);
+}
+window.hashPin = hashPin;
+
+// ── Aset Gambar (Base64 — embedded langsung) ────────────────────────────────
+
+const IMAGE_ASSETS = {
+"grafik_minat_baca": "https://i.ibb.co.com/CpCCLpdj/grafik-minat-baca.png",
+"diagram_daur_ulang": "https://i.ibb.co.com/mVP9Vm7p/diagram-daur-ulang.png",
+"iklan_hemat_air": "https://i.ibb.co.com/99zPM56c/iklan-hemat-air.png",
+"slide_presentasi": "https://i.ibb.co.com/yBgtCYBK/slide-presentasi.png"
+};
+
+
+function getImg(key, alt="Ilustrasi Soal") {
+    const url = IMAGE_ASSETS[key];
+    if (!url) return `<div style="background:#fef3c7;padding:15px;border-radius:8px;text-align:center;border:1px solid #f59e0b;">⚠️ Gambar tidak tersedia</div>`;
+    return `<img src="${url}" alt="${alt}" class="stimulus-img" loading="eager">`;
+}
+
+
+// ════════════════════════════════════════════════════════
+//  BANK SOAL — 40 Butir
+//  Soal 1–20  : PG Tunggal
+//  Soal 21–30 : PG Kompleks (PGK)
+//  Soal 31–40 : PG Kategori (PGK-Kat)
+// ════════════════════════════════════════════════════════
+
+const QUESTIONS = [
+
+// ══════════════════════════════════════════
+// PG TUNGGAL (1–20)
+// ══════════════════════════════════════════
+
+{ id:1, cat:"Maca & Ngartos", type:"pg", score:1,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 1: Piagam Adipura Kota Depok Tahun 2013</div><p>Kota Depok dianugerahkan Adipura. Adipura teh hiji penghargaan ka kota di Indonesia nu ngabogaan cara gawe alus dina miara kebersihan jeung miara lingkungan perkotaan anu diayakeun ku Kementerian Negara Lingkungan Hidup. Program Adipura dina nganilaina teh nyaeta tempat-tempat perumahan, jalan, pasar, perkotaan, perkantoran pemerintah.</div></div>",
+  q:"1. Tempat nu dijadikeun penilaian Adipura nyaeta \u2026.",
+  opt:["perkotaan anu miara lingkungan hidup","tempat nu aya diperkotaan miara kebersihan jeung lingkungan hidup","perumahan anu miara kebersihan","kota nu ngabogaan tempat runtah"],
+  ans:"tempat nu aya diperkotaan miara kebersihan jeung lingkungan hidup" },
+
+{ id:2, cat:"Maca & Ngartos", type:"pg", score:1,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 2: Ucing Sumput</div><p>Loba pisan kaulinan barudak teh, upamana: gatrik, galasin, tatarucingan, bebentengan. Ucing sumput oge kaulinan, bisa dimaenkeun ku lima atawa genepen. Carana mah gampang pisan, mimiti kudu nangtukeun heula saha ucingnya. Sanggeus tangtu nu jadi ucingna, nu sejen <em>nyarumput</em>. Nu ucingna kudu neangan, nepika kabeh kapanggih. Anu pangheulana kapanggih gentian jadi ucingna.</p></div>",
+  q:"2. Terjemah basa Indonesiana kecap nu dicithak miring \u201cnyumput\u201d nyaeta \u2026.",
+  opt:["menghindar","mengelak","bersembunyi","berlindung"],
+  ans:"bersembunyi" },
+
+{ id:3, cat:"Maca & Ngartos", type:"pg", score:1,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 3: Mundinglaya Di Kusumah</div><p>Kacaturkeun aya hiji nagara anu subur mamur murah sandang murah pangan. Eta nagara teh katelahana Pajajaran. Rajana nyaeta Prabu Siliwangi, raja adil tur wijaksana, nyaah ka rahayat. Prameswari Prabu Siliwangi jenenganana Padmawati. Sang Prabu gaduh putra nu jenengannana Mundinglaya Di Kusumah, pamuda leber wawanen gagah tur sakti.</p></div>",
+  q:"3. Jenenganna putra Prabu Siliwangi teh nyaeta \u2026.",
+  opt:["Padmawati","Pajajaran","Mundinglaya Di Kusumah","pamuda gagah tur sakti"],
+  ans:"Mundinglaya Di Kusumah" },
+
+{ id:4, cat:"Maca & Ngartos", type:"pg", score:1,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 4: Pesantren Kilat</div><p>\u201cPa, \u2026 pa kenging henteu Usep ngiring?\u201d \u201cNgilu naon, sep?\u201d \u201cIeu, Usep dipasihan formulir ku pa guru.\u201d \u201cOh ieu mah formulir keur murid anu rek miluan pesantren kilat.\u201d Pesantren kilat diayakeun ku lembaga formal jeung non formal. Tujuanna pikeun ngaronjatkeun pangaweruh agama islam jeung ningkatkeun akhlakul karimah. Dina pesantren kilat, para santi diajar jeung diaping ku ustad, ustadzah atawa ajengan.</p></div>",
+  q:"4. Barudak anu diajar ngaji di pesantren disebut \u2026.",
+  opt:["santri","siswa","mustami","ustadz"],
+  ans:"santri" },
+
+{ id:5, cat:"\u00c9lmu Basa", type:"pg", score:1,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 5: Kalimat Rumpang</div><p>\u201c\u2026 sakilona, mang buah mangga teh?\u201d</p></div>",
+  q:"5. Kecap pananya nu tepat pikeun ngalengkepan kalimat di luhur nyaeta \u2026.",
+  opt:["saha","sabaraha","iraha","naon"],
+  ans:"sabaraha" },
+
+{ id:6, cat:"Sastra Sunda", type:"pg", score:1,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 6: Sawer Panganten</div><p>Paralun nyerang pihatur / Ka sadaya nu caralik / Amit bade nyawer heula / Ngesian tali paranti / Nyumponan kabiasaan / Nurut galur nini aki / Diatur wangunan catur / Dirakit dangding pepeling / Direka-reka ku basa / ngedalkeun hariring ati / gelarna rasa kanyaah ka nu anyar jatukrami.</p><p>Sawer panganten eusina wejangan keur panganten nu anyar jatukrami.</p></div>",
+  q:"6. Harti kecap \u201cjatukrami\u201d dina teks sawer di luhur nyaeta \u2026.",
+  opt:["ngelamar","nasehat","menikah","seserahan"],
+  ans:"menikah" },
+
+{ id:7, cat:"\u00c9lmu Basa", type:"pg", score:1,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 7: Kalimat Rumpang</div><p>Ku sabab lampu pareum, kaayaan caang jadi ________</p></div>",
+  q:"7. Kecap nu tepat pikeun ngalengkepan kalimat di luhur nyaeta \u2026.",
+  opt:["isuk","bodas","caang","poek"],
+  ans:"poek" },
+
+{ id:8, cat:"\u00c9lmu Basa", type:"pg", score:1,
+  stim:"",
+  q:"8. Antonim kecap <strong>beunghar</strong> nyaeta \u2026.",
+  opt:["malarat","kaya","gampang","sugih"],
+  ans:"malarat" },
+
+{ id:9, cat:"\u00c9lmu Basa", type:"pg", score:1,
+  stim:"",
+  q:"9. Kecap \u201cgawe\u201d mun dirarangkeunan <em>pa-an</em>, jadi kecap rarangkeun nyaeta \u2026.",
+  opt:["kagawe","pagawean","pangawean","pakawean"],
+  ans:"pagawean" },
+
+{ id:10, cat:"Maca & Ngartos", type:"pg", score:1,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 8: Batu Tulis</div><p>Jaman baheula di Jawa Barat ngadeg hiji karajaan anu kasohor ka mana-mana, katelahna Kerajaan Tarumanagara. Puseur dayeuhna ayeuna mah kira-kira di wewengkon Bekasi. Rajana anu kawentar nyaeta Purnawarma, jujulukna Rajadiraja. Ciri bukti Karajaan Tarumanagara nyaeta Batu Tulis aksara Pallawa di sisi walugan Ciaruteun Bogor, prasasti di Banten, prasasti di Cilincing Jakarta, prasasti Cidangiang Kacamatan Munjul Kabupaten Pandeglang, jeung Prasasti di Kota Kapur pulau Bangka.</p></div>",
+  q:"10. Puseur dayeuh karajaan Tarumanagara nyaeta \u2026.",
+  opt:["Bogor","Bekasi","Bandung","Sukabumi"],
+  ans:"Bekasi" },
+
+{ id:11, cat:"\u00c9lmu Basa", type:"pg", score:1,
+  stim:"",
+  q:"11. Bahan baku roko keretek nyaeta cengkeh. Kecap <em>cengkeh</em> nyaeta serapan tina basa \u2026.",
+  opt:["Inggris","Cina","Walanda","Arab"],
+  ans:"Walanda" },
+
+{ id:12, cat:"Maca & Ngartos", type:"pg", score:1,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 9: Margonda</div><p>Margonda nyaeta ngaran hiji pamuda gagah jeung gede wanian. Margonda dibabarkeun di Bogor 1 Maret 1918, wafat di Depok 16 Nopember 1945 dina pertempuran ngalawan tantara Inggris di Kalibata. Dina tahun 1940, Margonda milu pelatihan penerbangan di departemen penerbangan Belanda, tapi teu lila Belanda nyerah jeung kakuasaan jadi pindah ka tantara Jepang.</p></div>",
+  q:"12. Dumasar kana carita di luhur, pahlawan Margonda ngabogaan sifat \u2026.",
+  opt:["sinatria dina palagan","ngelehan","era","sienan"],
+  ans:"sinatria dina palagan" },
+
+{ id:13, cat:"Maca & Ngartos", type:"pg", score:1,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 10: R.E. Martadinata</div><p>Raden Eddy Martadinata gumelar di Bandung tanggal 29 Maret 1921. Ti leuleutik kacida mikaresep laut. Dina mangsa rumaja, anjeunna asup ka Sakola Maritim di Surabaya. Anjeunna boga visi ngajaga kedaulatan laut Indonesia sareng nguatkeun angkatan laut. Dina mangsa perang kamerdikaan, R.E. Martadinata jadi salah sahiji anu penting dina ngalawan penjajah Belanda sarta ngawangun angkatan laut Indonesia anu kuat. Dina taun 1966, anjeunna dijenengkeun jadi Kepala Staf Angkatan Laut (KASAL).</p></div>",
+  q:"13. Peran R.E. Martadinata dina mangsa perang kamerdikaan nyaeta \u2026.",
+  opt:["Asup anggota BKR","ngawangun Angkatan Laut","ngawangun Angkatan Darat","ngawangun Angkatan Udara"],
+  ans:"ngawangun Angkatan Laut" },
+
+{ id:14, cat:"Maca & Ngartos", type:"pg", score:1,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 11: Aksara Sunda</div><p>Aksara Sunda asalna tina aksara Brahmi India. Aksara Brahmi mangrupa aksara kolot nu berkembang ti India jeung Asia Tenggara. Aksara ieu dibawa ka nusantara ku pedagang India sakitar abad ka-4 masehi. Aksara Sunda sering disebut aksara kaganga dumasar kana urutan tilu aksara kahijina.</p></div>",
+  q:"14. Aksara Sunda asalna tina aksara Brahmi ti \u2026.",
+  opt:["Bangladesh","Norwegia","Indonesia","India"],
+  ans:"India" },
+
+{ id:15, cat:"Maca & Ngartos", type:"pg", score:1,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 12: Carita Adun</div><p>\u201cDun, apal kudu kamanakeun ari runtah?\u201d \u201cSumuhun terang, pa, kedah kana wadah runtah.\u201d \u201cNaha atuh dipiceun di jero kelas?\u201d \u201cHi\u2026 hilap pa.\u201d Beungeut si Adun ayeuna semu beureum jiga rek ceurik. Pa Aan nitah Adun mulung runtah supaya dipiceun kana wadah runtah. \u201cRuntah sok jadi tempat bibit penyakit.\u201d</p></div>",
+  q:"15. Latar carita di luhur teh nyaeta \u2026.",
+  opt:["imah","sakola","lapang","jero imah"],
+  ans:"sakola" },
+
+{ id:16, cat:"Sastra Sunda", type:"pg", score:1,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 13: Wayang Golek</div><p>Wayang golek teh salah sahiji kasenian tradisional nu aya di Jawa Barat, mangrupa hiburan tapi ngandung atikan anu luhung pikeun kahirupan manusa. Kiwari wayang golek geus pada mikaresep, lain ku urang Sunda wungkul tapi ku seler-seler nu sejenna. Dina acara wayang golek dipintonkeun, nu lalajo teh sok loba, komo lamun dalangna anu kasohor mah.</p></div>",
+  q:"16. Juru kawih dina pagelaran wayang golek nyaeta \u2026.",
+  opt:["Dalang","Sinden","Nayaga","Alok"],
+  ans:"Dalang" },
+
+{ id:17, cat:"\u00c9lmu Basa", type:"pg", score:1,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 14: Kalimat Sunda</div><p>Manuk teh geleber hiber ku jangjangna.</p></div>",
+  q:"17. Terjemah kalimat di luhur kana basa Indonesia nyaeta \u2026.",
+  opt:["burung bernapas dengan sayap","burung terbang di udara","burung itu indah bagian kepalanya","burung terbang oleh sayapnya"],
+  ans:"burung terbang oleh sayapnya" },
+
+{ id:18, cat:"\u00c9lmu Basa", type:"pg", score:1,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 15: Kalimat Parentah</div><p>Sep, pangmeulikeun koran!</p></div>",
+  q:"18. Kalimat di luhur kaasup kalimat parentah \u2026.",
+  opt:["nyaram","nitah","ngajak","maksa"],
+  ans:"nitah" },
+
+{ id:19, cat:"\u00c9lmu Basa", type:"pg", score:1,
+  stim:"",
+  q:"19. Kecap pananya nu dipaké keur nanyakeun waktu nyaeta \u2026.",
+  opt:["saha","dimana","iraha","kumaha"],
+  ans:"iraha" },
+
+{ id:20, cat:"\u00c9lmu Basa", type:"pg", score:1,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 16: Jawaban</div><p>\u201cBapa nuju kulem.\u201d</p></div>",
+  q:"20. Kalimah pananya nu cocog pikeun eta jawaban nyaeta \u2026.",
+  opt:["Iraha Bapa angkat ka kantor?","Mana Bapa?","Di mana bapak damelna?","Sabaraha putra Bapa teh?"],
+  ans:"Mana Bapa?" },
+
+// ══════════════════════════════════════════
+// PG KOMPLEKS / PGK (21–30)
+// ══════════════════════════════════════════
+
+{ id:21, cat:"Maca & Ngartos", type:"pgk", score:2,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 17: Prasasti Batu Tulis</div><p>Di Bogor aya titinggal karuhun nu ku urang perlu dijaga jeung dipiara, nyaeta Batu Tulis atawa disebut oge prasasti. Batu Tulis mangrupa titinggal karajaan Tarumanagara jaman pamarentahan raja Purnawarman. Ditulisna ku aksara Pallawa basana basa Sangsekerta. Prasasti Batu Tulis nyaeta titinggal Raja Purnawarman jeung Prabu Surawisesa.</p></div>",
+  q:"21. Pilih <strong>leuwih ti hiji</strong> pernyataan nu bener ngeunaan Prasasti Batu Tulis!",
+  opt:["Ditulis ku aksara Pallawa jeung basana Sangsekerta","Mangrupa titinggal Raja Purnawarman jeung Prabu Surawisesa","Aya di puseur dayeuh Jakarta","Ditulis dina basa Jawa kuno"],
+  ans:["Ditulis ku aksara Pallawa jeung basana Sangsekerta","Mangrupa titinggal Raja Purnawarman jeung Prabu Surawisesa"] },
+
+{ id:22, cat:"\u00c9lmu Basa", type:"pgk", score:2,
+  stim:"",
+  q:"22. Pilih <strong>leuwih ti hiji</strong> kalimat nu kaasup kalimat PASIF!",
+  opt:["Nani meuli buku","Kebon keur dipacul ku Mang Dayat","Ucing ngegel beurit","Tatangkalan dipelak di buruan"],
+  ans:["Kebon keur dipacul ku Mang Dayat","Tatangkalan dipelak di buruan"] },
+
+{ id:23, cat:"Maca & Ngartos", type:"pgk", score:2,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 18: Peuyeum Bandung</div><p>Dimana-mana di kampung di kota / Tos kakoncara ku nimat rasana / Peuyeum Bandung kamashur / Mangga cobian / Peuyeum ti Bandung henteu sembarangan.</p></div>",
+  q:"23. Pilih <strong>leuwih ti hiji</strong> pernyataan nu bener ngeunaan Peuyeum Bandung dumasar kana teks!",
+  opt:["Peuyeum Bandung geus kakoncara ku nimat rasana","Bahan keur nyieun peuyeum nyaeta ragi","Peuyeum Bandung dijieun tina tipung beas","Peuyeum Bandung ukur kawentar di wewengkon Bandung wungkul"],
+  ans:["Peuyeum Bandung geus kakoncara ku nimat rasana","Bahan keur nyieun peuyeum nyaeta ragi"] },
+
+{ id:24, cat:"\u00c9lmu Basa", type:"pgk", score:2,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 19: Kecap Istilah</div><p>Citarum teh walungan panggedena di Jawa Barat. Gunung Gede nyaeta salah sahiji pasir nu aya di Jawa Barat.</p></div>",
+  q:"24. Pilih <strong>leuwih ti hiji</strong> kecap nu kaasup istilah GEOGRAFI!",
+  opt:["walungan","gunung","kasenian","pangaweruh"],
+  ans:["walungan","gunung"] },
+
+{ id:25, cat:"Sastra Sunda", type:"pgk", score:2,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 20: Kawih Pahlawan</div><p>Teu honcewang, sumareang / Tekadna pahlawan bangsa / Cadu mundur, pantrang mulang / Mun maksud tacan laksana / Berjuang keur lemah cai / Taya baso menta pamulang tarima / Iklas rido keur korban merdeka.</p></div>",
+  q:"25. Pilih <strong>leuwih ti hiji</strong> sifat pahlawan nu digambarkeun dina teks kawih di luhur!",
+  opt:["Iklas rido keur korban merdeka","Cadu mundur, pantrang mulang","Honcewang","Menta pamulang tarima"],
+  ans:["Iklas rido keur korban merdeka","Cadu mundur, pantrang mulang"] },
+
+{ id:26, cat:"Maca & Ngartos", type:"pgk", score:2,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 21: Aksara Sunda</div><p>Aksara Sunda asalna tina aksara Brahmi ti India. Aksara Brahmi mangrupa aksara kolot nu berkembang ti India jeung Asia Tenggara. Aksara ieu dibawa ka nusantara ku pedagang India sakitar abad ka-4 masehi. Aksara Sunda sering disebut aksara kaganga dumasar kana urutan tilu aksara kahijina.</p></div>",
+  q:"26. Pilih <strong>leuwih ti hiji</strong> pernyataan nu bener ngeunaan aksara Sunda!",
+  opt:["Aksara Sunda asalna tina aksara Brahmi ti India","Aksara Sunda sering disebut aksara kaganga","Aksara Sunda dibawa ku panjajah Walanda","Aksara Sunda mimiti mekar di Afrika"],
+  ans:["Aksara Sunda asalna tina aksara Brahmi ti India","Aksara Sunda sering disebut aksara kaganga"] },
+
+{ id:27, cat:"Maca & Ngartos", type:"pgk", score:2,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 22: Carita Adun (Lengkep)</div><p>\u201cDun, apal kudu kamanakeun ari runtah?\u201d \u201cSumuhun terang, pa, kedah kana wadah runtah.\u201d \u201cNaha atuh dipiceun di jero kelas?\u201d \u201cHi\u2026 hilap pa.\u201d Pa Aan nitah Adun mulung runtah supaya dipiceun kana wadah runtah. \u201cRuntah sok jadi tempat bibit penyakit.\u201d</p></div>",
+  q:"27. Pilih <strong>leuwih ti hiji</strong> amanat nu bisa dicokot tina carita Adun!",
+  opt:["Ulah piceun runtah di mana bae sabab bisa jadi bibit penyakit","Kudu ngajaga kabersihan jeung taat kana aturan sakola","Budak kudu ngadurukan runtah unggal poe","Guru teu meunang marentah murid ngaberesihan kelas"],
+  ans:["Ulah piceun runtah di mana bae sabab bisa jadi bibit penyakit","Kudu ngajaga kabersihan jeung taat kana aturan sakola"] },
+
+{ id:28, cat:"Sastra Sunda", type:"pgk", score:2,
+  stim:"",
+  q:"28. Pilih <strong>leuwih ti hiji</strong> kalimat nu make gaya bahasa RARAHULAN!",
+  opt:["Aya kutu mani sagede munding","Seungitna kembang eta nepi ka ujung dunya","Cicing atuh, ulah kawas cacing kepanasan","Manuk hiber ku jangjangna"],
+  ans:["Aya kutu mani sagede munding","Seungitna kembang eta nepi ka ujung dunya"] },
+
+{ id:29, cat:"Maca & Ngartos", type:"pgk", score:2,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 23: Maong Lodaya</div><p>Di hiji leuweung geledegan nu tara kasaba ku jalma, hirup hiji sato kulitna belang corelang matak resep anu nempo. Sato eta teh ngabogaan sima, mun urang kapanggih sok kabur pangacian, nagarasa kacida sieunna.</p></div>",
+  q:"29. Pilih <strong>leuwih ti hiji</strong> ciri sato Maong Lodaya nu digambarkeun dina teks!",
+  opt:["Kulitna belang corelang","Matak sieun nu kapanggihna","Hirup di walungan atawa laut","Leutik jeung gampang dikeureuyeuh"],
+  ans:["Kulitna belang corelang","Matak sieun nu kapanggihna"] },
+
+{ id:30, cat:"\u00c9lmu Basa", type:"pgk", score:2,
+  stim:"",
+  q:"30. Pilih <strong>leuwih ti hiji</strong> kalimat nu ngandung kecap kerja TRANSITIF!",
+  opt:["Kuring neangan pulpen nu leungit","Didi maca buku pangajaran","Manehna seuri bakat ku bungah","Dadan diuk dina korsi"],
+  ans:["Kuring neangan pulpen nu leungit","Didi maca buku pangajaran"] },
+
+// ══════════════════════════════════════════
+// PG KATEGORI / PGK-Kat (31–40)
+// ══════════════════════════════════════════
+
+{ id:31, cat:"\u00c9lmu Basa", type:"pgk-cat", score:2,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Katerangan</div><p>Kecap kerja <strong>transitif</strong> nyaeta kecap kerja nu merlukeun objek. Kecap kerja <strong>intransitif</strong> teu merlukeun objek dina kalimat.</p></div>",
+  q:"31. Klasifikasikan unggal kecap kerja: kaasup kecap kerja <strong>TRANSITIF</strong> atawa <strong>INTRANSITIF</strong>!",
+  rows:["lumpat","neangan","ngadiukan","nepikeun"],
+  cols:["Transitif","Intransitif"],
+  ans:["Intransitif","Transitif","Transitif","Transitif"] },
+
+{ id:32, cat:"\u00c9lmu Basa", type:"pgk-cat", score:2,
+  stim:"",
+  q:"32. Klasifikasikan unggal kalimat: kaasup kalimat <strong>AKTIF</strong> atawa <strong>PASIF</strong>!",
+  rows:["Ucing ngegel beurit","Kebon keur dipacul ku Mang Dayat","Nani meuli buku","Tatangkalan dipelak di buruan"],
+  cols:["Aktif","Pasif"],
+  ans:["Aktif","Pasif","Aktif","Pasif"] },
+
+{ id:33, cat:"Sastra Sunda", type:"pgk-cat", score:2,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Katerangan Gaya Basa</div><p><strong>Rarahulan</strong>: gaya basa nu ngagedékeun hiji hal ngaleuwihan kanyataan. <strong>Sindir</strong>: gaya basa nu nyindiran kalawan henteu langsung.</p></div>",
+  q:"33. Klasifikasikan unggal kalimat: kaasup gaya basa <strong>RARAHULAN</strong> atawa <strong>SINDIR</strong>!",
+  rows:["Aya kutu mani sagede munding","Cicing atuh, ulah kawas cacing kepanasan","Seungitna kembang eta nepi ka ujung dunya"],
+  cols:["Rarahulan","Sindir"],
+  ans:["Rarahulan","Sindir","Rarahulan"] },
+
+{ id:34, cat:"\u00c9lmu Basa", type:"pgk-cat", score:2,
+  stim:"",
+  q:"34. Klasifikasikan pasangan kecap ieu: kaasup <strong>SINONIM</strong> (sarua hartina) atawa <strong>ANTONIM</strong> (sabalikna)!",
+  rows:["beunghar \u2013 malarat","beunghar \u2013 sugih","caang \u2013 poek","lumpat \u2013 lari"],
+  cols:["Sinonim","Antonim"],
+  ans:["Antonim","Sinonim","Antonim","Sinonim"] },
+
+{ id:35, cat:"\u00c9lmu Basa", type:"pgk-cat", score:2,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Katerangan Kalimat Parentah</div><p><strong>Nitah</strong>: miwarang batur ngalakukeun hiji hal. <strong>Nyaram</strong>: ngalarang batur ngalakukeun hiji hal. <strong>Ngajak</strong>: ngahajak batur babarengan ngalakukeun hiji hal.</p></div>",
+  q:"35. Klasifikasikan unggal kalimat parentah: kaasup <strong>NITAH</strong>, <strong>NYARAM</strong>, atawa <strong>NGAJAK</strong>!",
+  rows:["Sep, pangmeulikeun koran!","Ulah piceun runtah di dieu!","Hayu urang balik babarengan!"],
+  cols:["Nitah","Nyaram","Ngajak"],
+  ans:["Nitah","Nyaram","Ngajak"] },
+
+{ id:36, cat:"\u00c9lmu Basa", type:"pgk-cat", score:2,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Katerangan</div><p><strong>Kecap barang</strong> (nomina): kecap nu ngaran jalma, tempat, atawa benda. <strong>Kecap kaayaan</strong> (adjektiva): kecap nu ngagambarkeun sifat atawa kaayaan.</p></div>",
+  q:"36. Klasifikasikan unggal kecap: kaasup <strong>KECAP BARANG</strong> atawa <strong>KECAP KAAYAAN</strong>!",
+  rows:["belang","walungan","gagah","batu"],
+  cols:["Kecap Barang","Kecap Kaayaan"],
+  ans:["Kecap Kaayaan","Kecap Barang","Kecap Kaayaan","Kecap Barang"] },
+
+{ id:37, cat:"Maca & Ngartos", type:"pgk-cat", score:2,
+  stim:"",
+  q:"37. Klasifikasikan unggal judul teks: kaasup <strong>TEKS WARTA / INFORMATIF</strong> atawa <strong>TEKS SASTRA</strong>!",
+  rows:["Piagam Adipura Kota Depok","Mundinglaya Di Kusumah","Batu Tulis di Bogor","Maong Lodaya di Leuweung"],
+  cols:["Teks Warta / Informatif","Teks Sastra"],
+  ans:["Teks Warta / Informatif","Teks Sastra","Teks Warta / Informatif","Teks Sastra"] },
+
+{ id:38, cat:"\u00c9lmu Basa", type:"pgk-cat", score:2,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Kecap Pananya</div><p><strong>Saha</strong> \u2192 nanyakeun jalma &nbsp;|&nbsp; <strong>Iraha</strong> \u2192 nanyakeun waktu &nbsp;|&nbsp; <strong>Dimana</strong> \u2192 nanyakeun tempat &nbsp;|&nbsp; <strong>Sabaraha</strong> \u2192 nanyakeun jumlah atawa harga</p></div>",
+  q:"38. Klasifikasikan kecap pananya nu cocog pikeun unggal kabutuhan nanya!",
+  rows:["Nanyakeun jalma / uwong","Nanyakeun waktu","Nanyakeun tempat","Nanyakeun jumlah atawa harga"],
+  cols:["saha","iraha","dimana","sabaraha"],
+  ans:["saha","iraha","dimana","sabaraha"] },
+
+{ id:39, cat:"\u00c9lmu Basa", type:"pgk-cat", score:2,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 24: Istilah tina Prasasti</div><p>Batu Tulis ditulisna ku aksara Pallawa basana basa Sangsekerta. Aksara Sunda katelah oge aksara Kaganga. Basa nu digunakeun dina kahirupan sapopoe di Jawa Barat nyaeta basa Sunda.</p></div>",
+  q:"39. Klasifikasikan unggal istilah: kaasup <strong>AKSARA</strong> atawa <strong>BASA</strong>!",
+  rows:["Pallawa","Sangsekerta","Kaganga","Sunda"],
+  cols:["Aksara","Basa"],
+  ans:["Aksara","Basa","Aksara","Basa"] },
+
+{ id:40, cat:"Maca & Ngartos", type:"pgk-cat", score:2,
+  stim:"<div class='stimulus-box'><div class='stimulus-head'>Teks 25: Tilu Tokoh Basa Sunda</div><p><strong>Prabu Siliwangi</strong>: raja Pajajaran nu adil, wijaksana, jeung nyaah ka rahayat. <strong>Margonda</strong>: pamuda gagah wanian ti Bogor anu wafat dina pertempuran ngalawan tantara Inggris di Kalibata taun 1945. <strong>R.E. Martadinata</strong>: ngawangun Angkatan Laut Indonesia jeung dijenengkeun KASAL taun 1966.</p></div>",
+  q:"40. Klasifikasikan unggal tokoh dumasar kana peranana!",
+  rows:["Prabu Siliwangi","Margonda","R.E. Martadinata"],
+  cols:["Raja nu Bijaksana","Pahlawan Perang Darat","Panglima Angkatan Laut"],
+  ans:["Raja nu Bijaksana","Pahlawan Perang Darat","Panglima Angkatan Laut"] }
+
+];
+
+// ════════════════════════════════════════════════════════
+//  APP OBJECT
+// ════════════════════════════════════════════════════════
+const app = {
+    session: { nama:"", kelas:"", answers:{}, startTime:0 },
+    currIdx: 0, timerInt: null, _hasSavedSession: false,
+
+    init() { this.showSlide('pin'); try { if(localStorage.getItem(CONFIG.STORAGE_KEY)) this._hasSavedSession=true; } catch(e){} },
+
+    async checkPin() {
+        const inp=document.getElementById('inp-pin'), val=inp.value.trim();
+        if(!val) return;
+        const h=await hashPin(val);
+        if(h===CONFIG.PIN_HASH){ this.showSlide('login'); if(this._hasSavedSession) document.getElementById('resume-alert').style.display='block'; }
+        else { inp.classList.add('error'); document.getElementById('pin-err').style.display='block'; inp.value=''; setTimeout(()=>inp.classList.remove('error'),400); }
+    },
+
+    login() {
+        const n=document.getElementById('inpNama').value.trim(), k=document.getElementById('inpKelas').value;
+        if(!n||!k){alert("Harap isi nama lengkap dan pilih kelas!");return;}
+        this.session.nama=n; this.session.kelas=k; this.showSlide('rules');
+    },
+
+    resume() { try { this.session=JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY)); this.renderSidebar(); this.startExam(true); } catch(e){alert("Sesi tersimpan rusak. Silakan mulai ujian baru.");} },
+
+    startExam(isRes=false) {
+        if(!isRes){this.session.startTime=Date.now();this.save();}
+        document.getElementById('user-badge').innerText=this.session.nama;
+        document.getElementById('user-badge').style.display='block';
+        document.getElementById('sidebar').style.display='flex';
+        this.renderQuestions(); this.renderSidebar(); this.showSlide('quiz'); this.goToQ(0); this.startTimer();
+    },
+
+    showSlide(id) { document.querySelectorAll('.slide').forEach(e=>e.classList.remove('active')); document.getElementById('slide-'+id).classList.add('active'); },
+
+    renderQuestions() {
+        const box=document.getElementById('quiz-container'); box.innerHTML="";
+        QUESTIONS.forEach((q,i)=>{
+            let h=`<div id="q-item-${i}" class="question-item"><div class="tag-cat">${q.cat}</div>${q.stim||""}<div class="q-text">${i+1}. ${q.q}</div>`;
+            if(q.type==='pg') q.opt.forEach((o,oi)=>h+=`<label class="opt-label"><input type="radio" name="ans_${q.id}" value="${oi}" onchange="app.saveAns(${q.id},${oi})"> ${o}</label>`);
+            else if(q.type==='pgk'){
+                h+=`<p style="font-size:.82rem;color:#64748b;margin-bottom:10px;">☑ Boleh memilih lebih dari satu jawaban</p>`;
+                q.opt.forEach((o,oi)=>h+=`<label class="opt-label"><input type="checkbox" value="${oi}" onchange="app.saveMulti(${q.id},${oi})"> ${o}</label>`);
+            } else if(q.type==='pgk-cat'){
+                h+=`<div class="matrix-wrapper"><table class="matrix-table"><tr><th>Pernyataan</th>`;
+                q.cols.forEach(c=>h+=`<th>${c}</th>`); h+=`</tr>`;
+                q.rows.forEach((r,ri)=>{ h+=`<tr><td>${r}</td>`; q.cols.forEach(c=>h+=`<td><input type="radio" name="mx_${q.id}_${ri}" value="${c}" onchange="app.saveMx(${q.id},${ri},'${c}')"></td>`); h+=`</tr>`; });
+                h+=`</table></div>`;
+            }
+            h+=`</div>`; box.innerHTML+=h;
+        });
+    },
+
+    goToQ(idx) {
+        if(idx<0||idx>=QUESTIONS.length) return;
+        this.currIdx=idx;
+        const qs=document.getElementById('quiz-scroll'); if(qs) qs.scrollTop=0;
+        document.querySelectorAll('.question-item').forEach(e=>e.classList.remove('active-q'));
+        document.getElementById(`q-item-${idx}`).classList.add('active-q');
+        document.getElementById('q-indicator').innerText=`Soal ${idx+1} / 40`;
+        document.getElementById('btn-prev').disabled=(idx===0);
+        const nBtn=document.getElementById('btn-next');
+        if(idx===QUESTIONS.length-1){nBtn.innerText="Selesai";nBtn.onclick=()=>this.confirmFinish();nBtn.classList.add('btn-danger');}
+        else{nBtn.innerText="Selanjutnya";nBtn.onclick=()=>this.move(1);nBtn.classList.remove('btn-danger');}
+        this.restoreVisual(idx); this.updateSidebarUI();
+    },
+
+    move(step){this.goToQ(this.currIdx+step);},
+    saveAns(qid,v){this.session.answers[qid]=v;this.save();this.updateSidebarUI();},
+    saveMulti(qid,oi){let c=this.session.answers[qid]||[];if(c.includes(oi))c=c.filter(x=>x!==oi);else c.push(oi);this.session.answers[qid]=c;this.save();this.updateSidebarUI();},
+    saveMx(qid,ri,v){let c=this.session.answers[qid]||[];c[ri]=v;this.session.answers[qid]=c;this.save();this.updateSidebarUI();},
+    save(){try{localStorage.setItem(CONFIG.STORAGE_KEY,JSON.stringify(this.session));}catch(e){}},
+
+    renderSidebar(){const g=document.getElementById('nav-grid');g.innerHTML="";QUESTIONS.forEach((q,i)=>g.innerHTML+=`<div id="nav-num-${i}" class="nav-num" onclick="app.goToQ(${i})">${i+1}</div>`);},
+
+    checkFilled(qid){const v=this.session.answers[qid];if(v===undefined||v===null)return false;if(Array.isArray(v))return v.filter(x=>x!==undefined&&x!==null).length>0;return true;},
+
+    updateSidebarUI(){QUESTIONS.forEach((q,i)=>{const el=document.getElementById(`nav-num-${i}`);if(!el)return;if(i===this.currIdx)el.classList.add('current');else el.classList.remove('current');if(this.checkFilled(q.id))el.classList.add('filled');else el.classList.remove('filled');});},
+
+    restoreVisual(idx){
+        const q=QUESTIONS[idx],ans=this.session.answers[q.id];
+        if(ans===undefined||ans===null)return;
+        if(q.type==='pg'){const el=document.querySelector(`input[name="ans_${q.id}"][value="${ans}"]`);if(el)el.checked=true;}
+        else if(q.type==='pgk'&&Array.isArray(ans))ans.forEach(v=>{const el=document.querySelector(`#q-item-${idx} input[value="${v}"]`);if(el)el.checked=true;});
+        else if(q.type==='pgk-cat'&&Array.isArray(ans))ans.forEach((v,ri)=>{if(!v)return;const el=document.querySelector(`input[name="mx_${q.id}_${ri}"][value="${v}"]`);if(el)el.checked=true;});
+    },
+
+    startTimer(){
+        clearInterval(this.timerInt);
+        this.timerInt=setInterval(()=>{
+            const rem=CONFIG.DURATION-Math.floor((Date.now()-this.session.startTime)/1000);
+            if(rem<=0){clearInterval(this.timerInt);this.submitExam();return;}
+            document.getElementById('timer-display').innerText=`${Math.floor(rem/60).toString().padStart(2,'0')}:${(rem%60).toString().padStart(2,'0')}`;
+        },1000);
+    },
+
+    confirmFinish(){document.getElementById('modal-confirm').style.display='flex';},
+
+    submitExam(){
+        document.getElementById('modal-confirm').style.display='none';
+        document.getElementById('modal-loading').style.display='flex';
+        clearInterval(this.timerInt);
+
+        const stats={};let totS=0,totM=0;
+        QUESTIONS.forEach(q=>{
+            if(!stats[q.cat])stats[q.cat]={s:0,m:0};
+            stats[q.cat].m+=q.score; totM+=q.score;
+            const u=this.session.answers[q.id]; let pt=0;
+            if(u!==undefined&&u!==null){
+                if(q.type==='pg'){if(u==q.opt.indexOf(q.ans))pt=q.score;}
+                else if(q.type==='pgk'&&Array.isArray(u)&&Array.isArray(q.ans)){
+                    if(JSON.stringify(u.map(i=>q.opt[i]).sort())===JSON.stringify([...q.ans].sort()))pt=q.score;
+                } else if(q.type==='pgk-cat'&&Array.isArray(u)){
+                    let m=0; q.ans.forEach((k,i)=>{if(u[i]===k)m++;});
+                    pt=(m/q.rows.length)*q.score;
+                }
+            }
+            stats[q.cat].s+=pt; totS+=pt;
+        });
+
+        const final=Math.round((totS/totM)*100);
+        let summ={},cht="",nts=[];
+        Object.keys(stats).forEach(c=>{
+            const p=stats[c].m>0?Math.round((stats[c].s/stats[c].m)*100):0;
+            summ[c]={skor:p,tuntas:p>=70,label:p>=70?"Tuntas":"Perlu Bimbingan"};
+            if(p<70)nts.push(c);
+            cht+=`<div class="chart-row"><div class="chart-lbl">${c}</div><div class="chart-track"><div class="chart-fill" style="width:${p}%;background:${p>=70?'#16a34a':'#dc2626'}"></div></div><div class="chart-val">${p}%</div></div>`;
+        });
+
+        const desc=nts.length===0?"Selamat! Tuntas semua elemen.":"Perlu belajar lagi di: "+nts.join(", ");
+        this.showSlide('result');
+        document.getElementById('modal-loading').style.display='none';
+        document.getElementById('result-content').innerHTML=`<h3>Nilai Akhir: <span style="color:var(--primary);font-size:2.5rem;">${final}</span></h3><div style="background:#eff6ff;padding:15px;border-radius:8px;margin-bottom:20px;">${desc}</div><h4>Capaian per Elemen:</h4>${cht}`;
+
+        fetch(CONFIG.SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},
+            body:JSON.stringify({action:"submit_exam",mapel:"Bahasa Sunda",nama:this.session.nama,kelas:this.session.kelas,skor:final,deskripsi:desc,jawaban:this.session.answers,ringkasanNilai:summ})
+        }).then(()=>{try{localStorage.removeItem(CONFIG.STORAGE_KEY);}catch(e){}});
+    }
+};
+window.onload=()=>app.init();
+</script>
+</body>
+</html>
