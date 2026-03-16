@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujian Sekolah Tertulis – Matematika · SD Muhammadiyah 01 Kukusan</title>
+    <script>
+    window.MathJax = {
+        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+        svg: { fontCache: 'global' }
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #0f766e;
+            --primary-light: #f0fdfa;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --text: #334155;
+            --bg: #f0fdf9;
+            --border: #cbd5e1;
+        }
+        * { box-sizing: border-box; outline: none; }
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; }
+        .app-container { display: flex; flex-direction: column; height: 100%; width: 100%; background: white; }
+        .header { height: 64px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); z-index: 50; flex-shrink: 0; }
+        .header-title { font-weight: 700; font-size: 1.15rem; }
+        .timer-box { background: rgba(255,255,255,0.15); padding: 6px 16px; border-radius: 6px; font-weight: 700; font-family: monospace; font-size: 1.25rem; border: 1px solid rgba(255,255,255,0.2); }
+        .workspace { display: flex; flex: 1; overflow: hidden; position: relative; }
+        .main-stage { flex: 1; position: relative; background: var(--bg); display: flex; flex-direction: column; overflow: hidden; }
+        .slide { display: none !important; width: 100%; height: 100%; }
+        .slide.active { display: flex !important; flex-direction: column; animation: fadeIn 0.4s ease; }
+        .center-content-wrapper { width: 100%; max-width: 800px; margin: 0 auto; padding: 20px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .card { background: white; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); padding: 32px; margin-bottom: 20px; border-top: 5px solid var(--primary); }
+        .quiz-scroll-area { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 80px; width: 100%; max-width: 900px; margin: 0 auto; }
+        .nav-bar-fixed { flex-shrink: 0; background: white; padding: 16px 24px; border-top: 1px solid #e2e8f0; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; z-index: 40; }
+        .question-item { display: none; }
+        .question-item.active-q { display: block; animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { opacity:0; transform:translateX(15px); } to { opacity:1; transform:translateX(0); } }
+        .stimulus-box { background: #ffffff; border: 1px solid #e2e8f0; border-left: 5px solid var(--primary); padding: 20px; margin-bottom: 24px; border-radius: 8px; }
+        .stimulus-head { font-weight: 800; color: var(--primary); border-bottom: 2px dashed #e2e8f0; padding-bottom: 10px; margin-bottom: 15px; font-size: 1.1rem; text-transform: uppercase; }
+        .visual-frame { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; display: flex; justify-content: center; align-items: center; margin: 15px 0; overflow: hidden; }
+        .q-text { font-size: 1.1rem; font-weight: 600; color: #1e293b; margin-bottom: 20px; line-height: 1.7; }
+        .tag-cat { display: inline-block; font-size: 0.75rem; background: #ccfbf1; color: #0f766e; padding: 4px 10px; border-radius: 20px; font-weight: bold; margin-bottom: 10px; }
+        .opt-label { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: white; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s; font-size: 1rem; color: #475569; line-height: 1.5; }
+        .opt-label:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+        .opt-label input { margin-top: 4px; transform: scale(1.2); flex-shrink: 0; }
+        .matrix-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .matrix-table th, .matrix-table td { border: 1px solid #e2e8f0; padding: 10px 14px; }
+        .matrix-table th { background: #f0fdf9; text-align: center; font-weight: 700; color: var(--primary); }
+        .matrix-table td { text-align: center; }
+        .matrix-table td:first-child { text-align: left; font-weight: 500; }
+        .side-panel { width: 300px; background: white; border-left: 1px solid #e2e8f0; display: flex; flex-direction: column; flex-shrink: 0; z-index: 40; }
+        .nav-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; padding: 16px; overflow-y: auto; }
+        .nav-num { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; color: #64748b; transition: all 0.2s; font-size: 0.85rem; }
+        .nav-num:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+        .nav-num.current { border: 2px solid var(--primary); transform: scale(1.1); box-shadow: 0 2px 8px rgba(0,0,0,0.15); color: var(--primary); }
+        .nav-num.filled { background-color: var(--success) !important; color: white !important; border-color: var(--success) !important; }
+        .nav-num.filled.current { border: 3px solid var(--primary) !important; }
+        input[type="text"], select { width: 100%; padding: 14px; margin: 8px 0 20px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 1rem; display: inline-flex; align-items: center; gap: 8px; justify-content: center; }
+        .btn:hover { background: #0d6460; }
+        .btn:disabled { background: #94a3b8; cursor: not-allowed; }
+        .btn-outline { background: white; border: 1px solid #cbd5e1; color: #475569; }
+        .btn-outline:hover { background: #f8fafc; }
+        .btn-danger { background: var(--danger); }
+        .chart-row { display: flex; align-items: center; margin-bottom: 12px; }
+        .chart-lbl { width: 200px; font-size: 0.78rem; font-weight: 600; text-align: right; padding-right: 15px; flex-shrink: 0; }
+        .chart-track { flex: 1; background: #e2e8f0; height: 16px; border-radius: 10px; overflow: hidden; }
+        .chart-fill { height: 100%; transition: width 1s ease-out; }
+        .chart-val { width: 50px; padding-left: 10px; font-weight: 700; }
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 100; }
+        .modal { background: white; padding: 30px; border-radius: 16px; width: 90%; max-width: 420px; text-align: center; }
+        .pin-input-wrap { position: relative; margin-bottom: 10px; }
+        .pin-input-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; pointer-events: none; }
+        #inp-pin { width: 100%; padding: 14px 14px 14px 44px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 1.1rem; font-weight: 700; letter-spacing: .15em; font-family: monospace; color: var(--text); transition: border-color .2s; }
+        #inp-pin:focus { border-color: var(--primary); }
+        #inp-pin.error { border-color: #dc2626; animation: shake .3s ease; }
+        #pin-err { font-size: .82rem; color: #dc2626; font-weight: 600; display: none; margin-bottom: 14px; }
+        .stimulus-img { max-width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); margin: 0 auto; }
+        .matrix-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .hint-pgk { font-size:.82rem; color:#64748b; background:#f0fdf9; border-left:3px solid var(--primary); padding:8px 12px; border-radius:0 6px 6px 0; margin-bottom:12px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+        @media (max-width: 768px) {
+            .workspace { flex-direction: column; }
+            .side-panel { width: 100%; height: auto; border-left: none; border-top: 1px solid #e2e8f0; order: 2; }
+            .nav-grid { max-height: 120px; padding: 10px; gap: 6px; }
+            .chart-lbl { width: 130px; font-size: 0.7rem; }
+            .header-title { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <div class="header">
+        <div class="header-title">Ujian Sekolah – Matematika</div>
+        <div style="display:flex;align-items:center;gap:15px;">
+            <div id="user-badge" style="display:none;font-size:0.85rem;background:rgba(255,255,255,0.1);padding:5px 12px;border-radius:20px;">Siswa</div>
+            <div class="timer-box" id="timer-display">--:--</div>
+        </div>
+    </div>
+    <div class="workspace">
+        <div class="main-stage">
+
+            <!-- ① SLIDE PIN -->
+            <div id="slide-pin" class="slide active">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:420px;margin:0 auto;text-align:center;">
+                        <div style="font-size:2.5rem;margin-bottom:12px;">🔐</div>
+                        <h2 style="color:var(--primary);margin-top:0;">Masukkan PIN</h2>
+                        <p style="color:#64748b;margin-bottom:24px;font-size:.95rem;">Masukkan PIN dari guru untuk membuka<br><strong>Ujian Sekolah Tertulis Matematika</strong></p>
+                        <div class="pin-input-wrap">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <input type="password" id="inp-pin" placeholder="PIN ujian…" maxlength="30" autocomplete="off" onkeydown="if(event.key==='Enter') app.checkPin()">
+                        </div>
+                        <div id="pin-err">❌ PIN salah. Coba lagi.</div>
+                        <button class="btn" style="width:100%" onclick="app.checkPin()">Buka Ujian →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ② SLIDE LOGIN -->
+            <div id="slide-login" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:450px;margin:0 auto;text-align:center;">
+                        <h2 style="color:var(--primary);margin-top:0;">Selamat Datang</h2>
+                        <p style="color:#64748b;margin-bottom:30px;">Ujian Sekolah Matematika (Fase C) — 5 Elemen</p>
+                        <div style="text-align:left;">
+                            <label>Nama Lengkap</label>
+                            <input type="text" id="inpNama" placeholder="Masukkan nama lengkap...">
+                            <label>Kelas</label>
+                            <select id="inpKelas">
+                                <option value="">-- Pilih Kelas --</option>
+                                <option value="6A">Kelas 6A</option>
+                                <option value="6B">Kelas 6B</option>
+                            </select>
+                        </div>
+                        <button class="btn" style="width:100%" onclick="app.login()">Masuk Ujian</button>
+                        <div id="resume-alert" style="display:none;margin-top:20px;padding:10px;background:#f0fdfa;color:#0f766e;border-radius:8px;cursor:pointer;font-size:0.9rem;" onclick="app.resume()">
+                            🔄 <b>Sesi Tersimpan Ditemukan</b><br>Klik untuk melanjutkan
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ③ SLIDE PETUNJUK -->
+            <div id="slide-rules" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:700px;margin:0 auto;">
+                        <h2 style="margin-top:0;border-bottom:1px solid #e2e8f0;padding-bottom:15px;color:var(--primary);">Petunjuk Pengerjaan</h2>
+                        <div style="line-height:1.8;color:#334155;">
+                            <p>1. <strong>Waktu:</strong> <strong>90 Menit</strong>. Ujian dikumpulkan otomatis saat waktu habis.</p>
+                            <p>2. <strong>Soal:</strong> <strong>35 butir soal</strong> — mencakup 5 elemen: Bilangan, Aljabar, Pengukuran, Geometri, dan Analisis Data &amp; Peluang.</p>
+                            <p>3. <strong>Format:</strong> PG Tunggal (pilih 1), PG Kompleks (boleh lebih dari 1), dan PG Kategori (menjodohkan).</p>
+                            <p>4. <strong>Catatan:</strong> Beberapa soal memuat notasi matematika (pecahan, simbol). Baca dengan teliti sebelum menjawab.</p>
+                            <p>5. <strong>Dilarang:</strong> Menutup atau me-refresh halaman selama ujian berlangsung.</p>
+                        </div>
+                        <div style="margin-top:30px;text-align:right;">
+                            <button class="btn" onclick="app.startExam()">Mulai Mengerjakan &#8594;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ④ SLIDE KUIS -->
+            <div id="slide-quiz" class="slide">
+                <div id="quiz-scroll" class="quiz-scroll-area">
+                    <div id="quiz-container"></div>
+                </div>
+                <div class="nav-bar-fixed">
+                    <button class="btn btn-outline" id="btn-prev" onclick="app.move(-1)">&#8592; Sebelumnya</button>
+                    <span id="q-indicator" style="font-weight:700;color:var(--primary);">Soal 1 / 35</span>
+                    <button class="btn" id="btn-next" onclick="app.move(1)">Selanjutnya</button>
+                </div>
+            </div>
+
+            <!-- ⑤ SLIDE HASIL -->
+            <div id="slide-result" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:620px;margin:0 auto;text-align:center;">
+                        <div style="font-size:4rem;margin-bottom:10px;">🎉</div>
+                        <h2 style="color:var(--primary);margin:0;">Ujian Selesai!</h2>
+                        <p style="color:#64748b;">Jawaban Anda telah kami terima.</p>
+                        <div id="result-content" style="text-align:left;margin-top:30px;border-top:1px solid #e2e8f0;padding-top:20px;">
+                            <p style="text-align:center;color:#64748b;">Sedang memproses nilai...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="side-panel" id="sidebar" style="display:none;">
+            <div style="padding:15px 20px;font-weight:700;color:#334155;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;">
+                <span>Navigasi Soal</span>
+                <span style="font-size:0.8rem;background:#ccfbf1;color:#0f766e;padding:2px 8px;border-radius:10px;">35 Butir</span>
+            </div>
+            <div class="nav-grid" id="nav-grid"></div>
+            <div style="padding:16px 20px;border-top:1px solid #e2e8f0;margin-top:auto;background:#f8fafc;">
+                <button class="btn btn-danger" style="width:100%" onclick="app.confirmFinish()">Selesai Ujian</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-confirm" class="overlay">
+    <div class="modal">
+        <h3 style="color:var(--primary);">Konfirmasi Pengumpulan</h3>
+        <p>Yakin ingin mengakhiri dan mengumpulkan ujian ini?</p>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:25px;">
+            <button class="btn btn-outline" onclick="document.getElementById('modal-confirm').style.display='none'">Cek Lagi</button>
+            <button class="btn btn-danger" onclick="app.submitExam()">Ya, Kumpulkan</button>
+        </div>
+    </div>
+</div>
+<div id="modal-loading" class="overlay">
+    <div class="modal">
+        <h3 style="color:var(--primary);">Sedang Mengirim…</h3>
+        <div style="width:40px;height:40px;border:4px solid #e2e8f0;border-top:4px solid var(--primary);border-radius:50%;margin:10px auto;animation:spin 1s linear infinite;"></div>
+        <p>Mohon jangan tutup halaman ini.</p>
+    </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  KONFIGURASI
+//  Untuk mengganti PIN: hashPin("PIN_BARU").then(h => console.log(h))
+// ════════════════════════════════════════════════════════
+const CONFIG = {
+    SCRIPT_URL:  "https://script.google.com/macros/s/AKfycbwJveJtAISKhveIQ4wspAaeaUKLrqB_IBY55qhOqDOl649QSjqtBa2hYhOrx7UNs0GbdA/exec",
+    STORAGE_KEY: "UST_2026_MATEMATIKA",
+    DURATION:    90 * 60,
+    PIN_HASH:    "1666718e4fcb0058"
+};
+
+async function hashPin(pin) {
+    const enc = new TextEncoder().encode(pin.trim().toLowerCase());
+    const buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,16);
+}
+window.hashPin = hashPin;
+
+
+// ── Aset Gambar (URL dari uji-coba, semua REUSE) ─────────────────────────────
+const IMAGE_ASSETS = {
+            "denah_lahan": "https://i.ibb.co.com/f66p6Ms/denah-lahan.png",
+            "jaring_kubus": "https://i.ibb.co.com/35pFtL0q/jaring-kubus.png",
+            "peta_koordinat": "https://i.ibb.co.com/pv42SLtF/peta-koordinat.png",
+            "diagram_kehadiran": "https://i.ibb.co.com/1f8tB1dn/diagram-kehadiran.png",
+            "tampak_bangun_ruang": "https://i.ibb.co.com/PzzFbwJN/tampak-bangun-ruang.png",
+            "pola_gambar": "https://i.ibb.co.com/tPvh90FW/pola-gambar.png",
+            "jam_dinding": "https://i.ibb.co.com/7JL1zz6N/jam-dinding.png",
+            "bangun_datar_ruang": "https://i.ibb.co.com/wrKXrssP/bangun-datar-ruang.png",
+            "grafik_penjualan": "https://i.ibb.co.com/0VZ3Lz2L/grafik-penjualan.png"
+        };
+
+function getImg(key, alt="Ilustrasi Soal") {
+    const url = IMAGE_ASSETS[key];
+    if (!url) return `<div style="background:#fef3c7;padding:15px;border-radius:8px;text-align:center;border:1px solid #f59e0b;">⚠️ Gambar tidak tersedia</div>`;
+    return `<img src="${url}" alt="${alt}" class="stimulus-img" loading="eager">`;
+}
+
+// ════════════════════════════════════════════════════════
+//  BANK SOAL — 35 Butir
+//  Sesi 1 (1–18): Bilangan & Aljabar
+//  Sesi 2 (19–35): Pengukuran, Geometri, Analisis Data & Peluang
+// ════════════════════════════════════════════════════════
+const QUESTIONS = [{
+                id: 1,
+                cat: "Bilangan",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Data Penduduk Kota</div><p>Jumlah penduduk sebuah kota adalah 485.729 jiwa. Angka 8 pada bilangan tersebut menempati nilai tempat...</p></div>",
+                q: "Tentukan nilai tempat dari angka 8!",
+                opt: ["Puluhan ribu", "Ratusan ribu", "Puluhan", "Ratusan"],
+                ans: "Puluhan ribu"
+            },
+            {
+                id: 2,
+                cat: "Bilangan",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Belanja di Koperasi</div><p>Daftar harga barang di koperasi sekolah:<br>• Buku tulis: Rp 4.500<br>• Pensil: Rp 2.000<br>• Penghapus: Rp 1.500<br><br>Rina membeli 3 buku tulis, 2 pensil, dan 1 penghapus. Ia membayar dengan uang Rp 25.000.</p></div>",
+                q: "Berapa kembalian yang diterima Rina?",
+                opt: ["Rp 5.000", "Rp 5.500", "Rp 6.000", "Rp 6.500"],
+                ans: "Rp 5.500"
+            },
+            {
+                id: 3,
+                cat: "Bilangan",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Jadwal Kegiatan</div><p>Andi mengikuti les matematika setiap 4 hari sekali. Budi mengikuti les matematika setiap 6 hari sekali. Mereka bertemu pertama kali pada tanggal 10 Januari 2026.</p></div>",
+                q: "Kapan mereka akan bertemu lagi untuk kedua kalinya?",
+                opt: ["Tanggal 20 Januari", "Tanggal 22 Januari", "Tanggal 24 Januari", "Tanggal 26 Januari"],
+                ans: "Tanggal 22 Januari"
+            },
+            {
+                id: 4,
+                cat: "Bilangan",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Pecahan Senilai</div><p>Diberikan pecahan $\\frac{3}{4}$. Pecahan berikut yang nilainya sama dengan $\\frac{3}{4}$ adalah...</p></div>",
+                q: "Pilih pecahan yang senilai!",
+                opt: ["$\\frac{6}{8}$", "$\\frac{5}{8}$", "$\\frac{9}{16}$", "$\\frac{7}{10}$"],
+                ans: "$\\frac{6}{8}$"
+            },
+            {
+                id: 5,
+                cat: "Bilangan",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Pembagian Bahan Makanan</div><p>Ibu memiliki $2\\frac{1}{2}$ kg tepung. Tepung tersebut akan dibagi rata kepada 5 orang anak untuk membuat kue.</p></div>",
+                q: "Berapa kg tepung yang diterima setiap anak?",
+                opt: ["$\\frac{1}{2}$ kg", "$\\frac{1}{4}$ kg", "$\\frac{3}{4}$ kg", "1 kg"],
+                ans: "$\\frac{1}{2}$ kg"
+            },
+            {
+                id: 6,
+                cat: "Bilangan",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Pengukuran Panjang</div><p>Hasil pengukuran panjang 4 benda:<br>• Pensil: 15,5 cm<br>• Penggaris: 30,2 cm<br>• Buku: 21,8 cm<br>• Kotak: 18,3 cm</p></div>",
+                q: "Urutkan dari yang terpendek ke terpanjang!",
+                opt: ["Pensil, Kotak, Buku, Penggaris", "Pensil, Buku, Kotak, Penggaris", "Kotak, Pensil, Buku, Penggaris", "Pensil, Kotak, Penggaris, Buku"],
+                ans: "Pensil, Kotak, Buku, Penggaris"
+            },
+            {
+                id: 7,
+                cat: "Bilangan",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Estimasi Belanja</div><p>Ayah berbelanja dengan membawa uang Rp 100.000. Harga barang yang akan dibeli:<br>• Beras: Rp 48.500<br>• Minyak: Rp 23.800<br>• Gula: Rp 15.200</p></div>",
+                q: "Dengan pembulatan ke ribuan terdekat, apakah uang Ayah cukup?",
+                opt: ["Cukup, sisa sekitar Rp 10.000", "Cukup, sisa sekitar Rp 12.000", "Tidak cukup, kurang sekitar Rp 2.000", "Tidak cukup, kurang sekitar Rp 5.000"],
+                ans: "Cukup, sisa sekitar Rp 12.000"
+            },
+            {
+                id: 8,
+                cat: "Bilangan",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Konversi Pecahan</div><p>Diberikan pecahan-pecahan berikut:<br>• $\\frac{2}{3}$<br>• $\\frac{3}{5}$<br>• $\\frac{5}{8}$<br>• $\\frac{7}{10}$</p></div>",
+                q: "Pilih LEBIH DARI SATU pecahan yang jika diubah menjadi desimal hasilnya lebih dari 0,5!",
+                opt: ["$\\frac{2}{3}$", "$\\frac{3}{5}$", "$\\frac{5}{8}$", "$\\frac{7}{10}$"],
+                ans: ["$\\frac{2}{3}$", "$\\frac{3}{5}$", "$\\frac{5}{8}$", "$\\frac{7}{10}$"]
+            },
+            {
+                id: 9,
+                cat: "Bilangan",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Faktor Persekutuan</div><p>Diberikan dua bilangan: 24 dan 36</p></div>",
+                q: "Pilih LEBIH DARI SATU bilangan yang merupakan faktor persekutuan dari 24 dan 36!",
+                opt: ["2", "3", "4", "6"],
+                ans: ["2", "3", "4", "6"]
+            },
+            {
+                id: 10,
+                cat: "Bilangan",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Penjumlahan Pecahan</div><p>Diberikan operasi: $2\\frac{1}{3} + 1\\frac{2}{5}$</p></div>",
+                q: "Pilih LEBIH DARI SATU langkah penyelesaian yang benar!",
+                opt: ["Ubah ke pecahan biasa: $\\frac{7}{3} + \\frac{7}{5}$", "Samakan penyebut menjadi 15", "Hasil akhir: $3\\frac{14}{15}$", "Hasil akhir: $4\\frac{1}{15}$"],
+                ans: ["Ubah ke pecahan biasa: $\\frac{7}{3} + \\frac{7}{5}$", "Samakan penyebut menjadi 15", "Hasil akhir: $3\\frac{14}{15}$"]
+            },
+            {
+                id: 11,
+                cat: "Aljabar",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Nilai Belum Diketahui</div><p>Diberikan kalimat matematika: $15 \\times n = 150$</p></div>",
+                q: "Berapa nilai $n$ yang tepat?",
+                opt: ["5", "10", "15", "20"],
+                ans: "10"
+            },
+            {
+                id: 12,
+                cat: "Aljabar",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Pola Bilangan</div><p>Diberikan urutan bilangan: 2, 4, 8, 16, ...</p></div>",
+                q: "Dua bilangan selanjutnya dalam pola tersebut adalah...",
+                opt: ["24, 32", "32, 48", "32, 64", "20, 24"],
+                ans: "32, 64"
+            },
+            {
+                id: 13,
+                cat: "Aljabar",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Rasio Satuan</div><p>Harga 3 buah apel adalah Rp 18.000.</p></div>",
+                q: "Berapa harga untuk 7 buah apel?",
+                opt: ["Rp 35.000", "Rp 38.000", "Rp 42.000", "Rp 45.000"],
+                ans: "Rp 42.000"
+            },
+            {
+                id: 14,
+                cat: "Aljabar",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Resep Masakan</div><p>Resep kue untuk 4 orang membutuhkan 200 gram tepung. Jika ingin membuat kue untuk 10 orang...</p></div>",
+                q: "Berapa gram tepung yang dibutuhkan?",
+                opt: ["400 gram", "450 gram", "500 gram", "550 gram"],
+                ans: "500 gram"
+            },
+            {
+                id: 15,
+                cat: "Aljabar",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Sifat Operasi</div><p>Pasangan kalimat matematika berikut:</p></div>",
+                q: "Pilih LEBIH DARI SATU pasangan yang memiliki hasil sama!",
+                opt: ["$5 \\times (3 + 2)$ dan $(5 \\times 3) + (5 \\times 2)$", "$8 + (4 + 6)$ dan $(8 + 4) + 6$", "$12 - 5$ dan $5 - 12$", "$10 \\div 2$ dan $2 \\div 10$"],
+                ans: ["$5 \\times (3 + 2)$ dan $(5 \\times 3) + (5 \\times 2)$", "$8 + (4 + 6)$ dan $(8 + 4) + 6$"]
+            },
+            {
+                id: 16,
+                cat: "Aljabar",
+                type: "pgk",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Pola Gambar</div><div class='visual-frame'>${getImg("pola_gambar", "Pola Gambar")}</div><p>Pola gambar bertambah secara teratur seperti yang terlihat di atas.</p></div>`,
+                q: "Pilih LEBIH DARI SATU pernyataan yang benar!",
+                opt: ["Pola bertambah 3 setiap gambar", "Gambar 5 memiliki 15 objek", "Rumus pola: $3 \\times n$", "Gambar 10 memiliki 25 objek"],
+                ans: ["Pola bertambah 3 setiap gambar", "Gambar 5 memiliki 15 objek", "Rumus pola: $3 \\times n$"]
+            },
+            {
+                id: 17,
+                cat: "Bilangan",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Klasifikasi Bilangan</div><p>Bilangan: 2, 9, 11, 15, 17</p></div>",
+                q: "Klasifikasikan setiap bilangan sebagai Prima atau Bukan Prima!",
+                rows: ["2", "9", "11", "15", "17"],
+                cols: ["Prima", "Bukan Prima"],
+                ans: ["Prima", "Bukan Prima", "Prima", "Bukan Prima", "Prima"]
+            },
+            {
+                id: 18,
+                cat: "Aljabar",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Jenis Operasi</div><p>Cerita masalah:</p></div>",
+                q: "Klasifikasikan setiap masalah diselesaikan dengan operasi apa!",
+                rows: ["Membagi 24 permen kepada 6 anak", "Menjumlahkan tabungan 3 bulan", "Menghitung harga 5 buku dengan harga satuan diketahui"],
+                cols: ["Perkalian/Pembagian", "Penjumlahan/Pengurangan"],
+                ans: ["Perkalian/Pembagian", "Penjumlahan/Pengurangan", "Perkalian/Pembagian"]
+            },
+            {
+                id: 19,
+                cat: "Pengukuran",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Luas Lahan Sekolah</div><div class='visual-frame'>${getImg("denah_lahan", "Denah Lahan")}</div><p>Denah lahan terdiri dari persegi panjang (10m x 8m) dan segitiga (alas 10m, tinggi 6m).</p></div>`,
+                q: "Hitung luas total lahan tersebut!",
+                opt: ["100 m²", "110 m²", "120 m²", "130 m²"],
+                ans: "110 m²"
+            },
+            {
+                id: 20,
+                cat: "Pengukuran",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Keliling Taman</div><p>Taman berbentuk persegi panjang dengan panjang 15 m dan lebar 10 m.</p></div>",
+                q: "Berapa panjang pagar yang dibutuhkan untuk mengelilingi taman?",
+                opt: ["40 m", "45 m", "50 m", "55 m"],
+                ans: "50 m"
+            },
+            {
+                id: 21,
+                cat: "Pengukuran",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Sudut Jam</div><div class='visual-frame'>${getImg("jam_dinding", "Jam Dinding")}</div><p>Jam dinding menunjukkan pukul 03.00 seperti yang terlihat di atas.</p></div>`,
+                q: "Berapa besar sudut terkecil yang dibentuk oleh jarum jam dan menit?",
+                opt: ["45°", "60°", "90°", "120°"],
+                ans: "90°"
+            },
+            {
+                id: 22,
+                cat: "Pengukuran",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Durasi Kegiatan</div><p>Jadwal kegiatan:<br>• Belajar: 07.00 - 08.30<br>• Olahraga: 09.00 - 10.00<br>• Seni: 10.30 - 11.45<br>• Istirahat: 12.00 - 13.00</p></div>",
+                q: "Pilih LEBIH DARI SATU kegiatan yang durasinya lebih dari 1 jam!",
+                opt: ["Belajar", "Olahraga", "Seni", "Istirahat"],
+                ans: ["Belajar", "Seni", "Istirahat"]
+            },
+            {
+                id: 23,
+                cat: "Pengukuran",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Volume Bak Mandi</div><p>Bak mandi berbentuk balok dengan ukuran: panjang 120 cm, lebar 80 cm, tinggi 70 cm.</p></div>",
+                q: "Berapa liter volume air maksimal yang dapat ditampung?",
+                opt: ["576 liter", "672 liter", "756 liter", "840 liter"],
+                ans: "672 liter"
+            },
+            {
+                id: 24,
+                cat: "Geometri",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Jaring-Jaring Kubus</div><div class='visual-frame'>${getImg("jaring_kubus", "Jaring Kubus")}</div><p>Beberapa pola gabungan persegi ditampilkan.</p></div>`,
+                q: "Manakah yang merupakan jaring-jaring kubus yang valid?",
+                opt: ["Pola A", "Pola B", "Pola C", "Pola D"],
+                ans: "Pola A"
+            },
+            {
+                id: 25,
+                cat: "Geometri",
+                type: "pgk",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Tampak Bangun Ruang</div><div class='visual-frame'>${getImg("tampak_bangun_ruang", "Tampak Bangun Ruang")}</div><p>Perhatikan gambar bangun ruang gabungan di atas dari berbagai sudut pandang.</p></div>`,
+                q: "Pilih LEBIH DARI SATU gambar yang menunjukkan tampak yang benar!",
+                opt: ["Tampak depan menunjukkan 6 persegi", "Tampak samping menunjukkan 4 persegi", "Tampak atas menunjukkan 3 persegi", "Tampak belakang sama dengan depan"],
+                ans: ["Tampak samping menunjukkan 4 persegi", "Tampak belakang sama dengan depan"]
+            },
+            {
+                id: 26,
+                cat: "Geometri",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Sifat Bangun Ruang</div><p>Pernyataan tentang kubus dan balok:</p></div>",
+                q: "Klasifikasikan setiap pernyataan sebagai Benar atau Salah!",
+                rows: ["Kubus memiliki 6 sisi yang sama besar", "Balok memiliki 12 rusuk", "Kubus memiliki 8 titik sudut"],
+                cols: ["Benar", "Salah"],
+                ans: ["Benar", "Benar", "Benar"]
+            },
+            {
+                id: 27,
+                cat: "Geometri",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Koordinat Peta</div><div class='visual-frame'>${getImg("peta_koordinat", "Peta Koordinat")}</div><p>Peta lingkungan sekolah dengan sistem koordinat (huruf dan angka).</p></div>`,
+                q: "Perpustakaan terletak pada koordinat...",
+                opt: ["(A, 1)", "(C, 2)", "(D, 4)", "(A, 5)"],
+                ans: "(A, 1)"
+            },
+            {
+                id: 28,
+                cat: "Geometri",
+                type: "pgk",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Sifat Bangun</div><div class='visual-frame'>${getImg("bangun_datar_ruang", "Bangun Datar dan Ruang")}</div><p>Disajikan 3 gambar bangun: persegi, kubus, lingkaran seperti di atas.</p></div>`,
+                q: "Pilih LEBIH DARI SATU bangun yang memiliki titik sudut!",
+                opt: ["Persegi", "Kubus", "Lingkaran", "Semua memiliki titik sudut"],
+                ans: ["Persegi", "Kubus"]
+            },
+            {
+                id: 29,
+                cat: "Analisis Data dan Peluang",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Diagram Kehadiran</div><div class='visual-frame'>${getImg("diagram_kehadiran", "Diagram Kehadiran")}</div><p>Diagram batang jumlah siswa yang hadir dalam seminggu.</p></div>`,
+                q: "Hari dengan jumlah kehadiran tertinggi adalah...",
+                opt: ["Senin", "Selasa", "Rabu", "Kamis"],
+                ans: "Rabu"
+            },
+            {
+                id: 30,
+                cat: "Analisis Data dan Peluang",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Tabel Nilai</div><p>Tabel nilai ujian:<br>• Nilai tertinggi: 95<br>• Nilai terendah: 60<br>• Rata-rata: 78</p></div>",
+                q: "Berapa selisih nilai tertinggi dan terendah?",
+                opt: ["25", "30", "35", "40"],
+                ans: "35"
+            },
+            {
+                id: 31,
+                cat: "Analisis Data dan Peluang",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Rata-Rata Tinggi Badan</div><p>Data tinggi badan 5 siswa (cm): 140, 145, 150, 155, 160</p></div>",
+                q: "Berapa rata-rata tinggi badan dari data tersebut?",
+                opt: ["148 cm", "150 cm", "152 cm", "155 cm"],
+                ans: "150 cm"
+            },
+            {
+                id: 32,
+                cat: "Analisis Data dan Peluang",
+                type: "pgk",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Grafik Penjualan</div><div class='visual-frame'>${getImg("grafik_penjualan", "Grafik Penjualan")}</div><p>Grafik penjualan koperasi selama 4 bulan menunjukkan tren naik dari Januari ke April seperti terlihat di atas.</p></div>`,
+                q: "Pilih LEBIH DARI SATU kesimpulan yang valid!",
+                opt: ["Penjualan April lebih tinggi dari Januari", "Tren penjualan meningkat", "Penjualan Februari lebih rendah dari Maret", "Penjualan tetap setiap bulan"],
+                ans: ["Penjualan April lebih tinggi dari Januari", "Tren penjualan meningkat"]
+            },
+            {
+                id: 33,
+                cat: "Analisis Data dan Peluang",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Peluang Kelereng</div><p>Kantong berisi: 5 kelereng merah, 3 kelereng biru, 2 kelereng hijau.</p></div>",
+                q: "Warna kelereng yang paling mungkin terambil secara acak adalah...",
+                opt: ["Merah", "Biru", "Hijau", "Semua sama"],
+                ans: "Merah"
+            },
+            {
+                id: 34,
+                cat: "Analisis Data dan Peluang",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Penyajian Data</div><p>Bentuk penyajian: Diagram Batang, Tabel, Piktogram</p></div>",
+                q: "Klasifikasikan setiap bentuk cocok untuk apa!",
+                rows: ["Diagram Batang", "Tabel", "Piktogram"],
+                cols: ["Membandingkan Jumlah", "Melihat Tren Waktu"],
+                ans: ["Membandingkan Jumlah", "Membandingkan Jumlah", "Membandingkan Jumlah"]
+            },
+            {
+                id: 35,
+                cat: "Analisis Data dan Peluang",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Kemungkinan Kejadian</div><p>Pernyataan kejadian:</p></div>",
+                q: "Klasifikasikan setiap kejadian!",
+                rows: ["Matahari terbit dari barat", "Hujan di musim kemarau", "Manusia bernapas"],
+                cols: ["Pasti", "Mungkin", "Tidak Mungkin"],
+                ans: ["Tidak Mungkin", "Mungkin", "Pasti"]
+            }
+        ];
+
+// ════════════════════════════════════════════════════════
+//  APP OBJECT
+// ════════════════════════════════════════════════════════
+const app = {
+    session: { nama:"", kelas:"", answers:{}, startTime:0 },
+    currIdx: 0, timerInt: null, _hasSavedSession: false,
+
+    init() {
+        this.showSlide('pin');
+        try { if(localStorage.getItem(CONFIG.STORAGE_KEY)) this._hasSavedSession=true; } catch(e){}
+    },
+
+    async checkPin() {
+        const inp=document.getElementById('inp-pin'), val=inp.value.trim();
+        if(!val) return;
+        const h=await hashPin(val);
+        if(h===CONFIG.PIN_HASH){
+            this.showSlide('login');
+            if(this._hasSavedSession) document.getElementById('resume-alert').style.display='block';
+        } else {
+            inp.classList.add('error');
+            document.getElementById('pin-err').style.display='block';
+            inp.value='';
+            setTimeout(()=>inp.classList.remove('error'),400);
+        }
+    },
+
+    login() {
+        const n=document.getElementById('inpNama').value.trim(), k=document.getElementById('inpKelas').value;
+        if(!n||!k){alert("Harap isi nama lengkap dan pilih kelas!");return;}
+        this.session.nama=n; this.session.kelas=k;
+        this.showSlide('rules');
+    },
+
+    resume() {
+        try {
+            this.session=JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY));
+            this.renderSidebar(); this.startExam(true);
+        } catch(e){ alert("Sesi tersimpan rusak. Silakan mulai ujian baru."); }
+    },
+
+    startExam(isRes=false) {
+        if(!isRes){ this.session.startTime=Date.now(); this.save(); }
+        document.getElementById('user-badge').innerText=this.session.nama;
+        document.getElementById('user-badge').style.display='block';
+        document.getElementById('sidebar').style.display='flex';
+        this.renderQuestions(); this.renderSidebar();
+        this.showSlide('quiz'); this.goToQ(0); this.startTimer();
+    },
+
+    showSlide(id) {
+        document.querySelectorAll('.slide').forEach(e=>e.classList.remove('active'));
+        document.getElementById('slide-'+id).classList.add('active');
+    },
+
+    renderQuestions() {
+        const box=document.getElementById('quiz-container'); box.innerHTML='';
+        QUESTIONS.forEach((q,i)=>{
+            let h=`<div id="q-item-${i}" class="question-item">
+                <div class="tag-cat">${q.cat}</div>
+                ${q.stim||''}
+                <div class="q-text">${i+1}. ${q.q}</div>`;
+
+            if(q.type==='pg') {
+                q.opt.forEach((o,oi)=>h+=`<label class="opt-label">
+                    <input type="radio" name="ans_${q.id}" value="${oi}"
+                        onchange="app.saveAns(${q.id},${oi})"> ${o}</label>`);
+            } else if(q.type==='pgk') {
+                h+=`<p class="hint-pgk">☑ Boleh memilih <strong>lebih dari satu</strong> jawaban yang benar</p>`;
+                q.opt.forEach((o,oi)=>h+=`<label class="opt-label">
+                    <input type="checkbox" value="${oi}"
+                        onchange="app.saveMulti(${q.id},${oi})"> ${o}</label>`);
+            } else if(q.type==='pgk-cat') {
+                h+=`<div class="matrix-wrapper"><table class="matrix-table"><tr><th>Pernyataan / Item</th>`;
+                q.cols.forEach(c=>h+=`<th>${c}</th>`);
+                h+=`</tr>`;
+                q.rows.forEach((r,ri)=>{
+                    h+=`<tr><td>${r}</td>`;
+                    q.cols.forEach(c=>h+=`<td><input type="radio"
+                        name="mx_${q.id}_${ri}" value="${c}"
+                        onchange="app.saveMx(${q.id},${ri},'${c}')"></td>`);
+                    h+=`</tr>`;
+                });
+                h+=`</table></div>`;
+            }
+            h+=`</div>`;
+            box.innerHTML+=h;
+        });
+        // Re-render MathJax after DOM update
+        if(window.MathJax && MathJax.typesetPromise) {
+            MathJax.typesetPromise([box]).catch(err=>console.warn('MathJax:', err));
+        }
+    },
+
+    goToQ(idx) {
+        if(idx<0||idx>=QUESTIONS.length) return;
+        this.currIdx=idx;
+        const qs=document.getElementById('quiz-scroll'); if(qs) qs.scrollTop=0;
+        document.querySelectorAll('.question-item').forEach(e=>e.classList.remove('active-q'));
+        const qEl=document.getElementById(`q-item-${idx}`);
+        qEl.classList.add('active-q');
+        document.getElementById('q-indicator').innerText=`Soal ${idx+1} / ${QUESTIONS.length}`;
+        document.getElementById('btn-prev').disabled=(idx===0);
+        const nBtn=document.getElementById('btn-next');
+        if(idx===QUESTIONS.length-1){
+            nBtn.innerText="Selesai"; nBtn.onclick=()=>this.confirmFinish(); nBtn.classList.add('btn-danger');
+        } else {
+            nBtn.innerText="Selanjutnya"; nBtn.onclick=()=>this.move(1); nBtn.classList.remove('btn-danger');
+        }
+        this.restoreVisual(idx); this.updateSidebarUI();
+    },
+
+    move(step){ this.goToQ(this.currIdx+step); },
+
+    saveAns(qid,v){ this.session.answers[qid]=v; this.save(); this.updateSidebarUI(); },
+
+    saveMulti(qid,oi){
+        let c=this.session.answers[qid]||[];
+        if(c.includes(oi)) c=c.filter(x=>x!==oi); else c.push(oi);
+        this.session.answers[qid]=c; this.save(); this.updateSidebarUI();
+    },
+
+    saveMx(qid,ri,v){
+        let c=this.session.answers[qid]||[]; c[ri]=v;
+        this.session.answers[qid]=c; this.save(); this.updateSidebarUI();
+    },
+
+    save(){ try{ localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(this.session)); }catch(e){} },
+
+    renderSidebar(){
+        const g=document.getElementById('nav-grid'); g.innerHTML='';
+        QUESTIONS.forEach((q,i)=>g.innerHTML+=`<div id="nav-num-${i}" class="nav-num"
+            onclick="app.goToQ(${i})">${i+1}</div>`);
+    },
+
+    checkFilled(qid){
+        const v=this.session.answers[qid];
+        if(v===undefined||v===null) return false;
+        if(Array.isArray(v)) return v.filter(x=>x!==undefined&&x!==null).length>0;
+        return true;
+    },
+
+    updateSidebarUI(){
+        QUESTIONS.forEach((q,i)=>{
+            const el=document.getElementById(`nav-num-${i}`); if(!el) return;
+            el.classList.toggle('current', i===this.currIdx);
+            el.classList.toggle('filled', this.checkFilled(q.id));
+        });
+    },
+
+    restoreVisual(idx){
+        const q=QUESTIONS[idx], ans=this.session.answers[q.id];
+        if(ans===undefined||ans===null) return;
+        if(q.type==='pg'){
+            const el=document.querySelector(`input[name="ans_${q.id}"][value="${ans}"]`);
+            if(el) el.checked=true;
+        } else if(q.type==='pgk'&&Array.isArray(ans)){
+            ans.forEach(v=>{
+                const el=document.querySelector(`#q-item-${idx} input[type="checkbox"][value="${v}"]`);
+                if(el) el.checked=true;
+            });
+        } else if(q.type==='pgk-cat'&&Array.isArray(ans)){
+            ans.forEach((v,ri)=>{
+                if(!v) return;
+                const el=document.querySelector(`input[name="mx_${q.id}_${ri}"][value="${v}"]`);
+                if(el) el.checked=true;
+            });
+        }
+    },
+
+    startTimer(){
+        clearInterval(this.timerInt);
+        this.timerInt=setInterval(()=>{
+            const rem=CONFIG.DURATION-Math.floor((Date.now()-this.session.startTime)/1000);
+            if(rem<=0){ clearInterval(this.timerInt); this.submitExam(); return; }
+            document.getElementById('timer-display').innerText=
+                `${Math.floor(rem/60).toString().padStart(2,'0')}:${(rem%60).toString().padStart(2,'0')}`;
+        },1000);
+    },
+
+    confirmFinish(){ document.getElementById('modal-confirm').style.display='flex'; },
+
+    submitExam(){
+        document.getElementById('modal-confirm').style.display='none';
+        document.getElementById('modal-loading').style.display='flex';
+        clearInterval(this.timerInt);
+
+        const stats={};let totS=0,totM=0;
+        QUESTIONS.forEach(q=>{
+            if(!stats[q.cat]) stats[q.cat]={s:0,m:0};
+            stats[q.cat].m+=q.score; totM+=q.score;
+            const u=this.session.answers[q.id]; let pt=0;
+            if(u!==undefined&&u!==null){
+                if(q.type==='pg'){
+                    if(u==q.opt.indexOf(q.ans)) pt=q.score;
+                } else if(q.type==='pgk'&&Array.isArray(u)&&Array.isArray(q.ans)){
+                    if(JSON.stringify(u.map(i=>q.opt[i]).sort())===JSON.stringify([...q.ans].sort()))
+                        pt=q.score;
+                } else if(q.type==='pgk-cat'&&Array.isArray(u)){
+                    let m=0; q.ans.forEach((k,i)=>{ if(u[i]===k) m++; });
+                    pt=(m/q.rows.length)*q.score;
+                }
+            }
+            stats[q.cat].s+=pt; totS+=pt;
+        });
+
+        const final=Math.round((totS/totM)*100);
+        const catOrder=['Bilangan','Aljabar','Pengukuran','Geometri','Analisis Data dan Peluang'];
+        let summ={}, cht='', nts=[];
+        catOrder.forEach(c=>{
+            if(!stats[c]) return;
+            const p=stats[c].m>0?Math.round((stats[c].s/stats[c].m)*100):0;
+            summ[c]={skor:p,tuntas:p>=70,label:p>=70?"Tuntas":"Perlu Bimbingan"};
+            if(p<70) nts.push(c);
+            cht+=`<div class="chart-row">
+                <div class="chart-lbl">${c}</div>
+                <div class="chart-track"><div class="chart-fill"
+                    style="width:${p}%;background:${p>=70?'#16a34a':'#dc2626'}"></div></div>
+                <div class="chart-val">${p}%</div>
+            </div>`;
+        });
+
+        const desc=nts.length===0?"Selamat! Tuntas semua elemen.":"Perlu belajar lagi di: "+nts.join(", ");
+        this.showSlide('result');
+        document.getElementById('modal-loading').style.display='none';
+        document.getElementById('result-content').innerHTML=`
+            <h3>Nilai Akhir: <span style="color:var(--primary);font-size:2.5rem;">${final}</span></h3>
+            <div style="background:#f0fdfa;padding:15px;border-radius:8px;margin-bottom:20px;">${desc}</div>
+            <h4>Capaian per Elemen:</h4>${cht}`;
+
+        fetch(CONFIG.SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},
+            body:JSON.stringify({action:"submit_exam",mapel:"Matematika",nama:this.session.nama,
+                kelas:this.session.kelas,skor:final,deskripsi:desc,
+                jawaban:this.session.answers,ringkasanNilai:summ})
+        }).then(()=>{ try{ localStorage.removeItem(CONFIG.STORAGE_KEY); }catch(e){} });
+    }
+};
+window.onload=()=>app.init();
+</script>
+</body>
+</html>
