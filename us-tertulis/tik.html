@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujian Sekolah Tertulis – TIK · SD Muhammadiyah 01 Kukusan</title>
+    <style>
+        :root {
+            --primary: #6d28d9;
+            --primary-light: #f5f3ff;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --text: #334155;
+            --bg: #faf5ff;
+            --border: #cbd5e1;
+        }
+        * { box-sizing: border-box; outline: none; }
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; }
+        .app-container { display: flex; flex-direction: column; height: 100%; width: 100%; background: white; }
+        .header { height: 64px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); z-index: 50; flex-shrink: 0; }
+        .header-title { font-weight: 700; font-size: 1.15rem; }
+        .timer-box { background: rgba(255,255,255,0.15); padding: 6px 16px; border-radius: 6px; font-weight: 700; font-family: monospace; font-size: 1.25rem; border: 1px solid rgba(255,255,255,0.2); }
+        .workspace { display: flex; flex: 1; overflow: hidden; position: relative; }
+        .main-stage { flex: 1; position: relative; background: var(--bg); display: flex; flex-direction: column; overflow: hidden; }
+        .slide { display: none !important; width: 100%; height: 100%; }
+        .slide.active { display: flex !important; flex-direction: column; animation: fadeIn 0.4s ease; }
+        .center-content-wrapper { width: 100%; max-width: 800px; margin: 0 auto; padding: 20px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .card { background: white; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); padding: 32px; margin-bottom: 20px; border-top: 5px solid var(--primary); }
+        .quiz-scroll-area { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 80px; width: 100%; max-width: 900px; margin: 0 auto; }
+        .nav-bar-fixed { flex-shrink: 0; background: white; padding: 16px 24px; border-top: 1px solid #e2e8f0; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; z-index: 40; }
+        .question-item { display: none; }
+        .question-item.active-q { display: block; animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { opacity:0; transform:translateX(15px); } to { opacity:1; transform:translateX(0); } }
+        .stimulus-box { background: #ffffff; border: 1px solid #e2e8f0; border-left: 5px solid var(--primary); padding: 20px; margin-bottom: 24px; border-radius: 8px; }
+        .stimulus-head { font-weight: 800; color: var(--primary); border-bottom: 2px dashed #e2e8f0; padding-bottom: 10px; margin-bottom: 15px; font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.03em; }
+        .visual-frame { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; display: flex; justify-content: center; align-items: center; margin: 15px 0; overflow: hidden; min-height: 80px; }
+        .q-text { font-size: 1.1rem; font-weight: 600; color: #1e293b; margin-bottom: 20px; line-height: 1.65; }
+        .tag-cat { display: inline-block; font-size: 0.75rem; background: #ede9fe; color: #6d28d9; padding: 4px 10px; border-radius: 20px; font-weight: bold; margin-bottom: 10px; }
+        .opt-label { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: white; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s; font-size: 0.97rem; color: #475569; line-height: 1.5; }
+        .opt-label:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+        .opt-label input { margin-top: 3px; transform: scale(1.2); flex-shrink: 0; }
+        .matrix-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .matrix-table th, .matrix-table td { border: 1px solid #e2e8f0; padding: 10px 14px; }
+        .matrix-table th { background: #ede9fe; text-align: center; font-weight: 700; color: var(--primary); }
+        .matrix-table td { text-align: center; }
+        .matrix-table td:first-child { text-align: left; font-weight: 500; }
+        .matrix-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .side-panel { width: 300px; background: white; border-left: 1px solid #e2e8f0; display: flex; flex-direction: column; flex-shrink: 0; z-index: 40; }
+        .nav-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; padding: 16px; overflow-y: auto; }
+        .nav-num { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; color: #64748b; transition: all 0.2s; font-size: 0.85rem; }
+        .nav-num:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+        .nav-num.current { border: 2px solid var(--primary); transform: scale(1.1); box-shadow: 0 2px 8px rgba(0,0,0,0.15); color: var(--primary); }
+        .nav-num.filled { background-color: var(--success) !important; color: white !important; border-color: var(--success) !important; }
+        .nav-num.filled.current { border: 3px solid var(--primary) !important; }
+        input[type="text"], select { width: 100%; padding: 14px; margin: 8px 0 20px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 1rem; display: inline-flex; align-items: center; gap: 8px; justify-content: center; }
+        .btn:hover { background: #5b21b6; }
+        .btn:disabled { background: #94a3b8; cursor: not-allowed; }
+        .btn-outline { background: white; border: 1px solid #cbd5e1; color: #475569; }
+        .btn-outline:hover { background: #f8fafc; }
+        .btn-danger { background: var(--danger); }
+        .hint-pgk { font-size:.82rem; color:#475569; background:#ede9fe; border-left:3px solid var(--primary); padding:8px 12px; border-radius:0 6px 6px 0; margin-bottom:12px; }
+        .chart-row { display: flex; align-items: center; margin-bottom: 12px; }
+        .chart-lbl { width: 180px; font-size: 0.78rem; font-weight: 600; text-align: right; padding-right: 15px; flex-shrink: 0; }
+        .chart-track { flex: 1; background: #e2e8f0; height: 16px; border-radius: 10px; overflow: hidden; }
+        .chart-fill { height: 100%; transition: width 1s ease-out; }
+        .chart-val { width: 50px; padding-left: 10px; font-weight: 700; }
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 100; }
+        .modal { background: white; padding: 30px; border-radius: 16px; width: 90%; max-width: 420px; text-align: center; }
+        .pin-input-wrap { position: relative; margin-bottom: 10px; }
+        .pin-input-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; pointer-events: none; }
+        #inp-pin { width: 100%; padding: 14px 14px 14px 44px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 1.1rem; font-weight: 700; letter-spacing: .15em; font-family: monospace; color: var(--text); transition: border-color .2s; }
+        #inp-pin:focus { border-color: var(--primary); }
+        #inp-pin.error { border-color: #dc2626; animation: shake .3s ease; }
+        #pin-err { font-size: .82rem; color: #dc2626; font-weight: 600; display: none; margin-bottom: 14px; }
+        .stimulus-img { max-width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); margin: 0 auto; }
+        .no-img { background: #fef3c7; padding: 16px; border-radius: 8px; text-align: center; border: 1px dashed #f59e0b; color: #92400e; font-size: 0.88rem; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+        @media (max-width: 768px) {
+            .workspace { flex-direction: column; }
+            .side-panel { width: 100%; height: auto; border-left: none; border-top: 1px solid #e2e8f0; order: 2; }
+            .nav-grid { max-height: 120px; padding: 10px; gap: 6px; }
+            .chart-lbl { width: 120px; font-size: 0.7rem; }
+            .header-title { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <div class="header">
+        <div class="header-title">Ujian Sekolah – TIK / Informatika</div>
+        <div style="display:flex;align-items:center;gap:15px;">
+            <div id="user-badge" style="display:none;font-size:0.85rem;background:rgba(255,255,255,0.1);padding:5px 12px;border-radius:20px;">Siswa</div>
+            <div class="timer-box" id="timer-display">--:--</div>
+        </div>
+    </div>
+    <div class="workspace">
+        <div class="main-stage">
+
+            <!-- ① SLIDE PIN -->
+            <div id="slide-pin" class="slide active">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:420px;margin:0 auto;text-align:center;">
+                        <div style="font-size:2.5rem;margin-bottom:12px;">🔐</div>
+                        <h2 style="color:var(--primary);margin-top:0;">Masukkan PIN</h2>
+                        <p style="color:#64748b;margin-bottom:24px;font-size:.95rem;">Masukkan PIN dari guru untuk membuka<br><strong>Ujian Sekolah Tertulis TIK / Informatika</strong></p>
+                        <div class="pin-input-wrap">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <input type="password" id="inp-pin" placeholder="PIN ujian…" maxlength="30" autocomplete="off" onkeydown="if(event.key==='Enter') app.checkPin()">
+                        </div>
+                        <div id="pin-err">❌ PIN salah. Coba lagi.</div>
+                        <button class="btn" style="width:100%" onclick="app.checkPin()">Buka Ujian →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ② SLIDE LOGIN -->
+            <div id="slide-login" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:450px;margin:0 auto;text-align:center;">
+                        <h2 style="color:var(--primary);margin-top:0;">Selamat Datang</h2>
+                        <p style="color:#64748b;margin-bottom:30px;">Ujian Sekolah TIK / Informatika (Fase C) — 4 Elemen</p>
+                        <div style="text-align:left;">
+                            <label>Nama Lengkap</label>
+                            <input type="text" id="inpNama" placeholder="Masukkan nama lengkap...">
+                            <label>Kelas</label>
+                            <select id="inpKelas">
+                                <option value="">-- Pilih Kelas --</option>
+                                <option value="6A">Kelas 6A</option>
+                                <option value="6B">Kelas 6B</option>
+                            </select>
+                        </div>
+                        <button class="btn" style="width:100%" onclick="app.login()">Masuk Ujian</button>
+                        <div id="resume-alert" style="display:none;margin-top:20px;padding:10px;background:#f5f3ff;color:#6d28d9;border-radius:8px;cursor:pointer;font-size:0.9rem;" onclick="app.resume()">
+                            🔄 <b>Sesi Tersimpan Ditemukan</b><br>Klik untuk melanjutkan
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ③ SLIDE PETUNJUK -->
+            <div id="slide-rules" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:700px;margin:0 auto;">
+                        <h2 style="margin-top:0;border-bottom:1px solid #e2e8f0;padding-bottom:15px;color:var(--primary);">Petunjuk Pengerjaan</h2>
+                        <div style="line-height:1.8;color:#334155;">
+                            <p>1. <strong>Waktu:</strong> <strong>90 Menit</strong>. Ujian dikumpulkan otomatis saat waktu habis.</p>
+                            <p>2. <strong>Soal:</strong> <strong>40 butir soal</strong> — TIK (Q1–20) dan Jaringan &amp; Dampak Sosial (Q21–40).</p>
+                            <p>3. <strong>Format:</strong> PG Tunggal (pilih 1), PG Kompleks (boleh lebih dari 1), dan PG Kategori (menjodohkan).</p>
+                            <p>4. <strong>Tips:</strong> Perhatikan gambar antarmuka dan diagram sebelum menjawab. Soal mengukur pemahaman konsep digital, bukan hafalan merek atau nama produk.</p>
+                            <p>5. <strong>Dilarang:</strong> Menutup atau me-refresh halaman selama ujian berlangsung.</p>
+                        </div>
+                        <div style="margin-top:30px;text-align:right;">
+                            <button class="btn" onclick="app.startExam()">Mulai Mengerjakan &#8594;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ④ SLIDE KUIS -->
+            <div id="slide-quiz" class="slide">
+                <div id="quiz-scroll" class="quiz-scroll-area">
+                    <div id="quiz-container"></div>
+                </div>
+                <div class="nav-bar-fixed">
+                    <button class="btn btn-outline" id="btn-prev" onclick="app.move(-1)">&#8592; Sebelumnya</button>
+                    <span id="q-indicator" style="font-weight:700;color:var(--primary);">Soal 1 / 40</span>
+                    <button class="btn" id="btn-next" onclick="app.move(1)">Selanjutnya</button>
+                </div>
+            </div>
+
+            <!-- ⑤ SLIDE HASIL -->
+            <div id="slide-result" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:620px;margin:0 auto;text-align:center;">
+                        <div style="font-size:4rem;margin-bottom:10px;">🎉</div>
+                        <h2 style="color:var(--primary);margin:0;">Ujian Selesai!</h2>
+                        <p style="color:#64748b;">Jawaban Anda telah kami terima.</p>
+                        <div id="result-content" style="text-align:left;margin-top:30px;border-top:1px solid #e2e8f0;padding-top:20px;">
+                            <p style="text-align:center;color:#64748b;">Sedang memproses nilai...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="side-panel" id="sidebar" style="display:none;">
+            <div style="padding:15px 20px;font-weight:700;color:#334155;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;">
+                <span>Navigasi Soal</span>
+                <span style="font-size:0.8rem;background:#ede9fe;color:#6d28d9;padding:2px 8px;border-radius:10px;">40 Butir</span>
+            </div>
+            <div class="nav-grid" id="nav-grid"></div>
+            <div style="padding:16px 20px;border-top:1px solid #e2e8f0;margin-top:auto;background:#f8fafc;">
+                <button class="btn btn-danger" style="width:100%" onclick="app.confirmFinish()">Selesai Ujian</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-confirm" class="overlay">
+    <div class="modal">
+        <h3 style="color:var(--primary);">Konfirmasi Pengumpulan</h3>
+        <p>Yakin ingin mengakhiri dan mengumpulkan ujian ini?</p>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:25px;">
+            <button class="btn btn-outline" onclick="document.getElementById('modal-confirm').style.display='none'">Cek Lagi</button>
+            <button class="btn btn-danger" onclick="app.submitExam()">Ya, Kumpulkan</button>
+        </div>
+    </div>
+</div>
+<div id="modal-loading" class="overlay">
+    <div class="modal">
+        <h3 style="color:var(--primary);">Sedang Mengirim…</h3>
+        <div style="width:40px;height:40px;border:4px solid #e2e8f0;border-top:4px solid var(--primary);border-radius:50%;margin:10px auto;animation:spin 1s linear infinite;"></div>
+        <p>Mohon jangan tutup halaman ini.</p>
+    </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  KONFIGURASI
+//  Untuk mengganti PIN: hashPin("PIN_BARU").then(h => console.log(h))
+// ════════════════════════════════════════════════════════
+const CONFIG = {
+    SCRIPT_URL:  "https://script.google.com/macros/s/AKfycbwJveJtAISKhveIQ4wspAaeaUKLrqB_IBY55qhOqDOl649QSjqtBa2hYhOrx7UNs0GbdA/exec",
+    STORAGE_KEY: "UST_2026_TIK",
+    DURATION:    90 * 60,
+    PIN_HASH:    "9a73d33960fed4b5"
+};
+async function hashPin(pin) {
+    const enc = new TextEncoder().encode(pin.trim().toLowerCase());
+    const buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,16);
+}
+window.hashPin = hashPin;
+
+// ── Aset Gambar ──────────────────────────────────────────────────────────────
+// ⚠️  SEMUA URL KOSONG — perlu diisi setelah gambar dibuat dan diupload.
+//    Cara:
+//    1. Generate tiap gambar dengan prompt di bawah (lihat file image-prompts-tik.md)
+//    2. Upload ke https://imgbb.com  → salin "Direct Link" (berakhir .png)
+//    3. Tempel URL ke nilai string kosong "" yang sesuai di bawah
+// ─────────────────────────────────────────────────────────────────────────────
+const IMAGE_ASSETS = {
+            "ui_pengolah_kata": "https://i.ibb.co.com/bgYHnrX0/Gambar-1-ui-pengolah-kata.png",
+            "diagram_ipo": "https://i.ibb.co.com/zhKNcWtj/Gambar-4-diagram-ipo.png",
+            "perangkat_keras": "https://i.ibb.co.com/Cj970zN/Gambar-3-perangkat-keras.png",
+            "ekstensi_file": "https://i.ibb.co.com/yFq2syX7/Gambar-2-ekstensi-file.png",
+            "email_phishing": "https://i.ibb.co.com/Nn26bTQ8/Gambar-5-email-phishing.png",
+            "jaringan_wifi": "https://i.ibb.co.com/0yrX51N0/Gambar-6-jaringan-wifi.png"
+        };
+
+function getImg(key, alt="Ilustrasi Soal") {
+    const url = IMAGE_ASSETS[key];
+    if (!url) return `<div class="no-img">⚠️ Gambar <code>${key}</code> belum tersedia.<br>Upload gambar &amp; isi URL di IMAGE_ASSETS.</div>`;
+    return `<img src="${url}" alt="${alt}" class="stimulus-img" loading="eager">`;
+}
+
+// ════════════════════════════════════════════════════════
+//  BANK SOAL — 40 Butir
+//  Sesi 1 (Q1–20) : TIK + Sistem Komputer
+//  Sesi 2 (Q21–40): Jaringan & Internet + Dampak Sosial
+// ════════════════════════════════════════════════════════
+const QUESTIONS = [{
+                id: 1,
+                cat: "TIK",
+                type: "pg",
+                score: 1,
+                stim: '<div class=\'stimulus-box\'><div class=\'stimulus-head\'>Antarmuka Pengolah Kata</div><div class=\'visual-frame\'>' + getImg("ui_pengolah_kata", "UI Pengolah Kata") + '</div><p>Perhatikan tampilan aplikasi pengolah kata di atas. Siswa ingin menebalkan judul dokumen agar terlihat lebih menonjol.</p></div>',
+                q: "Fitur mana yang paling tepat digunakan untuk menebalkan teks tersebut?",
+                opt: ["Italic (Miring)", "Bold (Tebal)", "Underline (Garis Bawah)", "Align Center (Rata Tengah)"],
+                ans: "Bold (Tebal)"
+            },
+            {
+                id: 2,
+                cat: "TIK",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Edit Gambar</div><p>Siswa memiliki foto kegiatan sekolah namun ada objek sampah di sudut foto yang mengganggu keindahan gambar.</p></div>",
+                q: "Fitur aplikasi pengolah gambar mana yang paling tepat untuk menghilangkan objek tersebut?",
+                opt: ["Crop (Potong)", "Resize (Ubah Ukuran)", "Rotate (Putar)", "Brightness (Kecerahan)"],
+                ans: "Crop (Potong)"
+            },
+            {
+                id: 3,
+                cat: "TIK",
+                type: "pg",
+                score: 1,
+                stim: '<div class=\'stimulus-box\'><div class=\'stimulus-head\'>Ekstensi File</div><div class=\'visual-frame\'>' + getImg("ekstensi_file", "Ekstensi File") + '</div><p>Perhatikan ikon file berikut: .docx, .jpg, .xlsx. Setiap ekstensi menunjukkan jenis konten yang berbeda.</p></div>',
+                q: "File dengan ekstensi .xlsx biasanya berisi konten berupa...",
+                opt: ["Dokumen teks", "Gambar foto", "Data tabel/spreadsheet", "Video musik"],
+                ans: "Data tabel/spreadsheet"
+            },
+            {
+                id: 4,
+                cat: "TIK",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Penyimpanan Data</div><p>Siswa ingin mengerjakan tugas di sekolah dan melanjutkannya di rumah tanpa membawa flashdisk.</p></div>",
+                q: "Metode penyimpanan mana yang paling tepat untuk kebutuhan tersebut?",
+                opt: ["Hard Disk Internal", "Cloud Storage (Penyimpanan Awan)", "DVD/CD", "Memory Card Kamera"],
+                ans: "Cloud Storage (Penyimpanan Awan)"
+            },
+            {
+                id: 5,
+                cat: "Sistem Komputer",
+                type: "pg",
+                score: 1,
+                stim: '<div class=\'stimulus-box\'><div class=\'stimulus-head\'>Perangkat Input</div><div class=\'visual-frame\'>' + getImg("perangkat_keras", "Perangkat Keras") + '</div><p>Perhatikan gambar perangkat komputer di atas. Siswa ingin memasukkan teks jawaban ujian ke dalam komputer.</p></div>',
+                q: "Perangkat mana yang paling tepat digunakan untuk memasukkan teks?",
+                opt: ["Mouse", "Keyboard", "Printer", "Speaker"],
+                ans: "Keyboard"
+            },
+            {
+                id: 6,
+                cat: "Sistem Komputer",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Perangkat Output</div><p>Siswa telah selesai mengetik tugas dan ingin mengumpulkan versi cetak kepada guru.</p></div>",
+                q: "Perangkat output mana yang paling tepat untuk kebutuhan tersebut?",
+                opt: ["Monitor", "Printer", "Scanner", "Microphone"],
+                ans: "Printer"
+            },
+            {
+                id: 7,
+                cat: "Sistem Komputer",
+                type: "pg",
+                score: 1,
+                stim: '<div class=\'stimulus-box\'><div class=\'stimulus-head\'>Diagram IPO</div><div class=\'visual-frame\'>' + getImg("diagram_ipo", "Diagram IPO") + '</div><p>Perhatikan diagram alur kerja komputer (Input - Proses - Output). Kotak tengah mewakili komponen sistem.</p></div>',
+                q: "Komponen mana yang berperan sebagai 'Proses' dalam diagram tersebut?",
+                opt: ["Keyboard", "CPU (Processor)", "Monitor", "Mouse"],
+                ans: "CPU (Processor)"
+            },
+            {
+                id: 8,
+                cat: "Sistem Komputer",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Otak Komputer</div><p>Dalam sistem komputer, terdapat satu komponen utama yang berfungsi mengatur semua aktivitas perhitungan dan logika.</p></div>",
+                q: "Komponen apakah yang disebut sebagai 'otak' komputer?",
+                opt: ["Hard Disk", "CPU (Processor)", "RAM", "Power Supply"],
+                ans: "CPU (Processor)"
+            },
+            {
+                id: 9,
+                cat: "TIK",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Spreadsheet</div><p>Siswa memiliki data nilai ujian 5 teman dalam satu kolom di aplikasi spreadsheet.</p></div>",
+                q: "Fitur mana yang paling tepat untuk menghitung total nilai secara otomatis?",
+                opt: ["Sort (Urutkan)", "Sum/AutoSum (Jumlah)", "Filter (Saring)", "Bold (Tebal)"],
+                ans: "Sum/AutoSum (Jumlah)"
+            },
+            {
+                id: 10,
+                cat: "TIK",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Manajemen File</div><p>Folder 'Tugas Sekolah' berisi 50 file bercampur antara gambar, dokumen, dan data tanpa aturan.</p></div>",
+                q: "Cara paling efektif untuk mengorganisir file agar mudah ditemukan adalah...",
+                opt: ["Menghapus semua file lama", "Membuat sub-folder berdasarkan jenis file", "Mengubah nama semua file menjadi angka", "Menyimpan semua file di desktop"],
+                ans: "Membuat sub-folder berdasarkan jenis file"
+            },
+            {
+                id: 11,
+                cat: "TIK",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Format Teks</div><p>Dalam aplikasi pengolah kata, terdapat berbagai fitur untuk mempercantik tampilan tulisan.</p></div>",
+                q: "Pilih LEBIH DARI SATU fitur yang digunakan untuk memformat tampilan teks!",
+                opt: ["Bold (Tebal)", "Italic (Miring)", "Crop (Potong)", "Underline (Garis Bawah)"],
+                ans: ["Bold (Tebal)", "Italic (Miring)", "Underline (Garis Bawah)"]
+            },
+            {
+                id: 12,
+                cat: "TIK",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>File Multimedia</div><p>Siswa ingin mengumpulkan tugas berupa rekaman suara dan video presentasi.</p></div>",
+                q: "Pilih LEBIH DARI SATU ekstensi file yang merupakan format multimedia (audio/video)!",
+                opt: [".mp3", ".docx", ".mp4", ".xlsx"],
+                ans: [".mp3", ".mp4"]
+            },
+            {
+                id: 13,
+                cat: "Sistem Komputer",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Perangkat Output</div><p>Komputer memiliki berbagai perangkat untuk menampilkan hasil proses kepada pengguna.</p></div>",
+                q: "Pilih LEBIH DARI SATU perangkat yang berfungsi sebagai output!",
+                opt: ["Monitor", "Keyboard", "Printer", "Mouse"],
+                ans: ["Monitor", "Printer"]
+            },
+            {
+                id: 14,
+                cat: "Sistem Komputer",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Hardware</div><p>Komputer terdiri dari perangkat keras yang dapat disentuh secara fisik.</p></div>",
+                q: "Pilih LEBIH DARI SATU komponen yang termasuk hardware (perangkat keras)!",
+                opt: ["Windows (Sistem Operasi)", "Mouse", "Microsoft Word", "Hard Disk"],
+                ans: ["Mouse", "Hard Disk"]
+            },
+            {
+                id: 15,
+                cat: "TIK",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Aplikasi Produktivitas</div><p>Komputer dapat membantu menyelesaikan berbagai tugas sekolah dengan aplikasi yang tepat.</p></div>",
+                q: "Pilih LEBIH DARI SATU kebutuhan yang dapat diselesaikan dengan aplikasi produktivitas!",
+                opt: ["Menulis surat tugas", "Mengedit foto", "Menghitung anggaran", "Memasak nasi"],
+                ans: ["Menulis surat tugas", "Menghitung anggaran"]
+            },
+            {
+                id: 16,
+                cat: "TIK",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Jenis File</div><p>Disajikan 3 nama file. Siswa mengklasifikasikan jenis kontennya.</p></div>",
+                q: "Klasifikasikan setiap file apakah Dokumen, Gambar, atau Data!",
+                rows: ["laporan.docx", "foto.jpg", "anggaran.xlsx"],
+                cols: ["Dokumen", "Gambar", "Data"],
+                ans: ["Dokumen", "Gambar", "Data"]
+            },
+            {
+                id: 17,
+                cat: "Sistem Komputer",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Input vs Output</div><p>Disajikan 3 perangkat. Siswa mengklasifikasikan fungsinya.</p></div>",
+                q: "Klasifikasikan setiap perangkat apakah Input atau Output!",
+                rows: ["Microphone", "Speaker", "Webcam"],
+                cols: ["Input", "Output"],
+                ans: ["Input", "Output", "Input"]
+            },
+            {
+                id: 18,
+                cat: "Sistem Komputer",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Internal vs Eksternal</div><p>Disajikan 3 komponen komputer. Siswa mengklasifikasikan lokasinya.</p></div>",
+                q: "Klasifikasikan setiap komponen apakah Internal atau Eksternal!",
+                rows: ["RAM", "Monitor", "Hard Disk Internal"],
+                cols: ["Internal", "Eksternal"],
+                ans: ["Internal", "Eksternal", "Internal"]
+            },
+            {
+                id: 19,
+                cat: "TIK",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Penyimpanan</div><p>Disajikan 3 media penyimpanan. Siswa mengklasifikasikan jenis koneksinya.</p></div>",
+                q: "Klasifikasikan setiap media apakah Online atau Offline!",
+                rows: ["Google Drive", "Flashdisk", "Hard Disk Internal"],
+                cols: ["Online", "Offline"],
+                ans: ["Online", "Offline", "Offline"]
+            },
+            {
+                id: 20,
+                cat: "Sistem Komputer",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Kategori Perangkat</div><p>Disajikan 3 perangkat elektronik. Siswa mengklasifikasikan jenis komputernya.</p></div>",
+                q: "Klasifikasikan setiap perangkat apakah Komputer Umum atau Perangkat Khusus!",
+                rows: ["Laptop", "Kalkulator Sains", "Smartphone"],
+                cols: ["Komputer Umum", "Perangkat Khusus"],
+                ans: ["Komputer Umum", "Perangkat Khusus", "Komputer Umum"]
+            },
+            {
+                id: 21,
+                cat: "Jaringan & Internet",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Manfaat Internet</div><p>Siswa ingin mencari materi tambahan tentang pelajaran untuk tugas sekolah.</p></div>",
+                q: "Cara paling efektif menggunakan internet untuk tujuan pembelajaran tersebut?",
+                opt: ["Bermain game online", "Mencari di mesin pencari edukasi", "Mengobrol di media sosial", "Menonton film hiburan"],
+                ans: "Mencari di mesin pencari edukasi"
+            },
+            {
+                id: 22,
+                cat: "Jaringan & Internet",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Hoaks</div><p>Siswa menerima pesan berantai di grup WhatsApp tentang giveaway hadiah tanpa sumber jelas.</p></div>",
+                q: "Tindakan paling tepat untuk memverifikasi kebenaran informasi tersebut?",
+                opt: ["Langsung menyebarkan ke teman", "Mengecek di situs berita resmi", "Mengklaim hadiah segera", "Mengabaikan saja"],
+                ans: "Mengecek di situs berita resmi"
+            },
+            {
+                id: 23,
+                cat: "Jaringan & Internet",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Keamanan Password</div><p>Siswa ingin membuat kata sandi untuk akun email sekolah agar tidak mudah diretas.</p></div>",
+                q: "Kata sandi mana yang paling aman berdasarkan kriteria keamanan?",
+                opt: ["123456", "nama_siswa", "Sekolah2026!", "aaaaaa"],
+                ans: "Sekolah2026!"
+            },
+            {
+                id: 24,
+                cat: "Jaringan & Internet",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Privasi Data</div><p>Siswa mengisi formulir pendaftaran lomba online di internet.</p></div>",
+                q: "Data mana yang sebaiknya TIDAK dibagikan secara sembarangan?",
+                opt: ["Nama Lengkap", "Alamat Rumah Lengkap", "Nama Sekolah", "Kelas"],
+                ans: "Alamat Rumah Lengkap"
+            },
+            {
+                id: 25,
+                cat: "Jaringan & Internet",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Jejak Digital</div><p>Siswa mengunggah foto perilaku tidak sopan di media sosial yang dapat dilihat publik.</p></div>",
+                q: "Dampak jangka panjang dari jejak digital tersebut terhadap reputasi?",
+                opt: ["Tidak ada dampak", "Bisa merugikan di masa depan", "Membuat terkenal", "Menambah teman"],
+                ans: "Bisa merugikan di masa depan"
+            },
+            {
+                id: 26,
+                cat: "Dampak Sosial",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Komunikasi</div><p>Kakek nenek siswa tinggal di luar pulau dan jarang bertemu secara langsung.</p></div>",
+                q: "Manfaat TIK mana yang paling relevan untuk menjaga hubungan keluarga?",
+                opt: ["Video Call", "Mengirim surat pos", "Mengirim paket", "Mendengar radio"],
+                ans: "Video Call"
+            },
+            {
+                id: 27,
+                cat: "Dampak Sosial",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Kecanduan Gawai</div><p>Siswa sulit tidur karena bermain game hingga larut malam setiap hari.</p></div>",
+                q: "Risiko kesehatan apa yang mungkin terjadi berdasarkan gejala tersebut?",
+                opt: ["Gangguan tidur dan mata", "Tubuh menjadi lebih tinggi", "Nilai sekolah naik", "Menjadi lebih sehat"],
+                ans: "Gangguan tidur dan mata"
+            },
+            {
+                id: 28,
+                cat: "Dampak Sosial",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Cyberbullying</div><p>Siswa melihat teman diejek secara kasar di kolom komentar media sosial.</p></div>",
+                q: "Sikap paling tepat sebagai warga digital yang bertanggung jawab?",
+                opt: ["Ikut mengejek", "Melaporkan dan menegur", "Diam saja", "Menyebarkan ejekan"],
+                ans: "Melaporkan dan menegur"
+            },
+            {
+                id: 29,
+                cat: "Dampak Sosial",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Screen Time</div><p>Siswa memiliki jadwal belajar, bermain, dan tidur yang harus seimbang.</p></div>",
+                q: "Alokasi waktu penggunaan gawai mana yang paling sehat?",
+                opt: ["24 jam sehari", "Saat waktu luang terbatas", "Saat jam belajar", "Saat jam tidur"],
+                ans: "Saat waktu luang terbatas"
+            },
+            {
+                id: 30,
+                cat: "Dampak Sosial",
+                type: "pg",
+                score: 1,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Dampak Teknologi</div><p>Mobil tanpa pengemudi (self-driving car) mulai dikembangkan untuk transportasi.</p></div>",
+                q: "Salah satu risiko yang mungkin muncul dari teknologi tersebut?",
+                opt: ["Kemacetan berkurang", "Kesalahan sistem komputer", "Bahan bakar hemat", "Perjalanan lebih cepat"],
+                ans: "Kesalahan sistem komputer"
+            },
+            {
+                id: 31,
+                cat: "Jaringan & Internet",
+                type: "pgk",
+                score: 2,
+                stim: '<div class=\'stimulus-box\'><div class=\'stimulus-head\'>Phishing</div><div class=\'visual-frame\'>' + getImg("email_phishing", "Email Phishing") + '</div><p>Perhatikan contoh pesan mencurigakan di atas. Siswa harus waspada terhadap penipuan daring.</p></div>',
+                q: "Pilih LEBIH DARI SATU ciri yang mengindikasikan upaya penipuan daring!",
+                opt: ["Link website aneh", "Minta data pribadi", "Bahasa mendesak", "Pengirim jelas"],
+                ans: ["Link website aneh", "Minta data pribadi", "Bahasa mendesak"]
+            },
+            {
+                id: 32,
+                cat: "Jaringan & Internet",
+                type: "pgk",
+                score: 2,
+                stim: '<div class=\'stimulus-box\'><div class=\'stimulus-head\'>Keamanan WiFi</div><div class=\'visual-frame\'>' + getImg("jaringan_wifi", "Jaringan WiFi") + '</div><p>Siswa menggunakan internet di berbagai tempat untuk tugas sekolah.</p></div>',
+                q: "Pilih LEBIH DARI SATU situasi yang memerlukan kewaspadaan ekstra terhadap keamanan data!",
+                opt: ["WiFi Publik di Kafe", "WiFi Rumah", "WiFi Sekolah", "WiFi Gratis Tanpa Password"],
+                ans: ["WiFi Publik di Kafe", "WiFi Gratis Tanpa Password"]
+            },
+            {
+                id: 33,
+                cat: "Dampak Sosial",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Interaksi Sosial</div><p>Teknologi mengubah cara manusia berinteraksi satu sama lain dalam masyarakat.</p></div>",
+                q: "Pilih LEBIH DARI SATU dampak yang mempengaruhi interaksi sosial masyarakat!",
+                opt: ["Bertemu virtual", "Kurang tatap muka langsung", "Grup komunitas online", "Makan bersama"],
+                ans: ["Bertemu virtual", "Kurang tatap muka langsung", "Grup komunitas online"]
+            },
+            {
+                id: 34,
+                cat: "Dampak Sosial",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Hak Cipta</div><p>Siswa ingin menggunakan gambar dari internet untuk tugas presentasi.</p></div>",
+                q: "Pilih LEBIH DARI SATU tindakan yang menghargai hak cipta orang lain!",
+                opt: ["Menyebutkan sumber", "Meminta izin pemilik", "Copy-paste tanpa kredit", "Mengaku sebagai karya sendiri"],
+                ans: ["Menyebutkan sumber", "Meminta izin pemilik"]
+            },
+            {
+                id: 35,
+                cat: "Jaringan & Internet",
+                type: "pgk",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Sumber Informasi</div><p>Siswa mencari referensi untuk karya ilmiah sekolah di internet.</p></div>",
+                q: "Pilih LEBIH DARI SATU sumber yang paling dapat dipercaya untuk tugas sekolah!",
+                opt: ["Situs berita resmi", "Blog pribadi tidak jelas", "Website pemerintah (.go.id)", "Wiki sembarang"],
+                ans: ["Situs berita resmi", "Website pemerintah (.go.id)"]
+            },
+            {
+                id: 36,
+                cat: "Jaringan & Internet",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Koneksi Internet</div><p>Disajikan 3 aktivitas komputer. Siswa mengklasifikasikan kebutuhan internetnya.</p></div>",
+                q: "Klasifikasikan setiap aktivitas apakah butuh Internet atau Tidak!",
+                rows: ["Mengirim Email", "Mengetik di Word Offline", "Video Call"],
+                cols: ["Butuh Internet", "Tidak Butuh"],
+                ans: ["Butuh Internet", "Tidak Butuh", "Butuh Internet"]
+            },
+            {
+                id: 37,
+                cat: "Dampak Sosial",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Dampak Gawai</div><p>Disajikan 3 dampak penggunaan gawai. Siswa mengklasifikasikan jenis dampaknya.</p></div>",
+                q: "Klasifikasikan setiap dampak apakah Fisik atau Mental!",
+                rows: ["Mata lelah", "Stres karena medsos", "Kurang gerak"],
+                cols: ["Fisik", "Mental"],
+                ans: ["Fisik", "Mental", "Fisik"]
+            },
+            {
+                id: 38,
+                cat: "Dampak Sosial",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Etika Digital</div><p>Disajikan 3 perilaku di grup chat kelas. Siswa mengklasifikasikan etika tersebut.</p></div>",
+                q: "Klasifikasikan setiap perilaku apakah Etis atau Tidak Etis!",
+                rows: ["Mengirim spam", "Ucapkan terima kasih", "Mengejek teman"],
+                cols: ["Etis", "Tidak Etis"],
+                ans: ["Tidak Etis", "Etis", "Tidak Etis"]
+            },
+            {
+                id: 39,
+                cat: "Jaringan & Internet",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Data Pribadi</div><p>Disajikan 3 jenis data. Siswa mengklasifikasikan tingkat sensitivitasnya.</p></div>",
+                q: "Klasifikasikan setiap data apakah Pribadi Sensitif atau Umum!",
+                rows: ["Alamat Rumah", "Nama Lengkap", "Warna Favorit"],
+                cols: ["Pribadi Sensitif", "Umum"],
+                ans: ["Pribadi Sensitif", "Pribadi Sensitif", "Umum"]
+            },
+            {
+                id: 40,
+                cat: "Dampak Sosial",
+                type: "pgk-cat",
+                score: 2,
+                stim: "<div class='stimulus-box'><div class='stimulus-head'>Sikap Digital</div><p>Disajikan 3 sikap terhadap teknologi. Siswa mengklasifikasikan tanggung jawabnya.</p></div>",
+                q: "Klasifikasikan setiap sikap apakah Bertanggung Jawab atau Tidak!",
+                rows: ["Verifikasi berita", "Sebar hoaks", "Bijak waktu layar"],
+                cols: ["Bertanggung Jawab", "Tidak"],
+                ans: ["Bertanggung Jawab", "Tidak", "Bertanggung Jawab"]
+            }
+        ];
+
+
+// ════════════════════════════════════════════════════════
+//  APP OBJECT
+// ════════════════════════════════════════════════════════
+const app = {
+    session: { nama:"", kelas:"", answers:{}, startTime:0 },
+    currIdx: 0, timerInt: null, _hasSavedSession: false,
+
+    init() {
+        this.showSlide('pin');
+        try { if(localStorage.getItem(CONFIG.STORAGE_KEY)) this._hasSavedSession=true; } catch(e){}
+    },
+
+    async checkPin() {
+        const inp=document.getElementById('inp-pin'), val=inp.value.trim();
+        if(!val) return;
+        const h=await hashPin(val);
+        if(h===CONFIG.PIN_HASH){
+            this.showSlide('login');
+            if(this._hasSavedSession) document.getElementById('resume-alert').style.display='block';
+        } else {
+            inp.classList.add('error');
+            document.getElementById('pin-err').style.display='block';
+            inp.value='';
+            setTimeout(()=>inp.classList.remove('error'),400);
+        }
+    },
+
+    login() {
+        const n=document.getElementById('inpNama').value.trim(), k=document.getElementById('inpKelas').value;
+        if(!n||!k){alert("Harap isi nama lengkap dan pilih kelas!");return;}
+        this.session.nama=n; this.session.kelas=k;
+        this.showSlide('rules');
+    },
+
+    resume() {
+        try {
+            this.session=JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY));
+            this.renderSidebar(); this.startExam(true);
+        } catch(e){ alert("Sesi tersimpan rusak. Silakan mulai ujian baru."); }
+    },
+
+    startExam(isRes=false) {
+        if(!isRes){ this.session.startTime=Date.now(); this.save(); }
+        document.getElementById('user-badge').innerText=this.session.nama;
+        document.getElementById('user-badge').style.display='block';
+        document.getElementById('sidebar').style.display='flex';
+        this.renderQuestions(); this.renderSidebar();
+        this.showSlide('quiz'); this.goToQ(0); this.startTimer();
+    },
+
+    showSlide(id) {
+        document.querySelectorAll('.slide').forEach(e=>e.classList.remove('active'));
+        document.getElementById('slide-'+id).classList.add('active');
+    },
+
+    renderQuestions() {
+        const box=document.getElementById('quiz-container'); box.innerHTML='';
+        QUESTIONS.forEach((q,i)=>{
+            let h=`<div id="q-item-${i}" class="question-item">
+                <div class="tag-cat">${q.cat}</div>
+                ${q.stim||''}
+                <div class="q-text">${i+1}. ${q.q}</div>`;
+            if(q.type==='pg') {
+                q.opt.forEach((o,oi)=>h+=`<label class="opt-label">
+                    <input type="radio" name="ans_${q.id}" value="${oi}"
+                        onchange="app.saveAns(${q.id},${oi})"> ${o}</label>`);
+            } else if(q.type==='pgk') {
+                h+=`<p class="hint-pgk">☑ Boleh memilih <strong>lebih dari satu</strong> jawaban yang benar</p>`;
+                q.opt.forEach((o,oi)=>h+=`<label class="opt-label">
+                    <input type="checkbox" value="${oi}"
+                        onchange="app.saveMulti(${q.id},${oi})"> ${o}</label>`);
+            } else if(q.type==='pgk-cat') {
+                h+=`<div class="matrix-wrapper"><table class="matrix-table"><tr><th>Item / Pernyataan</th>`;
+                q.cols.forEach(c=>h+=`<th>${c}</th>`);
+                h+=`</tr>`;
+                q.rows.forEach((r,ri)=>{
+                    h+=`<tr><td>${r}</td>`;
+                    q.cols.forEach(c=>h+=`<td><input type="radio"
+                        name="mx_${q.id}_${ri}" value="${c}"
+                        onchange="app.saveMx(${q.id},${ri},'${c}')"></td>`);
+                    h+=`</tr>`;
+                });
+                h+=`</table></div>`;
+            }
+            h+=`</div>`;
+            box.innerHTML+=h;
+        });
+    },
+
+    goToQ(idx) {
+        if(idx<0||idx>=QUESTIONS.length) return;
+        this.currIdx=idx;
+        const qs=document.getElementById('quiz-scroll'); if(qs) qs.scrollTop=0;
+        document.querySelectorAll('.question-item').forEach(e=>e.classList.remove('active-q'));
+        document.getElementById(`q-item-${idx}`).classList.add('active-q');
+        document.getElementById('q-indicator').innerText=`Soal ${idx+1} / ${QUESTIONS.length}`;
+        document.getElementById('btn-prev').disabled=(idx===0);
+        const nBtn=document.getElementById('btn-next');
+        if(idx===QUESTIONS.length-1){
+            nBtn.innerText="Selesai"; nBtn.onclick=()=>this.confirmFinish(); nBtn.classList.add('btn-danger');
+        } else {
+            nBtn.innerText="Selanjutnya"; nBtn.onclick=()=>this.move(1); nBtn.classList.remove('btn-danger');
+        }
+        this.restoreVisual(idx); this.updateSidebarUI();
+    },
+
+    move(step){ this.goToQ(this.currIdx+step); },
+    saveAns(qid,v){ this.session.answers[qid]=v; this.save(); this.updateSidebarUI(); },
+    saveMulti(qid,oi){
+        let c=this.session.answers[qid]||[];
+        if(c.includes(oi)) c=c.filter(x=>x!==oi); else c.push(oi);
+        this.session.answers[qid]=c; this.save(); this.updateSidebarUI();
+    },
+    saveMx(qid,ri,v){
+        let c=this.session.answers[qid]||[]; c[ri]=v;
+        this.session.answers[qid]=c; this.save(); this.updateSidebarUI();
+    },
+    save(){ try{ localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(this.session)); }catch(e){} },
+
+    renderSidebar(){
+        const g=document.getElementById('nav-grid'); g.innerHTML='';
+        QUESTIONS.forEach((q,i)=>g.innerHTML+=`<div id="nav-num-${i}" class="nav-num"
+            onclick="app.goToQ(${i})">${i+1}</div>`);
+    },
+
+    checkFilled(qid){
+        const v=this.session.answers[qid];
+        if(v===undefined||v===null) return false;
+        if(Array.isArray(v)) return v.filter(x=>x!==undefined&&x!==null).length>0;
+        return true;
+    },
+
+    updateSidebarUI(){
+        QUESTIONS.forEach((q,i)=>{
+            const el=document.getElementById(`nav-num-${i}`); if(!el) return;
+            el.classList.toggle('current', i===this.currIdx);
+            el.classList.toggle('filled', this.checkFilled(q.id));
+        });
+    },
+
+    restoreVisual(idx){
+        const q=QUESTIONS[idx], ans=this.session.answers[q.id];
+        if(ans===undefined||ans===null) return;
+        if(q.type==='pg'){
+            const el=document.querySelector(`input[name="ans_${q.id}"][value="${ans}"]`);
+            if(el) el.checked=true;
+        } else if(q.type==='pgk'&&Array.isArray(ans)){
+            ans.forEach(v=>{
+                const el=document.querySelector(`#q-item-${idx} input[type="checkbox"][value="${v}"]`);
+                if(el) el.checked=true;
+            });
+        } else if(q.type==='pgk-cat'&&Array.isArray(ans)){
+            ans.forEach((v,ri)=>{
+                if(!v) return;
+                const el=document.querySelector(`input[name="mx_${q.id}_${ri}"][value="${v}"]`);
+                if(el) el.checked=true;
+            });
+        }
+    },
+
+    startTimer(){
+        clearInterval(this.timerInt);
+        this.timerInt=setInterval(()=>{
+            const rem=CONFIG.DURATION-Math.floor((Date.now()-this.session.startTime)/1000);
+            if(rem<=0){ clearInterval(this.timerInt); this.submitExam(); return; }
+            document.getElementById('timer-display').innerText=
+                `${Math.floor(rem/60).toString().padStart(2,'0')}:${(rem%60).toString().padStart(2,'0')}`;
+        },1000);
+    },
+
+    confirmFinish(){ document.getElementById('modal-confirm').style.display='flex'; },
+
+    submitExam(){
+        document.getElementById('modal-confirm').style.display='none';
+        document.getElementById('modal-loading').style.display='flex';
+        clearInterval(this.timerInt);
+
+        const stats={};let totS=0,totM=0;
+        QUESTIONS.forEach(q=>{
+            if(!stats[q.cat]) stats[q.cat]={s:0,m:0};
+            stats[q.cat].m+=q.score; totM+=q.score;
+            const u=this.session.answers[q.id]; let pt=0;
+            if(u!==undefined&&u!==null){
+                if(q.type==='pg'){
+                    if(u==q.opt.indexOf(q.ans)) pt=q.score;
+                } else if(q.type==='pgk'&&Array.isArray(u)&&Array.isArray(q.ans)){
+                    if(JSON.stringify(u.map(i=>q.opt[i]).sort())===JSON.stringify([...q.ans].sort()))
+                        pt=q.score;
+                } else if(q.type==='pgk-cat'&&Array.isArray(u)){
+                    let m=0; q.ans.forEach((k,i)=>{ if(u[i]===k) m++; });
+                    pt=(m/q.rows.length)*q.score;
+                }
+            }
+            stats[q.cat].s+=pt; totS+=pt;
+        });
+
+        const final=Math.round((totS/totM)*100);
+        const catOrder=['TIK','Sistem Komputer','Jaringan & Internet','Dampak Sosial'];
+        let summ={}, cht='', nts=[];
+        catOrder.forEach(c=>{
+            if(!stats[c]) return;
+            const p=stats[c].m>0?Math.round((stats[c].s/stats[c].m)*100):0;
+            summ[c]={skor:p,tuntas:p>=70,label:p>=70?"Tuntas":"Perlu Bimbingan"};
+            if(p<70) nts.push(c);
+            cht+=`<div class="chart-row">
+                <div class="chart-lbl">${c}</div>
+                <div class="chart-track"><div class="chart-fill"
+                    style="width:${p}%;background:${p>=70?'#16a34a':'#dc2626'}"></div></div>
+                <div class="chart-val">${p}%</div>
+            </div>`;
+        });
+
+        const desc=nts.length===0?"Selamat! Tuntas semua elemen.":"Perlu belajar lagi di: "+nts.join(", ");
+        this.showSlide('result');
+        document.getElementById('modal-loading').style.display='none';
+        document.getElementById('result-content').innerHTML=`
+            <h3>Nilai Akhir: <span style="color:var(--primary);font-size:2.5rem;">${final}</span></h3>
+            <div style="background:#f5f3ff;padding:15px;border-radius:8px;margin-bottom:20px;">${desc}</div>
+            <h4>Capaian per Elemen:</h4>${cht}`;
+
+        fetch(CONFIG.SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},
+            body:JSON.stringify({action:"submit_exam",mapel:"TIK",nama:this.session.nama,
+                kelas:this.session.kelas,skor:final,deskripsi:desc,
+                jawaban:this.session.answers,ringkasanNilai:summ})
+        }).then(()=>{ try{ localStorage.removeItem(CONFIG.STORAGE_KEY); }catch(e){} });
+    }
+};
+window.onload=()=>app.init();
+</script>
+</body>
+</html>
