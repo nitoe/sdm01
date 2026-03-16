@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujian Sekolah Tertulis – Bahasa Inggris · SD Muhammadiyah 01 Kukusan</title>
+    <style>
+        :root {
+            --primary: #1d4ed8;
+            --primary-light: #eff6ff;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --text: #334155;
+            --bg: #f0f4ff;
+            --border: #cbd5e1;
+        }
+        * { box-sizing: border-box; outline: none; }
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; }
+        .app-container { display: flex; flex-direction: column; height: 100%; width: 100%; background: white; }
+        .header { height: 64px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); z-index: 50; flex-shrink: 0; }
+        .header-title { font-weight: 700; font-size: 1.15rem; }
+        .timer-box { background: rgba(255,255,255,0.15); padding: 6px 16px; border-radius: 6px; font-weight: 700; font-family: monospace; font-size: 1.25rem; border: 1px solid rgba(255,255,255,0.2); }
+        .workspace { display: flex; flex: 1; overflow: hidden; position: relative; }
+        .main-stage { flex: 1; position: relative; background: var(--bg); display: flex; flex-direction: column; overflow: hidden; }
+        .slide { display: none !important; width: 100%; height: 100%; }
+        .slide.active { display: flex !important; flex-direction: column; animation: fadeIn 0.4s ease; }
+        .center-content-wrapper { width: 100%; max-width: 800px; margin: 0 auto; padding: 20px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .card { background: white; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); padding: 32px; margin-bottom: 20px; border-top: 5px solid var(--primary); }
+        .quiz-scroll-area { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 80px; width: 100%; max-width: 900px; margin: 0 auto; }
+        .nav-bar-fixed { flex-shrink: 0; background: white; padding: 16px 24px; border-top: 1px solid #e2e8f0; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; z-index: 40; }
+        .question-item { display: none; }
+        .question-item.active-q { display: block; animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { opacity:0; transform:translateX(15px); } to { opacity:1; transform:translateX(0); } }
+        .stimulus-box { background: #ffffff; border: 1px solid #e2e8f0; border-left: 5px solid var(--primary); padding: 20px; margin-bottom: 24px; border-radius: 8px; }
+        .stimulus-head { font-weight: 800; color: var(--primary); border-bottom: 2px dashed #e2e8f0; padding-bottom: 10px; margin-bottom: 15px; font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.03em; }
+        .visual-frame { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; display: flex; justify-content: center; align-items: center; margin: 15px 0; overflow: hidden; }
+        .english-text { font-size: 1rem; line-height: 1.75; color: #1e293b; }
+        .english-text strong { color: var(--primary); }
+        .english-text em { background: #fefce8; padding: 1px 5px; border-radius: 4px; font-style: normal; border-bottom: 2px solid #facc15; }
+        .q-text { font-size: 1.1rem; font-weight: 600; color: #1e293b; margin-bottom: 20px; line-height: 1.65; }
+        .tag-cat { display: inline-block; font-size: 0.75rem; background: #dbeafe; color: #1d4ed8; padding: 4px 10px; border-radius: 20px; font-weight: bold; margin-bottom: 10px; letter-spacing: 0.02em; }
+        .opt-label { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: white; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s; font-size: 0.97rem; color: #475569; line-height: 1.5; }
+        .opt-label:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+        .opt-label input { margin-top: 3px; transform: scale(1.2); flex-shrink: 0; }
+        .matrix-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .matrix-table th, .matrix-table td { border: 1px solid #e2e8f0; padding: 10px 14px; }
+        .matrix-table th { background: #dbeafe; text-align: center; font-weight: 700; color: var(--primary); }
+        .matrix-table td { text-align: center; }
+        .matrix-table td:first-child { text-align: left; font-weight: 500; }
+        .side-panel { width: 300px; background: white; border-left: 1px solid #e2e8f0; display: flex; flex-direction: column; flex-shrink: 0; z-index: 40; }
+        .nav-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; padding: 16px; overflow-y: auto; }
+        .nav-num { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; color: #64748b; transition: all 0.2s; font-size: 0.85rem; }
+        .nav-num:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+        .nav-num.current { border: 2px solid var(--primary); transform: scale(1.1); box-shadow: 0 2px 8px rgba(0,0,0,0.15); color: var(--primary); }
+        .nav-num.filled { background-color: var(--success) !important; color: white !important; border-color: var(--success) !important; }
+        .nav-num.filled.current { border: 3px solid var(--primary) !important; }
+        input[type="text"], select { width: 100%; padding: 14px; margin: 8px 0 20px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 1rem; display: inline-flex; align-items: center; gap: 8px; justify-content: center; }
+        .btn:hover { background: #1e40af; }
+        .btn:disabled { background: #94a3b8; cursor: not-allowed; }
+        .btn-outline { background: white; border: 1px solid #cbd5e1; color: #475569; }
+        .btn-outline:hover { background: #f8fafc; }
+        .btn-danger { background: var(--danger); }
+        .chart-row { display: flex; align-items: center; margin-bottom: 12px; }
+        .chart-lbl { width: 190px; font-size: 0.78rem; font-weight: 600; text-align: right; padding-right: 15px; flex-shrink: 0; }
+        .chart-track { flex: 1; background: #e2e8f0; height: 16px; border-radius: 10px; overflow: hidden; }
+        .chart-fill { height: 100%; transition: width 1s ease-out; }
+        .chart-val { width: 50px; padding-left: 10px; font-weight: 700; }
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 100; }
+        .modal { background: white; padding: 30px; border-radius: 16px; width: 90%; max-width: 420px; text-align: center; }
+        .pin-input-wrap { position: relative; margin-bottom: 10px; }
+        .pin-input-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; pointer-events: none; }
+        #inp-pin { width: 100%; padding: 14px 14px 14px 44px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 1.1rem; font-weight: 700; letter-spacing: .15em; font-family: monospace; color: var(--text); transition: border-color .2s; }
+        #inp-pin:focus { border-color: var(--primary); }
+        #inp-pin.error { border-color: #dc2626; animation: shake .3s ease; }
+        #pin-err { font-size: .82rem; color: #dc2626; font-weight: 600; display: none; margin-bottom: 14px; }
+        .stimulus-img { max-width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); margin: 0 auto; }
+        .matrix-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .hint-pgk { font-size:.82rem; color:#475569; background:#dbeafe; border-left:3px solid var(--primary); padding:8px 12px; border-radius:0 6px 6px 0; margin-bottom:12px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+        @media (max-width: 768px) {
+            .workspace { flex-direction: column; }
+            .side-panel { width: 100%; height: auto; border-left: none; border-top: 1px solid #e2e8f0; order: 2; }
+            .nav-grid { max-height: 120px; padding: 10px; gap: 6px; }
+            .chart-lbl { width: 130px; font-size: 0.7rem; }
+            .header-title { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <div class="header">
+        <div class="header-title">Ujian Sekolah – Bahasa Inggris (Listening, Reading &amp; Writing)</div>
+        <div style="display:flex;align-items:center;gap:15px;">
+            <div id="user-badge" style="display:none;font-size:0.85rem;background:rgba(255,255,255,0.1);padding:5px 12px;border-radius:20px;">Siswa</div>
+            <div class="timer-box" id="timer-display">--:--</div>
+        </div>
+    </div>
+    <div class="workspace">
+        <div class="main-stage">
+
+            <!-- ① SLIDE PIN -->
+            <div id="slide-pin" class="slide active">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:420px;margin:0 auto;text-align:center;">
+                        <div style="font-size:2.5rem;margin-bottom:12px;">🔐</div>
+                        <h2 style="color:var(--primary);margin-top:0;">Masukkan PIN</h2>
+                        <p style="color:#64748b;margin-bottom:24px;font-size:.95rem;">Masukkan PIN dari guru untuk membuka<br><strong>Ujian Sekolah Tertulis Bahasa Inggris</strong></p>
+                        <div class="pin-input-wrap">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <input type="password" id="inp-pin" placeholder="PIN ujian…" maxlength="30" autocomplete="off" onkeydown="if(event.key==='Enter') app.checkPin()">
+                        </div>
+                        <div id="pin-err">❌ PIN salah. Coba lagi.</div>
+                        <button class="btn" style="width:100%" onclick="app.checkPin()">Buka Ujian →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ② SLIDE LOGIN -->
+            <div id="slide-login" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:450px;margin:0 auto;text-align:center;">
+                        <h2 style="color:var(--primary);margin-top:0;">Selamat Datang</h2>
+                        <p style="color:#64748b;margin-bottom:30px;">Ujian Sekolah Bahasa Inggris (Fase C) — 3 Elemen</p>
+                        <div style="text-align:left;">
+                            <label>Nama Lengkap</label>
+                            <input type="text" id="inpNama" placeholder="Masukkan nama lengkap...">
+                            <label>Kelas</label>
+                            <select id="inpKelas">
+                                <option value="">-- Pilih Kelas --</option>
+                                <option value="6A">Kelas 6A</option>
+                                <option value="6B">Kelas 6B</option>
+                            </select>
+                        </div>
+                        <button class="btn" style="width:100%" onclick="app.login()">Masuk Ujian</button>
+                        <div id="resume-alert" style="display:none;margin-top:20px;padding:10px;background:#eff6ff;color:#1d4ed8;border-radius:8px;cursor:pointer;font-size:0.9rem;" onclick="app.resume()">
+                            🔄 <b>Sesi Tersimpan Ditemukan</b><br>Klik untuk melanjutkan
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ③ SLIDE PETUNJUK -->
+            <div id="slide-rules" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:700px;margin:0 auto;">
+                        <h2 style="margin-top:0;border-bottom:1px solid #e2e8f0;padding-bottom:15px;color:var(--primary);">Instructions / Petunjuk Pengerjaan</h2>
+                        <div style="line-height:1.8;color:#334155;">
+                            <p>1. <strong>Time / Waktu:</strong> <strong>90 Minutes</strong>. Ujian dikumpulkan otomatis saat waktu habis.</p>
+                            <p>2. <strong>Questions / Soal:</strong> <strong>40 butir soal</strong> — Listening-Speaking (Q1–20) dan Reading-Viewing &amp; Writing-Presenting (Q21–40).</p>
+                            <p>3. <strong>Format:</strong> Single Choice (pilih 1), Multiple Choice (boleh lebih dari 1), dan Category Match (menjodohkan).</p>
+                            <p>4. <strong>Tip:</strong> Read all texts and dialogues carefully. Answer based on the text, not general knowledge.</p>
+                            <p>5. <strong>Important:</strong> Jangan tutup atau refresh halaman selama ujian berlangsung.</p>
+                        </div>
+                        <div style="margin-top:30px;text-align:right;">
+                            <button class="btn" onclick="app.startExam()">Start Exam &#8594;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ④ SLIDE KUIS -->
+            <div id="slide-quiz" class="slide">
+                <div id="quiz-scroll" class="quiz-scroll-area">
+                    <div id="quiz-container"></div>
+                </div>
+                <div class="nav-bar-fixed">
+                    <button class="btn btn-outline" id="btn-prev" onclick="app.move(-1)">&#8592; Previous</button>
+                    <span id="q-indicator" style="font-weight:700;color:var(--primary);">Question 1 / 40</span>
+                    <button class="btn" id="btn-next" onclick="app.move(1)">Next &#8594;</button>
+                </div>
+            </div>
+
+            <!-- ⑤ SLIDE HASIL -->
+            <div id="slide-result" class="slide">
+                <div class="center-content-wrapper">
+                    <div class="card" style="max-width:620px;margin:0 auto;text-align:center;">
+                        <div style="font-size:4rem;margin-bottom:10px;">🎉</div>
+                        <h2 style="color:var(--primary);margin:0;">Exam Finished!</h2>
+                        <p style="color:#64748b;">Jawaban Anda telah kami terima.</p>
+                        <div id="result-content" style="text-align:left;margin-top:30px;border-top:1px solid #e2e8f0;padding-top:20px;">
+                            <p style="text-align:center;color:#64748b;">Sedang memproses nilai...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="side-panel" id="sidebar" style="display:none;">
+            <div style="padding:15px 20px;font-weight:700;color:#334155;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;">
+                <span>Question Navigation</span>
+                <span style="font-size:0.8rem;background:#dbeafe;color:#1d4ed8;padding:2px 8px;border-radius:10px;">40 Questions</span>
+            </div>
+            <div class="nav-grid" id="nav-grid"></div>
+            <div style="padding:16px 20px;border-top:1px solid #e2e8f0;margin-top:auto;background:#f8fafc;">
+                <button class="btn btn-danger" style="width:100%" onclick="app.confirmFinish()">Submit Exam</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-confirm" class="overlay">
+    <div class="modal">
+        <h3 style="color:var(--primary);">Confirm Submission</h3>
+        <p>Yakin ingin mengakhiri dan mengumpulkan ujian ini?</p>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:25px;">
+            <button class="btn btn-outline" onclick="document.getElementById('modal-confirm').style.display='none'">Review Answers</button>
+            <button class="btn btn-danger" onclick="app.submitExam()">Yes, Submit</button>
+        </div>
+    </div>
+</div>
+<div id="modal-loading" class="overlay">
+    <div class="modal">
+        <h3 style="color:var(--primary);">Sending…</h3>
+        <div style="width:40px;height:40px;border:4px solid #e2e8f0;border-top:4px solid var(--primary);border-radius:50%;margin:10px auto;animation:spin 1s linear infinite;"></div>
+        <p>Mohon jangan tutup halaman ini.</p>
+    </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  KONFIGURASI
+//  Untuk mengganti PIN: hashPin("PIN_BARU").then(h => console.log(h))
+// ════════════════════════════════════════════════════════
+const CONFIG = {
+    SCRIPT_URL:  "https://script.google.com/macros/s/AKfycbwJveJtAISKhveIQ4wspAaeaUKLrqB_IBY55qhOqDOl649QSjqtBa2hYhOrx7UNs0GbdA/exec",
+    STORAGE_KEY: "UST_2026_ENGLISH",
+    DURATION:    90 * 60,
+    PIN_HASH:    "9ee3ec5a43a45e4f"
+};
+
+async function hashPin(pin) {
+    const enc = new TextEncoder().encode(pin.trim().toLowerCase());
+    const buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,16);
+}
+window.hashPin = hashPin;
+
+
+// ── Image Assets (all REUSE from uji-coba, 13 images) ──────────────────────
+const IMAGE_ASSETS = {
+            "greeting_dialogue": "https://i.postimg.cc/1zBT4mDX/01_greeting_dialogue_25.png",
+            "school_schedule": "https://i.postimg.cc/43PMnfpn/02_school_schedule_25.png",
+            "pet_description": "https://i.postimg.cc/s2m81j5M/03_pet_description_25.png",
+            "warning_sign": "https://i.postimg.cc/Dz6Dmv1n/04_warning_sign_25.png",
+            "house_description": "https://i.postimg.cc/v8NM8zvz/05-house-description-1-30.png",
+            "food_advertisement": "https://i.postimg.cc/YSxssr9w/06_food_advertisement_1_25.png",
+            "invitation_card": "https://i.postimg.cc/YSMZpGL2/07_invitation_card_25.png",
+            "announcement_poster": "https://i.postimg.cc/bvgMdy1c/08_announcement_poster_25.png",
+            "email_message": "https://i.postimg.cc/WpSJbQDT/09-email-message-1-30.png",
+            "brochure_tourism": "https://i.postimg.cc/25KrK73R/10-brochure-tourism-1-30.png",
+            "school_poster": "https://i.postimg.cc/ydgrYFj3/11-school-poster-1-25.png",
+            "venn_diagram": "https://i.postimg.cc/d0wpqkZY/12_venn_diagram_25.png",
+            "students_cleaning": "https://i.postimg.cc/bNzjyB7F/13-students-cleaning-25.png"
+        };
+
+function getImg(key, alt="Image") {
+    const url = IMAGE_ASSETS[key];
+    if (!url) return `<div style="background:#fef3c7;padding:15px;border-radius:8px;text-align:center;border:1px solid #f59e0b;">⚠️ Image not available</div>`;
+    return `<img src="${url}" alt="${alt}" class="stimulus-img" loading="eager">`;
+}
+
+// ════════════════════════════════════════════════════════
+//  QUESTION BANK — 40 Questions
+//  Session 1 (Q1–20):  Listening-Speaking + Reading-Viewing
+//  Session 2 (Q21–40): Writing-Presenting + Reading-Viewing (deeper)
+// ════════════════════════════════════════════════════════
+const QUESTIONS = [{
+                id: 1,
+                cat: "Listening-Speaking",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Dialogue: Meeting New Friend</div><div class='english-text'><p><strong>Teacher:</strong> Good morning, class! Today we have a new student.</p><p><strong>New Student:</strong> Good morning. My name is Sarah. I am from Bandung.</p><p><strong>Teacher:</strong> Welcome, Sarah. Please introduce yourself to the class.</p><p><strong>Sarah:</strong> Hello everyone. I am 12 years old. I like reading and drawing. Nice to meet you all.</p><p><strong>Class:</strong> Nice to meet you too, Sarah!</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> introduce = memperkenalkan, everyone = semua orang</div></div>`,
+                q: "What does Sarah say when she meets her new classmates?",
+                opt: ["Goodbye everyone", "Nice to meet you all", "See you later", "Thank you very much"],
+                ans: "Nice to meet you all"
+            },
+            {
+                id: 2,
+                cat: "Listening-Speaking",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Teacher Instruction</div><div class='english-text'><p><strong>Teacher:</strong> Attention please, students! Now, please open your English book. Turn to page 25. Look at picture number 3. Read the text below the picture. After that, answer question number 5 and 6 in your exercise book. You have 10 minutes to complete this task.</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> turn to = buka halaman, exercise book = buku latihan</div></div>`,
+                q: "What should students do FIRST according to the teacher?",
+                opt: ["Answer the questions", "Open the English book", "Close the book", "Write their name"],
+                ans: "Open the English book"
+            },
+            {
+                id: 3,
+                cat: "Reading-Viewing",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>My Pet Cat</div><div class='english-text'><p>I have a pet cat. Its name is Mimi. Mimi is white and fluffy. It has blue eyes and a pink nose. Mimi likes to eat fish and drink milk. Every morning, Mimi sleeps on my bed. In the afternoon, Mimi plays with a ball in the garden. Mimi is a friendly cat. It likes to sit on my lap when I study. I love Mimi very much because it is cute and sweet.</p></div><div class='visual-frame'>${getImg("pet_description", "Pet Description")}</div><div class='vocab-help'><strong>Vocabulary Help:</strong> fluffy = berbulu lembut, lap = pangkuan, cute = lucu</div></div>`,
+                q: "What is the main idea of the text?",
+                opt: ["How to take care of a cat", "Description of the writer's pet cat", "Where cats like to sleep", "What cats like to eat"],
+                ans: "Description of the writer's pet cat"
+            },
+            {
+                id: 4,
+                cat: "Reading-Viewing",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>School Schedule</div><div class='visual-frame'>${getImg("school_schedule", "School Schedule")}</div><table class='matrix-table'><tr><th>Day</th><th>Subject</th><th>Time</th></tr><tr><td>Monday</td><td>Mathematics</td><td>07.00 - 08.30</td></tr><tr><td>Tuesday</td><td>English</td><td>07.00 - 08.30</td></tr><tr><td>Wednesday</td><td>Science</td><td>07.00 - 08.30</td></tr><tr><td>Thursday</td><td>Indonesian</td><td>07.00 - 08.30</td></tr><tr><td>Friday</td><td>Sports</td><td>07.00 - 08.30</td></tr></table></div>`,
+                q: "When does the English class start?",
+                opt: ["Monday at 07.00", "Tuesday at 07.00", "Wednesday at 07.00", "Friday at 07.00"],
+                ans: "Tuesday at 07.00"
+            },
+            {
+                id: 5,
+                cat: "Listening-Speaking",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Dialogue: Saying Sorry</div><div class='english-text'><p><strong>Andi:</strong> Oh no! I am sorry, Budi. I broke your pencil.</p><p><strong>Budi:</strong> It is okay, Andi. Accidents can happen.</p><p><strong>Andi:</strong> I will buy you a new one tomorrow.</p><p><strong>Budi:</strong> Thank you, Andi. You are a good friend.</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> broke = memecahkan/mematahkan, accidents = kecelakaan, good friend = teman baik</div></div>`,
+                q: "What is the social function of the underlined expression \"I am sorry\"?",
+                opt: ["To thank someone", "To apologize", "To greet someone", "To say goodbye"],
+                ans: "To apologize"
+            },
+            {
+                id: 6,
+                cat: "Reading-Viewing",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Warning Sign</div><div class='visual-frame'>${getImg("warning_sign", "Warning Sign")}</div><p style='text-align:center; font-size:1.5rem; font-weight:bold; color:#dc2626;'>⚠️ NO SMOKING ⚠️</p><p style='text-align:center;'>This is a smoke-free area. Please do not smoke here. Thank you for your cooperation.</p></div>`,
+                q: "What does this sign mean?",
+                opt: ["You can smoke here", "You must smoke here", "You cannot smoke here", "You should buy cigarettes here"],
+                ans: "You cannot smoke here"
+            },
+            {
+                id: 7,
+                cat: "Listening-Speaking",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Question About Hobby</div><div class='english-text'><p><strong>Teacher:</strong> What is your hobby, Rina?</p><p><strong>Rina:</strong> ....................</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> hobby = hobi/kesenangan</div></div>`,
+                q: "What is the best response for Rina?",
+                opt: ["I am 12 years old", "I like dancing", "I live in Jakarta", "I have two brothers"],
+                ans: "I like dancing"
+            },
+            {
+                id: 8,
+                cat: "Reading-Viewing",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>My House</div><div class='english-text'><p>My house is not big but it is comfortable. It has three bedrooms, one living room, one kitchen, and two bathrooms. The living room is in the middle of the house. There is a sofa, a table, and a television in the living room. My bedroom is small. I have a bed, a desk, and a bookshelf in my room. I like my bedroom because it is clean and tidy.</p></div><div class='visual-frame'>${getImg("house_description", "House Description")}</div><div class='vocab-help'><strong>Vocabulary Help:</strong> comfortable = nyaman, tidy = rapi, bookshelf = rak buku</div></div>`,
+                q: "What is special about the living room?",
+                opt: ["It is very big", "It is in the middle of the house", "It has three bedrooms", "It is not comfortable"],
+                ans: "It is in the middle of the house"
+            },
+            {
+                id: 9,
+                cat: "Listening-Speaking",
+                type: "pgk",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Dialogue: Offering Help</div><div class='english-text'><p><strong>Mother:</strong> Can I help you, Dear?</p><p><strong>Child:</strong> Yes, please. I need help with my homework.</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> offering = menawarkan, homework = pekerjaan rumah</div></div>`,
+                q: "Choose MORE THAN ONE correct responses to ACCEPT the offer!",
+                opt: ["Yes, please", "No, thank you", "That is very kind of you", "I can do it myself"],
+                ans: ["Yes, please", "That is very kind of you"]
+            },
+            {
+                id: 10,
+                cat: "Reading-Viewing",
+                type: "pgk",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>How to Make Orange Juice</div><div class='english-text'><p><strong>Ingredients:</strong> 4 oranges, 2 cups of water, 2 spoons of sugar, ice cubes</p><p><strong>Steps:</strong></p><p>1. Peel the oranges and separate the segments.</p><p>2. Put the orange segments in a blender.</p><p>3. Add water and sugar.</p><p>4. Blend for 2 minutes until smooth.</p><p>5. Pour into a glass and add ice cubes.</p><p>6. Serve immediately.</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> peel = kupas, blender = blender, pour = tuang</div></div>`,
+                q: "Choose MORE THAN ONE steps that must be done BEFORE step 5!",
+                opt: ["Peel the oranges", "Add water and sugar", "Serve immediately", "Blend for 2 minutes"],
+                ans: ["Peel the oranges", "Add water and sugar", "Blend for 2 minutes"]
+            },
+            {
+                id: 11,
+                cat: "Listening-Speaking",
+                type: "pgk",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Expressions of Agreement</div><div class='english-text'><p>Read the following expressions:</p><p>1. I agree with you</p><p>2. I do not think so</p><p>3. That is a good idea</p><p>4. I disagree</p><p>5. You are right</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> agree = setuju, disagree = tidak setuju</div></div>`,
+                q: "Choose MORE THAN ONE expressions that show AGREEMENT!",
+                opt: ["I agree with you", "I do not think so", "That is a good idea", "You are right"],
+                ans: ["I agree with you", "That is a good idea", "You are right"]
+            },
+            {
+                id: 12,
+                cat: "Reading-Viewing",
+                type: "pgk",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Food Advertisement</div><div class='visual-frame'>${getImg("food_advertisement", "Food Advertisement")}</div><div class='english-text'><p>Read the following announcement about the canteen's new menu!</p></div></div>`,
+                q: "Choose MORE THAN ONE information from the advertisement!",
+                opt: ["The price is Rp 15.000", "Available on Sunday", "Sold at school canteen", "Available from 10.00 to 15.00"],
+                ans: ["The price is Rp 15.000", "Sold at school canteen", "Available from 10.00 to 15.00"]
+            },
+            {
+                id: 13,
+                cat: "Listening-Speaking",
+                type: "pgk-cat",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Greeting Situations</div><div class='english-text'><p>Match the situation with the appropriate greeting:</p><p>1. Meeting your teacher in the morning</p><p>2. Meeting your friend at the playground</p><p>3. Meeting your parents at home</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> appropriate = sesuai, playground = tempat bermain</div></div>`,
+                q: "Classify each greeting whether Formal or Informal!",
+                rows: ["Good morning, Sir", "Hi, buddy!", "Good morning, Mom"],
+                cols: ["Formal", "Informal"],
+                ans: ["Formal", "Informal", "Informal"]
+            },
+            {
+                id: 14,
+                cat: "Reading-Viewing",
+                type: "pgk-cat",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Text Types</div><div class='english-text'><p>Read the text samples:</p><p>Text A: \"Come to my birthday party! Saturday, 5 PM, My House\"</p><p>Text B: \"All students must attend the flag ceremony on Monday at 7 AM\"</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> birthday party = pesta ulang tahun, flag ceremony = upacara bendera</div></div>`,
+                q: "Classify each text whether Invitation or Announcement!",
+                rows: ["Text A", "Text B"],
+                cols: ["Invitation", "Announcement"],
+                ans: ["Invitation", "Announcement"]
+            },
+            {
+                id: 15,
+                cat: "Listening-Speaking",
+                type: "pgk-cat",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Pronunciation</div><div class='english-text'><p>Look at these words:</p><p>1. Cat</p><p>2. Bat</p><p>3. Cut</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> pronunciation = cara mengucapkan</div></div>`,
+                q: "Classify which words have the SAME vowel sound!",
+                rows: ["Cat", "Bat", "Cut"],
+                cols: ["Same Sound", "Different Sound"],
+                ans: ["Same Sound", "Same Sound", "Different Sound"]
+            },
+            {
+                id: 16,
+                cat: "Reading-Viewing",
+                type: "pgk-cat",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Word Meaning</div><div class='english-text'><p>Look at the word \"RUN\" in these sentences:</p><p>1. I run fast in the morning</p><p>2. The company runs well</p><p>3. We run out of time</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> company = perusahaan, run out = kehabisan</div></div>`,
+                q: "Classify each meaning whether Literal or Figurative!",
+                rows: ["Sentence 1", "Sentence 2", "Sentence 3"],
+                cols: ["Literal", "Figurative"],
+                ans: ["Literal", "Figurative", "Figurative"]
+            },
+            {
+                id: 17,
+                cat: "Listening-Speaking",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Dialogue: Holiday Plan</div><div class='english-text'><p><strong>Doni:</strong> What will you do next holiday, Lisa?</p><p><strong>Lisa:</strong> I will visit my grandmother in Surabaya.</p><p><strong>Doni:</strong> That sounds great! How will you go there?</p><p><strong>Lisa:</strong> ....................</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> holiday = liburan, grandmother = nenek</div></div>`,
+                q: "What is the best sentence to complete the dialogue?",
+                opt: ["I went there last year", "I will go by train", "I like Surabaya very much", "My grandmother is old"],
+                ans: "I will go by train"
+            },
+            {
+                id: 18,
+                cat: "Reading-Viewing",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>The Ant and the Dove</div><div class='english-text'><p>One day, an ant fell into a river. A dove saw the ant and dropped a leaf. The ant climbed on the leaf and was saved. Later, a hunter wanted to catch the dove. The ant bit the hunter. The hunter missed his shot. The dove flew away safely. They became good friends.</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> fell = jatuh, dropped = menjatuhkan, bit = menggigit, hunter = pemburu</div></div>`,
+                q: "What is the moral value of the story?",
+                opt: ["We should help each other", "We should run fast", "We should eat leaves", "We should catch hunters"],
+                ans: "We should help each other"
+            },
+            {
+                id: 19,
+                cat: "Listening-Speaking",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Phone Message</div><div class='english-text'><p><strong>Parts of phone message:</strong></p><p>A. Thank you. Goodbye.</p><p>B. Hello, this is Rina.</p><p>C. Please call me back.</p><p>D. I want to invite you to my party.</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> call back = telepon kembali, invite = undang</div></div>`,
+                q: "What is the correct order to make a logical phone message?",
+                opt: ["B - D - C - A", "A - B - C - D", "D - C - B - A", "C - D - A - B"],
+                ans: "B - D - C - A"
+            },
+            {
+                id: 20,
+                cat: "Reading-Viewing",
+                type: "pgk",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>School Event Poster</div><div class='visual-frame'>${getImg("school_poster", "School Poster")}</div><div class='english-text'><p>Read the following poster about school programs!</p></div></div>`,
+                q: "Choose MORE THAN ONE valid information from the poster!",
+                opt: ["The event is in March", "It starts at 08.00", "Only class 6 can join", "There is a quiz activity"],
+                ans: ["The event is in March", "It starts at 08.00", "There is a quiz activity"]
+            },
+            {
+                id: 21,
+                cat: "Writing-Presenting",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Personal Letter Structure</div><div class='english-text'><p>Parts of a personal letter:</p><p>1. Dear Sarah,</p><p>2. How are you? I hope you are fine.</p><p>3. Write back soon. Your friend, Rina</p><p>4. Jakarta, January 10, 2026</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> letter = surat, write back = balas surat</div></div>`,
+                q: "What is the correct order of a personal letter?",
+                opt: ["4 - 1 - 2 - 3", "1 - 2 - 3 - 4", "2 - 1 - 4 - 3", "3 - 2 - 1 - 4"],
+                ans: "4 - 1 - 2 - 3"
+            },
+            {
+                id: 22,
+                cat: "Writing-Presenting",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Two Paragraphs</div><div class='english-text'><p><strong>Paragraph A:</strong> My cat is white. It has blue eyes. It likes fish. It sleeps on my bed.</p><p><strong>Paragraph B:</strong> Yesterday I went to the market. I bought vegetables. Then I went home. I cooked lunch.</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> paragraph = paragraf, vegetables = sayuran</div></div>`,
+                q: "Which paragraph is a DESCRIPTIVE text?",
+                opt: ["Paragraph A", "Paragraph B", "Both paragraphs", "Neither paragraph"],
+                ans: "Paragraph A"
+            },
+            {
+                id: 23,
+                cat: "Writing-Presenting",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>School Photo</div><div class='visual-frame'>${getImg("students_cleaning", "School Activity")}</div><p style='text-align:center;'><em>School activity.</em></p></div>`,
+                q: "What is the best caption for this photo?",
+                opt: ["Students are sleeping in class", "Students are cleaning the classroom", "Students are eating lunch", "Students are going home"],
+                ans: "Students are cleaning the classroom"
+            },
+            {
+                id: 24,
+                cat: "Writing-Presenting",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Short Story</div><div class='english-text'><p>One day, a rabbit and a turtle had a race. The rabbit was very fast. The turtle was very slow. The rabbit slept under a tree. The turtle kept walking. Finally, the turtle won the race.</p><p>The rabbit was too ....................</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> race = lomba, slow = lambat, won = menang</div></div>`,
+                q: "What word best completes the story?",
+                opt: ["fast", "slow", "confident", "hungry"],
+                ans: "confident"
+            },
+            {
+                id: 25,
+                cat: "Writing-Presenting",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Speech Opening</div><div class='english-text'><p>Parts of a speech:</p><p>1. First of all, I would like to thank you all for coming.</p><p>2. Today I will talk about healthy food.</p><p>3. In conclusion, eat healthy food every day.</p><p>4. Good morning, teachers and friends.</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> speech = pidato, conclusion = kesimpulan</div></div>`,
+                q: "Which sentence is the OPENING of the speech?",
+                opt: ["Sentence 1", "Sentence 2", "Sentence 3", "Sentence 4"],
+                ans: "Sentence 4"
+            },
+            {
+                id: 26,
+                cat: "Reading-Viewing",
+                type: "pgk",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Email Invitation</div><div class='visual-frame'>${getImg("email_message", "Email Message")}</div><div class='english-text'><p>Read the email above from the principal to all students carefully!</p></div></div>`,
+                q: "Choose MORE THAN ONE important information from the email!",
+                opt: ["Trip to the museum", "On February 1, 2026", "Bring lunch and water", "Trip is free"],
+                ans: ["Trip to the museum", "On February 1, 2026", "Bring lunch and water"]
+            },
+            {
+                id: 27,
+                cat: "Writing-Presenting",
+                type: "pgk",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Holiday Dialogue</div><div class='english-text'><p><strong>Andi:</strong> What will you do next holiday?</p><p><strong>Budi:</strong> I will visit my grandmother.</p><p><strong>Andi:</strong> ....................</p><p><strong>Budi:</strong> Thank you. See you next month.</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> holiday = liburan, grandmother = nenek</div></div>`,
+                q: "Choose MORE THAN ONE sentences to complete the dialogue!",
+                opt: ["That sounds great!", "Have a nice trip!", "I do not like holidays", "See you next month"],
+                ans: ["That sounds great!", "Have a nice trip!", "See you next month"]
+            },
+            {
+                id: 28,
+                cat: "Writing-Presenting",
+                type: "pgk",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Sentence Structure</div><div class='english-text'><p>Look at these sentences:</p><p>1. She go to school every day.</p><p>2. She goes to school every day.</p><p>3. She is going to school now.</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> structure = struktur kalimat</div></div>`,
+                q: "Choose MORE THAN ONE grammatically correct sentences!",
+                opt: ["Sentence 1", "Sentence 2", "Sentence 3"],
+                ans: ["Sentence 2", "Sentence 3"]
+            },
+            {
+                id: 29,
+                cat: "Reading-Viewing",
+                type: "pgk",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Tourism Brochure</div><div class='visual-frame'>${getImg("brochure_tourism", "Tourism Brochure")}</div><div class='english-text'><p>Look at the travel brochure above!</p></div></div>`,
+                q: "Choose MORE THAN ONE valid information from the brochure!",
+                opt: ["Bali has beautiful beaches", "Best time is April - October", "Hotel is free", "There is traditional dance"],
+                ans: ["Bali has beautiful beaches", "Best time is April - October", "There is traditional dance"]
+            },
+            {
+                id: 30,
+                cat: "Writing-Presenting",
+                type: "pgk",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Paragraph Writing</div><div class='english-text'><p>Topic: My Favorite Food</p><p>Sentences:</p><p>1. I like fried rice very much.</p><p>2. It is delicious and cheap.</p><p>3. My mother cooks it every Sunday.</p><p>4. I eat it for breakfast.</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> fried rice = nasi goreng, delicious = enak</div></div>`,
+                q: "Choose MORE THAN ONE sentences that are relevant to the topic!",
+                opt: ["Sentence 1", "Sentence 2", "Sentence 3", "Sentence 4"],
+                ans: ["Sentence 1", "Sentence 2", "Sentence 3", "Sentence 4"]
+            },
+            {
+                id: 31,
+                cat: "Writing-Presenting",
+                type: "pgk-cat",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Text Purpose</div><div class='english-text'><p>Look at these texts:</p><p>Text A: \"Come to my birthday party!\"</p><p>Text B: \"All students must attend the meeting.\"</p><p>Text C: \"Yesterday I went to the zoo.\"</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> purpose = tujuan, meeting = pertemuan</div></div>`,
+                q: "Classify each text purpose!",
+                rows: ["Text A", "Text B", "Text C"],
+                cols: ["To Invite", "To Inform", "To Share Experience"],
+                ans: ["To Invite", "To Inform", "To Share Experience"]
+            },
+            {
+                id: 32,
+                cat: "Reading-Viewing",
+                type: "pgk-cat",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Text Formality</div><div class='english-text'><p>Look at these expressions:</p><p>1. Dear Mr. Smith,</p><p>2. Hi buddy!</p><p>3. To: The Principal</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> formality = tingkat kesopanan</div></div>`,
+                q: "Classify each expression whether Formal or Informal!",
+                rows: ["Expression 1", "Expression 2", "Expression 3"],
+                cols: ["Formal", "Informal"],
+                ans: ["Formal", "Informal", "Formal"]
+            },
+            {
+                id: 33,
+                cat: "Writing-Presenting",
+                type: "pgk-cat",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Punctuation</div><div class='english-text'><p>Look at these sentences:</p><p>1. What is your name?</p><p>2. I live in Jakarta</p><p>3. She likes apples.</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> punctuation = tanda baca</div></div>`,
+                q: "Classify each sentence whether Correct or Incorrect punctuation!",
+                rows: ["Sentence 1", "Sentence 2", "Sentence 3"],
+                cols: ["Correct", "Incorrect"],
+                ans: ["Correct", "Incorrect", "Correct"]
+            },
+            {
+                id: 34,
+                cat: "Reading-Viewing",
+                type: "pgk-cat",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Reference Words</div><div class='english-text'><p>Read the text:</p><p>\"Rina has a cat. It is white. She loves it very much.\"</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> reference = kata rujukan</div></div>`,
+                q: "Classify what the reference words refer to!",
+                rows: ["It (first)", "She", "It (second)"],
+                cols: ["Thing/Animal", "Person"],
+                ans: ["Thing/Animal", "Person", "Thing/Animal"]
+            },
+            {
+                id: 35,
+                cat: "Writing-Presenting",
+                type: "pgk-cat",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Time Order</div><div class='english-text'><p>Look at these sentences:</p><p>1. First, I wake up at 6 AM.</p><p>2. Then, I take a bath.</p><p>3. Finally, I go to school.</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> time order = urutan waktu, wake up = bangun</div></div>`,
+                q: "Classify whether the order is Chronological or Non-Chronological!",
+                rows: ["Sentence 1-2-3", "Sentence 3-1-2", "Sentence 1-3-2"],
+                cols: ["Chronological", "Non-Chronological"],
+                ans: ["Chronological", "Non-Chronological", "Non-Chronological"]
+            },
+            {
+                id: 36,
+                cat: "Reading-Viewing",
+                type: "pgk-cat",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Word Relationships</div><div class='english-text'><p>Look at these word pairs:</p><p>1. Big - Large</p><p>2. Hot - Cold</p><p>3. Happy - Sad</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> relationships = hubungan kata</div></div>`,
+                q: "Classify each pair whether Synonym or Antonym!",
+                rows: ["Pair 1", "Pair 2", "Pair 3"],
+                cols: ["Synonym", "Antonym"],
+                ans: ["Synonym", "Antonym", "Antonym"]
+            },
+            {
+                id: 37,
+                cat: "Writing-Presenting",
+                type: "pgk",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Paragraph Errors</div><div class='english-text'><p>Read this paragraph:</p><p>\"Yesterday I go to the market. I buys vegetables. Then I go home.\"</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> errors = kesalahan, vegetables = sayuran</div></div>`,
+                q: "Choose MORE THAN ONE types of errors in the paragraph!",
+                opt: ["Verb tense error", "Spelling error", "Subject-verb agreement error", "Punctuation error"],
+                ans: ["Verb tense error", "Subject-verb agreement error"]
+            },
+            {
+                id: 38,
+                cat: "Reading-Viewing",
+                type: "pg",
+                score: 1,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Venn Diagram</div><div class='visual-frame'>${getImg("venn_diagram", "Venn Diagram")}</div><div class='english-text'><p>Look at the illustration comparing and contrasting the two animals above</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> diagram = diagram, both = keduanya</div></div>`,
+                q: "What information belongs in the \"Both\" section?",
+                opt: ["Meows", "Pet", "Barks", "Climbs trees"],
+                ans: "Pet"
+            },
+            {
+                id: 39,
+                cat: "Writing-Presenting",
+                type: "pgk",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Writing for Audience</div><div class='english-text'><p>Situation: You are writing to different people:</p><p>1. Writing to your teacher</p><p>2. Writing to your best friend</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> audience = pembaca, teacher = guru</div></div>`,
+                q: "Choose MORE THAN ONE things to consider based on the audience!",
+                opt: ["Use formal language for teacher", "Use informal language for friend", "Use same language for both", "Adjust tone for each audience"],
+                ans: ["Use formal language for teacher", "Use informal language for friend", "Adjust tone for each audience"]
+            },
+            {
+                id: 40,
+                cat: "Writing-Presenting",
+                type: "pgk-cat",
+                score: 2,
+                stim: `<div class='stimulus-box'><div class='stimulus-head'>Multimodal Text</div><div class='visual-frame'>${getImg("school_poster", "School Poster")}</div><div class='english-text'><p>Poster elements:</p><p>1. Picture of students studying</p><p>2. Text: \"Study Hard for Success\"</p><p>3. School logo</p></div><div class='vocab-help'><strong>Vocabulary Help:</strong> multimodal = kombinasi teks dan gambar, logo = logo</div></div>`,
+                q: "Classify whether each element Supports or Does Not Support the main message!",
+                rows: ["Picture of students", "Text message", "School logo"],
+                cols: ["Supports", "Does Not Support"],
+                ans: ["Supports", "Supports", "Supports"]
+            }
+        ];
+
+// ════════════════════════════════════════════════════════
+//  APP OBJECT
+// ════════════════════════════════════════════════════════
+const app = {
+    session: { nama:"", kelas:"", answers:{}, startTime:0 },
+    currIdx: 0, timerInt: null, _hasSavedSession: false,
+
+    init() {
+        this.showSlide('pin');
+        try { if(localStorage.getItem(CONFIG.STORAGE_KEY)) this._hasSavedSession=true; } catch(e){}
+    },
+
+    async checkPin() {
+        const inp=document.getElementById('inp-pin'), val=inp.value.trim();
+        if(!val) return;
+        const h=await hashPin(val);
+        if(h===CONFIG.PIN_HASH){
+            this.showSlide('login');
+            if(this._hasSavedSession) document.getElementById('resume-alert').style.display='block';
+        } else {
+            inp.classList.add('error');
+            document.getElementById('pin-err').style.display='block';
+            inp.value='';
+            setTimeout(()=>inp.classList.remove('error'),400);
+        }
+    },
+
+    login() {
+        const n=document.getElementById('inpNama').value.trim(), k=document.getElementById('inpKelas').value;
+        if(!n||!k){alert("Harap isi nama lengkap dan pilih kelas!");return;}
+        this.session.nama=n; this.session.kelas=k;
+        this.showSlide('rules');
+    },
+
+    resume() {
+        try {
+            this.session=JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY));
+            this.renderSidebar(); this.startExam(true);
+        } catch(e){ alert("Sesi tersimpan rusak. Silakan mulai ujian baru."); }
+    },
+
+    startExam(isRes=false) {
+        if(!isRes){ this.session.startTime=Date.now(); this.save(); }
+        document.getElementById('user-badge').innerText=this.session.nama;
+        document.getElementById('user-badge').style.display='block';
+        document.getElementById('sidebar').style.display='flex';
+        this.renderQuestions(); this.renderSidebar();
+        this.showSlide('quiz'); this.goToQ(0); this.startTimer();
+    },
+
+    showSlide(id) {
+        document.querySelectorAll('.slide').forEach(e=>e.classList.remove('active'));
+        document.getElementById('slide-'+id).classList.add('active');
+    },
+
+    renderQuestions() {
+        const box=document.getElementById('quiz-container'); box.innerHTML='';
+        QUESTIONS.forEach((q,i)=>{
+            let h=`<div id="q-item-${i}" class="question-item">
+                <div class="tag-cat">${q.cat}</div>
+                ${q.stim||''}
+                <div class="q-text">${i+1}. ${q.q}</div>`;
+
+            if(q.type==='pg') {
+                q.opt.forEach((o,oi)=>h+=`<label class="opt-label">
+                    <input type="radio" name="ans_${q.id}" value="${oi}"
+                        onchange="app.saveAns(${q.id},${oi})"> ${o}</label>`);
+            } else if(q.type==='pgk') {
+                h+=`<p class="hint-pgk">☑ Select <strong>all correct answers</strong> (more than one may be correct)</p>`;
+                q.opt.forEach((o,oi)=>h+=`<label class="opt-label">
+                    <input type="checkbox" value="${oi}"
+                        onchange="app.saveMulti(${q.id},${oi})"> ${o}</label>`);
+            } else if(q.type==='pgk-cat') {
+                h+=`<div class="matrix-wrapper"><table class="matrix-table"><tr><th>Item</th>`;
+                q.cols.forEach(c=>h+=`<th>${c}</th>`);
+                h+=`</tr>`;
+                q.rows.forEach((r,ri)=>{
+                    h+=`<tr><td>${r}</td>`;
+                    q.cols.forEach(c=>h+=`<td><input type="radio"
+                        name="mx_${q.id}_${ri}" value="${c}"
+                        onchange="app.saveMx(${q.id},${ri},'${c}')"></td>`);
+                    h+=`</tr>`;
+                });
+                h+=`</table></div>`;
+            }
+            h+=`</div>`;
+            box.innerHTML+=h;
+        });
+    },
+
+    goToQ(idx) {
+        if(idx<0||idx>=QUESTIONS.length) return;
+        this.currIdx=idx;
+        const qs=document.getElementById('quiz-scroll'); if(qs) qs.scrollTop=0;
+        document.querySelectorAll('.question-item').forEach(e=>e.classList.remove('active-q'));
+        document.getElementById(`q-item-${idx}`).classList.add('active-q');
+        document.getElementById('q-indicator').innerText=`Question ${idx+1} / ${QUESTIONS.length}`;
+        document.getElementById('btn-prev').disabled=(idx===0);
+        const nBtn=document.getElementById('btn-next');
+        if(idx===QUESTIONS.length-1){
+            nBtn.innerText="Submit"; nBtn.onclick=()=>this.confirmFinish(); nBtn.classList.add('btn-danger');
+        } else {
+            nBtn.innerText="Next →"; nBtn.onclick=()=>this.move(1); nBtn.classList.remove('btn-danger');
+        }
+        this.restoreVisual(idx); this.updateSidebarUI();
+    },
+
+    move(step){ this.goToQ(this.currIdx+step); },
+    saveAns(qid,v){ this.session.answers[qid]=v; this.save(); this.updateSidebarUI(); },
+    saveMulti(qid,oi){
+        let c=this.session.answers[qid]||[];
+        if(c.includes(oi)) c=c.filter(x=>x!==oi); else c.push(oi);
+        this.session.answers[qid]=c; this.save(); this.updateSidebarUI();
+    },
+    saveMx(qid,ri,v){
+        let c=this.session.answers[qid]||[]; c[ri]=v;
+        this.session.answers[qid]=c; this.save(); this.updateSidebarUI();
+    },
+    save(){ try{ localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(this.session)); }catch(e){} },
+
+    renderSidebar(){
+        const g=document.getElementById('nav-grid'); g.innerHTML='';
+        QUESTIONS.forEach((q,i)=>g.innerHTML+=`<div id="nav-num-${i}" class="nav-num"
+            onclick="app.goToQ(${i})">${i+1}</div>`);
+    },
+
+    checkFilled(qid){
+        const v=this.session.answers[qid];
+        if(v===undefined||v===null) return false;
+        if(Array.isArray(v)) return v.filter(x=>x!==undefined&&x!==null).length>0;
+        return true;
+    },
+
+    updateSidebarUI(){
+        QUESTIONS.forEach((q,i)=>{
+            const el=document.getElementById(`nav-num-${i}`); if(!el) return;
+            el.classList.toggle('current', i===this.currIdx);
+            el.classList.toggle('filled', this.checkFilled(q.id));
+        });
+    },
+
+    restoreVisual(idx){
+        const q=QUESTIONS[idx], ans=this.session.answers[q.id];
+        if(ans===undefined||ans===null) return;
+        if(q.type==='pg'){
+            const el=document.querySelector(`input[name="ans_${q.id}"][value="${ans}"]`);
+            if(el) el.checked=true;
+        } else if(q.type==='pgk'&&Array.isArray(ans)){
+            ans.forEach(v=>{
+                const el=document.querySelector(`#q-item-${idx} input[type="checkbox"][value="${v}"]`);
+                if(el) el.checked=true;
+            });
+        } else if(q.type==='pgk-cat'&&Array.isArray(ans)){
+            ans.forEach((v,ri)=>{
+                if(!v) return;
+                const el=document.querySelector(`input[name="mx_${q.id}_${ri}"][value="${v}"]`);
+                if(el) el.checked=true;
+            });
+        }
+    },
+
+    startTimer(){
+        clearInterval(this.timerInt);
+        this.timerInt=setInterval(()=>{
+            const rem=CONFIG.DURATION-Math.floor((Date.now()-this.session.startTime)/1000);
+            if(rem<=0){ clearInterval(this.timerInt); this.submitExam(); return; }
+            document.getElementById('timer-display').innerText=
+                `${Math.floor(rem/60).toString().padStart(2,'0')}:${(rem%60).toString().padStart(2,'0')}`;
+        },1000);
+    },
+
+    confirmFinish(){ document.getElementById('modal-confirm').style.display='flex'; },
+
+    submitExam(){
+        document.getElementById('modal-confirm').style.display='none';
+        document.getElementById('modal-loading').style.display='flex';
+        clearInterval(this.timerInt);
+
+        const stats={};let totS=0,totM=0;
+        QUESTIONS.forEach(q=>{
+            if(!stats[q.cat]) stats[q.cat]={s:0,m:0};
+            stats[q.cat].m+=q.score; totM+=q.score;
+            const u=this.session.answers[q.id]; let pt=0;
+            if(u!==undefined&&u!==null){
+                if(q.type==='pg'){
+                    if(u==q.opt.indexOf(q.ans)) pt=q.score;
+                } else if(q.type==='pgk'&&Array.isArray(u)&&Array.isArray(q.ans)){
+                    if(JSON.stringify(u.map(i=>q.opt[i]).sort())===JSON.stringify([...q.ans].sort()))
+                        pt=q.score;
+                } else if(q.type==='pgk-cat'&&Array.isArray(u)){
+                    let m=0; q.ans.forEach((k,i)=>{ if(u[i]===k) m++; });
+                    pt=(m/q.rows.length)*q.score;
+                }
+            }
+            stats[q.cat].s+=pt; totS+=pt;
+        });
+
+        const final=Math.round((totS/totM)*100);
+        const catOrder=['Listening-Speaking','Reading-Viewing','Writing-Presenting'];
+        let summ={}, cht='', nts=[];
+        catOrder.forEach(c=>{
+            if(!stats[c]) return;
+            const p=stats[c].m>0?Math.round((stats[c].s/stats[c].m)*100):0;
+            summ[c]={skor:p,tuntas:p>=70,label:p>=70?"Tuntas":"Perlu Bimbingan"};
+            if(p<70) nts.push(c);
+            cht+=`<div class="chart-row">
+                <div class="chart-lbl">${c}</div>
+                <div class="chart-track"><div class="chart-fill"
+                    style="width:${p}%;background:${p>=70?'#16a34a':'#dc2626'}"></div></div>
+                <div class="chart-val">${p}%</div>
+            </div>`;
+        });
+
+        const desc=nts.length===0?"Great job! Tuntas semua elemen.":"Perlu belajar lagi di: "+nts.join(", ");
+        this.showSlide('result');
+        document.getElementById('modal-loading').style.display='none';
+        document.getElementById('result-content').innerHTML=`
+            <h3>Final Score: <span style="color:var(--primary);font-size:2.5rem;">${final}</span></h3>
+            <div style="background:#eff6ff;padding:15px;border-radius:8px;margin-bottom:20px;">${desc}</div>
+            <h4>Score per Skill:</h4>${cht}`;
+
+        fetch(CONFIG.SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},
+            body:JSON.stringify({action:"submit_exam",mapel:"Bahasa Inggris",nama:this.session.nama,
+                kelas:this.session.kelas,skor:final,deskripsi:desc,
+                jawaban:this.session.answers,ringkasanNilai:summ})
+        }).then(()=>{ try{ localStorage.removeItem(CONFIG.STORAGE_KEY); }catch(e){} });
+    }
+};
+window.onload=()=>app.init();
+</script>
+</body>
+</html>
