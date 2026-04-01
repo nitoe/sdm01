@@ -7,27 +7,27 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --blue:          #1a56db;
-      --blue-dark:     #1e429f;
-      --blue-light:    #ebf5ff;
-      --green:         #057a55;
-      --green-dark:    #046c4e;
-      --green-light:   #def7ec;
-      --amber:         #d97706;
-      --amber-light:   #fef3c7;
-      --orange:        #ea580c;
-      --orange-dark:   #c2410c;
-      --orange-light:  #fff7ed;
-      --purple:        #7c3aed;
-      --purple-dark:   #5b21b6;
-      --purple-light:  #ede9fe;
-      --text:          #1f2a37;
-      --text-muted:    #6b7280;
-      --bg:            #f0f4ff;
-      --white:         #ffffff;
-      --border:        #d1d5db;
-      --radius:        16px;
-      --shadow:        0 4px 24px rgba(0,0,0,0.08);
+      --blue:        #1a56db;
+      --blue-dark:   #1e429f;
+      --blue-light:  #ebf5ff;
+      --green:       #057a55;
+      --green-dark:  #046c4e;
+      --green-light: #def7ec;
+      --amber:       #d97706;
+      --amber-light: #fef3c7;
+      --orange:      #ea580c;
+      --orange-dark: #c2410c;
+      --orange-light:#fff7ed;
+      --purple:      #7c3aed;
+      --purple-dark: #5b21b6;
+      --purple-light:#f5f3ff;
+      --text:        #1f2a37;
+      --text-muted:  #6b7280;
+      --bg:          #f0f4ff;
+      --white:       #ffffff;
+      --border:      #d1d5db;
+      --radius:      16px;
+      --shadow:      0 4px 24px rgba(0,0,0,0.08);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -136,7 +136,7 @@
 
     /* ─── MAIN CONTENT ─── */
     .container {
-      max-width: 1160px;
+      max-width: 1080px;
       margin: 0 auto;
       padding: 40px 16px 56px;
     }
@@ -160,10 +160,10 @@
     @media (min-width: 560px) {
       .programs-grid { grid-template-columns: 1fr 1fr; }
     }
-    @media (min-width: 900px) {
+    @media (min-width: 860px) {
       .programs-grid { grid-template-columns: 1fr 1fr 1fr; }
     }
-    @media (min-width: 1100px) {
+    @media (min-width: 1300px) {
       .programs-grid { grid-template-columns: repeat(5, 1fr); }
     }
 
@@ -191,20 +191,20 @@
       box-shadow: 0 12px 40px rgba(0,0,0,0.15);
     }
 
-    .program-card.us:hover     { border-color: #a7f3d0; }
-    .program-card.tka:hover    { border-color: #bfdbfe; }
-    .program-card.ucoba:hover  { border-color: #fed7aa; }
-    .program-card.ust:hover    { border-color: #99f6e4; }
+    .program-card.us:hover    { border-color: #a7f3d0; }
+    .program-card.tka:hover   { border-color: #bfdbfe; }
+    .program-card.ucoba:hover { border-color: #fed7aa; }
+    .program-card.ust:hover   { border-color: #99f6e4; }
     .program-card.materi:hover { border-color: #c4b5fd; }
 
     .card-banner {
       height: 7px;
     }
 
-    .program-card.us     .card-banner { background: linear-gradient(90deg, #046c4e, #057a55, #10b981); }
-    .program-card.tka    .card-banner { background: linear-gradient(90deg, #1e429f, #1a56db, #3b82f6); }
-    .program-card.ucoba  .card-banner { background: linear-gradient(90deg, #c2410c, #ea580c, #fb923c); }
-    .program-card.ust    .card-banner { background: linear-gradient(90deg, #0f766e, #0d9488, #2dd4bf); }
+    .program-card.us    .card-banner { background: linear-gradient(90deg, #046c4e, #057a55, #10b981); }
+    .program-card.tka   .card-banner { background: linear-gradient(90deg, #1e429f, #1a56db, #3b82f6); }
+    .program-card.ucoba .card-banner { background: linear-gradient(90deg, #c2410c, #ea580c, #fb923c); }
+    .program-card.ust   .card-banner { background: linear-gradient(90deg, #0f766e, #0d9488, #2dd4bf); }
     .program-card.materi .card-banner { background: linear-gradient(90deg, #5b21b6, #7c3aed, #a78bfa); }
 
     .card-body {
@@ -220,10 +220,10 @@
       margin-bottom: 14px;
     }
 
-    .program-card.us     .card-icon { background: var(--green-light);  }
-    .program-card.tka    .card-icon { background: var(--blue-light);   }
-    .program-card.ucoba  .card-icon { background: var(--orange-light); }
-    .program-card.ust    .card-icon { background: #ccfbf1; }
+    .program-card.us    .card-icon { background: var(--green-light);  }
+    .program-card.tka   .card-icon { background: var(--blue-light);   }
+    .program-card.ucoba .card-icon { background: var(--orange-light); }
+    .program-card.ust   .card-icon { background: #ccfbf1; }
     .program-card.materi .card-icon { background: var(--purple-light); }
 
     .card-title {
@@ -233,10 +233,10 @@
       margin-bottom: 4px;
     }
 
-    .program-card.us     .card-title { color: var(--green-dark);  }
-    .program-card.tka    .card-title { color: var(--blue-dark);   }
-    .program-card.ucoba  .card-title { color: var(--orange-dark); }
-    .program-card.ust    .card-title { color: #0f766e; }
+    .program-card.us    .card-title { color: var(--green-dark);  }
+    .program-card.tka   .card-title { color: var(--blue-dark);   }
+    .program-card.ucoba .card-title { color: var(--orange-dark); }
+    .program-card.ust   .card-title { color: #0f766e; }
     .program-card.materi .card-title { color: var(--purple-dark); }
 
     .card-subtitle {
@@ -258,10 +258,10 @@
       padding: 3px 10px; border-radius: 10px;
     }
 
-    .program-card.us     .tag { background: var(--green-light);  color: var(--green-dark);  }
-    .program-card.tka    .tag { background: var(--blue-light);   color: var(--blue-dark);   }
-    .program-card.ucoba  .tag { background: var(--orange-light); color: var(--orange-dark); }
-    .program-card.ust    .tag { background: #ccfbf1;             color: #0f766e; }
+    .program-card.us    .tag { background: var(--green-light);  color: var(--green-dark);  }
+    .program-card.tka   .tag { background: var(--blue-light);   color: var(--blue-dark);   }
+    .program-card.ucoba .tag { background: var(--orange-light); color: var(--orange-dark); }
+    .program-card.ust   .tag { background: #ccfbf1; color: #0f766e; }
     .program-card.materi .tag { background: var(--purple-light); color: var(--purple-dark); }
 
     .card-cta {
@@ -272,10 +272,10 @@
       transition: opacity 0.15s;
     }
 
-    .program-card.us     .card-cta { background: var(--green-light);  color: var(--green-dark);  }
-    .program-card.tka    .card-cta { background: var(--blue-light);   color: var(--blue-dark);   }
-    .program-card.ucoba  .card-cta { background: var(--orange-light); color: var(--orange-dark); }
-    .program-card.ust    .card-cta { background: #ccfbf1;             color: #0f766e; }
+    .program-card.us    .card-cta { background: var(--green-light);  color: var(--green-dark);  }
+    .program-card.tka   .card-cta { background: var(--blue-light);   color: var(--blue-dark);   }
+    .program-card.ucoba .card-cta { background: var(--orange-light); color: var(--orange-dark); }
+    .program-card.ust   .card-cta { background: #ccfbf1; color: #0f766e; }
     .program-card.materi .card-cta { background: var(--purple-light); color: var(--purple-dark); }
 
     .card-cta:hover { opacity: 0.8; }
@@ -376,6 +376,7 @@
     .ev-up-line   { background: #FF9800; }
     .ev-tka-line  { background: #9C27B0; }
     .ev-us-line   { background: #009145; }
+    .ev-uam-line  { background: #795548; }
 
     /* ─── FOOTER ─── */
     .footer {
@@ -411,7 +412,7 @@
     <div class="school-badge">📋 Program Resmi Sekolah</div>
     <span class="hero-emoji">🎓</span>
     <h1>Program Ujian Kelas 6</h1>
-    <p>Informasi lengkap Ujian Sekolah dan Tes Kemampuan Akademik (TKA) untuk siswa kelas 6 tahun pelajaran 2025/2026.</p>
+    <p>Informasi lengkap Ujian Sekolah, Tes Kemampuan Akademik (TKA), dan Materi Belajar Mandiri untuk siswa kelas 6 tahun pelajaran 2025/2026.</p>
     <div class="hero-pills">
       <div class="pill">🗓️ Ujian: Apr – Mei 2026</div>
       <div class="pill">💻 Lab Komputer</div>
@@ -524,17 +525,17 @@
         <div class="card-body">
           <div class="card-icon">📖</div>
           <div class="card-title">Materi Ujian Sekolah</div>
-          <div class="card-subtitle">Bahan belajar mandiri per mapel</div>
+          <div class="card-subtitle">Bahan belajar mandiri per mata pelajaran</div>
           <p class="card-desc">
-            Materi lengkap setiap mata pelajaran untuk persiapan Ujian Sekolah. Mencakup ringkasan materi, peta konsep, dan contoh soal yang relevan.
+            Rangkuman materi lengkap untuk persiapan Ujian Sekolah dan UAM. Disusun berdasarkan kisi-kisi, mencakup materi ujian dan pengayaan.
           </p>
           <div class="card-tags">
             <span class="tag">12 Mata Pelajaran</span>
-            <span class="tag">Kisi-Kisi US</span>
+            <span class="tag">Sesuai Kisi-kisi</span>
             <span class="tag">Belajar Mandiri</span>
           </div>
           <div class="card-cta">
-            <span>Pilih Mata Pelajaran</span>
+            <span>Buka Materi Belajar</span>
             <span class="arrow">→</span>
           </div>
         </div>
