@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materi PJOK – Ujian Sekolah Kelas 6</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --purple:      #7c3aed;
+      --purple-dark: #5b21b6;
+      --purple-light:#f5f3ff;
+      --purple-pale: #ede9fe;
+      --green:       #059669;
+      --green-dark:  #065f46;
+      --green-light: #d1fae5;
+      --blue:        #2563eb;
+      --blue-light:  #dbeafe;
+      --orange:      #ea580c;
+      --orange-light:#fff7ed;
+      --red:         #dc2626;
+      --red-light:   #fef2f2;
+      --amber:       #d97706;
+      --amber-light: #fef3c7;
+      --teal:        #0d9488;
+      --teal-light:  #ccfbf1;
+      --text:        #1f2a37;
+      --text-muted:  #6b7280;
+      --bg:          #f0f4ff;
+      --white:       #ffffff;
+      --border:      #e5e7eb;
+      --radius:      14px;
+      --shadow:      0 4px 20px rgba(0,0,0,0.06);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: clamp(14px, 3.2vw, 16px); scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.75;
+    }
+
+    /* ─── HEADER ─── */
+    .header {
+      position: sticky; top: 0; z-index: 100;
+      background: linear-gradient(135deg, #3b0764, #5b21b6 50%, #7c3aed);
+      color: white;
+      padding: 0 20px;
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+
+    .header-brand { display: flex; align-items: center; gap: 10px; }
+    .logo { font-size: 1.5rem; }
+    .brand-name {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(0.82rem, 2.6vw, 1rem);
+      font-weight: 800; line-height: 1.1;
+    }
+    .sub-brand { font-size: 0.62rem; opacity: 0.8; font-weight: 600; }
+
+    .header-back {
+      display: flex; align-items: center; gap: 5px;
+      color: white; text-decoration: none;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.72rem; font-weight: 700;
+      transition: background 0.2s;
+    }
+    .header-back:hover { background: rgba(255,255,255,0.3); }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: linear-gradient(160deg, #3b0764 0%, #5b21b6 40%, #7c3aed 100%);
+      color: white;
+      padding: 40px 20px 48px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M50 50v-6h-2v6h-6v2h6v6h2v-6h6v-2h-6zM50 10V4h-2v6h-6v2h6v6h2v-6h6v-2h-6zM10 50v-6H8v6H2v2h6v6h2v-6h6v-2h-6zM10 10V4H8v6H2v2h6v6h2v-6h6v-2h-6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-emoji { font-size: 3rem; display: block; margin-bottom: 10px; position: relative; }
+    .hero h1 {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(1.4rem, 4.5vw, 2rem);
+      font-weight: 800; margin-bottom: 6px; position: relative;
+    }
+    .hero p {
+      font-size: clamp(0.8rem, 2.2vw, 0.92rem);
+      opacity: 0.88; font-weight: 600;
+      max-width: 600px; margin: 0 auto;
+      position: relative; line-height: 1.6;
+    }
+
+    /* ─── NAV PILLS ─── */
+    .nav-pills {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 16px;
+      position: sticky; top: 56px; z-index: 90;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .nav-pills-inner {
+      max-width: 900px; margin: 0 auto;
+      display: flex; gap: 8px; flex-wrap: wrap;
+      justify-content: center;
+    }
+    .nav-pill {
+      font-size: 0.72rem; font-weight: 700;
+      padding: 5px 14px; border-radius: 20px;
+      text-decoration: none;
+      background: var(--purple-light); color: var(--purple-dark);
+      border: 1px solid transparent;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .nav-pill:hover { background: var(--purple-pale); border-color: var(--purple); }
+
+    /* ─── MAIN ─── */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 16px 56px;
+    }
+
+    /* ─── SECTION BLOCKS ─── */
+    .section-block {
+      margin-bottom: 40px;
+    }
+
+    .section-header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 20px; padding-bottom: 12px;
+      border-bottom: 3px solid var(--purple);
+    }
+
+    .section-num {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; font-weight: 900; color: white; flex-shrink: 0;
+    }
+    .section-num.e1 { background: linear-gradient(135deg, #059669, #10b981); }
+    .section-num.e2 { background: linear-gradient(135deg, #2563eb, #60a5fa); }
+    .section-num.e3 { background: linear-gradient(135deg, #d97706, #fbbf24); }
+    .section-num.e4 { background: linear-gradient(135deg, #dc2626, #f87171); }
+
+    .section-title-group { flex: 1; }
+    .section-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.2rem; font-weight: 800; color: var(--text);
+    }
+    .section-subtitle {
+      font-size: 0.75rem; font-weight: 600; color: var(--text-muted);
+    }
+
+    /* ─── CONTENT CARDS ─── */
+    .content-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .content-card h3 {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.05rem; font-weight: 800;
+      margin-bottom: 12px;
+      color: var(--purple-dark);
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .content-card h4 {
+      font-size: 0.92rem; font-weight: 800;
+      margin: 18px 0 8px;
+      color: var(--text);
+    }
+
+    .content-card p {
+      font-size: 0.88rem; margin-bottom: 12px;
+      color: #374151;
+    }
+
+    .content-card ul, .content-card ol {
+      padding-left: 20px; margin-bottom: 12px;
+    }
+
+    .content-card li {
+      font-size: 0.86rem; margin-bottom: 6px;
+      color: #374151;
+    }
+
+    .content-card li strong { color: var(--text); }
+
+    /* ─── INFO BOX ─── */
+    .info-box {
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 16px 0;
+      font-size: 0.84rem;
+    }
+    .info-box.green  { background: var(--green-light); border-left: 4px solid var(--green); }
+    .info-box.blue   { background: var(--blue-light);  border-left: 4px solid var(--blue);  }
+    .info-box.orange { background: var(--orange-light); border-left: 4px solid var(--orange); }
+    .info-box.red    { background: var(--red-light);    border-left: 4px solid var(--red);   }
+    .info-box.amber  { background: var(--amber-light);  border-left: 4px solid var(--amber); }
+    .info-box.teal   { background: var(--teal-light);   border-left: 4px solid var(--teal);  }
+    .info-box.purple { background: var(--purple-light);  border-left: 4px solid var(--purple);  }
+
+    .info-box strong { display: block; margin-bottom: 4px; }
+    .info-box.green  strong { color: var(--green-dark); }
+    .info-box.blue   strong { color: #1e40af; }
+    .info-box.orange strong { color: var(--orange); }
+    .info-box.red    strong { color: var(--red); }
+    .info-box.amber  strong { color: var(--amber); }
+    .info-box.teal   strong { color: var(--teal); }
+    .info-box.purple strong { color: var(--purple-dark); }
+
+    /* ─── TABLES ─── */
+    .table-wrap { overflow-x: auto; margin: 14px 0; -webkit-overflow-scrolling: touch; }
+    table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.84rem; min-width: 400px;
+    }
+    th {
+      background: var(--purple-light); color: var(--purple-dark);
+      padding: 10px 14px; text-align: left;
+      font-weight: 800; font-size: 0.78rem;
+      text-transform: uppercase; letter-spacing: 0.3px;
+      border-bottom: 2px solid var(--purple);
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    tr:nth-child(even) td { background: #fafbff; }
+
+    /* ─── DIAGRAM CONTAINER ─── */
+    .diagram-container {
+      background: #f9fafb;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 16px 0;
+      text-align: center;
+    }
+    .diagram-container svg { max-width: 100%; height: auto; }
+    .diagram-caption {
+      font-size: 0.76rem; font-weight: 700;
+      color: var(--text-muted);
+      margin-top: 10px;
+    }
+
+    /* ─── KEY TERM ─── */
+    .key-term {
+      display: inline-block;
+      background: var(--purple-light);
+      color: var(--purple-dark);
+      padding: 1px 8px;
+      border-radius: 6px;
+      font-weight: 800;
+      font-size: 0.84rem;
+    }
+
+    /* ─── COMPARISON GRID ─── */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 14px 0;
+    }
+    @media (max-width: 500px) { .compare-grid { grid-template-columns: 1fr; } }
+
+    .compare-box {
+      border-radius: 10px;
+      padding: 16px;
+      font-size: 0.84rem;
+    }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      text-align: center;
+      padding: 24px 16px;
+      font-size: 0.76rem; color: var(--text-muted); font-weight: 600;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-brand">
+      <span class="logo">⚽</span>
+      <div>
+        <div class="brand-name">Materi PJOK</div>
+        <div class="sub-brand">Ujian Sekolah · Kelas 6</div>
+      </div>
+    </div>
+    <a href="index.html" class="header-back">← Hub Materi</a>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="hero-emoji">⚽</span>
+    <h1>PJOK – Tertulis</h1>
+    <p>Pendidikan Jasmani, Olahraga & Kesehatan. Materi lengkap untuk persiapan Ujian Sekolah tertulis mencakup 4 elemen: keterampilan gerak, strategi permainan, gaya hidup aktif, dan kesehatan.</p>
+  </section>
+
+  <!-- NAVIGATION PILLS -->
+  <nav class="nav-pills">
+    <div class="nav-pills-inner">
+      <a href="#elemen1" class="nav-pill">🏃 Terampil Bergerak</a>
+      <a href="#elemen2" class="nav-pill">🤝 Belajar Melalui Gerak</a>
+      <a href="#elemen3" class="nav-pill">💪 Bergaya Hidup Aktif</a>
+      <a href="#elemen4" class="nav-pill">🥗 Hidup Menyehatkan</a>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="container">
+
+    <!-- ═══════════════════════════════════════════════════════
+         ELEMEN 1: TERAMPIL BERGERAK
+         ═══════════════════════════════════════════════════════ -->
+    <div class="section-block" id="elemen1">
+      <div class="section-header">
+        <div class="section-num e1">1</div>
+        <div class="section-title-group">
+          <div class="section-title">Terampil Bergerak</div>
+          <div class="section-subtitle">Gerak dasar, keseimbangan, koordinasi, transfer keterampilan & analisis gerak</div>
+        </div>
+      </div>
+
+      <!-- 1A: Gerak Dasar -->
+      <div class="content-card">
+        <h3>🏃 Gerak Dasar dalam Aktivitas Jasmani</h3>
+        <p>Dalam PJOK, semua gerakan manusia dapat dikelompokkan ke dalam tiga kategori utama gerak dasar. Memahami klasifikasi ini penting karena setiap olahraga dan permainan merupakan kombinasi dari gerak-gerak dasar tersebut.</p>
+
+        <h4>Tiga Jenis Gerak Dasar</h4>
+        <ol>
+          <li><strong>Gerak Lokomotor</strong> — gerak berpindah tempat. Contoh: berlari, berjalan, melompat, meloncat, berguling, merangkak, memanjat, dan meluncur. Dalam gobak sodor, pemain dominan menggunakan gerak lokomotor berupa berlari dan mengubah arah.</li>
+          <li><strong>Gerak Non-lokomotor</strong> — gerak di tempat tanpa berpindah. Contoh: membungkuk, memutar badan, menarik, mendorong, mengayun, meregang, dan berputar di poros.</li>
+          <li><strong>Gerak Manipulatif</strong> — gerak yang melibatkan benda/alat. Contoh: melempar, menangkap, menendang, memukul, menggiring bola, dan memantulkan bola.</li>
+        </ol>
+
+        <div class="info-box green">
+          <strong>💡 Kombinasi Gerak</strong>
+          Kebanyakan olahraga menggunakan kombinasi gerak. Misalnya, dalam sepak bola: berlari (lokomotor) + menendang bola (manipulatif). Dalam permainan tradisional gobak sodor: berlari + mengubah arah (lokomotor) adalah gerak dominan.
+        </div>
+
+        <h4>Konsep Ruang, Arah, dan Waktu dalam Gerak</h4>
+        <p>Setiap gerak terjadi dalam tiga dimensi konsep:</p>
+        <ul>
+          <li><strong>Ruang (space)</strong> — area tempat gerak terjadi. Pemain perlu mengenali ruang kosong dan ruang yang tertutup lawan.</li>
+          <li><strong>Arah (direction)</strong> — ke mana gerak diarahkan: maju, mundur, menyamping, diagonal. Pemain yang cerdas memilih arah berdasarkan posisi lawan.</li>
+          <li><strong>Waktu (timing)</strong> — kapan melakukan gerak. Timing yang tepat membedakan gerakan efektif dan tidak efektif.</li>
+        </ul>
+      </div>
+
+      <!-- 1B: Keseimbangan dan Koordinasi -->
+      <div class="content-card">
+        <h3>⚖️ Keseimbangan dan Koordinasi</h3>
+        <p><span class="key-term">Keseimbangan</span> adalah kemampuan mempertahankan posisi tubuh agar tidak jatuh saat diam maupun bergerak. Keseimbangan dipengaruhi oleh beberapa faktor utama:</p>
+
+        <ul>
+          <li><strong>Titik tumpu (base of support)</strong> — semakin lebar tumpuan, semakin stabil. Berdiri dengan dua kaki lebih stabil dari satu kaki.</li>
+          <li><strong>Pusat gravitasi (center of gravity)</strong> — semakin rendah pusat gravitasi, semakin stabil tubuh. Itulah mengapa kuda-kuda dalam bela diri menggunakan posisi setengah jongkok.</li>
+          <li><strong>Arah pandangan mata</strong> — memandang ke satu titik tetap di depan sangat membantu menjaga keseimbangan. Ini adalah faktor kunci saat melakukan gerakan seperti sikap kapal terbang (berdiri satu kaki dengan tangan direntangkan).</li>
+          <li><strong>Kekuatan otot inti (core)</strong> — otot perut dan punggung yang kuat membantu menstabilkan tubuh.</li>
+        </ul>
+
+        <div class="info-box blue">
+          <strong>📘 Sikap Kapal Terbang</strong>
+          Sikap kapal terbang adalah pose keseimbangan statis di mana seseorang berdiri pada satu kaki, kaki lainnya diangkat ke belakang, dan kedua tangan direntangkan ke samping menyerupai sayap pesawat. Faktor kunci keseimbangan dalam gerakan ini adalah <strong>posisi pandangan mata ke depan</strong> pada satu titik tetap — bukan jenis sepatu, warna pakaian, atau pernapasan.
+        </div>
+
+        <p><span class="key-term">Koordinasi</span> adalah kemampuan menggerakkan beberapa bagian tubuh secara bersamaan dan terpadu. Contoh: saat menendang bola, kita harus mengkoordinasikan ayunan kaki, keseimbangan tubuh, dan pandangan mata secara bersamaan.</p>
+      </div>
+
+      <!-- 1C: Transfer Keterampilan -->
+      <div class="content-card">
+        <h3>🔄 Transfer Keterampilan Gerak</h3>
+        <p><span class="key-term">Transfer keterampilan</span> adalah kemampuan menerapkan keterampilan yang sudah dikuasai dari satu olahraga ke olahraga lain yang memiliki pola gerak serupa.</p>
+
+        <h4>Prinsip Transfer</h4>
+        <ul>
+          <li><strong>Transfer positif</strong> — terjadi ketika keterampilan di satu olahraga membantu penguasaan olahraga lain. Contoh: pemain bulu tangkis yang pindah ke tenis meja dapat mentransfer keterampilan <em>memegang raket</em> dan <em>timing pukulan</em> karena pola geraknya serupa.</li>
+          <li><strong>Transfer negatif</strong> — terjadi ketika kebiasaan dari satu olahraga justru mengganggu di olahraga lain. Contoh: pemain bisbol yang terbiasa mengayun bat horizontal mungkin kesulitan bermain golf yang membutuhkan ayunan vertikal.</li>
+        </ul>
+
+        <div class="info-box green">
+          <strong>💡 Contoh Transfer Positif yang Umum</strong>
+          Dari bulu tangkis ke tenis meja: cara memegang raket, refleks pukulan, dan timing. Dari sepak bola ke futsal: teknik menggiring dan mengoper bola pendek. Dari renang gaya bebas ke gaya punggung: teknik pernapasan dan tendangan kaki.
+        </div>
+      </div>
+
+      <!-- 1D: Analisis Efisiensi Gerak -->
+      <div class="content-card">
+        <h3>📐 Analisis Efisiensi Gerak (Biomekanika Dasar)</h3>
+        <p>Dalam PJOK, kita belajar bahwa tidak semua cara bergerak sama efektifnya. Ada prinsip-prinsip dasar yang membuat gerakan lebih efisien dan menghasilkan tenaga lebih besar:</p>
+
+        <h4>Prinsip Efisiensi Gerakan</h4>
+        <ul>
+          <li><strong>Gunakan seluruh tubuh</strong> — lemparan yang menggunakan langkah kaki + pinggul + bahu + lengan menghasilkan tenaga jauh lebih besar daripada hanya menggunakan lengan. Ini disebut <em>kinetic chain</em> (rantai kinetik).</li>
+          <li><strong>Sudut pelepasan</strong> — sudut optimal melempar untuk jarak terjauh adalah sekitar 45° dari horizontal.</li>
+          <li><strong>Ayunan (momentum)</strong> — gerakan awalan atau ancang-ancang memberikan momentum tambahan. Semakin panjang ayunan, semakin besar tenaga yang dihasilkan.</li>
+          <li><strong>Tumpuan yang kuat</strong> — kaki yang kokoh sebagai tumpuan memungkinkan transfer tenaga dari bawah ke atas secara optimal.</li>
+        </ul>
+
+        <div class="info-box purple">
+          <strong>🔬 Membandingkan Dua Teknik Melempar</strong>
+          Siswa A melempar dengan langkah kaki dan putaran badan → seluruh tubuh berkontribusi → lemparan lebih jauh. Siswa B melempar hanya dengan ayunan lengan tanpa langkah kaki → hanya sebagian kecil otot bekerja → lemparan lebih pendek. Prinsipnya: gerakan yang melibatkan <strong>seluruh tubuh</strong> selalu lebih efisien.
+        </div>
+      </div>
+
+      <!-- 1E: Adaptasi Gerak dan Pengambilan Keputusan -->
+      <div class="content-card">
+        <h3>🧠 Adaptasi Gerak dan Pengambilan Keputusan</h3>
+        <p>Dalam situasi permainan yang nyata, pemain tidak bisa hanya menguasai satu teknik. Mereka harus mampu <strong>memilih teknik yang tepat</strong> berdasarkan situasi yang berubah-ubah.</p>
+
+        <h4>Contoh Adaptasi dalam Permainan</h4>
+        <ul>
+          <li><strong>Sepak bola</strong>: Jika ruang di depan tertutup lawan, pemain harus mengubah arah ke sisi yang terbuka, bukan memaksa maju lurus. Menggiring bola ke ruang kosong lebih efektif daripada menendang tanpa arah.</li>
+          <li><strong>Basket</strong>: Jika dijaga ketat saat menggiring bola, pemain perlu memutuskan apakah mengoper, membuang bola, atau melakukan screen.</li>
+          <li><strong>Bola voli</strong>: Jika bola datang rendah, pemain beralih dari passing atas ke passing bawah.</li>
+        </ul>
+
+        <div class="info-box amber">
+          <strong>🏟️ Membaca Ruang Lapangan</strong>
+          Pemain yang cerdas selalu "membaca" posisi lawan sebelum bertindak. Jika sisi kanan tertutup, bergerak ke sisi kiri yang kosong. Jika tengah ramai, operkan bola ke sayap. Kemampuan membaca ruang ini disebut <em>game awareness</em> atau <em>kesadaran taktis</em>.
+        </div>
+      </div>
+
+      <!-- 1F: Permainan Tradisional -->
+      <div class="content-card">
+        <h3>🎭 Permainan Tradisional Indonesia</h3>
+        <p>Permainan tradisional tidak hanya melestarikan budaya, tetapi juga melatih berbagai keterampilan gerak dasar secara alami dan menyenangkan.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Permainan</th>
+                <th>Gerak Dominan</th>
+                <th>Keterampilan yang Dilatih</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Gobak Sodor</strong></td>
+                <td>Berlari + mengubah arah (lokomotor)</td>
+                <td>Kelincahan, kecepatan, strategi tim</td>
+              </tr>
+              <tr>
+                <td><strong>Lompat Tali</strong></td>
+                <td>Melompat (lokomotor)</td>
+                <td>Daya tahan, koordinasi, timing</td>
+              </tr>
+              <tr>
+                <td><strong>Engklek</strong></td>
+                <td>Meloncat satu kaki (lokomotor)</td>
+                <td>Keseimbangan, kekuatan kaki</td>
+              </tr>
+              <tr>
+                <td><strong>Bentengan</strong></td>
+                <td>Berlari + mengejar (lokomotor)</td>
+                <td>Kecepatan, strategi, kerja sama</td>
+              </tr>
+              <tr>
+                <td><strong>Kasti</strong></td>
+                <td>Memukul + berlari (manipulatif + lokomotor)</td>
+                <td>Koordinasi mata-tangan, kecepatan</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         ELEMEN 2: BELAJAR MELALUI GERAK
+         ═══════════════════════════════════════════════════════ -->
+    <div class="section-block" id="elemen2">
+      <div class="section-header">
+        <div class="section-num e2">2</div>
+        <div class="section-title-group">
+          <div class="section-title">Belajar Melalui Gerak</div>
+          <div class="section-subtitle">Strategi tim, sportivitas, peraturan, modifikasi permainan & klasifikasi permainan</div>
+        </div>
+      </div>
+
+      <!-- 2A: Strategi Permainan Beregu -->
+      <div class="content-card">
+        <h3>⚔️ Strategi dalam Permainan Beregu</h3>
+        <p>Permainan beregu bukan hanya soal kemampuan individu, tetapi juga bagaimana sebuah tim bekerja sama untuk mencapai tujuan. Ada beberapa aspek penting dalam strategi tim:</p>
+
+        <h4>Evaluasi dan Perbaikan Strategi</h4>
+        <p>Tim yang baik selalu mengevaluasi permainan mereka. Jika terjadi masalah — misalnya tim sering kehilangan bola karena pemain terlalu individualis — maka strategi harus diperbaiki. Solusinya biasanya adalah:</p>
+        <ul>
+          <li><strong>Meningkatkan operan (passing)</strong> — pemain harus lebih sering mengoper bola daripada bermain sendiri</li>
+          <li><strong>Komunikasi</strong> — memanggil teman yang ada di posisi terbuka</li>
+          <li><strong>Formasi</strong> — mengatur posisi pemain agar tersebar merata di lapangan</li>
+        </ul>
+
+        <h4>Formasi dan Peran Pemain</h4>
+        <p>Dalam olahraga beregu, setiap pemain memiliki posisi dan peran berbeda:</p>
+        <ul>
+          <li><strong>Penyerang (striker/forward)</strong> — bertugas mencetak gol/poin. Posisi dekat net/gawang lawan.</li>
+          <li><strong>Gelandang (midfielder)</strong> — penghubung antara pertahanan dan serangan.</li>
+          <li><strong>Bertahan (defender/back)</strong> — menjaga area pertahanan dari serangan lawan.</li>
+          <li><strong>Penjaga gawang (goalkeeper/keeper)</strong> — garis pertahanan terakhir.</li>
+        </ul>
+
+        <div class="info-box blue">
+          <strong>🏐 Posisi Strategis untuk Smash di Bola Voli</strong>
+          Dalam permainan bola voli, pemain yang paling strategis untuk melakukan smash berada di posisi <strong>depan dekat net</strong>. Dari posisi ini, pemain memiliki jarak terdekat ke bola set dan sudut serang terbaik ke lapangan lawan.
+        </div>
+      </div>
+
+      <!-- 2B: Klasifikasi Jenis Permainan -->
+      <div class="content-card">
+        <h3>📋 Klasifikasi Jenis Permainan</h3>
+        <p>Semua permainan olahraga beregu dapat diklasifikasikan ke dalam empat kategori berdasarkan cara bermain dan tujuan permainannya:</p>
+
+        <!-- SVG Diagram: Klasifikasi Permainan -->
+        <div class="diagram-container">
+          <svg viewBox="0 0 700 340" xmlns="http://www.w3.org/2000/svg" style="font-family: Nunito, sans-serif;">
+            <!-- Title -->
+            <text x="350" y="28" text-anchor="middle" font-size="15" font-weight="800" fill="#1f2a37">Klasifikasi Jenis Permainan</text>
+
+            <!-- Invasi -->
+            <rect x="15" y="50" width="160" height="270" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+            <rect x="15" y="50" width="160" height="40" rx="12" fill="#2563eb"/>
+            <rect x="15" y="78" width="160" height="12" fill="#2563eb"/>
+            <text x="95" y="76" text-anchor="middle" font-size="13" font-weight="800" fill="white">🏈 INVASI</text>
+            <text x="95" y="108" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">Masuk area lawan</text>
+            <text x="95" y="122" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">untuk mencetak gol</text>
+            <line x1="35" y1="134" x2="155" y2="134" stroke="#93c5fd" stroke-width="1"/>
+            <text x="95" y="154" text-anchor="middle" font-size="10" fill="#374151">⚽ Sepak Bola</text>
+            <text x="95" y="174" text-anchor="middle" font-size="10" fill="#374151">🏀 Basket</text>
+            <text x="95" y="194" text-anchor="middle" font-size="10" fill="#374151">⚽ Futsal</text>
+            <text x="95" y="214" text-anchor="middle" font-size="10" fill="#374151">🏑 Hoki</text>
+            <text x="95" y="234" text-anchor="middle" font-size="10" fill="#374151">🤾 Handball</text>
+            <line x1="35" y1="250" x2="155" y2="250" stroke="#93c5fd" stroke-width="1"/>
+            <text x="95" y="268" text-anchor="middle" font-size="9" font-weight="700" fill="#1e40af">Ciri: Ada gawang/ring,</text>
+            <text x="95" y="282" text-anchor="middle" font-size="9" font-weight="700" fill="#1e40af">kontak fisik, luas</text>
+
+            <!-- Net -->
+            <rect x="190" y="50" width="160" height="270" rx="12" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+            <rect x="190" y="50" width="160" height="40" rx="12" fill="#059669"/>
+            <rect x="190" y="78" width="160" height="12" fill="#059669"/>
+            <text x="270" y="76" text-anchor="middle" font-size="13" font-weight="800" fill="white">🏸 NET</text>
+            <text x="270" y="108" text-anchor="middle" font-size="10" font-weight="700" fill="#065f46">Kirim bola/kok</text>
+            <text x="270" y="122" text-anchor="middle" font-size="10" font-weight="700" fill="#065f46">melewati net</text>
+            <line x1="210" y1="134" x2="330" y2="134" stroke="#6ee7b7" stroke-width="1"/>
+            <text x="270" y="154" text-anchor="middle" font-size="10" fill="#374151">🏸 Bulu Tangkis</text>
+            <text x="270" y="174" text-anchor="middle" font-size="10" fill="#374151">🏐 Bola Voli</text>
+            <text x="270" y="194" text-anchor="middle" font-size="10" fill="#374151">🏓 Tenis Meja</text>
+            <text x="270" y="214" text-anchor="middle" font-size="10" fill="#374151">🎾 Tenis</text>
+            <text x="270" y="234" text-anchor="middle" font-size="10" fill="#374151">🏸 Sepak Takraw</text>
+            <line x1="210" y1="250" x2="330" y2="250" stroke="#6ee7b7" stroke-width="1"/>
+            <text x="270" y="268" text-anchor="middle" font-size="9" font-weight="700" fill="#065f46">Ciri: Ada net/jaring,</text>
+            <text x="270" y="282" text-anchor="middle" font-size="9" font-weight="700" fill="#065f46">tanpa kontak, bergantian</text>
+
+            <!-- Fielding/Striking -->
+            <rect x="365" y="50" width="160" height="270" rx="12" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+            <rect x="365" y="50" width="160" height="40" rx="12" fill="#ea580c"/>
+            <rect x="365" y="78" width="160" height="12" fill="#ea580c"/>
+            <text x="445" y="76" text-anchor="middle" font-size="13" font-weight="800" fill="white">🏏 FIELDING</text>
+            <text x="445" y="108" text-anchor="middle" font-size="10" font-weight="700" fill="#c2410c">Pukul &amp; lari,</text>
+            <text x="445" y="122" text-anchor="middle" font-size="10" font-weight="700" fill="#c2410c">tangkap &amp; lempar</text>
+            <line x1="385" y1="134" x2="505" y2="134" stroke="#fdba74" stroke-width="1"/>
+            <text x="445" y="154" text-anchor="middle" font-size="10" fill="#374151">⚾ Kasti</text>
+            <text x="445" y="174" text-anchor="middle" font-size="10" fill="#374151">⚾ Bisbol</text>
+            <text x="445" y="194" text-anchor="middle" font-size="10" fill="#374151">🏏 Kriket</text>
+            <text x="445" y="214" text-anchor="middle" font-size="10" fill="#374151">🥎 Softball</text>
+            <text x="445" y="234" text-anchor="middle" font-size="10" fill="#374151">🏏 Rounders</text>
+            <line x1="385" y1="250" x2="505" y2="250" stroke="#fdba74" stroke-width="1"/>
+            <text x="445" y="268" text-anchor="middle" font-size="9" font-weight="700" fill="#c2410c">Ciri: Tim pukul vs tim</text>
+            <text x="445" y="282" text-anchor="middle" font-size="9" font-weight="700" fill="#c2410c">jaga, berlari ke base</text>
+
+            <!-- Target -->
+            <rect x="540" y="50" width="145" height="270" rx="12" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
+            <rect x="540" y="50" width="145" height="40" rx="12" fill="#7c3aed"/>
+            <rect x="540" y="78" width="145" height="12" fill="#7c3aed"/>
+            <text x="612" y="76" text-anchor="middle" font-size="13" font-weight="800" fill="white">🎯 TARGET</text>
+            <text x="612" y="108" text-anchor="middle" font-size="10" font-weight="700" fill="#5b21b6">Arahkan benda</text>
+            <text x="612" y="122" text-anchor="middle" font-size="10" font-weight="700" fill="#5b21b6">ke sasaran</text>
+            <line x1="560" y1="134" x2="665" y2="134" stroke="#c4b5fd" stroke-width="1"/>
+            <text x="612" y="154" text-anchor="middle" font-size="10" fill="#374151">🎳 Bowling</text>
+            <text x="612" y="174" text-anchor="middle" font-size="10" fill="#374151">⛳ Golf</text>
+            <text x="612" y="194" text-anchor="middle" font-size="10" fill="#374151">🎯 Panahan</text>
+            <text x="612" y="214" text-anchor="middle" font-size="10" fill="#374151">🥌 Curling</text>
+            <text x="612" y="234" text-anchor="middle" font-size="10" fill="#374151">🎱 Biliar</text>
+            <line x1="560" y1="250" x2="665" y2="250" stroke="#c4b5fd" stroke-width="1"/>
+            <text x="612" y="268" text-anchor="middle" font-size="9" font-weight="700" fill="#5b21b6">Ciri: Akurasi,</text>
+            <text x="612" y="282" text-anchor="middle" font-size="9" font-weight="700" fill="#5b21b6">presisi, konsentrasi</text>
+          </svg>
+          <div class="diagram-caption">Diagram klasifikasi empat jenis permainan berdasarkan cara bermain</div>
+        </div>
+
+        <div class="info-box teal">
+          <strong>🔑 Cara Mudah Mengingat</strong>
+          <strong>Invasi</strong> = "menyerbu" area lawan (ada gawang/ring) → Sepak Bola, Basket<br>
+          <strong>Net</strong> = ada penghalang/jaring di tengah → Bola Voli, Bulu Tangkis<br>
+          <strong>Fielding</strong> = "pukul dan lari" → Kasti, Bisbol<br>
+          <strong>Target</strong> = arahkan ke sasaran → Bowling, Panahan
+        </div>
+      </div>
+
+      <!-- 2C: Sportivitas dan Peran dalam Tim -->
+      <div class="content-card">
+        <h3>🤝 Sportivitas, Kerjasama & Peran dalam Tim</h3>
+
+        <h4>Sportivitas (Fair Play)</h4>
+        <p>Sportivitas adalah sikap jujur, adil, dan menghormati lawan, wasit, serta peraturan dalam olahraga. Seorang pemain yang sportif:</p>
+        <ul>
+          <li>Menerima keputusan wasit dengan lapang dada, meskipun merasa dirugikan</li>
+          <li>Mengakui keunggulan lawan ketika kalah</li>
+          <li>Tidak mencurangi atau menyakiti lawan</li>
+          <li>Memberi selamat kepada pemenang</li>
+          <li>Bermain sesuai aturan, bukan mencari celah</li>
+        </ul>
+
+        <h4>Perilaku yang Mendukung Keberhasilan Kelompok</h4>
+        <ul>
+          <li><strong>Saling memberi semangat</strong> — motivasi positif meningkatkan performa seluruh tim</li>
+          <li><strong>Bekerja sama dalam strategi</strong> — mendiskusikan taktik dan menjalankan rencana bersama</li>
+          <li><strong>Komunikasi yang baik</strong> — memanggil, memberi kode, dan berkoordinasi di lapangan</li>
+          <li><strong>Menerima peran masing-masing</strong> — tidak semua orang harus jadi pencetak gol</li>
+        </ul>
+
+        <div class="info-box red">
+          <strong>❌ Perilaku yang Merugikan Tim</strong>
+          Saling menyalahkan saat kalah, bermain sendiri tanpa peduli teman, protes berlebihan, dan meninggalkan lapangan saat kesal — semua ini merusak kekompakan tim dan tidak menunjukkan sportivitas.
+        </div>
+
+        <h4>Kepemimpinan dalam Tim</h4>
+        <p>Seorang kapten atau pemimpin tim yang baik berperan sebagai <strong>mediator</strong> saat terjadi konflik. Ketika dua pemain saling menyalahkan, kapten seharusnya mengajak keduanya berdiskusi secara terbuka, bukan memihak salah satu atau melaporkan tanpa berbicara terlebih dahulu.</p>
+      </div>
+
+      <!-- 2D: Peraturan dan Wasit -->
+      <div class="content-card">
+        <h3>📏 Peraturan dan Peran Wasit</h3>
+
+        <h4>Mengapa Peraturan Diperlukan?</h4>
+        <p>Tanpa peraturan, permainan akan kacau karena setiap pemain bisa punya pemahaman berbeda tentang aturan. Peraturan berfungsi agar:</p>
+        <ul>
+          <li>Permainan berjalan <strong>tertib dan adil</strong> untuk semua pihak</li>
+          <li>Keselamatan pemain terjaga</li>
+          <li>Ada standar yang sama untuk menentukan pemenang</li>
+          <li>Konflik bisa diselesaikan dengan merujuk aturan yang jelas</li>
+        </ul>
+
+        <h4>Tugas Wasit dan Ofisial Pertandingan</h4>
+        <ul>
+          <li><strong>Wasit</strong>: menegakkan aturan permainan, memimpin jalannya pertandingan, memberi keputusan atas pelanggaran</li>
+          <li><strong>Pencatat skor</strong>: mencatat poin dan skor masing-masing tim</li>
+          <li><strong>Hakim garis</strong>: membantu wasit memantau batas lapangan</li>
+        </ul>
+        <p>Catatan: tugas wasit/ofisial berbeda dari <em>kapten tim</em> (memimpin tim saat bermain) dan <em>pelatih</em> (melatih pemain di pinggir lapangan).</p>
+      </div>
+
+      <!-- 2E: Modifikasi Permainan dan Inklusi -->
+      <div class="content-card">
+        <h3>♿ Modifikasi Permainan untuk Inklusi dan Fair Play</h3>
+        <p>Tidak semua situasi memungkinkan permainan berjalan dengan aturan standar. Dalam kondisi tertentu, peraturan perlu dimodifikasi agar permainan tetap adil, aman, dan bisa diikuti semua orang.</p>
+
+        <h4>Kapan Perlu Modifikasi?</h4>
+        <ul>
+          <li><strong>Lapangan terlalu kecil/besar</strong> — sesuaikan jumlah pemain per tim agar tidak terlalu sesak atau terlalu longgar</li>
+          <li><strong>Jumlah pemain tidak merata</strong> — ubah aturan rotasi atau giliran</li>
+          <li><strong>Terdapat siswa berkebutuhan khusus</strong> — sesuaikan ukuran lapangan, aturan, dan cara bermain agar siswa tersebut bisa berpartisipasi secara adil</li>
+          <li><strong>Perbedaan kemampuan besar</strong> — beri handicap atau aturan khusus agar semua bisa menikmati</li>
+        </ul>
+
+        <div class="info-box green">
+          <strong>💡 Prinsip Inklusi dalam PJOK</strong>
+          Modifikasi yang baik <strong>menyesuaikan aturan</strong> agar siswa berkebutuhan khusus bisa ikut bermain — bukan melarangnya bermain, memintanya hanya menonton, atau mengubah semua aturan secara total. Intinya: sesuaikan secukupnya, bukan batasi.
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         ELEMEN 3: BERGAYA HIDUP AKTIF
+         ═══════════════════════════════════════════════════════ -->
+    <div class="section-block" id="elemen3">
+      <div class="section-header">
+        <div class="section-num e3">3</div>
+        <div class="section-title-group">
+          <div class="section-title">Bergaya Hidup Aktif</div>
+          <div class="section-subtitle">Aktivitas fisik, perilaku sedenter, aerobik vs anaerobik, kebugaran jasmani, manfaat olahraga</div>
+        </div>
+      </div>
+
+      <!-- 3A: Aktivitas Fisik dan Rekomendasinya -->
+      <div class="content-card">
+        <h3>💪 Aktivitas Fisik dan Rekomendasinya</h3>
+        <p>Aktivitas fisik adalah setiap gerakan tubuh yang membutuhkan energi. Untuk anak usia sekolah dasar, aktivitas fisik sangat penting bagi pertumbuhan dan perkembangan.</p>
+
+        <h4>Rekomendasi Aktivitas Fisik untuk Anak SD</h4>
+        <ul>
+          <li><strong>Frekuensi</strong>: minimal <span class="key-term">3–5 kali seminggu</span></li>
+          <li><strong>Durasi</strong>: minimal 60 menit per hari (bisa dibagi beberapa sesi)</li>
+          <li><strong>Jenis yang direkomendasikan</strong>: lari santai, berenang, bersepeda, bermain bola, senam, menari — aktivitas yang menyenangkan dan sesuai usia</li>
+          <li><strong>Jenis yang TIDAK direkomendasikan</strong>: angkat beban berat, latihan otot intensif yang belum sesuai untuk tulang dan otot anak yang masih berkembang</li>
+        </ul>
+      </div>
+
+      <!-- 3B: Perilaku Sedenter -->
+      <div class="content-card">
+        <h3>📵 Perilaku Sedenter (Kurang Gerak)</h3>
+        <p><span class="key-term">Perilaku sedenter</span> adalah perilaku kurang gerak dengan pengeluaran energi sangat rendah. Ini bukan sekadar "malas" — ini adalah pola kebiasaan yang bisa berdampak serius pada kesehatan.</p>
+
+        <h4>Contoh Perilaku Sedenter</h4>
+        <ul>
+          <li>Menonton TV lebih dari 4 jam tanpa jeda aktivitas</li>
+          <li>Bermain game/gadget berjam-jam tanpa bergerak</li>
+          <li>Mengerjakan PR sambil duduk terus-menerus tanpa istirahat</li>
+          <li>Menghabiskan 6+ jam di depan layar setiap hari</li>
+        </ul>
+
+        <h4>Dampak Jangka Panjang Perilaku Sedenter</h4>
+        <ul>
+          <li><strong>Obesitas</strong> — kelebihan berat badan karena kalori masuk lebih banyak dari yang dibakar</li>
+          <li><strong>Gangguan penglihatan</strong> — mata lelah karena terlalu lama menatap layar</li>
+          <li><strong>Otot melemah</strong> — otot tidak terlatih menjadi mudah lelah</li>
+          <li><strong>Risiko penyakit jantung</strong> — kurang gerak mempengaruhi kesehatan kardiovaskular</li>
+          <li><strong>Postur tubuh buruk</strong> — duduk terlalu lama menyebabkan bungkuk dan nyeri punggung</li>
+        </ul>
+
+        <div class="info-box orange">
+          <strong>⚠️ Yang BUKAN Perilaku Sedenter</strong>
+          Bersepeda di sore hari, berjalan kaki ke sekolah, bermain bola — ini semua adalah aktivitas fisik aktif, bukan perilaku sedenter. Kuncinya: apakah tubuh bergerak aktif atau hanya diam dalam waktu lama?
+        </div>
+      </div>
+
+      <!-- 3C: Aerobik vs Anaerobik -->
+      <div class="content-card">
+        <h3>🫀 Aktivitas Aerobik vs Anaerobik</h3>
+
+        <div class="compare-grid">
+          <div class="compare-box" style="background: var(--blue-light);">
+            <h4 style="color: #1e40af; margin-top:0;">🏃 Aerobik</h4>
+            <p style="font-size: 0.82rem;"><strong>Definisi:</strong> Aktivitas berdurasi lama dengan intensitas sedang, menggunakan oksigen sebagai sumber energi utama.</p>
+            <p style="font-size: 0.82rem;"><strong>Ciri:</strong> Bisa dilakukan >20 menit, napas teratur, detak jantung naik tapi masih bisa bicara.</p>
+            <p style="font-size: 0.82rem;"><strong>Contoh:</strong> Lari marathon, jalan cepat, bersepeda santai, berenang, jogging, senam aerobik.</p>
+            <p style="font-size: 0.82rem;"><strong>Melatih:</strong> Daya tahan jantung & paru-paru (kardiorespirasi).</p>
+          </div>
+          <div class="compare-box" style="background: var(--red-light);">
+            <h4 style="color: var(--red); margin-top:0;">🏋️ Anaerobik</h4>
+            <p style="font-size: 0.82rem;"><strong>Definisi:</strong> Aktivitas berdurasi singkat dengan intensitas tinggi, tidak bergantung pada oksigen.</p>
+            <p style="font-size: 0.82rem;"><strong>Ciri:</strong> Dilakukan <2 menit, napas tersengal-sengal, tenaga maksimal.</p>
+            <p style="font-size: 0.82rem;"><strong>Contoh:</strong> Angkat besi, lari sprint (100m), push-up cepat, lompat jauh.</p>
+            <p style="font-size: 0.82rem;"><strong>Melatih:</strong> Kekuatan otot dan kecepatan.</p>
+          </div>
+        </div>
+
+        <div class="info-box teal">
+          <strong>🔑 Cara Mudah Membedakan</strong>
+          <strong>Aerobik</strong> = "lama tapi santai" → lari marathon, jalan cepat, berenang<br>
+          <strong>Anaerobik</strong> = "cepat tapi sebentar" → angkat besi, sprint, push-up cepat
+        </div>
+      </div>
+
+      <!-- 3D: Komponen Kebugaran Jasmani -->
+      <div class="content-card">
+        <h3>🏋️ Komponen Kebugaran Jasmani</h3>
+        <p>Kebugaran jasmani terdiri dari beberapa komponen yang masing-masing dilatih oleh jenis aktivitas berbeda:</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Komponen</th>
+                <th>Pengertian</th>
+                <th>Latihan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Daya Tahan Kardiorespirasi</strong></td>
+                <td>Kemampuan jantung & paru bekerja dalam waktu lama</td>
+                <td>Lari jarak jauh, bersepeda, berenang</td>
+              </tr>
+              <tr>
+                <td><strong>Kekuatan Otot</strong></td>
+                <td>Kemampuan otot mengerahkan tenaga maksimal</td>
+                <td>Push-up, sit-up, angkat beban</td>
+              </tr>
+              <tr>
+                <td><strong>Kelenturan/Fleksibilitas</strong></td>
+                <td>Kemampuan sendi bergerak secara maksimal</td>
+                <td>Peregangan (stretching), yoga, senam</td>
+              </tr>
+              <tr>
+                <td><strong>Kecepatan</strong></td>
+                <td>Kemampuan bergerak dalam waktu singkat</td>
+                <td>Lari sprint, shuttle run</td>
+              </tr>
+              <tr>
+                <td><strong>Kelincahan</strong></td>
+                <td>Kemampuan mengubah arah dengan cepat</td>
+                <td>Lari zig-zag, gobak sodor</td>
+              </tr>
+              <tr>
+                <td><strong>Keseimbangan</strong></td>
+                <td>Kemampuan menjaga posisi tubuh</td>
+                <td>Berdiri satu kaki, senam lantai</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box purple">
+          <strong>❓ Lari Jarak Jauh Melatih Apa?</strong>
+          Lari jarak jauh (marathon, jogging) terutama melatih <strong>daya tahan jantung dan paru-paru</strong> (kardiorespirasi), BUKAN kekuatan otot lengan, kelenturan sendi, atau kecepatan reaksi.
+        </div>
+      </div>
+
+      <!-- 3E: Klasifikasi Intensitas Aktivitas -->
+      <div class="content-card">
+        <h3>📊 Klasifikasi Intensitas Aktivitas</h3>
+        <p>Aktivitas fisik dibedakan berdasarkan tingkat intensitasnya:</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Intensitas</th>
+                <th>Ciri-ciri</th>
+                <th>Contoh</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Ringan</strong></td>
+                <td>Napas normal, masih bisa ngobrol santai, detak jantung sedikit naik</td>
+                <td>Jalan santai, peregangan, pekerjaan rumah ringan</td>
+              </tr>
+              <tr>
+                <td><strong>Sedang</strong></td>
+                <td>Napas agak cepat, bisa bicara tapi tak bisa bernyanyi, berkeringat</td>
+                <td>Jogging, bersepeda, berenang santai, senam</td>
+              </tr>
+              <tr>
+                <td><strong>Berat</strong></td>
+                <td>Napas tersengal, sulit bicara, berkeringat deras, detak jantung tinggi</td>
+                <td>Lari sprint, sepak bola intensif, skipping cepat</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 3F: Manfaat Olahraga untuk Mental dan Sosial -->
+      <div class="content-card">
+        <h3>🧠 Manfaat Olahraga: Fisik, Mental & Sosial</h3>
+        <p>Manfaat olahraga tidak hanya dirasakan oleh tubuh, tetapi juga oleh pikiran dan kehidupan sosial.</p>
+
+        <h4>Manfaat Fisik</h4>
+        <ul>
+          <li>Memperkuat otot dan tulang</li>
+          <li>Meningkatkan daya tahan tubuh (imunitas)</li>
+          <li>Menjaga berat badan ideal</li>
+          <li>Meningkatkan fungsi jantung dan paru-paru</li>
+        </ul>
+
+        <h4>Manfaat Mental</h4>
+        <ul>
+          <li><strong>Mengurangi stres dan kecemasan</strong> — olahraga melepaskan hormon endorfin yang membuat perasaan lebih baik</li>
+          <li><strong>Meningkatkan mood</strong> dan mengurangi gejala depresi</li>
+          <li><strong>Meningkatkan konsentrasi</strong> dan kemampuan belajar</li>
+          <li><strong>Meningkatkan kualitas tidur</strong></li>
+        </ul>
+
+        <h4>Manfaat Sosial</h4>
+        <ul>
+          <li><strong>Mendapat teman baru</strong> dari klub olahraga atau kegiatan bersama</li>
+          <li>Belajar bekerja sama dan bersosialisasi</li>
+          <li>Mengembangkan jiwa kepemimpinan</li>
+          <li>Belajar menerima kekalahan dan kemenangan</li>
+        </ul>
+
+        <div class="info-box blue">
+          <strong>💆 Olahraga untuk Mengatasi Stres Ujian</strong>
+          Merasa cemas menghadapi ujian? Aktivitas fisik ringan seperti <strong>jalan santai atau jogging ringan</strong> terbukti efektif mengurangi stres. Ini jauh lebih sehat daripada tidur sepanjang hari, bermain game berjam-jam, atau makan makanan cepat saji.
+        </div>
+      </div>
+
+      <!-- 3G: Kebiasaan Mendukung/Tidak -->
+      <div class="content-card">
+        <h3>✅ Kebiasaan Sehari-hari: Mendukung atau Tidak?</h3>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Kebiasaan</th>
+                <th>Mendukung / Tidak</th>
+                <th>Alasan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Tidur 8 jam setiap malam</td>
+                <td style="color: var(--green); font-weight: 800;">✅ Mendukung</td>
+                <td>Tidur cukup penting untuk pemulihan tubuh dan pertumbuhan</td>
+              </tr>
+              <tr>
+                <td>Olahraga rutin 3× seminggu</td>
+                <td style="color: var(--green); font-weight: 800;">✅ Mendukung</td>
+                <td>Memenuhi rekomendasi aktivitas fisik minimum</td>
+              </tr>
+              <tr>
+                <td>Jalan kaki ke sekolah</td>
+                <td style="color: var(--green); font-weight: 800;">✅ Mendukung</td>
+                <td>Aktivitas fisik ringan yang rutin</td>
+              </tr>
+              <tr>
+                <td>Makan fast food setiap hari</td>
+                <td style="color: var(--red); font-weight: 800;">❌ Tidak Mendukung</td>
+                <td>Tinggi lemak, gula, garam — meningkatkan risiko obesitas</td>
+              </tr>
+              <tr>
+                <td>Main game 6 jam tanpa jeda</td>
+                <td style="color: var(--red); font-weight: 800;">❌ Tidak Mendukung</td>
+                <td>Perilaku sedenter, merusak mata, kurang gerak</td>
+              </tr>
+              <tr>
+                <td>Kurang tidur (begadang)</td>
+                <td style="color: var(--red); font-weight: 800;">❌ Tidak Mendukung</td>
+                <td>Mengganggu pertumbuhan, konsentrasi, dan imunitas</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         ELEMEN 4: MEMILIH HIDUP YANG MENYEHATKAN
+         ═══════════════════════════════════════════════════════ -->
+    <div class="section-block" id="elemen4">
+      <div class="section-header">
+        <div class="section-num e4">4</div>
+        <div class="section-title-group">
+          <div class="section-title">Memilih Hidup yang Menyehatkan</div>
+          <div class="section-subtitle">Nutrisi & gizi, Isi Piringku, makronutrien vs mikronutrien, hidrasi, cedera & RICE</div>
+        </div>
+      </div>
+
+      <!-- 4A: Zat Gizi dan Fungsinya -->
+      <div class="content-card">
+        <h3>🥗 Zat Gizi dan Fungsinya</h3>
+        <p>Tubuh manusia membutuhkan berbagai zat gizi dari makanan yang kita konsumsi. Setiap zat gizi memiliki fungsi yang berbeda dan saling melengkapi.</p>
+
+        <h4>Tiga Fungsi Utama Zat Gizi</h4>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Fungsi</th>
+                <th>Zat Gizi</th>
+                <th>Sumber Makanan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Sumber Energi</strong><br><span style="font-size:0.76rem;color:var(--text-muted);">(bahan bakar tubuh)</span></td>
+                <td>Karbohidrat, Lemak</td>
+                <td>Nasi, roti, mie, jagung, kentang, ubi, minyak, mentega</td>
+              </tr>
+              <tr>
+                <td><strong>Zat Pembangun</strong><br><span style="font-size:0.76rem;color:var(--text-muted);">(membangun & memperbaiki sel)</span></td>
+                <td>Protein</td>
+                <td>Daging ayam, ikan, telur, tahu, tempe, kacang-kacangan, susu</td>
+              </tr>
+              <tr>
+                <td><strong>Zat Pengatur</strong><br><span style="font-size:0.76rem;color:var(--text-muted);">(mengatur fungsi tubuh)</span></td>
+                <td>Vitamin, Mineral</td>
+                <td>Buah-buahan, sayur-sayuran, susu</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box amber">
+          <strong>🔑 Cara Mudah Mengingat</strong>
+          <strong>Energi</strong> = nasi, roti, mie (sumber tenaga)<br>
+          <strong>Pembangun</strong> = daging, telur, ikan (membentuk otot & sel baru)<br>
+          <strong>Pengatur</strong> = buah, sayur (menjaga tubuh tetap berfungsi baik)
+        </div>
+      </div>
+
+      <!-- 4B: Makronutrien vs Mikronutrien -->
+      <div class="content-card">
+        <h3>⚖️ Makronutrien vs Mikronutrien</h3>
+        <p>Selain diklasifikasikan berdasarkan fungsi, zat gizi juga dibedakan berdasarkan jumlah yang dibutuhkan tubuh:</p>
+
+        <div class="compare-grid">
+          <div class="compare-box" style="background: var(--blue-light);">
+            <h4 style="color: #1e40af; margin-top:0;">📦 Makronutrien</h4>
+            <p style="font-size: 0.82rem;"><strong>Dibutuhkan dalam jumlah BESAR</strong></p>
+            <ul style="font-size: 0.82rem;">
+              <li><strong>Karbohidrat</strong> — sumber energi utama</li>
+              <li><strong>Protein</strong> — pembangun sel & otot</li>
+              <li><strong>Lemak</strong> — cadangan energi & pelindung organ</li>
+            </ul>
+            <p style="font-size: 0.82rem;">Diukur dalam gram (g). Tubuh butuh ratusan gram per hari.</p>
+          </div>
+          <div class="compare-box" style="background: var(--green-light);">
+            <h4 style="color: var(--green-dark); margin-top:0;">💊 Mikronutrien</h4>
+            <p style="font-size: 0.82rem;"><strong>Dibutuhkan dalam jumlah KECIL</strong></p>
+            <ul style="font-size: 0.82rem;">
+              <li><strong>Vitamin</strong> (A, B, C, D, E, K)</li>
+              <li><strong>Mineral</strong> (zat besi, kalsium, zinc)</li>
+            </ul>
+            <p style="font-size: 0.82rem;">Diukur dalam miligram (mg) atau mikrogram (μg). Sedikit tapi vital!</p>
+          </div>
+        </div>
+
+        <div class="info-box purple">
+          <strong>📝 Contoh Klasifikasi</strong>
+          Karbohidrat → <strong>Makronutrien</strong> (butuh banyak)<br>
+          Vitamin C → <strong>Mikronutrien</strong> (butuh sedikit)<br>
+          Zat Besi → <strong>Mikronutrien</strong> (butuh sedikit)<br>
+          Protein → <strong>Makronutrien</strong> (butuh banyak)
+        </div>
+      </div>
+
+      <!-- 4C: Isi Piringku -->
+      <div class="content-card">
+        <h3>🍽️ Panduan Gizi Seimbang: Isi Piringku</h3>
+        <p>"Isi Piringku" adalah panduan resmi gizi seimbang dari Kementerian Kesehatan Indonesia yang menggantikan konsep lama "4 Sehat 5 Sempurna". Panduan ini menunjukkan proporsi ideal makanan dalam satu piring.</p>
+
+        <!-- SVG Diagram: Isi Piringku -->
+        <div class="diagram-container">
+          <svg viewBox="0 0 440 360" xmlns="http://www.w3.org/2000/svg" style="font-family: Nunito, sans-serif;">
+            <!-- Plate circle -->
+            <ellipse cx="200" cy="190" rx="170" ry="160" fill="#f8fafc" stroke="#d1d5db" stroke-width="2"/>
+
+            <!-- Sayur & Buah (left half) -->
+            <path d="M200,35 A160,155 0 0,0 200,345" fill="#22c55e" opacity="0.2" stroke="#16a34a" stroke-width="2"/>
+            <!-- Subdivide left: Sayur (top-left) -->
+            <path d="M200,35 A160,155 0 0,0 35,190 L200,190 Z" fill="#22c55e" opacity="0.3"/>
+            <!-- Subdivide left: Buah (bottom-left) -->
+            <path d="M35,190 A160,155 0 0,0 200,345 L200,190 Z" fill="#f59e0b" opacity="0.25"/>
+
+            <!-- Karbohidrat (top-right, larger) -->
+            <path d="M200,35 A160,155 0 0,1 365,190 L200,190 Z" fill="#3b82f6" opacity="0.2" stroke="#2563eb" stroke-width="2"/>
+
+            <!-- Protein (bottom-right, smaller) -->
+            <path d="M365,190 A160,155 0 0,1 200,345 L200,190 Z" fill="#ef4444" opacity="0.2" stroke="#dc2626" stroke-width="2"/>
+
+            <!-- Dividing lines -->
+            <line x1="200" y1="35" x2="200" y2="345" stroke="#9ca3af" stroke-width="2"/>
+            <line x1="35" y1="190" x2="200" y2="190" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4"/>
+            <line x1="200" y1="190" x2="365" y2="190" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4"/>
+
+            <!-- Labels -->
+            <text x="118" y="130" text-anchor="middle" font-size="13" font-weight="800" fill="#15803d">🥬 SAYUR</text>
+            <text x="118" y="148" text-anchor="middle" font-size="10" font-weight="600" fill="#15803d">⅓ piring</text>
+
+            <text x="118" y="260" text-anchor="middle" font-size="13" font-weight="800" fill="#b45309">🍎 BUAH</text>
+            <text x="118" y="278" text-anchor="middle" font-size="10" font-weight="600" fill="#b45309">⅙ piring</text>
+
+            <text x="282" y="120" text-anchor="middle" font-size="12" font-weight="800" fill="#1d4ed8">🍚 MAKANAN</text>
+            <text x="282" y="138" text-anchor="middle" font-size="12" font-weight="800" fill="#1d4ed8">POKOK</text>
+            <text x="282" y="156" text-anchor="middle" font-size="10" font-weight="600" fill="#1d4ed8">⅓ piring</text>
+
+            <text x="282" y="260" text-anchor="middle" font-size="13" font-weight="800" fill="#dc2626">🍗 PROTEIN</text>
+            <text x="282" y="278" text-anchor="middle" font-size="10" font-weight="600" fill="#dc2626">⅙ piring</text>
+
+            <!-- Water glass -->
+            <rect x="385" y="145" width="45" height="60" rx="6" fill="#dbeafe" stroke="#60a5fa" stroke-width="2"/>
+            <text x="407" y="182" text-anchor="middle" font-size="18">💧</text>
+            <text x="407" y="130" text-anchor="middle" font-size="10" font-weight="700" fill="#2563eb">AIR</text>
+            <text x="407" y="222" text-anchor="middle" font-size="9" font-weight="600" fill="#2563eb">8 gelas/hari</text>
+
+            <!-- Title -->
+            <text x="200" y="22" text-anchor="middle" font-size="14" font-weight="800" fill="#1f2a37">ISI PIRINGKU</text>
+          </svg>
+          <div class="diagram-caption">Panduan gizi seimbang "Isi Piringku" — Kementerian Kesehatan RI</div>
+        </div>
+
+        <h4>Komposisi Isi Piringku</h4>
+        <ul>
+          <li><strong>Setengah piring (50%)</strong> berisi <strong>sayur dan buah</strong> — porsi sayur lebih banyak dari buah</li>
+          <li><strong>Seperempat piring (25%)</strong> berisi <strong>makanan pokok</strong> (karbohidrat): nasi, roti, mie, ubi</li>
+          <li><strong>Seperempat piring (25%)</strong> berisi <strong>lauk-pauk</strong> (protein): ikan, ayam, telur, tahu, tempe</li>
+          <li>Minum <strong>air putih</strong> minimal 8 gelas per hari</li>
+        </ul>
+      </div>
+
+      <!-- 4D: Nutrisi untuk Olahraga -->
+      <div class="content-card">
+        <h3>🍌 Nutrisi Sebelum dan Sesudah Olahraga</h3>
+
+        <h4>Sebelum Olahraga (1–2 jam sebelumnya)</h4>
+        <ul>
+          <li>Makan makanan tinggi <strong>karbohidrat kompleks</strong> sebagai sumber energi: nasi dengan lauk pauk, roti gandum, oatmeal</li>
+          <li>Hindari makanan berat, pedas, atau terlalu manis yang bisa menyebabkan mual</li>
+          <li>Minum air putih yang cukup</li>
+        </ul>
+
+        <h4>Sesudah Olahraga</h4>
+        <ul>
+          <li><strong>Protein</strong> untuk memperbaiki otot: telur, susu, daging, kacang</li>
+          <li><strong>Karbohidrat</strong> untuk mengembalikan energi</li>
+          <li><strong>Air putih</strong> untuk mengganti cairan yang hilang</li>
+        </ul>
+      </div>
+
+      <!-- 4E: Hidrasi -->
+      <div class="content-card">
+        <h3>💧 Pentingnya Hidrasi Saat Berolahraga</h3>
+        <p>Saat berolahraga, tubuh kehilangan banyak cairan melalui keringat. Jika tidak diganti, tubuh akan mengalami dehidrasi yang berbahaya.</p>
+
+        <h4>Mengapa Air Putih Lebih Baik?</h4>
+        <ul>
+          <li><strong>Air putih</strong>: mengganti cairan tubuh tanpa gula berlebih, tanpa kafein, mudah diserap tubuh</li>
+          <li><strong>Minuman bersoda</strong>: mengandung gula sangat tinggi, gas CO₂ yang membuat kembung, tidak efektif mengganti cairan</li>
+          <li><strong>Minuman berenergi</strong>: mengandung kafein dan gula berlebih, tidak cocok untuk anak-anak</li>
+        </ul>
+
+        <div class="info-box blue">
+          <strong>💧 Kapan Harus Minum?</strong>
+          <strong>Sebelum</strong> olahraga: minum 1–2 gelas air putih (30 menit sebelumnya)<br>
+          <strong>Selama</strong> olahraga: minum sedikit-sedikit setiap 15–20 menit<br>
+          <strong>Sesudah</strong> olahraga: minum hingga warna urine kembali jernih
+        </div>
+      </div>
+
+      <!-- 4F: Cedera Olahraga -->
+      <div class="content-card">
+        <h3>🩹 Cedera Olahraga dan Pertolongan Pertama</h3>
+
+        <h4>Jenis Cedera Umum dalam Olahraga</h4>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Jenis Cedera</th>
+                <th>Gejala</th>
+                <th>Penanganan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Keseleo (sprain)</strong></td>
+                <td>Bengkak, nyeri saat digerakkan, memar di area sendi (biasanya pergelangan kaki)</td>
+                <td>Prinsip RICE</td>
+              </tr>
+              <tr>
+                <td><strong>Memar (kontusi)</strong></td>
+                <td>Area kulit membiru/keunguan, nyeri saat ditekan</td>
+                <td>Kompres dingin, istirahatkan</td>
+              </tr>
+              <tr>
+                <td><strong>Kram otot</strong></td>
+                <td>Otot mengencang tiba-tiba, nyeri tajam</td>
+                <td>Peregangan perlahan, minum air</td>
+              </tr>
+              <tr>
+                <td><strong>Luka lecet</strong></td>
+                <td>Kulit tergores, sedikit berdarah</td>
+                <td>Bersihkan dengan air, beri antiseptik</td>
+              </tr>
+              <tr>
+                <td><strong>Patah tulang</strong></td>
+                <td>Nyeri hebat, tidak bisa digerakkan, bentuk tidak normal</td>
+                <td>⚠️ Segera ke dokter! Jangan digerakkan</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Klasifikasi Cedera: Pertolongan Pertama vs Bantuan Medis</h4>
+        <div class="compare-grid">
+          <div class="compare-box" style="background: var(--green-light);">
+            <h4 style="color: var(--green-dark); margin-top:0;">✅ Bisa Ditangani Sendiri</h4>
+            <ul style="font-size: 0.82rem;">
+              <li>Luka lecet ringan</li>
+              <li>Keseleo ringan (bengkak tapi masih bisa digerakkan sedikit)</li>
+              <li>Memar ringan</li>
+              <li>Kram otot</li>
+            </ul>
+          </div>
+          <div class="compare-box" style="background: var(--red-light);">
+            <h4 style="color: var(--red); margin-top:0;">🏥 Perlu Bantuan Medis</h4>
+            <ul style="font-size: 0.82rem;">
+              <li>Patah tulang (terlihat atau dicurigai)</li>
+              <li>Pendarahan yang tidak berhenti</li>
+              <li>Cedera kepala dengan pusing/mual</li>
+              <li>Sendi terkilir parah (tidak bisa digerakkan)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4G: Prinsip RICE -->
+      <div class="content-card">
+        <h3>🧊 Prinsip RICE — Pertolongan Pertama Cedera Otot & Sendi</h3>
+        <p>RICE adalah singkatan dari langkah-langkah pertolongan pertama pada cedera otot dan sendi. Ini adalah prinsip yang wajib diingat!</p>
+
+        <!-- SVG Diagram: RICE -->
+        <div class="diagram-container">
+          <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" style="font-family: Nunito, sans-serif;">
+            <!-- R -->
+            <rect x="15" y="15" width="155" height="170" rx="14" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+            <circle cx="92" cy="58" r="26" fill="#2563eb"/>
+            <text x="92" y="65" text-anchor="middle" font-size="22" fill="white">🛏️</text>
+            <text x="92" y="103" text-anchor="middle" font-size="20" font-weight="900" fill="#1e40af">R</text>
+            <text x="92" y="122" text-anchor="middle" font-size="12" font-weight="800" fill="#1e40af">REST</text>
+            <text x="92" y="140" text-anchor="middle" font-size="9.5" font-weight="600" fill="#374151">Istirahatkan</text>
+            <text x="92" y="154" text-anchor="middle" font-size="9.5" font-weight="600" fill="#374151">bagian cedera.</text>
+            <text x="92" y="168" text-anchor="middle" font-size="9.5" font-weight="600" fill="#374151">Jangan dipaksakan.</text>
+
+            <!-- Arrow -->
+            <text x="182" y="100" font-size="20" fill="#9ca3af">→</text>
+
+            <!-- I -->
+            <rect x="195" y="15" width="155" height="170" rx="14" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="2"/>
+            <circle cx="272" cy="58" r="26" fill="#0ea5e9"/>
+            <text x="272" y="65" text-anchor="middle" font-size="22" fill="white">🧊</text>
+            <text x="272" y="103" text-anchor="middle" font-size="20" font-weight="900" fill="#0369a1">I</text>
+            <text x="272" y="122" text-anchor="middle" font-size="12" font-weight="800" fill="#0369a1">ICE</text>
+            <text x="272" y="140" text-anchor="middle" font-size="9.5" font-weight="600" fill="#374151">Kompres es</text>
+            <text x="272" y="154" text-anchor="middle" font-size="9.5" font-weight="600" fill="#374151">15–20 menit.</text>
+            <text x="272" y="168" text-anchor="middle" font-size="9.5" font-weight="600" fill="#374151">Kurangi bengkak.</text>
+
+            <!-- Arrow -->
+            <text x="362" y="100" font-size="20" fill="#9ca3af">→</text>
+
+            <!-- C -->
+            <rect x="375" y="15" width="155" height="170" rx="14" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+            <circle cx="452" cy="58" r="26" fill="#d97706"/>
+            <text x="452" y="65" text-anchor="middle" font-size="22" fill="white">🩹</text>
+            <text x="452" y="103" text-anchor="middle" font-size="20" font-weight="900" fill="#92400e">C</text>
+            <text x="452" y="122" text-anchor="middle" font-size="12" font-weight="800" fill="#92400e">COMPRESSION</text>
+            <text x="452" y="140" text-anchor="middle" font-size="9.5" font-weight="600" fill="#374151">Balut/perban area</text>
+            <text x="452" y="154" text-anchor="middle" font-size="9.5" font-weight="600" fill="#374151">cedera. Tekan</text>
+            <text x="452" y="168" text-anchor="middle" font-size="9.5" font-weight="600" fill="#374151">lembut, bukan ketat.</text>
+
+            <!-- Arrow -->
+            <text x="542" y="100" font-size="20" fill="#9ca3af">→</text>
+
+            <!-- E -->
+            <rect x="555" y="15" width="130" height="170" rx="14" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+            <circle cx="620" cy="58" r="26" fill="#059669"/>
+            <text x="620" y="65" text-anchor="middle" font-size="22" fill="white">⬆️</text>
+            <text x="620" y="103" text-anchor="middle" font-size="20" font-weight="900" fill="#065f46">E</text>
+            <text x="620" y="122" text-anchor="middle" font-size="12" font-weight="800" fill="#065f46">ELEVATION</text>
+            <text x="620" y="140" text-anchor="middle" font-size="9.5" font-weight="600" fill="#374151">Tinggikan area</text>
+            <text x="620" y="154" text-anchor="middle" font-size="9.5" font-weight="600" fill="#374151">cedera di atas</text>
+            <text x="620" y="168" text-anchor="middle" font-size="9.5" font-weight="600" fill="#374151">posisi jantung.</text>
+          </svg>
+          <div class="diagram-caption">4 langkah RICE: Rest → Ice → Compression → Elevation</div>
+        </div>
+
+        <h4>Yang Harus DIHINDARI Saat Cedera</h4>
+        <ul>
+          <li>❌ <strong>Memijat area bengkak dengan kuat</strong> — bisa memperparah peradangan dan pembengkakan</li>
+          <li>❌ <strong>Menggerakkan paksa bagian cedera</strong> — bisa menambah kerusakan jaringan</li>
+          <li>❌ <strong>Mengompres dengan air panas</strong> — panas memperlebar pembuluh darah sehingga bengkak makin parah</li>
+          <li>❌ <strong>Mengabaikan cedera dan terus bermain</strong> — bisa menyebabkan cedera permanen</li>
+        </ul>
+
+        <div class="info-box red">
+          <strong>⚠️ TEPAT vs TIDAK TEPAT menurut RICE</strong>
+          ✅ <strong>Tepat</strong>: Kompres es pada area cedera, mengistirahatkan bagian cedera, membalut dengan perban, meninggikan area cedera<br>
+          ❌ <strong>Tidak Tepat</strong>: Memijat kuat area bengkak, menggerakkan paksa, mengompres panas, terus bermain
+        </div>
+      </div>
+
+      <!-- 4H: Gaya Hidup dan Risiko Penyakit -->
+      <div class="content-card">
+        <h3>⚕️ Kebiasaan Hidup dan Risiko Penyakit</h3>
+        <p>Kebiasaan sehari-hari kita sangat mempengaruhi risiko terkena penyakit di kemudian hari.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Kebiasaan</th>
+                <th>Dampak pada Risiko Penyakit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>🚬 Merokok aktif</td>
+                <td style="color: var(--red); font-weight: 700;">↑ MENINGKATKAN risiko — kanker paru, penyakit jantung, gangguan pernapasan</td>
+              </tr>
+              <tr>
+                <td>😴 Kurang tidur / begadang</td>
+                <td style="color: var(--red); font-weight: 700;">↑ MENINGKATKAN risiko — daya tahan menurun, konsentrasi buruk, obesitas</td>
+              </tr>
+              <tr>
+                <td>📱 Kurang gerak (sedenter)</td>
+                <td style="color: var(--red); font-weight: 700;">↑ MENINGKATKAN risiko — obesitas, penyakit jantung, diabetes</td>
+              </tr>
+              <tr>
+                <td>🥗 Makan sayur setiap hari</td>
+                <td style="color: var(--green); font-weight: 700;">↓ MENURUNKAN risiko — mendapat vitamin, mineral, dan serat yang cukup</td>
+              </tr>
+              <tr>
+                <td>🏃 Olahraga teratur</td>
+                <td style="color: var(--green); font-weight: 700;">↓ MENURUNKAN risiko — menjaga berat badan, jantung sehat, mental sehat</td>
+              </tr>
+              <tr>
+                <td>😴 Tidur 8 jam per malam</td>
+                <td style="color: var(--green); font-weight: 700;">↓ MENURUNKAN risiko — pemulihan tubuh optimal, pertumbuhan baik</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         RINGKASAN AKHIR
+         ═══════════════════════════════════════════════════════ -->
+    <div class="content-card" style="border: 2px solid var(--purple); background: var(--purple-light);">
+      <h3 style="color: var(--purple-dark); font-size: 1.1rem;">📝 Ringkasan Poin Kunci untuk Ujian</h3>
+
+      <h4>Elemen 1 — Terampil Bergerak</h4>
+      <ul>
+        <li>3 gerak dasar: <strong>lokomotor</strong> (berpindah), <strong>non-lokomotor</strong> (di tempat), <strong>manipulatif</strong> (dengan benda)</li>
+        <li>Keseimbangan paling dipengaruhi oleh <strong>pandangan mata ke depan</strong></li>
+        <li>Transfer keterampilan positif: pola gerak serupa antar olahraga (contoh: bulu tangkis → tenis meja)</li>
+        <li>Lemparan dengan <strong>seluruh tubuh</strong> lebih efisien daripada hanya lengan</li>
+        <li>Adaptasi gerak: pilih arah menuju <strong>ruang kosong</strong>, bukan memaksa ke area yang tertutup</li>
+      </ul>
+
+      <h4>Elemen 2 — Belajar Melalui Gerak</h4>
+      <ul>
+        <li>Tim yang baik: saling semangat, kerja sama strategi, komunikasi</li>
+        <li>Kapten sebagai <strong>mediator</strong> saat konflik</li>
+        <li>Sportivitas: <strong>terima keputusan wasit</strong> dengan lapang dada</li>
+        <li>Wasit: menegakkan aturan + mencatat skor</li>
+        <li>4 klasifikasi permainan: <strong>Invasi, Net, Fielding, Target</strong></li>
+        <li>Modifikasi untuk inklusi: <strong>sesuaikan aturan</strong>, bukan melarang bermain</li>
+      </ul>
+
+      <h4>Elemen 3 — Bergaya Hidup Aktif</h4>
+      <ul>
+        <li>Aktivitas fisik minimal <strong>3–5 kali seminggu</strong>, 60 menit/hari</li>
+        <li>Aerobik = lama + sedang (jogging, renang). Anaerobik = singkat + berat (sprint, angkat besi)</li>
+        <li>Lari jarak jauh melatih <strong>daya tahan jantung & paru</strong></li>
+        <li>Perilaku sedenter: >2 jam duduk tanpa gerak → risiko obesitas, gangguan penglihatan</li>
+        <li>Manfaat mental: mengurangi stres, meningkatkan mood. Manfaat sosial: dapat teman baru</li>
+      </ul>
+
+      <h4>Elemen 4 — Memilih Hidup yang Menyehatkan</h4>
+      <ul>
+        <li>3 fungsi gizi: <strong>energi</strong> (karbohidrat) – <strong>pembangun</strong> (protein) – <strong>pengatur</strong> (vitamin/mineral)</li>
+        <li>Makronutrien (butuh banyak): karbohidrat, protein, lemak. Mikronutrien (butuh sedikit): vitamin, mineral</li>
+        <li>Isi Piringku: <strong>50% sayur+buah</strong>, 25% karbohidrat, 25% protein + air putih</li>
+        <li>RICE: <strong>Rest – Ice – Compression – Elevation</strong></li>
+        <li>JANGAN: memijat kuat area bengkak, menggerakkan paksa bagian cedera</li>
+        <li>Air putih > minuman bersoda untuk mengganti cairan setelah olahraga</li>
+      </ul>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    SD Muhammadiyah 01 Kukusan · Materi PJOK Kelas 6 · Tahun Pelajaran 2025/2026 ⚽
+  </footer>
+
+</body>
+</html>
