@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materi Bahasa Inggris – Ujian Sekolah Kelas 6</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--purple:#7c3aed;--purple-dark:#5b21b6;--purple-light:#f5f3ff;--purple-pale:#ede9fe;--green:#059669;--green-dark:#065f46;--green-light:#d1fae5;--blue:#2563eb;--blue-light:#dbeafe;--orange:#ea580c;--orange-light:#fff7ed;--red:#dc2626;--red-light:#fef2f2;--amber:#d97706;--amber-light:#fef3c7;--teal:#0d9488;--teal-light:#ccfbf1;--text:#1f2a37;--text-muted:#6b7280;--bg:#f0f4ff;--white:#fff;--border:#e5e7eb;--radius:14px;--shadow:0 4px 20px rgba(0,0,0,.06)}
+    *{box-sizing:border-box;margin:0;padding:0}html{font-size:clamp(14px,3.2vw,16px);scroll-behavior:smooth}body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.75}
+    .header{position:sticky;top:0;z-index:100;background:linear-gradient(135deg,#3b0764,#5b21b6 50%,#7c3aed);color:#fff;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(0,0,0,.25)}.header-brand{display:flex;align-items:center;gap:10px}.logo{font-size:1.5rem}.brand-name{font-family:'Baloo 2',cursive;font-size:clamp(.82rem,2.6vw,1rem);font-weight:800;line-height:1.1}.sub-brand{font-size:.62rem;opacity:.8;font-weight:600}.header-back{display:flex;align-items:center;gap:5px;color:#fff;text-decoration:none;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 14px;font-size:.72rem;font-weight:700;transition:background .2s}.header-back:hover{background:rgba(255,255,255,.3)}
+    .hero{background:linear-gradient(160deg,#3b0764,#5b21b6 40%,#7c3aed);color:#fff;padding:40px 20px 48px;text-align:center;position:relative;overflow:hidden}.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M50 50v-6h-2v6h-6v2h6v6h2v-6h6v-2h-6zM50 10V4h-2v6h-6v2h6v6h2v-6h6v-2h-6zM10 50v-6H8v6H2v2h6v6h2v-6h6v-2h-6zM10 10V4H8v6H2v2h6v6h2v-6h6v-2h-6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}.hero-emoji{font-size:3rem;display:block;margin-bottom:10px;position:relative}.hero h1{font-family:'Baloo 2',cursive;font-size:clamp(1.4rem,4.5vw,2rem);font-weight:800;margin-bottom:6px;position:relative}.hero p{font-size:clamp(.8rem,2.2vw,.92rem);opacity:.88;font-weight:600;max-width:620px;margin:0 auto;position:relative;line-height:1.6}
+    .nav-pills{background:var(--white);border-bottom:1px solid var(--border);padding:12px 16px;position:sticky;top:56px;z-index:90;box-shadow:0 2px 8px rgba(0,0,0,.04)}.nav-pills-inner{max-width:920px;margin:0 auto;display:flex;gap:6px;flex-wrap:wrap;justify-content:center}.nav-pill{font-size:.7rem;font-weight:700;padding:4px 12px;border-radius:20px;text-decoration:none;background:var(--purple-light);color:var(--purple-dark);border:1px solid transparent;transition:all .2s;white-space:nowrap}.nav-pill:hover{background:var(--purple-pale);border-color:var(--purple)}
+    .container{max-width:920px;margin:0 auto;padding:32px 16px 56px}
+    .section-block{margin-bottom:40px}.section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:3px solid var(--purple)}.section-num{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;color:#fff;flex-shrink:0}
+    .sn1{background:linear-gradient(135deg,#2563eb,#60a5fa)}.sn2{background:linear-gradient(135deg,#059669,#10b981)}.sn3{background:linear-gradient(135deg,#d97706,#fbbf24)}.sn4{background:linear-gradient(135deg,#7c3aed,#a78bfa)}.sn5{background:linear-gradient(135deg,#dc2626,#f87171)}
+    .section-title-group{flex:1}.section-title{font-family:'Baloo 2',cursive;font-size:1.15rem;font-weight:800}.section-subtitle{font-size:.73rem;font-weight:600;color:var(--text-muted)}
+    .cc{background:var(--white);border-radius:var(--radius);padding:24px;margin-bottom:20px;box-shadow:var(--shadow);border:1px solid var(--border)}.cc h3{font-family:'Baloo 2',cursive;font-size:1.02rem;font-weight:800;margin-bottom:12px;color:var(--purple-dark);display:flex;align-items:center;gap:8px}.cc h4{font-size:.9rem;font-weight:800;margin:16px 0 8px;color:var(--text)}.cc p{font-size:.86rem;margin-bottom:10px;color:#374151}.cc ul,.cc ol{padding-left:20px;margin-bottom:10px}.cc li{font-size:.84rem;margin-bottom:5px;color:#374151}.cc li strong{color:var(--text)}
+    .ib{border-radius:10px;padding:14px 16px;margin:14px 0;font-size:.82rem}.ib.green{background:var(--green-light);border-left:4px solid var(--green)}.ib.blue{background:var(--blue-light);border-left:4px solid var(--blue)}.ib.orange{background:var(--orange-light);border-left:4px solid var(--orange)}.ib.red{background:var(--red-light);border-left:4px solid var(--red)}.ib.amber{background:var(--amber-light);border-left:4px solid var(--amber)}.ib.teal{background:var(--teal-light);border-left:4px solid var(--teal)}.ib.purple{background:var(--purple-light);border-left:4px solid var(--purple)}
+    .ib strong{display:block;margin-bottom:4px}.ib.green strong{color:var(--green-dark)}.ib.blue strong{color:#1e40af}.ib.orange strong{color:var(--orange)}.ib.red strong{color:var(--red)}.ib.amber strong{color:var(--amber)}.ib.teal strong{color:var(--teal)}.ib.purple strong{color:var(--purple-dark)}
+    .tw{overflow-x:auto;margin:12px 0;-webkit-overflow-scrolling:touch}table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:320px}th{background:var(--purple-light);color:var(--purple-dark);padding:9px 12px;text-align:left;font-weight:800;font-size:.76rem;text-transform:uppercase;letter-spacing:.3px;border-bottom:2px solid var(--purple)}td{padding:9px 12px;border-bottom:1px solid var(--border)}tr:nth-child(even) td{background:#fafbff}
+    .kt{display:inline-block;background:var(--purple-light);color:var(--purple-dark);padding:1px 8px;border-radius:6px;font-weight:800;font-size:.82rem}
+    .cg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}@media(max-width:500px){.cg{grid-template-columns:1fr}}.cb{border-radius:10px;padding:14px;font-size:.82rem}
+    .en{font-style:italic;color:#1e40af}.dlg{background:#f9fafb;border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:10px 0;font-size:.84rem}.dlg p{margin-bottom:6px}
+    .footer{text-align:center;padding:24px 16px;font-size:.76rem;color:var(--text-muted);font-weight:600;border-top:1px solid var(--border)}
+  </style>
+</head>
+<body>
+
+<header class="header"><div class="header-brand"><span class="logo">🌍</span><div><div class="brand-name">Materi Bahasa Inggris</div><div class="sub-brand">Ujian Sekolah · Kelas 6</div></div></div><a href="index.html" class="header-back">← Hub Materi</a></header>
+
+<section class="hero"><span class="hero-emoji">🌍</span><h1>Bahasa Inggris</h1><p>Materi lengkap 5 topik: Expressions & Social Functions, Reading Comprehension, Vocabulary & Grammar, Text Types, dan Writing & Presenting. Soal berbasis konteks kehidupan siswa.</p></section>
+
+<nav class="nav-pills"><div class="nav-pills-inner">
+<a href="#s1" class="nav-pill">💬 Expressions</a><a href="#s2" class="nav-pill">📖 Reading</a><a href="#s3" class="nav-pill">📚 Vocabulary & Grammar</a><a href="#s4" class="nav-pill">📋 Text Types</a><a href="#s5" class="nav-pill">✍️ Writing & Presenting</a>
+</div></nav>
+
+<main class="container">
+
+<!-- ═══ 1: EXPRESSIONS & SOCIAL FUNCTIONS ═══ -->
+<div class="section-block" id="s1"><div class="section-header"><div class="section-num sn1">💬</div><div class="section-title-group"><div class="section-title">Expressions & Social Functions</div><div class="section-subtitle">Greetings, self-introduction, apology, offering help, agreement, responding to instructions</div></div></div>
+
+<div class="cc"><h3>👋 Greetings — Sapaan</h3>
+<div class="cg">
+<div class="cb" style="background:var(--blue-light);"><h4 style="color:#1e40af;margin-top:0;">🎩 Formal (Resmi)</h4>
+<p><strong>Good morning, Sir/Ma'am.</strong><br>Digunakan untuk guru, kepala sekolah, orang dewasa yang dihormati.</p>
+<p><strong>Good morning, Mom/Dad.</strong><br>Untuk orang tua — sopan tapi akrab.</p></div>
+<div class="cb" style="background:var(--green-light);"><h4 style="color:var(--green-dark);margin-top:0;">😎 Informal (Santai)</h4>
+<p><strong>Hi, buddy!</strong><br>Digunakan untuk teman sebaya, sahabat.</p>
+<p><strong>Hey! What's up?</strong><br>Sangat santai, hanya untuk teman dekat.</p></div>
+</div>
+</div>
+
+<div class="cc"><h3>🤝 Self-Introduction — Perkenalan Diri</h3>
+<p>Saat memperkenalkan diri, gunakan pola berikut:</p>
+<div class="dlg">
+<p><strong>Hello everyone.</strong> (Halo semuanya)</p>
+<p><strong>My name is Sarah.</strong> (Nama saya Sarah)</p>
+<p><strong>I am 12 years old.</strong> (Saya berumur 12 tahun)</p>
+<p><strong>I like reading and drawing.</strong> (Saya suka membaca dan menggambar)</p>
+<p><strong>Nice to meet you all.</strong> (Senang berkenalan dengan kalian semua)</p>
+</div>
+<div class="ib blue"><strong>🔑 Ungkapan Penting saat Berkenalan</strong>
+<strong>Nice to meet you.</strong> = Senang berkenalan denganmu.<br>
+<strong>Nice to meet you too!</strong> = Senang berkenalan denganmu juga! (respon)</div>
+</div>
+
+<div class="cc"><h3>🙏 Social Functions — Fungsi Ungkapan</h3>
+<div class="tw"><table><thead><tr><th>Function (Fungsi)</th><th>Expression (Ungkapan)</th><th>Arti</th></tr></thead><tbody>
+<tr><td><strong>Apologizing</strong> (Meminta maaf)</td><td><em>I am sorry.</em></td><td>Saya minta maaf.</td></tr>
+<tr><td><strong>Thanking</strong> (Berterima kasih)</td><td><em>Thank you very much.</em></td><td>Terima kasih banyak.</td></tr>
+<tr><td><strong>Offering help</strong> (Menawarkan bantuan)</td><td><em>Can I help you?</em></td><td>Bolehkah saya membantu?</td></tr>
+<tr><td><strong>Accepting offer</strong> (Menerima tawaran)</td><td><em>Yes, please.</em> / <em>That is very kind of you.</em></td><td>Ya, tolong. / Kamu baik sekali.</td></tr>
+<tr><td><strong>Declining offer</strong> (Menolak tawaran)</td><td><em>No, thank you.</em> / <em>I can do it myself.</em></td><td>Tidak, terima kasih. / Saya bisa sendiri.</td></tr>
+<tr><td><strong>Saying goodbye</strong> (Berpamitan)</td><td><em>Goodbye.</em> / <em>See you later.</em></td><td>Selamat tinggal. / Sampai jumpa.</td></tr>
+</tbody></table></div>
+</div>
+
+<div class="cc"><h3>✅ Agreement & Disagreement — Setuju & Tidak Setuju</h3>
+<div class="cg">
+<div class="cb" style="background:var(--green-light);"><h4 style="color:var(--green-dark);margin-top:0;">✅ Agreement (Setuju)</h4>
+<ul style="font-size:.82rem;">
+<li><strong>I agree with you.</strong></li>
+<li><strong>That is a good idea.</strong></li>
+<li><strong>You are right.</strong></li>
+<li><strong>That sounds great!</strong></li>
+</ul></div>
+<div class="cb" style="background:var(--red-light);"><h4 style="color:var(--red);margin-top:0;">❌ Disagreement (Tidak Setuju)</h4>
+<ul style="font-size:.82rem;">
+<li><strong>I do not think so.</strong></li>
+<li><strong>I disagree.</strong></li>
+<li><strong>I am not sure about that.</strong></li>
+</ul></div>
+</div>
+</div>
+
+<div class="cc"><h3>👂 Responding to Instructions — Merespons Instruksi</h3>
+<p>Saat guru memberi instruksi, identifikasi kata kerja kunci dan <strong>urutan tindakan</strong>.</p>
+<div class="dlg">
+<p><strong>Teacher:</strong> <em>"Please open your English book. Turn to page 25. Look at picture number 3. Read the text. Answer questions 5 and 6."</em></p>
+</div>
+<p>Pertanyaan: "What should students do FIRST?" → Jawab berdasarkan instruksi pertama: <strong>"Open the English book"</strong> (karena itu yang disebut pertama).</p>
+
+<h4>Responding to WH-Questions</h4>
+<div class="tw"><table><thead><tr><th>Question Word</th><th>Asks About (Menanyakan)</th><th>Example Answer</th></tr></thead><tbody>
+<tr><td><strong>What</strong></td><td>Benda / hal</td><td>What is your hobby? → <em>I like dancing.</em></td></tr>
+<tr><td><strong>Who</strong></td><td>Orang</td><td>Who is she? → <em>She is my sister.</em></td></tr>
+<tr><td><strong>Where</strong></td><td>Tempat</td><td>Where do you live? → <em>I live in Jakarta.</em></td></tr>
+<tr><td><strong>When</strong></td><td>Waktu</td><td>When does English start? → <em>On Tuesday.</em></td></tr>
+<tr><td><strong>Why</strong></td><td>Alasan</td><td>Why are you sad? → <em>Because I lost my book.</em></td></tr>
+<tr><td><strong>How</strong></td><td>Cara / kondisi</td><td>How will you go? → <em>I will go by train.</em></td></tr>
+</tbody></table></div>
+<div class="ib amber"><strong>⚠️ Cocokkan Jawaban dengan Pertanyaan!</strong>Jika ditanya <strong>"What is your hobby?"</strong> → jawab tentang hobi (<em>I like dancing</em>), BUKAN tentang umur, tempat tinggal, atau jumlah saudara.</div>
+</div>
+
+<div class="cc"><h3>📱 Phone Message — Pesan Telepon</h3>
+<p>Urutan logis pesan telepon:</p>
+<ol>
+<li><strong>Salam pembuka</strong> — <em>"Hello, this is Rina."</em></li>
+<li><strong>Isi pesan</strong> — <em>"I want to invite you to my party."</em></li>
+<li><strong>Permintaan</strong> — <em>"Please call me back."</em></li>
+<li><strong>Penutup</strong> — <em>"Thank you. Goodbye."</em></li>
+</ol>
+</div>
+</div>
+
+<!-- ═══ 2: READING COMPREHENSION ═══ -->
+<div class="section-block" id="s2"><div class="section-header"><div class="section-num sn2">📖</div><div class="section-title-group"><div class="section-title">Reading Comprehension</div><div class="section-subtitle">Main idea, detail information, signs/notices, advertisements, schedules, moral values, procedures</div></div></div>
+
+<div class="cc"><h3>💡 Finding the Main Idea — Menemukan Ide Pokok</h3>
+<p>Main idea = inti/topik utama dari seluruh teks. Biasanya bisa dijawab dengan: "This text is about..." (Teks ini tentang...)</p>
+<div class="ib green"><strong>💡 Tips</strong>Baca teks secara keseluruhan dulu. Tanyakan: <strong>"Secara umum, teks ini bercerita tentang apa?"</strong> Misalnya teks tentang kucing peliharaan yang putih, berbulu lembut, suka ikan → Main idea: <em>"Description of the writer's pet cat"</em> (bukan "how to take care of a cat" atau "what cats eat").</div>
+</div>
+
+<div class="cc"><h3>⚠️ Signs, Notices & Warnings — Tanda dan Peringatan</h3>
+<div class="tw"><table><thead><tr><th>Sign</th><th>Meaning (Arti)</th></tr></thead><tbody>
+<tr><td>⚠️ <strong>NO SMOKING</strong></td><td>You <strong>cannot</strong> smoke here. (Dilarang merokok)</td></tr>
+<tr><td>⚠️ <strong>WET FLOOR</strong></td><td>Be careful, the floor is wet. (Hati-hati, lantai basah)</td></tr>
+<tr><td>⚠️ <strong>DO NOT ENTER</strong></td><td>You cannot go in. (Dilarang masuk)</td></tr>
+<tr><td>⚠️ <strong>KEEP SILENCE</strong></td><td>Please be quiet. (Harap tenang)</td></tr>
+</tbody></table></div>
+<div class="ib red"><strong>⚠️ Kata Kunci dalam Tanda</strong><strong>No</strong> = dilarang. <strong>Do not</strong> = jangan. <strong>Must</strong> = harus/wajib. <strong>Please</strong> = tolong (permintaan sopan). Perhatikan kata-kata ini untuk memahami makna tanda.</div>
+</div>
+
+<div class="cc"><h3>📊 Reading Schedules, Tables & Visual Texts</h3>
+<p>Untuk membaca jadwal/tabel: temukan <strong>baris dan kolom</strong> yang sesuai dengan pertanyaan.</p>
+<div class="ib blue"><strong>📘 Contoh: School Schedule</strong>
+Pertanyaan: "When does English class start?" → Cari baris "English" di tabel → kolom Day: <strong>Tuesday</strong>, kolom Time: <strong>07.00</strong>. Jawaban: <em>"Tuesday at 07.00"</em>.</div>
+
+<h4>Reading Posters, Brochures & Advertisements</h4>
+<p>Saat membaca poster/brosur/iklan, cari informasi kunci: <strong>What</strong> (acara apa), <strong>When</strong> (kapan), <strong>Where</strong> (di mana), <strong>Who</strong> (untuk siapa), dan <strong>How much</strong> (harga). Hanya pilih informasi yang benar-benar tertulis, jangan menebak.</p>
+</div>
+
+<div class="cc"><h3>📖 Narrative Texts — Teks Cerita</h3>
+<p>Teks naratif menceritakan kejadian dengan pesan moral di akhir.</p>
+<div class="dlg">
+<p><strong>The Ant and the Dove</strong>: Semut jatuh ke sungai → Merpati menolongnya → Nanti, pemburu mau menangkap merpati → Semut menggigit pemburu → Merpati selamat.</p>
+<p><strong>Moral value:</strong> <em>"We should help each other."</em> (Kita harus saling menolong)</p>
+</div>
+
+<div class="dlg">
+<p><strong>The Rabbit and the Turtle</strong>: Kelinci sangat cepat tapi terlalu percaya diri → tidur di bawah pohon → Kura-kura terus berjalan → Kura-kura menang.</p>
+<p><strong>Moral value:</strong> <em>"Don't be too confident."</em> / <em>"Slow and steady wins the race."</em></p>
+</div>
+</div>
+
+<div class="cc"><h3>📋 Procedure Texts — Teks Prosedur</h3>
+<p>Teks prosedur berisi langkah-langkah berurutan. Perhatikan <strong>urutan kronologis</strong>.</p>
+<div class="ib teal"><strong>📝 Contoh: How to Make Orange Juice</strong>
+1. Peel the oranges → 2. Put in blender → 3. Add water and sugar → 4. Blend for 2 minutes → 5. Pour into glass, add ice → 6. Serve.<br>
+Pertanyaan: "Steps before step 5?" → Langkah 1, 2, 3, 4 semua dilakukan sebelum step 5. Langkah 6 (serve) dilakukan SESUDAH.</div>
+
+<h4>Time Order Words — Kata Penanda Urutan</h4>
+<div class="tw"><table><thead><tr><th>Word</th><th>Arti</th><th>Posisi</th></tr></thead><tbody>
+<tr><td><strong>First</strong></td><td>Pertama</td><td>Awal</td></tr>
+<tr><td><strong>Then / After that</strong></td><td>Kemudian / Setelah itu</td><td>Tengah</td></tr>
+<tr><td><strong>Next</strong></td><td>Selanjutnya</td><td>Tengah</td></tr>
+<tr><td><strong>Finally / Lastly</strong></td><td>Akhirnya / Terakhir</td><td>Akhir</td></tr>
+</tbody></table></div>
+</div>
+
+<div class="cc"><h3>🔄 Venn Diagram — Diagram Venn</h3>
+<p>Diagram Venn digunakan untuk membandingkan dua hal. Bagian yang bertumpuk (<strong>"Both"</strong>) berisi kesamaan.</p>
+<div class="ib purple"><strong>📝 Contoh: Cat vs Dog</strong>
+Cat only: Meows, climbs trees. Dog only: Barks, fetches sticks. <strong>Both: Pet</strong> (keduanya hewan peliharaan). Informasi di bagian "Both" harus berlaku untuk cat DAN dog.</div>
+</div>
+</div>
+
+<!-- ═══ 3: VOCABULARY & GRAMMAR ═══ -->
+<div class="section-block" id="s3"><div class="section-header"><div class="section-num sn3">📚</div><div class="section-title-group"><div class="section-title">Vocabulary & Grammar</div><div class="section-subtitle">Literal vs figurative, synonyms/antonyms, reference words, tenses, subject-verb agreement</div></div></div>
+
+<div class="cc"><h3>📖 Literal vs Figurative Meaning — Makna Harfiah vs Kiasan</h3>
+<div class="cg">
+<div class="cb" style="background:var(--blue-light);"><h4 style="color:#1e40af;margin-top:0;">📘 Literal (Harfiah)</h4><p>Makna <strong>sebenarnya</strong> dari kata tersebut.</p><p><em>"I <strong>run</strong> fast in the morning."</em><br>→ run = berlari (makna asli)</p></div>
+<div class="cb" style="background:var(--amber-light);"><h4 style="color:var(--amber);margin-top:0;">🎭 Figurative (Kiasan)</h4><p>Makna <strong>bukan sebenarnya</strong>, digunakan sebagai ungkapan.</p><p><em>"The company <strong>runs</strong> well."</em><br>→ runs = berjalan/beroperasi (kiasan)</p><p><em>"We <strong>run out</strong> of time."</em><br>→ run out = kehabisan (kiasan)</p></div>
+</div>
+</div>
+
+<div class="cc"><h3>🔄 Synonyms & Antonyms</h3>
+<div class="tw"><table><thead><tr><th>Type</th><th>Definition</th><th>Examples</th></tr></thead><tbody>
+<tr><td><strong>Synonym</strong> (Sinonim)</td><td>Kata yang memiliki arti <strong>sama/mirip</strong></td><td>Big = Large, Happy = Glad, Fast = Quick, Beautiful = Pretty</td></tr>
+<tr><td><strong>Antonym</strong> (Antonim)</td><td>Kata yang memiliki arti <strong>berlawanan</strong></td><td>Hot ↔ Cold, Happy ↔ Sad, Big ↔ Small, Fast ↔ Slow</td></tr>
+</tbody></table></div>
+</div>
+
+<div class="cc"><h3>👉 Reference Words — Kata Rujukan</h3>
+<p>Kata seperti <strong>it, he, she, they, them</strong> merujuk ke kata lain yang sudah disebut sebelumnya.</p>
+<div class="dlg">
+<p><em>"Rina has a cat. <strong>It</strong> is white. <strong>She</strong> loves <strong>it</strong> very much."</em></p>
+<p><strong>It</strong> (pertama) = <em>the cat</em> → Thing/Animal</p>
+<p><strong>She</strong> = <em>Rina</em> → Person</p>
+<p><strong>it</strong> (kedua) = <em>the cat</em> → Thing/Animal</p>
+</div>
+<div class="ib green"><strong>💡 Tips</strong>Untuk menemukan rujukan: baca kalimat sebelumnya dan cari kata benda yang cocok. <strong>It</strong> → benda/hewan. <strong>He/She</strong> → orang. <strong>They</strong> → lebih dari satu (orang/benda).</div>
+</div>
+
+<div class="cc"><h3>📐 Grammar: Tenses — Kala/Waktu</h3>
+
+<h4>Simple Present Tense (Kebiasaan Sehari-hari)</h4>
+<p>Digunakan untuk kebiasaan, fakta umum, rutinitas.</p>
+<div class="tw"><table><thead><tr><th>Subject</th><th>Verb</th><th>Example</th></tr></thead><tbody>
+<tr><td>I / You / We / They</td><td>Verb dasar (tanpa -s)</td><td><em>I <strong>go</strong> to school every day.</em></td></tr>
+<tr><td>He / She / It</td><td>Verb + <strong>s/es</strong></td><td><em>She <strong>goes</strong> to school every day.</em></td></tr>
+</tbody></table></div>
+
+<h4>Present Continuous Tense (Sedang Berlangsung Sekarang)</h4>
+<p>Digunakan untuk kegiatan yang sedang terjadi saat ini.</p>
+<p>Pola: Subject + <strong>is/am/are</strong> + Verb<strong>-ing</strong></p>
+<p><em>She <strong>is going</strong> to school now.</em> (Dia sedang pergi ke sekolah sekarang)</p>
+
+<h4>Simple Past Tense (Kejadian di Masa Lalu)</h4>
+<p>Digunakan untuk kejadian yang sudah terjadi. Kata petunjuk: <strong>yesterday, last week, ago</strong>.</p>
+<p>Pola: Subject + Verb<strong>-ed</strong> (regular) atau Verb bentuk ke-2 (irregular)</p>
+<p><em>Yesterday I <strong>went</strong> to the market.</em> (Kemarin saya pergi ke pasar)</p>
+
+<div class="ib red"><strong>⚠️ Kesalahan Umum yang Sering Diujikan</strong>
+❌ <em>"She <strong>go</strong> to school every day."</em> → SALAH (She harus pakai go<strong>es</strong>)<br>
+✅ <em>"She <strong>goes</strong> to school every day."</em> → BENAR<br><br>
+❌ <em>"Yesterday I <strong>go</strong> to the market."</em> → SALAH (past tense harus pakai <strong>went</strong>)<br>
+❌ <em>"I <strong>buys</strong> vegetables."</em> → SALAH (I tidak pakai -s; seharusnya <strong>bought</strong> untuk past)<br><br>
+Ini disebut <strong>verb tense error</strong> dan <strong>subject-verb agreement error</strong>.</div>
+</div>
+
+<div class="cc"><h3>❗ Punctuation — Tanda Baca</h3>
+<div class="tw"><table><thead><tr><th>Rule</th><th>Correct ✅</th><th>Incorrect ❌</th></tr></thead><tbody>
+<tr><td>Kalimat tanya diakhiri <strong>?</strong></td><td><em>What is your name<strong>?</strong></em></td><td><em>What is your name.</em></td></tr>
+<tr><td>Kalimat pernyataan diakhiri <strong>.</strong></td><td><em>She likes apples<strong>.</strong></em></td><td><em>She likes apples</em> (tanpa titik)</td></tr>
+<tr><td>Awal kalimat huruf <strong>kapital</strong></td><td><em><strong>I</strong> live in Jakarta.</em></td><td><em>i live in Jakarta.</em></td></tr>
+<tr><td>Nama orang/tempat huruf kapital</td><td><em><strong>J</strong>akarta, <strong>S</strong>arah</em></td><td><em>jakarta, sarah</em></td></tr>
+</tbody></table></div>
+</div>
+
+<div class="cc"><h3>🗣️ Pronunciation — Pengucapan</h3>
+<p>Beberapa soal menguji apakah dua kata memiliki bunyi vokal yang sama.</p>
+<div class="tw"><table><thead><tr><th>Words</th><th>Vowel Sound</th><th>Same?</th></tr></thead><tbody>
+<tr><td><strong>Cat</strong> & <strong>Bat</strong></td><td>/æ/ (seperti "e" pendek)</td><td style="color:var(--green);font-weight:700;">✅ Same</td></tr>
+<tr><td><strong>Cat</strong> & <strong>Cut</strong></td><td>/æ/ vs /ʌ/</td><td style="color:var(--red);font-weight:700;">❌ Different</td></tr>
+</tbody></table></div>
+<div class="ib teal"><strong>💡 Tips</strong>Ucapkan kedua kata dengan keras. Jika bunyi vokalnya terdengar sama → same sound. Jika berbeda → different sound. <strong>Cat</strong> (kæt) dan <strong>Bat</strong> (bæt) → sama. <strong>Cut</strong> (kʌt) → beda.</div>
+</div>
+</div>
+
+<!-- ═══ 4: TEXT TYPES ═══ -->
+<div class="section-block" id="s4"><div class="section-header"><div class="section-num sn4">📋</div><div class="section-title-group"><div class="section-title">Text Types — Jenis Teks</div><div class="section-subtitle">Descriptive, narrative, procedure, invitation, announcement, email, brochure</div></div></div>
+
+<div class="cc"><h3>📝 Jenis Teks dan Cirinya</h3>
+<div class="tw"><table><thead><tr><th>Text Type</th><th>Purpose (Tujuan)</th><th>Ciri Khas</th><th>Example</th></tr></thead><tbody>
+<tr><td><strong>Descriptive</strong></td><td>Menggambarkan objek secara detail</td><td>Kata sifat banyak: white, fluffy, big, beautiful</td><td>My cat is white and fluffy.</td></tr>
+<tr><td><strong>Narrative</strong></td><td>Menceritakan kejadian + pesan moral</td><td>Ada tokoh, masalah, penyelesaian; past tense</td><td>The Ant and the Dove</td></tr>
+<tr><td><strong>Procedure</strong></td><td>Memberi petunjuk langkah-langkah</td><td>First, then, next, finally; kata perintah</td><td>How to Make Orange Juice</td></tr>
+<tr><td><strong>Invitation</strong></td><td>Mengundang seseorang</td><td>Come to..., You are invited, date & place</td><td>Come to my birthday party!</td></tr>
+<tr><td><strong>Announcement</strong></td><td>Menyampaikan informasi resmi</td><td>All students must..., Attention please</td><td>Flag ceremony on Monday 7 AM</td></tr>
+<tr><td><strong>Recount</strong></td><td>Menceritakan pengalaman pribadi</td><td>Past tense: went, bought, cooked</td><td>Yesterday I went to the zoo.</td></tr>
+</tbody></table></div>
+
+<div class="ib amber"><strong>🔑 Descriptive vs Narrative vs Recount</strong>
+<strong>Descriptive</strong> → menggambarkan satu objek SEKARANG (present tense): "My cat <strong>is</strong> white."<br>
+<strong>Narrative</strong> → cerita fiksi + pesan moral (past tense): "One day, an ant <strong>fell</strong> into a river."<br>
+<strong>Recount</strong> → pengalaman nyata di MASA LALU: "Yesterday I <strong>went</strong> to the market."</div>
+</div>
+
+<div class="cc"><h3>📋 Text Purpose — Tujuan Teks</h3>
+<div class="tw"><table><thead><tr><th>Text Sample</th><th>Purpose</th></tr></thead><tbody>
+<tr><td>"Come to my birthday party!"</td><td><strong>To invite</strong> (mengundang)</td></tr>
+<tr><td>"All students must attend the meeting."</td><td><strong>To inform</strong> (memberitahu)</td></tr>
+<tr><td>"Yesterday I went to the zoo."</td><td><strong>To share experience</strong> (berbagi pengalaman)</td></tr>
+</tbody></table></div>
+</div>
+
+<div class="cc"><h3>🎩 Formal vs Informal — Resmi vs Santai</h3>
+<div class="tw"><table><thead><tr><th>Expression</th><th>Formality</th><th>Used For</th></tr></thead><tbody>
+<tr><td><em>Dear Mr. Smith,</em></td><td><strong>Formal</strong></td><td>Surat untuk guru / atasan</td></tr>
+<tr><td><em>To: The Principal</em></td><td><strong>Formal</strong></td><td>Surat resmi ke kepala sekolah</td></tr>
+<tr><td><em>Hi buddy!</em></td><td><strong>Informal</strong></td><td>Pesan untuk teman</td></tr>
+<tr><td><em>Good morning, Sir.</em></td><td><strong>Formal</strong></td><td>Sapaan untuk guru</td></tr>
+</tbody></table></div>
+<div class="ib purple"><strong>📝 Prinsip Utama</strong>Sesuaikan bahasa dengan audiens. Tulis untuk <strong>guru → formal</strong>. Tulis untuk <strong>teman → informal</strong>. Yang penting: <strong>adjust tone for each audience</strong> (sesuaikan nada untuk setiap pembaca).</div>
+</div>
+</div>
+
+<!-- ═══ 5: WRITING & PRESENTING ═══ -->
+<div class="section-block" id="s5"><div class="section-header"><div class="section-num sn5">✍️</div><div class="section-title-group"><div class="section-title">Writing & Presenting</div><div class="section-subtitle">Personal letter, speech structure, captions, completing stories, paragraph writing, error identification</div></div></div>
+
+<div class="cc"><h3>✉️ Personal Letter — Surat Pribadi</h3>
+<p>Struktur surat pribadi dalam Bahasa Inggris:</p>
+<div class="tw"><table><thead><tr><th>Order</th><th>Part</th><th>Example</th></tr></thead><tbody>
+<tr><td><strong>1</strong></td><td>Date & Place (Tanggal & Tempat)</td><td><em>Jakarta, January 10, 2026</em></td></tr>
+<tr><td><strong>2</strong></td><td>Greeting (Salam Pembuka)</td><td><em>Dear Sarah,</em></td></tr>
+<tr><td><strong>3</strong></td><td>Body (Isi Surat)</td><td><em>How are you? I hope you are fine.</em></td></tr>
+<tr><td><strong>4</strong></td><td>Closing (Penutup)</td><td><em>Write back soon. Your friend, Rina</em></td></tr>
+</tbody></table></div>
+<p>Urutan: <strong>Date → Greeting → Body → Closing</strong> (4 → 1 → 2 → 3 dalam contoh soal).</p>
+</div>
+
+<div class="cc"><h3>🎤 Speech Structure — Struktur Pidato</h3>
+<div class="tw"><table><thead><tr><th>Part</th><th>Function</th><th>Example</th></tr></thead><tbody>
+<tr><td><strong>Opening</strong></td><td>Salam, sapaan</td><td><em>"Good morning, teachers and friends."</em></td></tr>
+<tr><td><strong>Thanking</strong></td><td>Ucapan terima kasih</td><td><em>"First of all, I would like to thank you all."</em></td></tr>
+<tr><td><strong>Body</strong></td><td>Isi pidato</td><td><em>"Today I will talk about healthy food."</em></td></tr>
+<tr><td><strong>Closing</strong></td><td>Kesimpulan</td><td><em>"In conclusion, eat healthy food every day."</em></td></tr>
+</tbody></table></div>
+<p>Pertanyaan "Which is the OPENING?" → yang berisi salam dan sapaan = <em>"Good morning, teachers and friends."</em></p>
+</div>
+
+<div class="cc"><h3>📸 Writing Captions — Menulis Keterangan Gambar</h3>
+<p>Caption harus mendeskripsikan apa yang <strong>terlihat di gambar</strong> secara akurat.</p>
+<div class="ib green"><strong>💡 Tips</strong>Gunakan <strong>Present Continuous</strong> untuk mendeskripsikan aktivitas dalam gambar: <em>"Students <strong>are cleaning</strong> the classroom."</em> Pastikan caption cocok dengan gambar — jangan tebak.</div>
+</div>
+
+<div class="cc"><h3>🧩 Completing Stories & Dialogues</h3>
+<p>Saat melengkapi cerita/dialog, pilih kata/kalimat yang <strong>paling logis dan koheren</strong> dengan konteks.</p>
+
+<div class="dlg">
+<p><strong>Story:</strong> The rabbit was too ...................</p>
+<p>Konteks: kelinci tidur di bawah pohon saat lomba lari karena merasa pasti menang.</p>
+<p>Jawaban: <strong>confident</strong> (terlalu percaya diri) — bukan fast, slow, atau hungry.</p>
+</div>
+
+<div class="dlg">
+<p><strong>Dialogue:</strong></p>
+<p><strong>Andi:</strong> What will you do next holiday?</p>
+<p><strong>Budi:</strong> I will visit my grandmother.</p>
+<p><strong>Andi:</strong> ..................</p>
+<p>Respon yang cocok: <em>"That sounds great!"</em> atau <em>"Have a nice trip!"</em> (positif dan relevan)</p>
+</div>
+</div>
+
+<div class="cc"><h3>🔍 Error Identification — Mengidentifikasi Kesalahan</h3>
+<div class="tw"><table><thead><tr><th>Error Type</th><th>Description</th><th>Example</th></tr></thead><tbody>
+<tr><td><strong>Verb tense error</strong></td><td>Salah penggunaan waktu</td><td><em>"Yesterday I <strong>go</strong> to the market."</em> (seharusnya <strong>went</strong>)</td></tr>
+<tr><td><strong>Subject-verb agreement</strong></td><td>Verb tidak cocok dengan subject</td><td><em>"I <strong>buys</strong> vegetables."</em> (seharusnya <strong>buy</strong> / <strong>bought</strong>)</td></tr>
+<tr><td><strong>Spelling error</strong></td><td>Salah ejaan</td><td><em>"tommorow"</em> (seharusnya <strong>tomorrow</strong>)</td></tr>
+<tr><td><strong>Punctuation error</strong></td><td>Salah tanda baca</td><td>Kalimat tanpa titik atau tanda tanya</td></tr>
+</tbody></table></div>
+</div>
+
+<div class="cc"><h3>📝 Paragraph Writing — Menulis Paragraf</h3>
+<p>Semua kalimat dalam paragraf harus <strong>relevan</strong> dengan topik.</p>
+<div class="ib blue"><strong>📘 Contoh: Topic "My Favorite Food"</strong>
+✅ <em>"I like fried rice very much."</em> → relevan<br>
+✅ <em>"It is delicious and cheap."</em> → relevan<br>
+✅ <em>"My mother cooks it every Sunday."</em> → relevan<br>
+✅ <em>"I eat it for breakfast."</em> → relevan<br>
+Semua kalimat mendukung topik "favorite food".</div>
+
+<h4>Multimodal Text — Teks Kombinasi</h4>
+<p>Teks multimodal menggabungkan gambar dan tulisan. Semua elemen harus <strong>mendukung pesan utama</strong>: gambar siswa belajar + teks "Study Hard for Success" + logo sekolah → ketiganya mendukung pesan motivasi belajar.</p>
+</div>
+</div>
+
+<!-- ═══ RINGKASAN ═══ -->
+<div class="cc" style="border:2px solid var(--purple);background:var(--purple-light);">
+<h3 style="color:var(--purple-dark);font-size:1.08rem;">📝 Ringkasan Poin Kunci untuk Ujian</h3>
+
+<h4>Expressions & Speaking</h4>
+<ul>
+<li><em>Nice to meet you</em> = berkenalan. <em>I am sorry</em> = meminta maaf. <em>Can I help you?</em> = menawarkan bantuan</li>
+<li>Accept offer: <em>Yes, please / That is very kind of you</em>. Decline: <em>No, thank you</em></li>
+<li>Agreement: <em>I agree / You are right / That's a good idea</em></li>
+<li>Phone message: Greeting → Message → Request → Closing</li>
+<li>Cocokkan jawaban WH-question: What = benda, Where = tempat, When = waktu, How = cara</li>
+</ul>
+
+<h4>Reading</h4>
+<ul>
+<li>Main idea = "This text is about..." — cari inti, bukan detail kecil</li>
+<li>Signs: No = dilarang, Must = wajib, Please = permintaan sopan</li>
+<li>Narrative moral: Ant & Dove = saling menolong. Rabbit & Turtle = jangan terlalu percaya diri</li>
+<li>Procedure: perhatikan urutan langkah dan time order words (first, then, finally)</li>
+<li>Venn diagram "Both" = kesamaan antara dua hal</li>
+</ul>
+
+<h4>Vocabulary & Grammar</h4>
+<ul>
+<li><strong>Literal</strong> = makna sebenarnya. <strong>Figurative</strong> = makna kiasan</li>
+<li><strong>Synonym</strong> = sama (big-large). <strong>Antonym</strong> = lawan (hot-cold)</li>
+<li>Reference: <strong>it</strong> = benda/hewan, <strong>she/he</strong> = orang</li>
+<li>Simple Present: She go<strong>es</strong> (he/she/it + s). I/you/we/they + verb dasar</li>
+<li>Present Continuous: is/am/are + verb-<strong>ing</strong> (sedang berlangsung)</li>
+<li>Past Tense: yesterday + verb ke-2 (<strong>went</strong>, bukan go)</li>
+</ul>
+
+<h4>Text Types</h4>
+<ul>
+<li><strong>Descriptive</strong> = menggambarkan (present tense, kata sifat). <strong>Narrative</strong> = cerita + moral (past tense)</li>
+<li><strong>Invitation</strong> = mengundang. <strong>Announcement</strong> = memberitahu</li>
+<li><strong>Formal</strong> untuk guru/kepala sekolah. <strong>Informal</strong> untuk teman</li>
+</ul>
+
+<h4>Writing & Presenting</h4>
+<ul>
+<li>Personal letter: Date → Greeting → Body → Closing</li>
+<li>Speech: Opening (salam) → Body → Conclusion</li>
+<li>Caption: gunakan present continuous, cocokkan dengan gambar</li>
+<li>Error types: verb tense, subject-verb agreement, spelling, punctuation</li>
+<li>Semua kalimat dalam paragraf harus relevan dengan topik</li>
+</ul>
+</div>
+
+</main>
+
+<footer class="footer">SD Muhammadiyah 01 Kukusan · Materi Bahasa Inggris Kelas 6 · Tahun Pelajaran 2025/2026 🌍</footer>
+</body>
+</html>
