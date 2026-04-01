@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materi IPAS – Ujian Sekolah Kelas 6</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--purple:#7c3aed;--purple-dark:#5b21b6;--purple-light:#f5f3ff;--purple-pale:#ede9fe;--green:#059669;--green-dark:#065f46;--green-light:#d1fae5;--blue:#2563eb;--blue-light:#dbeafe;--orange:#ea580c;--orange-light:#fff7ed;--red:#dc2626;--red-light:#fef2f2;--amber:#d97706;--amber-light:#fef3c7;--teal:#0d9488;--teal-light:#ccfbf1;--cyan:#0891b2;--cyan-light:#cffafe;--text:#1f2a37;--text-muted:#6b7280;--bg:#f0f4ff;--white:#fff;--border:#e5e7eb;--radius:14px;--shadow:0 4px 20px rgba(0,0,0,.06)}
+    *{box-sizing:border-box;margin:0;padding:0}html{font-size:clamp(14px,3.2vw,16px);scroll-behavior:smooth}body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.75}
+    .header{position:sticky;top:0;z-index:100;background:linear-gradient(135deg,#3b0764,#5b21b6 50%,#7c3aed);color:#fff;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(0,0,0,.25)}.header-brand{display:flex;align-items:center;gap:10px}.logo{font-size:1.5rem}.brand-name{font-family:'Baloo 2',cursive;font-size:clamp(.82rem,2.6vw,1rem);font-weight:800;line-height:1.1}.sub-brand{font-size:.62rem;opacity:.8;font-weight:600}.header-back{display:flex;align-items:center;gap:5px;color:#fff;text-decoration:none;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 14px;font-size:.72rem;font-weight:700;transition:background .2s}.header-back:hover{background:rgba(255,255,255,.3)}
+    .hero{background:linear-gradient(160deg,#3b0764,#5b21b6 40%,#7c3aed);color:#fff;padding:40px 20px 48px;text-align:center;position:relative;overflow:hidden}.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M50 50v-6h-2v6h-6v2h6v6h2v-6h6v-2h-6zM50 10V4h-2v6h-6v2h6v6h2v-6h6v-2h-6zM10 50v-6H8v6H2v2h6v6h2v-6h6v-2h-6zM10 10V4H8v6H2v2h6v6h2v-6h6v-2h-6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}.hero-emoji{font-size:3rem;display:block;margin-bottom:10px;position:relative}.hero h1{font-family:'Baloo 2',cursive;font-size:clamp(1.4rem,4.5vw,2rem);font-weight:800;margin-bottom:6px;position:relative}.hero p{font-size:clamp(.8rem,2.2vw,.92rem);opacity:.88;font-weight:600;max-width:620px;margin:0 auto;position:relative;line-height:1.6}
+    .nav-pills{background:var(--white);border-bottom:1px solid var(--border);padding:12px 16px;position:sticky;top:56px;z-index:90;box-shadow:0 2px 8px rgba(0,0,0,.04)}.nav-pills-inner{max-width:920px;margin:0 auto;display:flex;gap:6px;flex-wrap:wrap;justify-content:center}.nav-pill{font-size:.68rem;font-weight:700;padding:4px 12px;border-radius:20px;text-decoration:none;background:var(--purple-light);color:var(--purple-dark);border:1px solid transparent;transition:all .2s;white-space:nowrap}.nav-pill:hover{background:var(--purple-pale);border-color:var(--purple)}
+    .container{max-width:920px;margin:0 auto;padding:32px 16px 56px}
+    .section-block{margin-bottom:40px}.section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:3px solid var(--purple)}.section-num{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;color:#fff;flex-shrink:0}
+    .sn-red{background:linear-gradient(135deg,#dc2626,#f87171)}.sn-blue{background:linear-gradient(135deg,#2563eb,#60a5fa)}.sn-green{background:linear-gradient(135deg,#059669,#10b981)}.sn-amber{background:linear-gradient(135deg,#d97706,#fbbf24)}.sn-purple{background:linear-gradient(135deg,#7c3aed,#a78bfa)}.sn-teal{background:linear-gradient(135deg,#0d9488,#2dd4bf)}.sn-cyan{background:linear-gradient(135deg,#0891b2,#22d3ee)}.sn-orange{background:linear-gradient(135deg,#ea580c,#fb923c)}
+    .section-title-group{flex:1}.section-title{font-family:'Baloo 2',cursive;font-size:1.15rem;font-weight:800}.section-subtitle{font-size:.73rem;font-weight:600;color:var(--text-muted)}
+    .cc{background:var(--white);border-radius:var(--radius);padding:24px;margin-bottom:20px;box-shadow:var(--shadow);border:1px solid var(--border)}.cc h3{font-family:'Baloo 2',cursive;font-size:1.02rem;font-weight:800;margin-bottom:12px;color:var(--purple-dark);display:flex;align-items:center;gap:8px}.cc h4{font-size:.9rem;font-weight:800;margin:16px 0 8px;color:var(--text)}.cc p{font-size:.86rem;margin-bottom:10px;color:#374151}.cc ul,.cc ol{padding-left:20px;margin-bottom:10px}.cc li{font-size:.84rem;margin-bottom:5px;color:#374151}.cc li strong{color:var(--text)}
+    .ib{border-radius:10px;padding:14px 16px;margin:14px 0;font-size:.82rem}.ib.green{background:var(--green-light);border-left:4px solid var(--green)}.ib.blue{background:var(--blue-light);border-left:4px solid var(--blue)}.ib.orange{background:var(--orange-light);border-left:4px solid var(--orange)}.ib.red{background:var(--red-light);border-left:4px solid var(--red)}.ib.amber{background:var(--amber-light);border-left:4px solid var(--amber)}.ib.teal{background:var(--teal-light);border-left:4px solid var(--teal)}.ib.purple{background:var(--purple-light);border-left:4px solid var(--purple)}.ib.cyan{background:var(--cyan-light);border-left:4px solid var(--cyan)}
+    .ib strong{display:block;margin-bottom:4px}.ib.green strong{color:var(--green-dark)}.ib.blue strong{color:#1e40af}.ib.orange strong{color:var(--orange)}.ib.red strong{color:var(--red)}.ib.amber strong{color:var(--amber)}.ib.teal strong{color:var(--teal)}.ib.purple strong{color:var(--purple-dark)}.ib.cyan strong{color:var(--cyan)}
+    .tw{overflow-x:auto;margin:12px 0;-webkit-overflow-scrolling:touch}table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:360px}th{background:var(--purple-light);color:var(--purple-dark);padding:9px 12px;text-align:left;font-weight:800;font-size:.76rem;text-transform:uppercase;letter-spacing:.3px;border-bottom:2px solid var(--purple)}td{padding:9px 12px;border-bottom:1px solid var(--border)}tr:nth-child(even) td{background:#fafbff}
+    .dc{background:#f9fafb;border:1px solid var(--border);border-radius:12px;padding:20px;margin:14px 0;text-align:center}.dc svg{max-width:100%;height:auto}.dc-cap{font-size:.74rem;font-weight:700;color:var(--text-muted);margin-top:8px}
+    .kt{display:inline-block;background:var(--purple-light);color:var(--purple-dark);padding:1px 8px;border-radius:6px;font-weight:800;font-size:.82rem}
+    .cg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}@media(max-width:500px){.cg{grid-template-columns:1fr}}.cb{border-radius:10px;padding:14px;font-size:.82rem}
+    .footer{text-align:center;padding:24px 16px;font-size:.76rem;color:var(--text-muted);font-weight:600;border-top:1px solid var(--border)}
+  </style>
+</head>
+<body>
+
+<header class="header"><div class="header-brand"><span class="logo">🔬</span><div><div class="brand-name">Materi IPAS</div><div class="sub-brand">Ujian Sekolah · Kelas 6</div></div></div><a href="index.html" class="header-back">← Hub Materi</a></header>
+
+<section class="hero"><span class="hero-emoji">🔬</span><h1>IPAS – Ilmu Pengetahuan Alam & Sosial</h1><p>Materi lengkap mencakup IPA (tubuh manusia, ekosistem, cahaya, bunyi, energi, tata surya, iklim), IPS (geografi, ekonomi, sejarah, kearifan lokal), dan Keterampilan Proses Ilmiah.</p></section>
+
+<nav class="nav-pills"><div class="nav-pills-inner">
+<a href="#s1" class="nav-pill">🫀 Tubuh Manusia</a><a href="#s2" class="nav-pill">🌿 Ekosistem</a><a href="#s3" class="nav-pill">💡 Cahaya & Bunyi</a><a href="#s4" class="nav-pill">⚡ Energi</a><a href="#s5" class="nav-pill">🪐 Tata Surya</a><a href="#s6" class="nav-pill">🗺️ Geografi & Ekonomi</a><a href="#s7" class="nav-pill">📜 Sejarah & Budaya</a><a href="#s8" class="nav-pill">🔍 Keterampilan Proses</a>
+</div></nav>
+
+<main class="container">
+
+<!-- ═══ 1: TUBUH MANUSIA & KESEHATAN ═══ -->
+<div class="section-block" id="s1"><div class="section-header"><div class="section-num sn-red">🫀</div><div class="section-title-group"><div class="section-title">Sistem Organ Tubuh Manusia & Kesehatan</div><div class="section-subtitle">Sistem pernapasan, peredaran darah, pencernaan, gaya hidup sehat, penyakit & pencegahan</div></div></div>
+
+<div class="cc"><h3>🫁 Sistem Pernapasan & Peredaran Darah</h3>
+<p>Dua sistem organ ini bekerja sama menjaga kehidupan — paru-paru menyuplai oksigen, jantung dan pembuluh darah mengalirkannya ke seluruh tubuh.</p>
+<div class="tw"><table><thead><tr><th>Organ</th><th>Sistem</th><th>Fungsi Utama</th></tr></thead><tbody>
+<tr><td><strong>Paru-paru</strong></td><td>Pernapasan</td><td>Pertukaran O₂ dan CO₂ antara udara dan darah</td></tr>
+<tr><td><strong>Diafragma</strong></td><td>Pernapasan</td><td>Otot yang mengembang-kempiskan paru-paru saat bernapas</td></tr>
+<tr><td><strong>Trakea (tenggorokan)</strong></td><td>Pernapasan</td><td>Saluran udara dari hidung/mulut ke paru-paru</td></tr>
+<tr><td><strong>Jantung</strong></td><td>Peredaran Darah</td><td>Memompa darah ke seluruh tubuh</td></tr>
+<tr><td><strong>Pembuluh darah</strong></td><td>Peredaran Darah</td><td>Menyalurkan darah (arteri = dari jantung, vena = ke jantung)</td></tr>
+<tr><td><strong>Sel darah merah</strong></td><td>Peredaran Darah</td><td>Mengangkut oksigen ke seluruh tubuh</td></tr>
+</tbody></table></div>
+
+<h4>Dampak Gaya Hidup terhadap Sistem Organ</h4>
+<div class="tw"><table><thead><tr><th>Kebiasaan Buruk</th><th>Dampak pada Sistem Organ</th></tr></thead><tbody>
+<tr><td>Merokok bertahun-tahun</td><td><strong>Sistem pernapasan</strong> — paru-paru rusak, risiko kanker paru, sesak napas</td></tr>
+<tr><td>Kolesterol tinggi + kurang gerak</td><td><strong>Sistem peredaran darah</strong> — pembuluh darah tersumbat, tekanan darah tinggi, risiko serangan jantung</td></tr>
+<tr><td>Makanan tinggi lemak jenuh</td><td>Kolesterol naik → mempercepat penyumbatan pembuluh darah</td></tr>
+<tr><td>Jarang berolahraga</td><td>Jantung dan paru melemah, daya tahan tubuh menurun</td></tr>
+</tbody></table></div>
+<div class="ib red"><strong>⚠️ Kombinasi Terburuk</strong>Merokok + kolesterol tinggi + tidak olahraga = sistem pernapasan DAN peredaran darah paling berisiko rusak bersamaan.</div>
+</div>
+
+<div class="cc"><h3>💊 Penyakit dan Pencegahan</h3>
+<div class="tw"><table><thead><tr><th>Penyakit</th><th>Penyebab</th><th>Penularan</th><th>Pencegahan</th></tr></thead><tbody>
+<tr><td><strong>Flu/Influenza</strong></td><td>Virus</td><td>Droplet (batuk/bersin)</td><td>Cuci tangan, tutup mulut saat bersin</td></tr>
+<tr><td><strong>ISPA</strong></td><td>Virus/bakteri</td><td>Udara, kontak langsung</td><td>Cuci tangan, pakai masker saat sakit</td></tr>
+<tr><td><strong>Diare</strong></td><td>Bakteri E.coli / virus</td><td>Makanan/air terkontaminasi</td><td>Cuci tangan, makanan bersih, air matang</td></tr>
+<tr><td><strong>Anemia</strong></td><td>Kekurangan zat besi / vit B12</td><td>Tidak menular</td><td>Makan bergizi (daging, sayuran hijau)</td></tr>
+<tr><td><strong>Rabun senja</strong></td><td>Kekurangan vitamin A</td><td>Tidak menular</td><td>Konsumsi sayur/buah berwarna (wortel, labu)</td></tr>
+<tr><td><strong>TBC</strong></td><td>Bakteri Mycobacterium</td><td>Udara (droplet)</td><td>Vaksinasi BCG, lingkungan bersih</td></tr>
+</tbody></table></div>
+<div class="ib green"><strong>💡 Penyakit yang Bisa Dicegah dengan Gizi Seimbang</strong><strong>Anemia</strong> (kecukupan zat besi & B12) dan <strong>Rabun senja</strong> (kecukupan vitamin A). TBC tidak bisa dicegah hanya dengan nutrisi — butuh vaksinasi dan sanitasi.</div>
+
+<h4>Perilaku Pencegahan Paling Efektif di Sekolah</h4>
+<ul><li><strong>Cuci tangan dengan sabun</strong> — mencegah flu, ISPA, dan diare sekaligus</li><li><strong>Tutup mulut/hidung</strong> saat batuk/bersin — mencegah penyebaran droplet</li></ul>
+</div>
+</div>
+
+<!-- ═══ 2: EKOSISTEM ═══ -->
+<div class="section-block" id="s2"><div class="section-header"><div class="section-num sn-green">🌿</div><div class="section-title-group"><div class="section-title">Ekosistem & Lingkungan</div><div class="section-subtitle">Komponen biotik/abiotik, rantai makanan, dampak gangguan, mitigasi perubahan iklim</div></div></div>
+
+<div class="cc"><h3>🌱 Komponen Ekosistem</h3>
+<div class="cg">
+<div class="cb" style="background:var(--green-light);"><h4 style="color:var(--green-dark);margin-top:0;">🌿 Biotik (Makhluk Hidup)</h4><p>Pohon, rumput, cacing tanah, burung, siswa, bakteri, jamur</p></div>
+<div class="cb" style="background:var(--blue-light);"><h4 style="color:#1e40af;margin-top:0;">🪨 Abiotik (Tak Hidup)</h4><p>Air, batu, tanah, udara, sinar matahari, suhu, kelembapan</p></div>
+</div>
+<div class="ib amber"><strong>🔑 Cara Membedakan</strong>Biotik = bernapas, tumbuh, berkembang biak. Abiotik = benda mati. Batu hias dan kolam air = <strong>abiotik</strong>. Pohon mangga dan cacing tanah = <strong>biotik</strong>.</div>
+</div>
+
+<div class="cc"><h3>🔗 Rantai Makanan & Dampak Gangguan</h3>
+<p>Rantai makanan menunjukkan aliran energi dari produsen → konsumen → predator puncak. Jika satu komponen terganggu, seluruh rantai terdampak.</p>
+
+<h4>Contoh: Ekosistem Sawah</h4>
+<p>Padi → Tikus → Ular → Elang &nbsp;|&nbsp; Padi → Belalang → Katak → Ular → Elang</p>
+
+<div class="ib red"><strong>⚠️ Jika Ular Diburu Besar-besaran (200 → 20 ekor)</strong>
+Ular adalah predator tikus → populasi tikus meningkat tak terkendali → tikus memakan padi lebih banyak → <strong>hasil panen terancam</strong>. Di sisi lain, elang juga kehilangan mangsa utama → populasi elang menurun. Ini menunjukkan pentingnya menjaga keseimbangan ekosistem.</div>
+
+<h4>Dampak Tindakan Manusia terhadap Ekosistem</h4>
+<div class="tw"><table><thead><tr><th>Tindakan</th><th>Dampak</th></tr></thead><tbody>
+<tr><td style="color:var(--green);font-weight:700;">✅ Reboisasi tanaman asli daerah</td><td>Positif — memulihkan tutupan hutan & keanekaragaman hayati</td></tr>
+<tr><td style="color:var(--green);font-weight:700;">✅ Koridor satwa liar antarhutan</td><td>Positif — menghubungkan habitat yang terfragmentasi</td></tr>
+<tr><td style="color:var(--red);font-weight:700;">❌ Konversi hutan → sawit monokultur</td><td>Negatif — mengurangi keanekaragaman hayati drastis</td></tr>
+<tr><td style="color:var(--red);font-weight:700;">❌ Buang limbah industri ke sungai</td><td>Negatif — mencemari air dan membunuh biota sungai</td></tr>
+</tbody></table></div>
+</div>
+
+<div class="cc"><h3>🌡️ Mitigasi Perubahan Iklim</h3>
+<p><span class="kt">Mitigasi</span> = upaya mengurangi penyebab perubahan iklim (emisi gas rumah kaca/CO₂).</p>
+<h4>Aktivitas yang Mengurangi Emisi</h4>
+<ul>
+<li>✅ <strong>Menanam pohon</strong> — menyerap CO₂ dari udara</li>
+<li>✅ <strong>Naik sepeda/jalan kaki</strong> jarak dekat — mengurangi emisi kendaraan</li>
+<li>✅ <strong>Kantong belanja kain</strong> — mengurangi produksi plastik</li>
+<li>❌ <strong>Membakar sampah</strong> — justru MENAMBAH emisi CO₂ dan polutan udara</li>
+</ul>
+</div>
+</div>
+
+<!-- ═══ 3: CAHAYA & BUNYI ═══ -->
+<div class="section-block" id="s3"><div class="section-header"><div class="section-num sn-amber">💡</div><div class="section-title-group"><div class="section-title">Sifat Cahaya & Gelombang Bunyi</div><div class="section-subtitle">Pemantulan, pembiasan, penguraian cahaya; bunyi melalui medium padat, cair, gas</div></div></div>
+
+<div class="cc"><h3>💡 Empat Sifat Cahaya</h3>
+<div class="tw"><table><thead><tr><th>Sifat</th><th>Penjelasan</th><th>Contoh Fenomena</th></tr></thead><tbody>
+<tr><td><strong>Merambat lurus</strong></td><td>Cahaya bergerak dalam garis lurus</td><td>Bayangan terbentuk di bawah lampu sorot → cahaya tidak bisa berbelok melewati tubuh</td></tr>
+<tr><td><strong>Dipantulkan (refleksi)</strong></td><td>Cahaya memantul saat mengenai permukaan halus/mengkilap</td><td>Wajah terlihat di <strong>cermin datar</strong>; pantulan di permukaan air tenang</td></tr>
+<tr><td><strong>Dibiaskan (refraksi)</strong></td><td>Cahaya berbelok saat melewati medium berbeda kerapatan</td><td><strong>Pensil di air</strong> tampak patah/bengkok</td></tr>
+<tr><td><strong>Diuraikan (dispersi)</strong></td><td>Cahaya putih terurai menjadi spektrum warna</td><td><strong>Pelangi</strong> setelah hujan — tetesan air mengurai cahaya matahari</td></tr>
+</tbody></table></div>
+
+<h4>Benda dan Cahaya</h4>
+<div class="tw"><table><thead><tr><th>Benda</th><th>Sifat terhadap Cahaya</th><th>Alasan</th></tr></thead><tbody>
+<tr><td>Cermin datar bersih</td><td style="color:var(--green);font-weight:700;">Memantulkan dengan baik</td><td>Permukaan halus & mengkilap</td></tr>
+<tr><td>Air kolam tenang</td><td style="color:var(--green);font-weight:700;">Memantulkan dengan baik</td><td>Permukaan datar seperti cermin</td></tr>
+<tr><td>Batu hitam kasar</td><td style="color:var(--red);font-weight:700;">Menyerap cahaya</td><td>Permukaan kasar + warna gelap</td></tr>
+</tbody></table></div>
+</div>
+
+<div class="cc"><h3>🔊 Gelombang Bunyi</h3>
+<p>Bunyi membutuhkan <strong>medium</strong> untuk merambat — bisa melalui benda padat, cair, maupun gas (udara). Bunyi TIDAK bisa merambat di ruang hampa udara.</p>
+<div class="tw"><table><thead><tr><th>Medium</th><th>Contoh Percobaan</th></tr></thead><tbody>
+<tr><td><strong>Padat</strong></td><td>Menempelkan telinga ke meja kayu → ketukan di ujung lain terdengar jelas. Telepon kaleng dengan benang terentang → suara merambat lewat benang.</td></tr>
+<tr><td><strong>Cair</strong></td><td>Berenang di kolam → ketukan pada dinding kolam terdengar di dalam air</td></tr>
+<tr><td><strong>Gas (Udara)</strong></td><td>Berteriak di lapangan terbuka → suara terdengar memantul dari gedung (gema)</td></tr>
+</tbody></table></div>
+<div class="ib blue"><strong>📘 Cara Alat Musik Menghasilkan Bunyi</strong>
+<strong>Getaran senar:</strong> Gitar (dipetik), Rebab (digesek), Biola (digesek)<br>
+<strong>Getaran kolom udara:</strong> Seruling (ditiup), Terompet (ditiup)<br>
+<strong>Getaran membran/kulit:</strong> Drum (dipukul), Rebana (dipukul)</div>
+</div>
+</div>
+
+<!-- ═══ 4: ENERGI ═══ -->
+<div class="section-block" id="s4"><div class="section-header"><div class="section-num sn-blue">⚡</div><div class="section-title-group"><div class="section-title">Sumber Energi & Penghematan</div><div class="section-subtitle">Energi terbarukan vs tidak terbarukan, hemat listrik, potensi energi lokal</div></div></div>
+
+<div class="cc"><h3>♻️ Energi Terbarukan vs Tidak Terbarukan</h3>
+<div class="cg">
+<div class="cb" style="background:var(--green-light);"><h4 style="color:var(--green-dark);margin-top:0;">♻️ Terbarukan</h4><p style="font-size:.82rem;">Dapat diperbaharui secara alami, tidak habis.</p><ul style="font-size:.82rem;"><li>☀️ Matahari (PLTS)</li><li>💨 Angin (PLTB)</li><li>💧 Air (PLTA)</li><li>🌋 Panas bumi (Geothermal)</li><li>🌱 Biomassa</li></ul></div>
+<div class="cb" style="background:var(--red-light);"><h4 style="color:var(--red);margin-top:0;">⛽ Tidak Terbarukan</h4><p style="font-size:.82rem;">Terbentuk jutaan tahun, akan habis.</p><ul style="font-size:.82rem;"><li>🛢️ Minyak bumi (Petroleum)</li><li>⛽ Gas alam (LPG/LNG)</li><li>⚫ Batu bara</li></ul></div>
+</div>
+<div class="ib teal"><strong>🔑 Memilih Energi Berdasarkan Kondisi Geografis</strong>
+Desa pesisir angin kuat (7–9 m/s konsisten) → <strong>PLTB (angin)</strong> paling optimal. Daerah pegunungan dengan sungai deras → <strong>PLTA</strong>. Daerah banyak sinar matahari → <strong>PLTS</strong>. Pilih berdasarkan data kondisi, bukan asumsi umum.</div>
+</div>
+
+<div class="cc"><h3>💡 Penghematan Energi Listrik</h3>
+<p>Tiga cara paling efektif menghemat listrik di rumah:</p>
+<ul>
+<li><strong>Ganti lampu pijar → LED</strong> — lampu LED 9W setara terang dengan pijar 60W, hemat ~85% listrik</li>
+<li><strong>Cabut charger</strong> dari stopkontak saat tidak digunakan — mencegah <em>phantom load</em> (arus listrik kecil yang terus mengalir)</li>
+<li><strong>Atur AC di 26–27°C</strong> dan matikan saat sudah dingin — AC konsumsi listrik terbesar di rumah</li>
+</ul>
+<div class="ib amber"><strong>⚠️ Mengganti warna cat dinding = TIDAK efektif</strong>
+Warna cat mempengaruhi kesan terang ruangan secara visual, tapi tidak menghemat konsumsi listrik secara signifikan.</div>
+</div>
+</div>
+
+<!-- ═══ 5: TATA SURYA ═══ -->
+<div class="section-block" id="s5"><div class="section-header"><div class="section-num sn-purple">🪐</div><div class="section-title-group"><div class="section-title">Sistem Tata Surya</div><div class="section-subtitle">Rotasi & revolusi bumi, planet dalam vs luar, zona waktu</div></div></div>
+
+<div class="cc"><h3>🌍 Rotasi vs Revolusi Bumi</h3>
+<div class="cg">
+<div class="cb" style="background:var(--blue-light);"><h4 style="color:#1e40af;margin-top:0;">🔄 Rotasi</h4><p style="font-size:.82rem;">Bumi berputar pada <strong>porosnya sendiri</strong>.</p><p style="font-size:.82rem;"><strong>Periode:</strong> ~24 jam (1 hari)</p><p style="font-size:.82rem;"><strong>Akibat:</strong></p><ul style="font-size:.82rem;"><li>Pergantian siang & malam</li><li>Perbedaan zona waktu (WIB/WITA/WIT)</li><li>Gerak semu harian matahari (timur → barat)</li><li>Tokyo malam saat New York siang</li></ul></div>
+<div class="cb" style="background:var(--amber-light);"><h4 style="color:var(--amber);margin-top:0;">🌐 Revolusi</h4><p style="font-size:.82rem;">Bumi mengelilingi <strong>matahari</strong>.</p><p style="font-size:.82rem;"><strong>Periode:</strong> ~365,25 hari (1 tahun)</p><p style="font-size:.82rem;"><strong>Akibat:</strong></p><ul style="font-size:.82rem;"><li>Pergantian musim (hujan/kemarau)</li><li>Perbedaan panjang siang-malam di daerah subtropis</li><li>Gerak semu tahunan matahari</li></ul></div>
+</div>
+
+<div class="ib purple"><strong>📝 Fenomena Akibat ROTASI (sering diujikan)</strong>
+Perbedaan zona waktu antarnegara, gerak semu harian matahari (terbit dari timur), dan perbedaan siang-malam antara kota di belahan bumi berbeda — semuanya akibat ROTASI. Pergantian musim hujan/kemarau = akibat REVOLUSI.</div>
+</div>
+
+<div class="cc"><h3>🪐 Planet Dalam vs Planet Luar</h3>
+<p>Tata surya dibagi dua oleh <strong>Sabuk Asteroid</strong> (antara Mars dan Jupiter):</p>
+<div class="tw"><table><thead><tr><th>Planet Dalam (sebelum Sabuk Asteroid)</th><th>Planet Luar (setelah Sabuk Asteroid)</th></tr></thead><tbody>
+<tr><td>☿ <strong>Merkurius</strong></td><td>♃ <strong>Jupiter</strong></td></tr>
+<tr><td>♀ <strong>Venus</strong></td><td>♄ <strong>Saturnus</strong></td></tr>
+<tr><td>🌍 <strong>Bumi</strong></td><td>♅ <strong>Uranus</strong></td></tr>
+<tr><td>♂ <strong>Mars</strong></td><td>♆ <strong>Neptunus</strong></td></tr>
+</tbody></table></div>
+<p style="font-size:.82rem;font-style:italic;">Urutan dari Matahari: <strong>Me-Ve-Bu-Ma</strong> — (Sabuk Asteroid) — <strong>Ju-Sa-Ur-Ne</strong></p>
+</div>
+</div>
+
+<!-- ═══ 6: GEOGRAFI & EKONOMI ═══ -->
+<div class="section-block" id="s6"><div class="section-header"><div class="section-num sn-teal">🗺️</div><div class="section-title-group"><div class="section-title">Geografi Indonesia & Kegiatan Ekonomi</div><div class="section-subtitle">Kondisi geografis, mata pencaharian, peta, produksi-distribusi-konsumsi, kelangkaan</div></div></div>
+
+<div class="cc"><h3>🏔️ Kondisi Geografis & Mata Pencaharian</h3>
+<div class="tw"><table><thead><tr><th>Wilayah</th><th>Karakteristik</th><th>Mata Pencaharian Utama</th></tr></thead><tbody>
+<tr><td><strong>Pegunungan</strong></td><td>Lereng curam, tanah vulkanik subur, sejuk</td><td>Petani sayuran, buah, perkebunan teh/kopi</td></tr>
+<tr><td><strong>Pesisir/Pantai</strong></td><td>Dekat laut, ombak, angin kencang</td><td>Nelayan, pembudidaya tambak, wisata bahari</td></tr>
+<tr><td><strong>Dataran rendah</strong></td><td>Luas, subur, dekat sungai besar</td><td>Petani padi, palawija, industri</td></tr>
+</tbody></table></div>
+</div>
+
+<div class="cc"><h3>💰 Tiga Jenis Kegiatan Ekonomi</h3>
+<div class="tw"><table><thead><tr><th>Jenis</th><th>Pengertian</th><th>Contoh</th></tr></thead><tbody>
+<tr><td><strong>Produksi</strong></td><td>Menghasilkan barang/jasa</td><td>Petani memanen padi, penjahit membuat baju, pabrik memproduksi sepatu</td></tr>
+<tr><td><strong>Distribusi</strong></td><td>Menyalurkan barang dari produsen ke konsumen (tanpa mengubah wujud)</td><td>Sopir truk mengangkut sayuran, distributor grosir menyalurkan beras</td></tr>
+<tr><td><strong>Konsumsi</strong></td><td>Menggunakan/menghabiskan barang/jasa</td><td>Ibu memasak nasi, siswa memakai sepatu, keluarga makan bersama</td></tr>
+</tbody></table></div>
+
+<h4>Rantai Distribusi Beras</h4>
+<p>Petani (produksi) → Pengepul desa → Pabrik penggilingan (produksi/pengolahan) → <strong>Distributor grosir</strong> (distribusi utama) → Pedagang eceran → Konsumen</p>
+
+<h4>Kelangkaan</h4>
+<p><span class="kt">Kelangkaan</span> = kondisi di mana ketersediaan sumber daya (barang) <strong>tidak mencukupi</strong> untuk memenuhi kebutuhan. Contoh: harga daging sapi naik tajam menjelang Lebaran karena pasokan berkurang sedangkan permintaan meningkat drastis.</p>
+</div>
+
+<div class="cc"><h3>🗺️ Jenis Peta dan Penggunaannya</h3>
+<div class="tw"><table><thead><tr><th>Kebutuhan</th><th>Jenis Peta Paling Tepat</th></tr></thead><tbody>
+<tr><td>Mencari rute tercepat dengan transportasi umum</td><td><strong>Peta digital interaktif</strong> (Google Maps) — rute real-time + jadwal angkutan</td></tr>
+<tr><td>Mempelajari perubahan batas wilayah sepanjang sejarah</td><td><strong>Atlas peta historis</strong> — data wilayah dari berbagai periode</td></tr>
+<tr><td>Melihat kontur tanah & ketinggian pegunungan</td><td><strong>Peta topografi</strong> — menampilkan garis kontur & elevasi</td></tr>
+<tr><td>Melihat batas provinsi/kabupaten saat ini</td><td><strong>Peta administrasi</strong> — batas wilayah terkini</td></tr>
+</tbody></table></div>
+</div>
+</div>
+
+<!-- ═══ 7: SEJARAH & BUDAYA ═══ -->
+<div class="section-block" id="s7"><div class="section-header"><div class="section-num sn-orange">📜</div><div class="section-title-group"><div class="section-title">Sejarah, Kearifan Lokal & Budaya</div><div class="section-subtitle">Pahlawan, sumber sejarah, kearifan lokal, warisan budaya UNESCO</div></div></div>
+
+<div class="cc"><h3>🏛️ Pahlawan & Nilai Perjuangan</h3>
+<p><strong>Ki Hajar Dewantara</strong> (1889–1959) — pendiri Taman Siswa (1922), pejuang pendidikan. Ajarannya: <em>"Ing ngarsa sung tuladha, ing madya mangun karsa, tut wuri handayani"</em> (di depan memberi teladan, di tengah memberi semangat, di belakang mendorong). Nilai yang bisa diteladani siswa: <strong>berjuang keras dalam belajar</strong> karena pendidikan adalah kunci kemajuan bangsa, dan tidak menyerah meskipun soal terasa sulit.</p>
+
+<h4>Sumber Sejarah</h4>
+<div class="cg">
+<div class="cb" style="background:var(--amber-light);"><h4 style="color:var(--amber);margin-top:0;">📝 Sumber Tertulis</h4><ul style="font-size:.82rem;"><li><strong>Prasasti</strong> — batu dengan tulisan kuno terpahat</li><li><strong>Buku catatan harian</strong> pejuang — tulisan langsung dari pelaku</li><li>Surat-surat resmi, piagam, naskah</li></ul></div>
+<div class="cb" style="background:var(--blue-light);"><h4 style="color:#1e40af;margin-top:0;">🏺 Artefak / Sumber Benda</h4><ul style="font-size:.82rem;"><li><strong>Keris kuno</strong> — benda bersejarah tapi <em>tanpa teks</em></li><li>Alat-alat perang, perhiasan kuno</li><li>Bangunan bersejarah</li></ul></div>
+</div>
+<div class="ib amber"><strong>⚠️ Foto = Sumber Visual, Bukan Sumber Tertulis</strong>
+Foto hitam-putih peristiwa sejarah adalah dokumentasi visual, bukan sumber tertulis. Sumber tertulis harus mengandung <strong>teks/tulisan</strong> (prasasti, buku catatan, surat).</div>
+</div>
+
+<div class="cc"><h3>🌿 Kearifan Lokal untuk Pelestarian Lingkungan</h3>
+<div class="tw"><table><thead><tr><th>Kearifan Lokal</th><th>Daerah</th><th>Fungsi</th></tr></thead><tbody>
+<tr><td><strong>Sasi Laut</strong></td><td>Maluku</td><td>Larangan mengambil hasil laut selama periode tertentu → memberi waktu biota laut pulih. <strong>Pelestarian SDA ✅</strong></td></tr>
+<tr><td><strong>Subak</strong></td><td>Bali</td><td>Sistem irigasi sawah berbasis kesepakatan komunal → distribusi air adil & berkelanjutan. <strong>Pelestarian SDA ✅</strong></td></tr>
+<tr><td><strong>Tembawang + Adat Bunu</strong></td><td>Kalimantan</td><td>Hutan adat + wajib tanam 5 pohon per 1 ditebang → hutan lestari. <strong>Pelestarian SDA ✅</strong></td></tr>
+<tr><td><strong>Ulos</strong></td><td>Sumatera Utara (Batak)</td><td>Kain tradisional untuk upacara adat → memperkuat ikatan sosial. <strong>Pelestarian budaya</strong> (bukan SDA)</td></tr>
+</tbody></table></div>
+<div class="ib teal"><strong>🔑 Pembeda Penting</strong>Sasi Laut dan Subak berfungsi langsung melestarikan <strong>sumber daya alam</strong>. Ulos melestarikan <strong>budaya/sosial</strong>. Tidak semua kearifan lokal berkaitan langsung dengan alam.</div>
+</div>
+
+<div class="cc"><h3>🏛️ Warisan Budaya Indonesia</h3>
+<p>Tiga budaya Indonesia yang telah mendapat status <strong>Warisan Budaya Tak Benda Dunia UNESCO</strong>:</p>
+<ul>
+<li>🎨 <strong>Batik</strong> — motif kain tradisional (diakui 2009)</li>
+<li>🎭 <strong>Wayang Kulit</strong> — pertunjukan seni bayangan (diakui 2003)</li>
+<li>💃 <strong>Tari Saman</strong> — tari massal dari Aceh (diakui 2011)</li>
+</ul>
+<p>Catatan: tidak semua budaya daerah otomatis diakui UNESCO — harus melalui proses penilaian ketat.</p>
+</div>
+</div>
+
+<!-- ═══ 8: KETERAMPILAN PROSES ILMIAH ═══ -->
+<div class="section-block" id="s8"><div class="section-header"><div class="section-num sn-cyan">🔍</div><div class="section-title-group"><div class="section-title">Keterampilan Proses Ilmiah</div><div class="section-subtitle">Variabel eksperimen, membaca data, menyimpulkan, mengevaluasi, mengomunikasikan hasil</div></div></div>
+
+<div class="cc"><h3>🧪 Variabel dalam Eksperimen</h3>
+<p>Setiap eksperimen ilmiah yang baik harus mengidentifikasi tiga jenis variabel:</p>
+<div class="tw"><table><thead><tr><th>Variabel</th><th>Pengertian</th><th>Contoh (Eksperimen Cahaya & Tanaman)</th></tr></thead><tbody>
+<tr><td><strong>Variabel Bebas</strong> (diubah)</td><td>Faktor yang sengaja diubah-ubah oleh peneliti</td><td>Jumlah cahaya matahari (8 jam / 2 jam / 0 jam)</td></tr>
+<tr><td><strong>Variabel Terikat</strong> (diukur)</td><td>Hasil yang diamati/diukur sebagai dampak perubahan</td><td>Tinggi/kecepatan tumbuh tanaman</td></tr>
+<tr><td><strong>Variabel Kontrol</strong> (dijaga tetap)</td><td>Faktor yang dijaga sama agar tidak mempengaruhi hasil</td><td>Jenis bibit, jenis tanah, jumlah air</td></tr>
+</tbody></table></div>
+<div class="ib cyan"><strong>💡 Rumus Mudah</strong><strong>Bebas</strong> = yang diubah (penyebab). <strong>Terikat</strong> = yang diukur (akibat). <strong>Kontrol</strong> = yang dijaga sama (agar adil).</div>
+</div>
+
+<div class="cc"><h3>📊 Membaca Data & Menyimpulkan</h3>
+<h4>Prinsip Menyimpulkan dari Data</h4>
+<ul>
+<li><strong>Simpulkan berdasarkan data</strong>, bukan asumsi. Jika tabel menunjukkan kombinasi pupuk organik+anorganik memberikan hasil tertinggi → itulah kesimpulannya.</li>
+<li><strong>Jangan mengabaikan data</strong> yang berbeda dari prediksi — data "aneh" tetap harus dianalisis.</li>
+<li><strong>Jangan menyimpulkan</strong> jika data tidak menunjukkan perbedaan signifikan.</li>
+</ul>
+
+<h4>Cara Penyajian Data</h4>
+<div class="tw"><table><thead><tr><th>Alat Penyajian</th><th>Paling Cocok Untuk</th></tr></thead><tbody>
+<tr><td><strong>Diagram batang</strong></td><td><strong>Membandingkan</strong> data antar kelompok (contoh: perbandingan tinggi tanaman dari 4 perlakuan pupuk)</td></tr>
+<tr><td><strong>Grafik garis</strong></td><td><strong>Menunjukkan tren/perubahan</strong> seiring waktu (contoh: perubahan suhu selama 30 hari)</td></tr>
+<tr><td><strong>Tabel terstruktur</strong></td><td>Mencatat data pengamatan secara sistematis (kolom: tanggal, ukuran, kondisi)</td></tr>
+</tbody></table></div>
+</div>
+
+<div class="cc"><h3>🔬 Evaluasi & Refleksi Eksperimen</h3>
+<h4>Langkah yang SESUAI Prinsip Ilmiah</h4>
+<ul>
+<li>✅ Mengulang eksperimen dengan alat ukur lebih akurat saat hasil tidak konsisten</li>
+<li>✅ Menggunakan alat yang sama (sendok ukuran sama, takaran sama) untuk semua kondisi</li>
+<li>✅ Rekaman video sebagai data pendukung</li>
+</ul>
+<h4>Langkah yang TIDAK SESUAI</h4>
+<ul>
+<li>❌ Menyimpulkan bahwa faktor X berpengaruh padahal data menunjukkan tidak ada perbedaan</li>
+<li>❌ Mengabaikan data yang berbeda dari prediksi karena dianggap "salah"</li>
+<li>❌ Menggunakan alat berbeda untuk kondisi berbeda (contoh: sendok besar untuk air panas, kecil untuk air dingin)</li>
+</ul>
+
+<div class="ib red"><strong>⚠️ Contoh Eksperimen Bermasalah</strong>
+Kelompok menguji pengaruh suhu terhadap kecepatan melarut gula, tapi pakai sendok berbeda ukuran untuk tiap percobaan. Ini membuat variabel kontrol tidak terjaga → kesimpulan tidak valid. <strong>Solusi: ulang eksperimen dengan sendok sama ukuran dan jumlah adukan sama.</strong></div>
+</div>
+
+<div class="cc"><h3>📢 Mengomunikasikan Hasil</h3>
+<p>Format komunikasi harus disesuaikan dengan <strong>audiens</strong>:</p>
+<div class="tw"><table><thead><tr><th>Audiens</th><th>Format Paling Tepat</th></tr></thead><tbody>
+<tr><td>Warga umum (non-sains)</td><td>Poster infografis berwarna + video pendek 2-3 menit → visual menarik, bahasa sederhana</td></tr>
+<tr><td>Tim juri lomba ilmiah</td><td>Laporan ilmiah formal + presentasi data statistik → detail, akurat, metodologis</td></tr>
+<tr><td>Siswa kelas 3 (usia 8-9)</td><td>Demonstrasi langsung + cerita sederhana → konkret, menyenangkan</td></tr>
+</tbody></table></div>
+</div>
+</div>
+
+<!-- ═══ RINGKASAN ═══ -->
+<div class="cc" style="border:2px solid var(--purple);background:var(--purple-light);">
+<h3 style="color:var(--purple-dark);font-size:1.08rem;">📝 Ringkasan Poin Kunci untuk Ujian</h3>
+
+<h4>Tubuh Manusia</h4>
+<ul><li>Paru-paru + diafragma = pernapasan. Jantung + pembuluh = peredaran darah</li><li>Merokok → rusak paru. Kolesterol tinggi → rusak pembuluh darah. Keduanya SEKALIGUS berisiko</li><li>Anemia & rabun senja bisa dicegah dengan gizi seimbang. TBC tidak cukup hanya nutrisi</li></ul>
+
+<h4>Ekosistem & Lingkungan</h4>
+<ul><li>Biotik = hidup (pohon, cacing). Abiotik = tak hidup (batu, air, udara)</li><li>Ular diburu → tikus meningkat → padi terancam (dampak berantai)</li><li>Mitigasi iklim: tanam pohon ✅, naik sepeda ✅, bakar sampah ❌</li></ul>
+
+<h4>Cahaya & Bunyi</h4>
+<ul><li>Cermin = <strong>pemantulan</strong>. Pensil di air = <strong>pembiasan</strong>. Pelangi = <strong>penguraian</strong>. Bayangan = cahaya merambat lurus</li><li>Bunyi melalui padat: meja kayu, benang telepon kaleng. Melalui cair: air kolam</li></ul>
+
+<h4>Energi</h4>
+<ul><li>Terbarukan: matahari, angin, air, panas bumi. Tidak terbarukan: minyak bumi, gas alam, batu bara</li><li>Hemat listrik: ganti LED ✅, cabut charger ✅, atur AC 26°C ✅</li></ul>
+
+<h4>Tata Surya</h4>
+<ul><li><strong>Rotasi</strong> → siang/malam, zona waktu, gerak semu harian. <strong>Revolusi</strong> → musim</li><li>Planet dalam (Me-Ve-Bu-Ma) — Sabuk Asteroid — Planet luar (Ju-Sa-Ur-Ne)</li></ul>
+
+<h4>Geografi & Ekonomi</h4>
+<ul><li>Pegunungan → petani sayur/teh. Pesisir → nelayan. Dataran rendah → petani padi</li><li><strong>Produksi</strong> = membuat. <strong>Distribusi</strong> = menyalurkan. <strong>Konsumsi</strong> = menggunakan</li><li>Kelangkaan = ketersediaan < kebutuhan (contoh: daging mahal saat Lebaran)</li></ul>
+
+<h4>Sejarah & Budaya</h4>
+<ul><li>Sumber tertulis: prasasti, buku catatan. Artefak: keris. Visual: foto (bukan tertulis)</li><li>Sasi Laut & Subak = pelestarian SDA. Ulos = pelestarian budaya</li><li>UNESCO: Batik, Wayang Kulit, Tari Saman</li></ul>
+
+<h4>Keterampilan Proses</h4>
+<ul><li>Variabel: <strong>Bebas</strong> (diubah), <strong>Terikat</strong> (diukur), <strong>Kontrol</strong> (dijaga sama)</li><li>Diagram batang = bandingkan. Grafik garis = tren waktu</li><li>Eksperimen bermasalah → ulang dengan variabel kontrol yang benar</li></ul>
+</div>
+
+</main>
+
+<footer class="footer">SD Muhammadiyah 01 Kukusan · Materi IPAS Kelas 6 · Tahun Pelajaran 2025/2026 🔬</footer>
+</body>
+</html>
