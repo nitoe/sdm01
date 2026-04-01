@@ -3,1326 +3,359 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Materi Pendidikan Pancasila – Kelas 6 SD Muhammadiyah 01 Kukusan</title>
+  <title>Materi Pendidikan Pancasila – Ujian Sekolah Kelas 6</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
-
-  <!--
-  ══════════════════════════════════════════════════════════════
-  CATATAN ILUSTRASI — 5 gambar diperlukan untuk halaman ini
-  Unggah ke ibb.co lalu ganti URL pada array IMAGE_ASSETS di bagian <script>
-
-  [1] lambang-lima-sila.png
-      Prompt: "Educational infographic for Indonesian elementary school students
-      showing all 5 Pancasila symbols in a clean horizontal row on white
-      background. Left to right: (1) golden five-pointed star on black
-      background labeled 'Sila 1 – Bintang Emas'; (2) gold chain of
-      square+circle links labeled 'Sila 2 – Rantai'; (3) large banyan tree
-      labeled 'Sila 3 – Pohon Beringin'; (4) bull head labeled 'Sila 4 –
-      Kepala Banteng'; (5) rice stalk and cotton labeled 'Sila 5 – Padi &
-      Kapas'. Bold labels below each symbol. Colorful, child-friendly, flat
-      illustration style."
-
-  [2] timeline-pancasila.png
-      Prompt: "Horizontal educational timeline for Indonesian grade 6 students
-      showing the birth of Pancasila in 1945. Four key events marked by
-      circles on a horizontal line: (A) 29 Mei 1945 – Sidang BPUPK, Moh.
-      Yamin proposes; (B) 1 Juni 1945 – Soekarno delivers Pancasila speech,
-      marked as 'Hari Lahir Pancasila'; (C) 22 Juni 1945 – Piagam Jakarta
-      signed by Panitia Sembilan; (D) 18 Agustus 1945 – PPKI ratifies UUD
-      1945, Pancasila finalized. Each event has a small icon (scroll, mic,
-      handshake, stamp). Color each circle distinctly. Clean flat design."
-
-  [3] pembukaan-uud1945.png
-      Prompt: "Clean educational diagram for Indonesian elementary school
-      showing the 4 paragraphs (alinea) of the UUD 1945 Preamble. Four
-      vertical colored cards arranged in a row: Alinea I (blue) – 'Hak
-      kemerdekaan segala bangsa'; Alinea II (green) – 'Perjuangan bangsa
-      Indonesia'; Alinea III (amber) – 'Pernyataan kemerdekaan'; Alinea IV
-      (red, slightly larger/highlighted) – 'Tujuan negara + Pancasila'.
-      Each card has the key summary text inside. White background, minimal
-      flat design, suitable for grade 6 students."
-
-  [4] empat-jenis-norma.png
-      Prompt: "Educational infographic for Indonesian grade 6 students
-      comparing Indonesia's 4 types of social norms. Four columns, each
-      a colored card: (1) Norma Agama – purple – source: Tuhan, sanction:
-      dosa/akhirat, icon: praying hands; (2) Norma Kesusilaan – blue –
-      source: hati nurani, sanction: rasa malu/bersalah, icon: heart;
-      (3) Norma Kesopanan – green – source: masyarakat, sanction:
-      dikucilkan, icon: group of people; (4) Norma Hukum – red – source:
-      negara, sanction: denda/penjara (paling tegas), icon: gavel.
-      Row headers: 'Norma', 'Sumber', 'Sanksi', 'Contoh Pelanggaran'.
-      Clean table layout, flat illustration, white background."
-
-  [5] hierarki-wilayah-nkri.png
-      Prompt: "Pyramid/hierarchy diagram for Indonesian grade 6 students
-      showing the administrative regions of the Republic of Indonesia
-      (NKRI) from largest to smallest. Pyramid shape with 7 levels from
-      top to bottom: NKRI (top, red), Provinsi (38 provinces, orange),
-      Kabupaten/Kota (green), Kecamatan (blue), Desa/Kelurahan (indigo),
-      RW (violet), RT (gray, smallest). Include count where applicable
-      (38 provinsi). Each level labeled clearly. Flat colorful design
-      on white background, educational infographic style."
-  ══════════════════════════════════════════════════════════════
-  -->
-
   <style>
-    :root {
-      --red:       #dc2626;
-      --red-dark:  #991b1b;
-      --red-mid:   #b91c1c;
-      --red-light: #fee2e2;
-      --red-vl:    #fff5f5;
-      --text:      #1f2a37;
-      --text-muted:#6b7280;
-      --bg:        #fff5f5;
-      --white:     #ffffff;
-      --border:    #fecaca;
-      --border-g:  #d1d5db;
-      --radius:    14px;
-      --shadow:    0 4px 20px rgba(0,0,0,0.07);
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: clamp(14px, 3.5vw, 16px); scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Nunito', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
-
-    /* ─── HEADER ─── */
-    .header {
-      position: sticky; top: 0; z-index: 200;
-      background: linear-gradient(135deg, #7f1d1d, #991b1b 50%, #dc2626);
-      color: white;
-      padding: 0 20px;
-      height: 56px;
-      display: flex; align-items: center; justify-content: space-between;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
-    }
-
-    .header-brand { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; font-weight: 800; }
-    .header-brand span { font-size: 1.4rem; }
-    .header-sub { font-size: 0.65rem; opacity: 0.8; font-weight: 600; display: block; }
-
-    .back-btn {
-      display: flex; align-items: center; gap: 6px;
-      background: rgba(255,255,255,0.18);
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 20px;
-      padding: 5px 14px;
-      font-size: 0.75rem; font-weight: 700;
-      color: white; text-decoration: none;
-      transition: background 0.2s;
-      white-space: nowrap;
-    }
-    .back-btn:hover { background: rgba(255,255,255,0.28); }
-
-    /* ─── HERO ─── */
-    .hero {
-      background: linear-gradient(160deg, #7f1d1d 0%, #991b1b 40%, #dc2626 100%);
-      color: white; text-align: center;
-      padding: 44px 20px 52px;
-      position: relative; overflow: hidden;
-    }
-    .hero::before {
-      content: ''; position: absolute; inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M50 50v-6h-2v6h-6v2h6v6h2v-6h6v-2h-6zM10 10V4H8v6H2v2h6v6h2v-6h6v-2h-6z'/%3E%3C/g%3E%3C/svg%3E");
-    }
-
-    .hero-emoji { font-size: 3.2rem; display: block; margin-bottom: 10px; animation: float 3s ease-in-out infinite; position: relative; }
-    @keyframes float { 0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)} }
-
-    .hero h1 { font-family:'Baloo 2',cursive; font-size:clamp(1.6rem,5vw,2.3rem); font-weight:800; margin-bottom:6px; position:relative; }
-    .hero-sub { font-size:clamp(0.82rem,2.5vw,0.95rem); opacity:0.88; max-width:520px; margin:0 auto 22px; font-weight:600; position:relative; }
-
-    .hero-pills { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; position:relative; }
-    .pill {
-      background:rgba(255,255,255,0.18); backdrop-filter:blur(8px);
-      border:1px solid rgba(255,255,255,0.25); border-radius:30px;
-      padding:5px 14px; font-size:0.76rem; font-weight:700;
-    }
-
-    /* ─── NAV ELEMEN ─── */
-    .nav-elemen {
-      position: sticky; top: 56px; z-index: 100;
-      background: white; border-bottom: 2px solid var(--border);
-      padding: 0 16px;
-      display: flex; gap: 0; overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .nav-elemen::-webkit-scrollbar { display: none; }
-
-    .nav-tab {
-      padding: 12px 18px;
-      font-size: 0.78rem; font-weight: 800;
-      color: var(--text-muted);
-      text-decoration: none;
-      border-bottom: 3px solid transparent;
-      white-space: nowrap;
-      transition: color 0.2s, border-color 0.2s;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .nav-tab:hover { color: var(--red); }
-    .nav-tab.active { color: var(--red); border-bottom-color: var(--red); }
-
-    /* ─── MAIN CONTAINER ─── */
-    .container { max-width: 900px; margin: 0 auto; padding: 32px 16px 64px; }
-
-    /* ─── ELEMEN SECTION ─── */
-    .elemen-section {
-      margin-bottom: 56px;
-      scroll-margin-top: 110px;
-    }
-
-    .elemen-header {
-      display: flex; align-items: center; gap: 14px;
-      margin-bottom: 24px;
-      padding-bottom: 14px;
-      border-bottom: 2px solid var(--red-light);
-    }
-
-    .elemen-icon {
-      width: 52px; height: 52px; flex-shrink: 0;
-      border-radius: 14px;
-      background: linear-gradient(135deg, var(--red-dark), var(--red));
-      color: white; font-size: 1.6rem;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 12px rgba(185,28,28,0.3);
-    }
-
-    .elemen-meta { flex: 1; }
-    .elemen-num { font-size: 0.7rem; font-weight: 800; color: var(--red); text-transform: uppercase; letter-spacing: 1px; }
-    .elemen-title { font-family: 'Baloo 2', cursive; font-size: 1.4rem; font-weight: 800; color: var(--red-dark); line-height: 1.1; }
-    .elemen-soal { font-size: 0.72rem; color: var(--text-muted); font-weight: 700; margin-top: 2px; }
-
-    /* ─── TOPIK CARD ─── */
-    .topik-card {
-      background: var(--white);
-      border-radius: var(--radius);
-      border: 1.5px solid var(--border-g);
-      box-shadow: var(--shadow);
-      margin-bottom: 20px;
-      overflow: hidden;
-    }
-
-    .topik-header {
-      background: var(--red-light);
-      padding: 14px 18px;
-      display: flex; align-items: center; gap: 10px;
-      border-bottom: 1px solid var(--border);
-    }
-    .topik-header-icon { font-size: 1.2rem; flex-shrink: 0; }
-    .topik-title { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1rem; color: var(--red-dark); }
-    .topik-tag {
-      margin-left: auto;
-      font-size: 0.65rem; font-weight: 800;
-      background: var(--red-dark); color: white;
-      padding: 2px 8px; border-radius: 8px;
-      text-transform: uppercase; letter-spacing: 0.3px;
-      white-space: nowrap; flex-shrink: 0;
-    }
-
-    .topik-body { padding: 20px 18px; }
-    .topik-body p { font-size: 0.9rem; line-height: 1.75; color: #374151; margin-bottom: 14px; }
-    .topik-body p:last-child { margin-bottom: 0; }
-
-    /* ─── VISUAL PLACEHOLDER ─── */
-    .visual-box {
-      background: #f9fafb;
-      border: 2px dashed #d1d5db;
-      border-radius: 10px;
-      padding: 16px;
-      margin: 16px 0;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center;
-      min-height: 160px;
-    }
-    .visual-box img {
-      max-width: 100%; height: auto;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-    .visual-placeholder {
-      color: #9ca3af; font-size: 0.8rem; font-weight: 600;
-    }
-    .visual-caption {
-      font-size: 0.72rem; color: var(--text-muted); font-weight: 700;
-      margin-top: 8px; text-align: center; font-style: italic;
-    }
-
-    /* ─── SILA GRID ─── */
-    .sila-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 12px;
-      margin: 16px 0;
-    }
-
-    .sila-card {
-      background: var(--white);
-      border: 1.5px solid var(--border-g);
-      border-radius: 10px;
-      padding: 14px 12px;
-      text-align: center;
-      transition: box-shadow 0.2s;
-    }
-    .sila-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
-
-    .sila-num {
-      font-size: 0.65rem; font-weight: 800;
-      color: white; background: var(--red);
-      border-radius: 20px; padding: 2px 8px;
-      display: inline-block; margin-bottom: 6px;
-    }
-
-    .sila-symbol { font-size: 2rem; margin-bottom: 6px; display: block; }
-    .sila-lambang { font-size: 0.75rem; font-weight: 800; color: var(--red-dark); margin-bottom: 4px; }
-    .sila-text { font-size: 0.7rem; color: #4b5563; line-height: 1.4; font-weight: 600; }
-
-    /* ─── INFO BOX (kuning) ─── */
-    .info-box {
-      background: #fffbeb;
-      border-left: 4px solid #f59e0b;
-      border-radius: 0 8px 8px 0;
-      padding: 14px 16px;
-      margin: 14px 0;
-      font-size: 0.85rem; line-height: 1.65;
-      color: #374151;
-    }
-    .info-box strong { color: #92400e; display: block; margin-bottom: 4px; font-size: 0.83rem; }
-
-    /* ─── HIGHLIGHT BOX (merah) ─── */
-    .highlight-box {
-      background: var(--red-light);
-      border-left: 4px solid var(--red);
-      border-radius: 0 8px 8px 0;
-      padding: 14px 16px;
-      margin: 14px 0;
-      font-size: 0.85rem; line-height: 1.65;
-      color: #374151;
-    }
-    .highlight-box strong { color: var(--red-dark); display: block; margin-bottom: 4px; font-size: 0.83rem; }
-
-    /* ─── TIP BOX (biru) ─── */
-    .tip-box {
-      background: #eff6ff;
-      border-left: 4px solid #2563eb;
-      border-radius: 0 8px 8px 0;
-      padding: 14px 16px;
-      margin: 14px 0;
-    }
-    .tip-box strong { color: #1d4ed8; font-size: 0.83rem; display: block; margin-bottom: 6px; }
-    .tip-list { list-style: none; padding: 0; }
-    .tip-list li {
-      font-size: 0.84rem; color: #374151; line-height: 1.65;
-      padding: 3px 0 3px 18px; position: relative;
-    }
-    .tip-list li::before { content: '✓'; position: absolute; left: 0; color: #2563eb; font-weight: 800; }
-
-    /* ─── TABLE ─── */
-    .materi-table {
-      width: 100%; border-collapse: collapse;
-      font-size: 0.84rem; margin: 14px 0;
-      border-radius: 8px; overflow: hidden;
-      border: 1px solid #e5e7eb;
-    }
-    .materi-table th {
-      background: var(--red-dark); color: white;
-      padding: 10px 12px; text-align: left;
-      font-size: 0.78rem; font-weight: 800;
-    }
-    .materi-table td {
-      padding: 10px 12px;
-      border-bottom: 1px solid #f3f4f6;
-      color: #374151; line-height: 1.55;
-      vertical-align: top;
-    }
-    .materi-table tr:last-child td { border-bottom: none; }
-    .materi-table tr:nth-child(even) td { background: #fafafa; }
-
-    /* ─── ORDERED LIST ─── */
-    .ol-materi { padding-left: 0; list-style: none; margin: 10px 0; }
-    .ol-materi li {
-      display: flex; gap: 10px; align-items: flex-start;
-      padding: 6px 0;
-      border-bottom: 1px solid #f3f4f6;
-      font-size: 0.87rem; color: #374151; line-height: 1.6;
-    }
-    .ol-materi li:last-child { border-bottom: none; }
-    .ol-num {
-      background: var(--red); color: white;
-      font-size: 0.7rem; font-weight: 800;
-      min-width: 22px; height: 22px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; margin-top: 2px;
-    }
-
-    /* ─── UL MATERI ─── */
-    .ul-materi { list-style: none; padding: 0; margin: 10px 0; }
-    .ul-materi li {
-      padding: 5px 0 5px 22px; position: relative;
-      font-size: 0.87rem; color: #374151; line-height: 1.6;
-      border-bottom: 1px solid #f3f4f6;
-    }
-    .ul-materi li:last-child { border-bottom: none; }
-    .ul-materi li::before { content:'—'; color: var(--red); font-weight:800; position:absolute; left:0; }
-
-    /* ─── CONTOH KASUS ─── */
-    .kasus-box {
-      background: #f0fdf4;
-      border: 1.5px solid #86efac;
-      border-radius: 10px;
-      padding: 16px;
-      margin: 14px 0;
-    }
-    .kasus-label {
-      font-size: 0.68rem; font-weight: 800;
-      color: #15803d; text-transform: uppercase; letter-spacing: 0.5px;
-      margin-bottom: 8px;
-    }
-    .kasus-box p { font-size: 0.84rem; color: #374151; line-height: 1.65; margin-bottom: 8px; }
-    .kasus-box p:last-child { margin-bottom: 0; }
-    .kasus-jawab {
-      background: #dcfce7; border-radius: 6px;
-      padding: 8px 12px; font-size: 0.82rem;
-      color: #15803d; font-weight: 700; margin-top: 6px;
-    }
-
-    /* ─── DAFTAR BERTAHAP ─── */
-    .hierarki-visual {
-      margin: 14px 0;
-      display: flex; flex-direction: column; align-items: center; gap: 4px;
-    }
-    .hierarki-level {
-      display: flex; align-items: center; gap: 10px;
-      width: 100%; max-width: 480px;
-    }
-    .hierarki-bar {
-      flex: 1; padding: 8px 14px; border-radius: 8px;
-      font-size: 0.82rem; font-weight: 800; text-align: center;
-      color: white;
-    }
-    .hierarki-detail { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; width: 100px; text-align: left; }
-    .hierarki-arrow { font-size: 1rem; color: var(--text-muted); }
-
-    /* ─── FOOTER ─── */
-    .footer {
-      text-align: center; padding: 24px 16px;
-      font-size: 0.76rem; color: var(--text-muted); font-weight: 600;
-      border-top: 1px solid var(--border-g);
-    }
-
-    /* ─── SCROLL REVEAL (sederhana) ─── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .topik-card { animation: fadeUp 0.45s ease both; }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 480px) {
-      .sila-grid { grid-template-columns: 1fr 1fr; }
-      .elemen-icon { width: 44px; height: 44px; font-size: 1.3rem; }
-    }
+    :root{--purple:#7c3aed;--purple-dark:#5b21b6;--purple-light:#f5f3ff;--purple-pale:#ede9fe;--green:#059669;--green-dark:#065f46;--green-light:#d1fae5;--blue:#2563eb;--blue-light:#dbeafe;--orange:#ea580c;--orange-light:#fff7ed;--red:#dc2626;--red-light:#fef2f2;--amber:#d97706;--amber-light:#fef3c7;--teal:#0d9488;--teal-light:#ccfbf1;--text:#1f2a37;--text-muted:#6b7280;--bg:#f0f4ff;--white:#fff;--border:#e5e7eb;--radius:14px;--shadow:0 4px 20px rgba(0,0,0,.06)}
+    *{box-sizing:border-box;margin:0;padding:0}html{font-size:clamp(14px,3.2vw,16px);scroll-behavior:smooth}body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.75}
+    .header{position:sticky;top:0;z-index:100;background:linear-gradient(135deg,#3b0764,#5b21b6 50%,#7c3aed);color:#fff;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+    .header-brand{display:flex;align-items:center;gap:10px}.logo{font-size:1.5rem}.brand-name{font-family:'Baloo 2',cursive;font-size:clamp(.82rem,2.6vw,1rem);font-weight:800;line-height:1.1}.sub-brand{font-size:.62rem;opacity:.8;font-weight:600}
+    .header-back{display:flex;align-items:center;gap:5px;color:#fff;text-decoration:none;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 14px;font-size:.72rem;font-weight:700;transition:background .2s}.header-back:hover{background:rgba(255,255,255,.3)}
+    .hero{background:linear-gradient(160deg,#3b0764,#5b21b6 40%,#7c3aed);color:#fff;padding:40px 20px 48px;text-align:center;position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M50 50v-6h-2v6h-6v2h6v6h2v-6h6v-2h-6zM50 10V4h-2v6h-6v2h6v6h2v-6h6v-2h-6zM10 50v-6H8v6H2v2h6v6h2v-6h6v-2h-6zM10 10V4H8v6H2v2h6v6h2v-6h6v-2h-6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+    .hero-emoji{font-size:3rem;display:block;margin-bottom:10px;position:relative}.hero h1{font-family:'Baloo 2',cursive;font-size:clamp(1.4rem,4.5vw,2rem);font-weight:800;margin-bottom:6px;position:relative}.hero p{font-size:clamp(.8rem,2.2vw,.92rem);opacity:.88;font-weight:600;max-width:600px;margin:0 auto;position:relative;line-height:1.6}
+    .nav-pills{background:var(--white);border-bottom:1px solid var(--border);padding:14px 16px;position:sticky;top:56px;z-index:90;box-shadow:0 2px 8px rgba(0,0,0,.04)}.nav-pills-inner{max-width:900px;margin:0 auto;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.nav-pill{font-size:.72rem;font-weight:700;padding:5px 14px;border-radius:20px;text-decoration:none;background:var(--purple-light);color:var(--purple-dark);border:1px solid transparent;transition:all .2s;white-space:nowrap}.nav-pill:hover{background:var(--purple-pale);border-color:var(--purple)}
+    .container{max-width:900px;margin:0 auto;padding:32px 16px 56px}
+    .section-block{margin-bottom:40px}.section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:3px solid var(--purple)}.section-num{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:900;color:#fff;flex-shrink:0}
+    .section-num.e1{background:linear-gradient(135deg,#dc2626,#f87171)}.section-num.e2{background:linear-gradient(135deg,#2563eb,#60a5fa)}.section-num.e3{background:linear-gradient(135deg,#d97706,#fbbf24)}.section-num.e4{background:linear-gradient(135deg,#059669,#10b981)}
+    .section-title-group{flex:1}.section-title{font-family:'Baloo 2',cursive;font-size:1.2rem;font-weight:800}.section-subtitle{font-size:.75rem;font-weight:600;color:var(--text-muted)}
+    .content-card{background:var(--white);border-radius:var(--radius);padding:24px;margin-bottom:20px;box-shadow:var(--shadow);border:1px solid var(--border)}.content-card h3{font-family:'Baloo 2',cursive;font-size:1.05rem;font-weight:800;margin-bottom:12px;color:var(--purple-dark);display:flex;align-items:center;gap:8px}.content-card h4{font-size:.92rem;font-weight:800;margin:18px 0 8px;color:var(--text)}.content-card p{font-size:.88rem;margin-bottom:12px;color:#374151}.content-card ul,.content-card ol{padding-left:20px;margin-bottom:12px}.content-card li{font-size:.86rem;margin-bottom:6px;color:#374151}.content-card li strong{color:var(--text)}
+    .info-box{border-radius:10px;padding:16px 18px;margin:16px 0;font-size:.84rem}.info-box.green{background:var(--green-light);border-left:4px solid var(--green)}.info-box.blue{background:var(--blue-light);border-left:4px solid var(--blue)}.info-box.orange{background:var(--orange-light);border-left:4px solid var(--orange)}.info-box.red{background:var(--red-light);border-left:4px solid var(--red)}.info-box.amber{background:var(--amber-light);border-left:4px solid var(--amber)}.info-box.teal{background:var(--teal-light);border-left:4px solid var(--teal)}.info-box.purple{background:var(--purple-light);border-left:4px solid var(--purple)}
+    .info-box strong{display:block;margin-bottom:4px}.info-box.green strong{color:var(--green-dark)}.info-box.blue strong{color:#1e40af}.info-box.orange strong{color:var(--orange)}.info-box.red strong{color:var(--red)}.info-box.amber strong{color:var(--amber)}.info-box.teal strong{color:var(--teal)}.info-box.purple strong{color:var(--purple-dark)}
+    .table-wrap{overflow-x:auto;margin:14px 0;-webkit-overflow-scrolling:touch}table{width:100%;border-collapse:collapse;font-size:.84rem;min-width:360px}th{background:var(--purple-light);color:var(--purple-dark);padding:10px 14px;text-align:left;font-weight:800;font-size:.78rem;text-transform:uppercase;letter-spacing:.3px;border-bottom:2px solid var(--purple)}td{padding:10px 14px;border-bottom:1px solid var(--border)}tr:nth-child(even) td{background:#fafbff}
+    .diagram-container{background:#f9fafb;border:1px solid var(--border);border-radius:12px;padding:20px;margin:16px 0;text-align:center}.diagram-container svg{max-width:100%;height:auto}.diagram-caption{font-size:.76rem;font-weight:700;color:var(--text-muted);margin-top:10px}
+    .key-term{display:inline-block;background:var(--purple-light);color:var(--purple-dark);padding:1px 8px;border-radius:6px;font-weight:800;font-size:.84rem}
+    .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}@media(max-width:500px){.compare-grid{grid-template-columns:1fr}}.compare-box{border-radius:10px;padding:16px;font-size:.84rem}
+    .footer{text-align:center;padding:24px 16px;font-size:.76rem;color:var(--text-muted);font-weight:600;border-top:1px solid var(--border)}
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="header-brand">
-      <span>🦅</span>
-      <div>
-        Pendidikan Pancasila
-        <span class="header-sub">Materi Ujian Sekolah · Kelas 6</span>
-      </div>
-    </div>
-    <a class="back-btn" href="index.html">← Semua Mapel</a>
-  </header>
-
-  <!-- HERO -->
-  <section class="hero">
-    <span class="hero-emoji">🦅</span>
-    <h1>Materi Pendidikan Pancasila</h1>
-    <p class="hero-sub">Panduan belajar mandiri sesuai kisi-kisi Ujian Sekolah 4 Mei 2026 — mencakup semua elemen yang diujikan beserta materi pendukungnya.</p>
-    <div class="hero-pills">
-      <div class="pill">📋 40 Soal · 4 Mei 2026</div>
-      <div class="pill">📖 4 Elemen Materi</div>
-      <div class="pill">⏱️ 90 Menit</div>
-    </div>
-  </section>
-
-  <!-- NAVIGASI ELEMEN -->
-  <nav class="nav-elemen">
-    <a class="nav-tab" href="#elemen-1">⭐ Pancasila</a>
-    <a class="nav-tab" href="#elemen-2">📜 UUD 1945</a>
-    <a class="nav-tab" href="#elemen-3">🤝 Bhinneka Tunggal Ika</a>
-    <a class="nav-tab" href="#elemen-4">🗺️ NKRI</a>
-  </nav>
-
-  <!-- ════════════════════ KONTEN MATERI ════════════════════ -->
-  <main class="container">
-
-
-    <!-- ═══════════════════════════════════════════
-         ELEMEN 1: PANCASILA (Soal 1–10)
-    ═══════════════════════════════════════════ -->
-    <section class="elemen-section" id="elemen-1">
-      <div class="elemen-header">
-        <div class="elemen-icon">⭐</div>
-        <div class="elemen-meta">
-          <div class="elemen-num">Elemen 1</div>
-          <div class="elemen-title">Pancasila</div>
-          <div class="elemen-soal">Soal 1–10 · PG Tunggal, PG Kompleks & PG Kategori</div>
-        </div>
-      </div>
-
-      <!-- Topik 1.1: Lima Sila & Lambang -->
-      <div class="topik-card">
-        <div class="topik-header">
-          <span class="topik-header-icon">🔖</span>
-          <div class="topik-title">Lima Sila Pancasila beserta Lambangnya</div>
-          <span class="topik-tag">Kisi-Kisi</span>
-        </div>
-        <div class="topik-body">
-          <p>Pancasila adalah dasar negara dan pandangan hidup bangsa Indonesia. Kelima silanya tidak berdiri sendiri — satu sila selalu berkaitan dan memperkuat sila lainnya sebagai satu kesatuan yang utuh.</p>
-
-          <div class="sila-grid">
-            <div class="sila-card">
-              <span class="sila-num">Sila ke-1</span>
-              <span class="sila-symbol">⭐</span>
-              <div class="sila-lambang">Bintang Emas</div>
-              <div class="sila-text">Ketuhanan Yang Maha Esa — Melambangkan cahaya kerohanian bagi manusia. Lima sudut = 5 agama yang diakui.</div>
-            </div>
-            <div class="sila-card">
-              <span class="sila-num">Sila ke-2</span>
-              <span class="sila-symbol">⛓️</span>
-              <div class="sila-lambang">Rantai Emas</div>
-              <div class="sila-text">Kemanusiaan yang Adil dan Beradab — Rantai persegi (laki-laki) + bulat (perempuan) berkaitan erat = kemanusiaan yang saling menghormati.</div>
-            </div>
-            <div class="sila-card">
-              <span class="sila-num">Sila ke-3</span>
-              <span class="sila-symbol">🌳</span>
-              <div class="sila-lambang">Pohon Beringin</div>
-              <div class="sila-text">Persatuan Indonesia — Akar tunggang yang kuat + akar gantung = persatuan bangsa yang kokoh dari berbagai unsur.</div>
-            </div>
-            <div class="sila-card">
-              <span class="sila-num">Sila ke-4</span>
-              <span class="sila-symbol">🐃</span>
-              <div class="sila-lambang">Kepala Banteng</div>
-              <div class="sila-text">Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan — Banteng = hewan sosial yang kuat saat berkelompok.</div>
-            </div>
-            <div class="sila-card">
-              <span class="sila-num">Sila ke-5</span>
-              <span class="sila-symbol">🌾</span>
-              <div class="sila-lambang">Padi & Kapas</div>
-              <div class="sila-text">Keadilan Sosial bagi Seluruh Rakyat Indonesia — Padi (pangan) dan Kapas (sandang) = kebutuhan dasar yang harus terpenuhi bagi semua rakyat.</div>
-            </div>
-          </div>
-
-          <!-- PLACEHOLDER GAMBAR 1 -->
-          <div class="visual-box" id="img-sila-lambang">
-            <img src="" alt="Lima Lambang Sila Pancasila" style="display:none;" id="imgEl1">
-            <div class="visual-placeholder" id="imgPh1">🖼️ Ilustrasi: Lima Lambang Sila Pancasila<br><small>Gambar sedang disiapkan</small></div>
-          </div>
-          <div class="visual-caption">Gambar 1 — Lima lambang sila Pancasila pada Garuda Pancasila</div>
-
-          <div class="info-box">
-            <strong>💡 Cara Soal Menguji Lambang</strong>
-            Soal tidak menanyakan "apa lambang sila ke-3?" secara langsung, melainkan menampilkan gambar salah satu lambang dan meminta kamu mengidentifikasi makna atau sila yang sesuai. Hafalkan <strong>3 kata kunci per lambang</strong>: nama lambang, sila yang diwakili, dan makna utamanya.
-          </div>
-
-          <div class="tip-box">
-            <strong>🧠 Tips Menghafal Lambang</strong>
-            <ul class="tip-list">
-              <li><strong>Sila 1 – Bintang:</strong> "Satu Tuhan, satu bintang yang bersinar."</li>
-              <li><strong>Sila 2 – Rantai:</strong> "Manusia saling <em>terkait</em> = rantai; persegi+bulat = laki-perempuan setara."</li>
-              <li><strong>Sila 3 – Beringin:</strong> "Indonesia <em>bernaung</em> di bawah satu pohon besar meski akar beragam."</li>
-              <li><strong>Sila 4 – Banteng:</strong> "Banteng = musyawarah bersama, bukan keputusan satu orang."</li>
-              <li><strong>Sila 5 – Padi & Kapas:</strong> "Semua rakyat harus cukup sandang dan pangan."</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Topik 1.2: Fungsi Ganda Pancasila -->
-      <div class="topik-card">
-        <div class="topik-header">
-          <span class="topik-header-icon">⚖️</span>
-          <div class="topik-title">Pancasila sebagai Dasar Negara vs. Pandangan Hidup Bangsa</div>
-          <span class="topik-tag">Kisi-Kisi</span>
-        </div>
-        <div class="topik-body">
-          <p>Pancasila memiliki dua fungsi utama yang saling berkaitan namun berbeda orientasinya. Ini sering muncul dalam soal PG Kategori — kamu diminta mengklasifikasikan suatu pernyataan ke salah satu fungsi.</p>
-
-          <table class="materi-table">
-            <thead>
-              <tr>
-                <th>Aspek</th>
-                <th>Dasar Negara</th>
-                <th>Pandangan Hidup Bangsa</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Orientasi</strong></td>
-                <td>Hukum & konstitusi</td>
-                <td>Nilai & perilaku sehari-hari</td>
-              </tr>
-              <tr>
-                <td><strong>Fungsi</strong></td>
-                <td>Fondasi seluruh peraturan negara; semua UU tidak boleh bertentangan</td>
-                <td>Kompas nilai dan pedoman hidup warga negara</td>
-              </tr>
-              <tr>
-                <td><strong>Contoh</strong></td>
-                <td>MK membatalkan UU yang bertentangan Pancasila; aturan sekolah tidak boleh melanggar nilai Pancasila</td>
-                <td>Siswa bergotong royong membersihkan kelas; warga membantu tetangga musibah</td>
-              </tr>
-              <tr>
-                <td><strong>Nama lain</strong></td>
-                <td>Sumber dari segala sumber hukum</td>
-                <td>Jati diri bangsa; pedoman moral</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="kasus-box">
-            <div class="kasus-label">📝 Contoh Kasus — Fungsi Ganda</div>
-            <p>Kepala sekolah membatalkan aturan wali kelas yang melarang siswa membawa bekal, karena bertentangan dengan kebijakan sekolah yang lebih tinggi. Kepala sekolah menjelaskan ini mirip dengan fungsi Pancasila di tingkat negara.</p>
-            <div class="kasus-jawab">✅ Fungsi yang dimaksud: <strong>Pancasila sebagai Dasar Negara</strong> — sumber dari segala sumber hukum yang mengikat.</div>
-          </div>
-
-          <div class="kasus-box">
-            <div class="kasus-label">📝 Contoh Kasus — Pandangan Hidup</div>
-            <p>Pak Budi selalu ikut kerja bakti dengan tulus dan mengajak tetangga lain. Berbeda dengan Pak Andi yang hanya membayar petugas kebersihan, Bu Dewi yang hanya ikut saat ada penilaian.</p>
-            <div class="kasus-jawab">✅ Pak Budi mencerminkan <strong>Pancasila sebagai Pandangan Hidup</strong> — nilai gotong royong dan kepedulian yang konsisten, bukan karena terpaksa.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Topik 1.3: Sejarah Kelahiran Pancasila -->
-      <div class="topik-card">
-        <div class="topik-header">
-          <span class="topik-header-icon">📅</span>
-          <div class="topik-title">Kronologi Sejarah Kelahiran Pancasila</div>
-          <span class="topik-tag">Kisi-Kisi</span>
-        </div>
-        <div class="topik-body">
-          <p>Pancasila lahir melalui proses panjang penuh kompromi. Soal menguji kemampuanmu <strong>mengurutkan peristiwa secara kronologis</strong> dan memahami makna tiap momen penting.</p>
-
-          <!-- PLACEHOLDER GAMBAR 2 -->
-          <div class="visual-box" id="img-timeline">
-            <img src="" alt="Timeline Kronologi Kelahiran Pancasila" style="display:none;" id="imgEl2">
-            <div class="visual-placeholder" id="imgPh2">🖼️ Ilustrasi: Timeline Kronologi Kelahiran Pancasila<br><small>Gambar sedang disiapkan</small></div>
-          </div>
-          <div class="visual-caption">Gambar 2 — Kronologi lahirnya Pancasila dari sidang BPUPK hingga pengesahan 18 Agustus 1945</div>
-
-          <ol class="ol-materi">
-            <li>
-              <span class="ol-num">1</span>
-              <div><strong>29 Mei 1945</strong> — Mr. Moh. Yamin menyampaikan lima dasar negara (pertama kali dalam sejarah sidang BPUPK). Juga dikenal sebagai pidato pertama dalam Sidang BPUPK.</div>
-            </li>
-            <li>
-              <span class="ol-num">2</span>
-              <div><strong>31 Mei 1945</strong> — Dr. Soepomo menyampaikan teori negara integralistik sebagai alternatif dasar negara.</div>
-            </li>
-            <li>
-              <span class="ol-num">3</span>
-              <div><strong>1 Juni 1945</strong> — Ir. Soekarno berpidato mengusulkan nama <em>"Pancasila"</em> secara resmi. Tanggal ini diperingati sebagai <strong>Hari Lahir Pancasila</strong>.</div>
-            </li>
-            <li>
-              <span class="ol-num">4</span>
-              <div><strong>22 Juni 1945</strong> — <strong>Piagam Jakarta</strong> ditandatangani oleh Panitia Sembilan. Sila pertama berbunyi: <em>"Ketuhanan, dengan kewajiban menjalankan syariat Islam bagi pemeluk-pemeluknya"</em> (tujuh kata kontroversial).</div>
-            </li>
-            <li>
-              <span class="ol-num">5</span>
-              <div><strong>17 Agustus 1945</strong> — Proklamasi Kemerdekaan Indonesia oleh Soekarno-Hatta.</div>
-            </li>
-            <li>
-              <span class="ol-num">6</span>
-              <div><strong>18 Agustus 1945</strong> — PPKI mengesahkan UUD 1945. Tujuh kata dalam Piagam Jakarta <strong>dihapus</strong> demi menjaga persatuan. Sila pertama menjadi: <em>"Ketuhanan Yang Maha Esa"</em>. Inilah <strong>Pancasila final</strong> yang berlaku hingga kini.</div>
-            </li>
-          </ol>
-
-          <div class="highlight-box">
-            <strong>🔑 Urutan yang Sering Diujikan</strong>
-            Pidato Soekarno (1 Juni) → Piagam Jakarta (22 Juni) → Pengesahan UUD 1945 (18 Agustus). Ingat: Piagam Jakarta <em>lebih dulu</em> dari pengesahan UUD, dan pidato Soekarno <em>lebih dulu</em> dari keduanya.
-          </div>
-
-          <p><strong>Tokoh-tokoh Kunci dan Sikap yang Diteladani:</strong></p>
-          <table class="materi-table">
-            <thead><tr><th>Tokoh</th><th>Peran</th><th>Sikap yang Diteladani</th></tr></thead>
-            <tbody>
-              <tr><td>Ir. Soekarno</td><td>Pencetus nama "Pancasila", ketua Panitia Sembilan</td><td>Memimpin musyawarah, menjembatani berbagai pihak</td></tr>
-              <tr><td>Moh. Hatta</td><td>Memfasilitasi dialog antara golongan nasionalis & Islam</td><td>Aktif menjembatani perbedaan; tidak memaksakan pendapat</td></tr>
-              <tr><td>Moh. Yamin</td><td>Pidato pertama usulan dasar negara (29 Mei)</td><td>Berani menyampaikan gagasan demi bangsa</td></tr>
-              <tr><td>Dr. Soepomo</td><td>Menyampaikan teori integralistik (31 Mei)</td><td>Rela usulannya tidak dipakai demi kepentingan bersama</td></tr>
-            </tbody>
-          </table>
-
-          <div class="info-box">
-            <strong>💡 BPUPK vs PPKI</strong>
-            <strong>BPUPK</strong> (Badan Penyelidik Usaha-Usaha Persiapan Kemerdekaan) → bertugas merumuskan dasar negara dan UUD. <strong>PPKI</strong> (Panitia Persiapan Kemerdekaan Indonesia) → bertugas mengesahkan hasil kerja BPUPK pada 18 Agustus 1945.
-          </div>
-        </div>
-      </div>
-
-      <!-- Topik 1.4: Implementasi Sila & Keterkaitan -->
-      <div class="topik-card">
-        <div class="topik-header">
-          <span class="topik-header-icon">🔗</span>
-          <div class="topik-title">Implementasi Nilai Sila dalam Kehidupan Sehari-hari</div>
-          <span class="topik-tag">Kisi-Kisi</span>
-        </div>
-        <div class="topik-body">
-          <p>Soal Pancasila selalu dikemas dalam studi kasus. Kamu tidak ditanya <em>"Apa bunyi sila ke-2?"</em> tapi <em>"Kasus ini mencerminkan atau melanggar sila ke berapa?"</em></p>
-
-          <table class="materi-table">
-            <thead><tr><th>Sila</th><th>Contoh Penerapan di Sekolah</th><th>Contoh Pelanggaran</th></tr></thead>
-            <tbody>
-              <tr>
-                <td><strong>Sila 1</strong><br>Ketuhanan</td>
-                <td>Berdoa sebelum belajar; menghormati teman yang sedang beribadah</td>
-                <td>Mengganggu teman yang sedang salat; mengolok-olok agama lain</td>
-              </tr>
-              <tr>
-                <td><strong>Sila 2</strong><br>Kemanusiaan</td>
-                <td>Bertanggung jawab atas barang yang dipinjam; tidak merendahkan teman</td>
-                <td>Membully teman; meminjam barang lalu merusaknya tanpa ganti rugi</td>
-              </tr>
-              <tr>
-                <td><strong>Sila 3</strong><br>Persatuan</td>
-                <td>Mau satu kelompok dengan teman berbeda suku; tidak pilih-pilih teman</td>
-                <td>Mengelompokkan diri hanya dengan sesama suku/daerah</td>
-              </tr>
-              <tr>
-                <td><strong>Sila 4</strong><br>Kerakyatan</td>
-                <td>Musyawarah menentukan ketua kelompok; menerima keputusan bersama</td>
-                <td>Ketua OSIS memutuskan sendiri tanpa tanya anggota lain</td>
-              </tr>
-              <tr>
-                <td><strong>Sila 5</strong><br>Keadilan Sosial</td>
-                <td>Membagi tugas kelompok secara adil dan merata; berbagi alat tulis</td>
-                <td>Meminta jatah anggaran jauh lebih besar dari kelompok lain</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="kasus-box">
-            <div class="kasus-label">📝 Contoh Soal — Keterkaitan Antar Sila</div>
-            <p>Komunitas Kukusan mengadakan aksi bersih sungai secara sukarela pada hari Minggu. Warga berbeda agama dan profesi bergotong royong selama 3 jam, lalu sarapan bersama dari patungan. Dampaknya, banjir tidak terjadi dalam tiga bulan ke depan.</p>
-            <div class="kasus-jawab">✅ Tiga sila yang tercermin sekaligus: <br>
-              • Sila ke-3 (Persatuan) — warga berbeda latar belakang bersatu<br>
-              • Sila ke-4 (Kerakyatan) — inisiatif dari rakyat, bukan perintah pemerintah<br>
-              • Sila ke-5 (Keadilan Sosial) — manfaatnya dirasakan bersama</div>
-          </div>
-
-          <div class="tip-box">
-            <strong>🧠 Tips Menjawab Soal Implementasi</strong>
-            <ul class="tip-list">
-              <li>Cari kata kunci: <strong>musyawarah</strong> → Sila 4; <strong>gotong royong/adil</strong> → Sila 5; <strong>tidak membeda-bedakan</strong> → Sila 3; <strong>hak orang lain/martabat</strong> → Sila 2; <strong>ibadah/agama</strong> → Sila 1.</li>
-              <li>Satu kasus bisa mencerminkan <strong>lebih dari satu sila</strong> — di soal PG Kompleks kamu harus pilih semua yang benar.</li>
-              <li>Fokus pada <strong>niat dan konsistensi</strong>, bukan sekadar tindakan fisik (Pak Budi vs Bu Dewi).</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-    </section><!-- /elemen-1 -->
-
-
-    <!-- ═══════════════════════════════════════════
-         ELEMEN 2: UUD 1945 (Soal 11–20)
-    ═══════════════════════════════════════════ -->
-    <section class="elemen-section" id="elemen-2">
-      <div class="elemen-header">
-        <div class="elemen-icon">📜</div>
-        <div class="elemen-meta">
-          <div class="elemen-num">Elemen 2</div>
-          <div class="elemen-title">UUD 1945</div>
-          <div class="elemen-soal">Soal 11–20 · PG Tunggal, PG Kompleks & PG Kategori</div>
-        </div>
-      </div>
-
-      <!-- Topik 2.1: Pembukaan UUD 1945 -->
-      <div class="topik-card">
-        <div class="topik-header">
-          <span class="topik-header-icon">📋</span>
-          <div class="topik-title">Pembukaan UUD 1945 — Empat Alinea</div>
-          <span class="topik-tag">Kisi-Kisi</span>
-        </div>
-        <div class="topik-body">
-          <p>Pembukaan UUD 1945 terdiri dari empat alinea (paragraf). Soal paling sering menguji <strong>alinea keempat</strong> karena memuat tujuan negara dan Pancasila secara eksplisit.</p>
-
-          <!-- PLACEHOLDER GAMBAR 3 -->
-          <div class="visual-box" id="img-uud">
-            <img src="" alt="Struktur Pembukaan UUD 1945" style="display:none;" id="imgEl3">
-            <div class="visual-placeholder" id="imgPh3">🖼️ Ilustrasi: Struktur Empat Alinea Pembukaan UUD 1945<br><small>Gambar sedang disiapkan</small></div>
-          </div>
-          <div class="visual-caption">Gambar 3 — Empat alinea Pembukaan UUD 1945 beserta isi pokoknya</div>
-
-          <table class="materi-table">
-            <thead><tr><th>Alinea</th><th>Isi Pokok</th><th>Kata Kunci</th></tr></thead>
-            <tbody>
-              <tr>
-                <td><strong>Alinea I</strong></td>
-                <td>Kemerdekaan adalah hak segala bangsa — penjajahan bertentangan dengan perikemanusiaan dan perikeadilan.</td>
-                <td>Hak kemerdekaan segala bangsa</td>
-              </tr>
-              <tr>
-                <td><strong>Alinea II</strong></td>
-                <td>Perjuangan bangsa Indonesia mengantar ke depan pintu gerbang kemerdekaan menuju negara yang merdeka, bersatu, berdaulat, adil, dan makmur.</td>
-                <td>Perjuangan → kemerdekaan</td>
-              </tr>
-              <tr>
-                <td><strong>Alinea III</strong></td>
-                <td>Pernyataan kemerdekaan atas berkat rahmat Allah YME dan didorongkan oleh keinginan luhur supaya berkehidupan kebangsaan yang bebas.</td>
-                <td>Proklamasi kemerdekaan</td>
-              </tr>
-              <tr style="background:#fff0f0;">
-                <td><strong>Alinea IV ⭐</strong></td>
-                <td><strong>Tujuan negara Indonesia:</strong> (1) Melindungi segenap bangsa, (2) Memajukan kesejahteraan umum, (3) Mencerdaskan kehidupan bangsa, (4) Ikut perdamaian dunia. <br>+ Bentuk pemerintahan republik + <strong>Dasar negara Pancasila</strong>.</td>
-                <td>Tujuan negara + Pancasila</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="highlight-box">
-            <strong>🔑 Hafal 4 Tujuan Negara (Alinea IV)</strong>
-            Singkatan: <strong>MeCe-Lut-Dun</strong><br>
-            <strong>Me</strong>lindungi segenap bangsa — <strong>Ce</strong>rdaskan kehidupan bangsa — <strong>Lut</strong> = meningkatkan kesejahteraan umum — <strong>Dun</strong> = ikut perdamaian dunia.
-          </div>
-        </div>
-      </div>
-
-      <!-- Topik 2.2: Hak & Kewajiban -->
-      <div class="topik-card">
-        <div class="topik-header">
-          <span class="topik-header-icon">⚖️</span>
-          <div class="topik-title">Hak dan Kewajiban Warga Negara</div>
-          <span class="topik-tag">Kisi-Kisi</span>
-        </div>
-        <div class="topik-body">
-          <p>Hak adalah sesuatu yang <strong>berhak diterima</strong> oleh seseorang. Kewajiban adalah sesuatu yang <strong>harus dilakukan/dipenuhi</strong>. Hak dan kewajiban harus seimbang — kamu baru bisa menuntut hak setelah memenuhi kewajiban.</p>
-
-          <table class="materi-table">
-            <thead><tr><th>Hak Warga Negara</th><th>Kewajiban Warga Negara</th></tr></thead>
-            <tbody>
-              <tr>
-                <td>Mendapat pendidikan yang layak</td>
-                <td>Membayar pajak tepat waktu</td>
-              </tr>
-              <tr>
-                <td>Mendapat perlindungan hukum yang adil</td>
-                <td>Mematuhi hukum dan peraturan negara</td>
-              </tr>
-              <tr>
-                <td>Menerima layanan kesehatan dari fasilitas publik</td>
-                <td>Ikut serta membela negara</td>
-              </tr>
-              <tr>
-                <td>Menggunakan fasilitas umum (jalan, taman, UKS)</td>
-                <td>Menghormati hak dan kebebasan orang lain</td>
-              </tr>
-              <tr>
-                <td>Menyampaikan pendapat / usul dalam musyawarah</td>
-                <td>Menjaga ketertiban dan kebersihan lingkungan</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="kasus-box">
-            <div class="kasus-label">📝 Contoh Soal — Hak vs Kewajiban Siswa di Sekolah</div>
-            <p>Guru meminta siswa memilah: (a) mendapat pengajaran dari guru, (b) menggunakan UKS saat sakit, (c) membayar SPP, (d) mematuhi jadwal piket, (e) mendapat bimbingan guru BK, (f) ikut ekstrakurikuler pilihan.</p>
-            <div class="kasus-jawab">✅ Hak siswa: (a), (b), (e), (f)<br>✅ Kewajiban siswa: (c) dan (d)</div>
-          </div>
-
-          <div class="info-box">
-            <strong>💡 Kunci Membedakan Hak dan Kewajiban</strong>
-            Tanya dirimu: "Apakah ini sesuatu yang aku <em>terima</em> atau sesuatu yang aku <em>lakukan</em>?" Hak = diterima/didapatkan. Kewajiban = dilakukan/dipenuhi. Mengajukan usul dalam rapat RT = <strong>hak</strong> (bisa dilakukan, tapi bukan kewajiban).
-          </div>
-        </div>
-      </div>
-
-      <!-- Topik 2.3: Empat Jenis Norma -->
-      <div class="topik-card">
-        <div class="topik-header">
-          <span class="topik-header-icon">📏</span>
-          <div class="topik-title">Empat Jenis Norma dan Sanksinya</div>
-          <span class="topik-tag">Kisi-Kisi</span>
-        </div>
-        <div class="topik-body">
-          <p>Norma adalah aturan yang mengatur perilaku manusia dalam masyarakat. Indonesia mengenal empat jenis norma. Soal sering meminta kamu mengidentifikasi norma yang paling dominan dilanggar dalam sebuah kasus.</p>
-
-          <!-- PLACEHOLDER GAMBAR 4 -->
-          <div class="visual-box" id="img-norma">
-            <img src="" alt="Empat Jenis Norma" style="display:none;" id="imgEl4">
-            <div class="visual-placeholder" id="imgPh4">🖼️ Ilustrasi: Perbandingan Empat Jenis Norma di Indonesia<br><small>Gambar sedang disiapkan</small></div>
-          </div>
-          <div class="visual-caption">Gambar 4 — Empat jenis norma: sumber, sanksi, dan contoh pelanggarannya</div>
-
-          <table class="materi-table">
-            <thead><tr><th>Norma</th><th>Sumber</th><th>Sanksi</th><th>Contoh Pelanggaran</th></tr></thead>
-            <tbody>
-              <tr>
-                <td>🙏 <strong>Agama</strong></td>
-                <td>Tuhan (kitab suci)</td>
-                <td>Dosa (di akhirat); dari Tuhan</td>
-                <td>Tidak salat, berbohong</td>
-              </tr>
-              <tr>
-                <td>❤️ <strong>Kesusilaan</strong></td>
-                <td>Hati nurani</td>
-                <td>Rasa bersalah, malu pada diri sendiri</td>
-                <td>Menyontek saat ulangan meski tak ada yang melihat</td>
-              </tr>
-              <tr>
-                <td>👥 <strong>Kesopanan</strong></td>
-                <td>Kebiasaan masyarakat</td>
-                <td>Dikucilkan, dicela, dipermalukan</td>
-                <td>Memotong antrean di kantin; berbicara kasar kepada orang tua</td>
-              </tr>
-              <tr style="background:#fff0f0;">
-                <td>⚖️ <strong>Hukum ⭐</strong></td>
-                <td>Negara (UU, peraturan)</td>
-                <td><strong>Sanksi formal resmi</strong>: denda, penjara — paling tegas</td>
-                <td>Berkendara tanpa SIM; memasang spanduk yang membahayakan keselamatan umum</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="highlight-box">
-            <strong>🔑 Norma Hukum = Sanksi Paling Tegas</strong>
-            Norma Hukum memiliki sanksi paling tegas karena <strong>ditetapkan secara formal oleh negara</strong> dan dapat dipaksakan oleh aparat penegak hukum. Inilah yang membedakannya dari tiga norma lainnya.
-          </div>
-
-          <div class="kasus-box">
-            <div class="kasus-label">📝 Latihan Klasifikasi Norma</div>
-            <p>(1) Seorang siswa menyontek saat ulangan meskipun tidak ada yang melihat — melanggar norma apa?<br>
-               (2) Pengendara motor tanpa SIM di jalan raya — norma apa?<br>
-               (3) Siswa memotong antrean di kantin — norma apa?</p>
-            <div class="kasus-jawab">
-              ✅ (1) <strong>Kesusilaan</strong> — melanggar hati nurani sendiri<br>
-              ✅ (2) <strong>Hukum</strong> — melanggar UU Lalu Lintas, sanksi formal<br>
-              ✅ (3) <strong>Kesopanan</strong> — melanggar tata krama yang disepakati masyarakat
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Topik 2.4: Musyawarah Mufakat -->
-      <div class="topik-card">
-        <div class="topik-header">
-          <span class="topik-header-icon">🤝</span>
-          <div class="topik-title">Musyawarah untuk Mufakat</div>
-          <span class="topik-tag">Kisi-Kisi</span>
-        </div>
-        <div class="topik-body">
-          <p>Musyawarah adalah proses pengambilan keputusan yang mengutamakan <strong>kesepakatan bersama</strong>, bukan sekadar menghitung suara terbanyak (voting). Prinsip ini bersumber dari Sila ke-4 Pancasila.</p>
-
-          <p><strong>Prinsip Musyawarah yang Baik:</strong></p>
-          <ul class="ul-materi">
-            <li>Semua pihak diberi kesempatan <strong>berbicara dan didengar</strong> secara setara</li>
-            <li>Mengutamakan kepentingan bersama, bukan kepentingan pribadi/golongan</li>
-            <li>Keputusan yang dicapai <strong>diterima dan dilaksanakan bersama</strong> dengan lapang dada</li>
-            <li>Sikap menghormati perbedaan pendapat; tidak boleh memaksakan kehendak</li>
-            <li>Berlangsung dengan <strong>itikad baik</strong> — bukan berpura-pura setuju</li>
-          </ul>
-
-          <div class="info-box">
-            <strong>💡 Musyawarah ≠ Voting</strong>
-            Dalam musyawarah, suara terbanyak bukan jaminan keputusan terbaik. Contoh: kelompok wisata budaya dapat 15 suara (terbanyak), tapi kelompok wisata edukasi mengusulkan kompromi yang diterima semua. Kompromi itulah yang disebut <strong>mufakat</strong> — kesepakatan yang diridai semua pihak.
-          </div>
-
-          <p><strong>Tahapan Musyawarah yang Sesuai Prinsip:</strong></p>
-          <table class="materi-table">
-            <thead><tr><th>Tahapan</th><th>Sesuai / Tidak Sesuai</th></tr></thead>
-            <tbody>
-              <tr><td>Setiap calon diberi waktu sama menyampaikan visi</td><td>✅ Sesuai — semua pihak didengar</td></tr>
-              <tr><td>Anggota tidak setuju diam agar rapat cepat selesai</td><td>❌ Tidak Sesuai — bukan mufakat sejati, hanya pura-pura setuju</td></tr>
-              <tr><td>Keputusan dilaksanakan meski ada yang tidak sepakat awalnya</td><td>✅ Sesuai — menerima keputusan dengan lapang dada</td></tr>
-              <tr><td>Ketua langsung mengesahkan keputusan tanpa diskusi</td><td>❌ Tidak Sesuai — tidak ada proses musyawarah</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-    </section><!-- /elemen-2 -->
-
-
-    <!-- ═══════════════════════════════════════════
-         ELEMEN 3: BHINNEKA TUNGGAL IKA (Soal 21–30)
-    ═══════════════════════════════════════════ -->
-    <section class="elemen-section" id="elemen-3">
-      <div class="elemen-header">
-        <div class="elemen-icon">🤝</div>
-        <div class="elemen-meta">
-          <div class="elemen-num">Elemen 3</div>
-          <div class="elemen-title">Bhinneka Tunggal Ika</div>
-          <div class="elemen-soal">Soal 21–30 · PG Tunggal, PG Kompleks & PG Kategori</div>
-        </div>
-      </div>
-
-      <!-- Topik 3.1: Makna Semboyan -->
-      <div class="topik-card">
-        <div class="topik-header">
-          <span class="topik-header-icon">🕊️</span>
-          <div class="topik-title">Makna Semboyan "Bhinneka Tunggal Ika"</div>
-          <span class="topik-tag">Kisi-Kisi</span>
-        </div>
-        <div class="topik-body">
-          <p>Semboyan bangsa Indonesia tertulis pada pita yang dicengkeram oleh Garuda Pancasila. Artinya: <strong>"Berbeda-beda tetapi tetap satu juga."</strong></p>
-
-          <table class="materi-table">
-            <thead><tr><th>Aspek</th><th>Keterangan</th></tr></thead>
-            <tbody>
-              <tr><td><strong>Asal kata</strong></td><td>Bahasa Jawa Kuno; dari kitab <em>Sutasoma</em> karya Mpu Tantular (abad ke-14)</td></tr>
-              <tr><td><strong>Arti</strong></td><td>"Berbeda-beda tetapi tetap satu juga"</td></tr>
-              <tr><td><strong>Bhinneka</strong></td><td>Beraneka ragam / berbeda-beda</td></tr>
-              <tr><td><strong>Tunggal Ika</strong></td><td>Satu juga / tetap bersatu</td></tr>
-              <tr><td><strong>Pesan</strong></td><td>Perbedaan suku, agama, bahasa, dan budaya bukan penghalang — justru kekuatan persatuan Indonesia</td></tr>
-            </tbody>
-          </table>
-
-          <div class="kasus-box">
-            <div class="kasus-label">📝 Contoh Kasus — Makna Bhinneka dalam Tindakan</div>
-            <p>Warga RW 07 dengan tiga rumah ibadah berbeda (masjid, gereja, pura) bergotong royong memperbaiki ketiganya secara bergantian, tanpa memandang perbedaan agama.</p>
-            <div class="kasus-jawab">✅ Makna yang tepat: "Perbedaan keyakinan tidak menghalangi kerja sama dalam kepentingan bersama yang melampaui batas agama." — Ini wujud nyata Bhinneka Tunggal Ika.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Topik 3.2: Toleran vs Intoleran & Budaya -->
-      <div class="topik-card">
-        <div class="topik-header">
-          <span class="topik-header-icon">🌈</span>
-          <div class="topik-title">Toleransi, Melestarikan Budaya, dan Keberagaman</div>
-          <span class="topik-tag">Kisi-Kisi</span>
-        </div>
-        <div class="topik-body">
-          <p>Soal elemen ini banyak menggunakan cerita kehidupan sehari-hari dan memintamu mengklasifikasikan sikap (toleran/intoleran) atau mengidentifikasi tindakan pelestarian budaya yang efektif.</p>
-
-          <p><strong>Ciri Sikap Toleran vs Intoleran:</strong></p>
-          <table class="materi-table">
-            <thead><tr><th>Toleran ✅</th><th>Intoleran ❌</th></tr></thead>
-            <tbody>
-              <tr><td>Menyediakan fasilitas ibadah bagi karyawan berbeda agama</td><td>Menyebarkan konten menghina ritual agama lain</td></tr>
-              <tr><td>Ikut menjaga ketertiban saat umat agama lain beribadah</td><td>Memaksa orang lain merayakan tradisi yang bukan budayanya</td></tr>
-              <tr><td>Mengucapkan selamat hari raya kepada teman yang berbeda agama</td><td>Menolak berteman dengan seseorang karena agama atau sukunya</td></tr>
-              <tr><td>Membantu teman menyiapkan dekorasi perayaan agamanya</td><td>Menyebarkan informasi yang memecah belah antarumat beragama</td></tr>
-            </tbody>
-          </table>
-
-          <p style="margin-top:14px;"><strong>Budaya Lokal vs Budaya Nasional:</strong></p>
-          <table class="materi-table">
-            <thead><tr><th>Budaya Lokal (Kedaerahan)</th><th>Budaya Nasional (Pemersatu)</th></tr></thead>
-            <tbody>
-              <tr><td>Tari Kecak — Bali</td><td>Bahasa Indonesia sebagai bahasa persatuan</td></tr>
-              <tr><td>Rumah Honai — Papua</td><td>Lagu kebangsaan "Indonesia Raya"</td></tr>
-              <tr><td>Tari Jaipong — Jawa Barat</td><td>Garuda Pancasila sebagai lambang negara</td></tr>
-              <tr><td>Batik Mega Mendung — Cirebon</td><td>Batik (secara umum, diakui UNESCO untuk Indonesia)</td></tr>
-              <tr><td>Rumah Gadang — Minangkabau</td><td>Lagu wajib nasional</td></tr>
-            </tbody>
-          </table>
-
-          <div class="info-box">
-            <strong>💡 Cara Melestarikan Budaya yang Efektif dan Berkelanjutan</strong>
-            Soal tidak mencari jawaban yang sekadar "tahu ada perbedaan", melainkan <strong>tindakan nyata yang berkelanjutan</strong>. Contoh terbaik: menginisiasi klub permainan tradisional dan mengajarkannya secara rutin kepada adik kelas — bukan sekadar memasang poster atau membeli alat.
-          </div>
-
-          <div class="kasus-box">
-            <div class="kasus-label">📝 Latihan — Unsur Keberagaman</div>
-            <p>Tigor, siswa baru dari Medan, berbahasa Batak di rumah, beragama Kristen Protestan, membawa bekal nasi saksang, dan berkulit lebih gelap dari teman-temannya.</p>
-            <div class="kasus-jawab">✅ Unsur keberagaman yang nyata: <br>
-              (1) Suku bangsa Batak<br>
-              (2) Agama Kristen Protestan<br>
-              (3) Bahasa daerah Batak<br>
-              ❌ Warna kulit — bukan termasuk unsur keberagaman yang secara formal diakui (suku, agama, bahasa, adat)
-            </div>
-          </div>
-
-          <div class="tip-box">
-            <strong>🧠 Tips Soal Bhinneka Tunggal Ika</strong>
-            <ul class="tip-list">
-              <li>Fokus pada <strong>tindakan nyata</strong> melestarikan, bukan sekadar mengakui ada perbedaan.</li>
-              <li>Sikap toleran bersifat <strong>aktif</strong> (membantu, menyediakan fasilitas) — bukan hanya pasif tidak mengganggu.</li>
-              <li>Etnosentrisme = menganggap budaya sendiri lebih baik → hambatan utama Bhinneka Tunggal Ika.</li>
-              <li>Penyelesaian konflik yang terbaik: <strong>akomodatif</strong> — semua pihak terwakili (bukan memaksakan satu pihak menang).</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-    </section><!-- /elemen-3 -->
-
-
-    <!-- ═══════════════════════════════════════════
-         ELEMEN 4: NKRI (Soal 31–40)
-    ═══════════════════════════════════════════ -->
-    <section class="elemen-section" id="elemen-4">
-      <div class="elemen-header">
-        <div class="elemen-icon">🗺️</div>
-        <div class="elemen-meta">
-          <div class="elemen-num">Elemen 4</div>
-          <div class="elemen-title">NKRI</div>
-          <div class="elemen-soal">Soal 31–40 · PG Tunggal, PG Kompleks & PG Kategori</div>
-        </div>
-      </div>
-
-      <!-- Topik 4.1: Hierarki Wilayah -->
-      <div class="topik-card">
-        <div class="topik-header">
-          <span class="topik-header-icon">🗂️</span>
-          <div class="topik-title">Hierarki Wilayah Administrasi NKRI</div>
-          <span class="topik-tag">Kisi-Kisi</span>
-        </div>
-        <div class="topik-body">
-          <p>Indonesia adalah negara kesatuan yang wilayahnya dibagi dalam hierarki administrasi dari yang terluas hingga yang terkecil. Kamu harus hafal urutannya dan contoh kongkretnya.</p>
-
-          <!-- PLACEHOLDER GAMBAR 5 -->
-          <div class="visual-box" id="img-hierarki">
-            <img src="" alt="Hierarki Wilayah Administrasi NKRI" style="display:none;" id="imgEl5">
-            <div class="visual-placeholder" id="imgPh5">🖼️ Ilustrasi: Hierarki Wilayah Administrasi NKRI (dari terbesar ke terkecil)<br><small>Gambar sedang disiapkan</small></div>
-          </div>
-          <div class="visual-caption">Gambar 5 — Piramida hierarki wilayah administrasi NKRI</div>
-
-          <div class="hierarki-visual">
-            <div class="hierarki-level">
-              <div class="hierarki-bar" style="background:#991b1b;">🏛️ NKRI</div>
-              <div class="hierarki-detail">1 negara</div>
-            </div>
-            <div class="hierarki-arrow">↓</div>
-            <div class="hierarki-level">
-              <div class="hierarki-bar" style="background:#c2410c;">🗺️ Provinsi</div>
-              <div class="hierarki-detail">38 provinsi</div>
-            </div>
-            <div class="hierarki-arrow">↓</div>
-            <div class="hierarki-level">
-              <div class="hierarki-bar" style="background:#d97706;">🏙️ Kabupaten / Kota</div>
-              <div class="hierarki-detail">514+ kab/kota</div>
-            </div>
-            <div class="hierarki-arrow">↓</div>
-            <div class="hierarki-level">
-              <div class="hierarki-bar" style="background:#15803d;">🏘️ Kecamatan</div>
-              <div class="hierarki-detail"></div>
-            </div>
-            <div class="hierarki-arrow">↓</div>
-            <div class="hierarki-level">
-              <div class="hierarki-bar" style="background:#1d4ed8;">🏠 Desa / Kelurahan</div>
-              <div class="hierarki-detail"></div>
-            </div>
-            <div class="hierarki-arrow">↓</div>
-            <div class="hierarki-level">
-              <div class="hierarki-bar" style="background:#6d28d9;">👥 RW (Rukun Warga)</div>
-              <div class="hierarki-detail"></div>
-            </div>
-            <div class="hierarki-arrow">↓</div>
-            <div class="hierarki-level">
-              <div class="hierarki-bar" style="background:#374151;">🏡 RT (Rukun Tetangga)</div>
-              <div class="hierarki-detail">terkecil</div>
-            </div>
-          </div>
-
-          <div class="highlight-box">
-            <strong>🔑 Urutan Lengkap dari Terbesar ke Terkecil</strong>
-            <strong>NKRI → Provinsi → Kabupaten/Kota → Kecamatan → Desa/Kelurahan → RW → RT</strong>
-          </div>
-
-          <p><strong>Contoh Penerapan Kontekstual:</strong></p>
-          <table class="materi-table">
-            <thead><tr><th>Tempat</th><th>Kabupaten/Kota</th><th>Provinsi</th></tr></thead>
-            <tbody>
-              <tr><td>SD Muhammadiyah 01 Kukusan (Depok)</td><td>Kota Depok</td><td>Jawa Barat</td></tr>
-              <tr><td>Kukusan, Beji</td><td>Kota Depok</td><td>Jawa Barat</td></tr>
-              <tr><td>Kabupaten Bogor</td><td>Kabupaten Bogor</td><td>Jawa Barat</td></tr>
-              <tr><td>Kota Jakarta Selatan</td><td>Kota Jakarta Selatan</td><td>DKI Jakarta</td></tr>
-            </tbody>
-          </table>
-
-          <div class="info-box">
-            <strong>💡 Depok Termasuk Jawa Barat, Bukan Jakarta!</strong>
-            Meski Kota Depok berbatasan langsung dengan Jakarta, Depok adalah bagian dari <strong>Provinsi Jawa Barat</strong>. Jangan tertukar saat mengisi formulir atau menjawab soal.
-          </div>
-
-          <div class="kasus-box">
-            <div class="kasus-label">📝 Latihan — Urutan Hierarki yang Benar</div>
-            <p>Manakah urutan hierarki dari terbesar ke terkecil yang benar?<br>
-              (A) Provinsi → Kabupaten/Kota → Kecamatan<br>
-              (B) Negara → Provinsi → Kabupaten/Kota<br>
-              (C) Kabupaten/Kota → Kecamatan → Desa/Kelurahan<br>
-              (D) Desa/Kelurahan → Kecamatan → Provinsi</p>
-            <div class="kasus-jawab">✅ Urutan yang benar: (A), (B), dan (C). <br>❌ (D) salah — urutannya terbalik (dari terkecil ke terbesar).</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Topik 4.2: Bela Negara -->
-      <div class="topik-card">
-        <div class="topik-header">
-          <span class="topik-header-icon">🛡️</span>
-          <div class="topik-title">Bela Negara — Fisik dan Non-Fisik</div>
-          <span class="topik-tag">Kisi-Kisi</span>
-        </div>
-        <div class="topik-body">
-          <p>Bela negara adalah <strong>hak dan kewajiban</strong> setiap warga negara (UU No. 3 Tahun 2002 tentang Pertahanan Negara). Bela negara bukan hanya soal angkat senjata — siswa SD pun bisa bela negara!</p>
-
-          <table class="materi-table">
-            <thead><tr><th>Bela Negara Fisik</th><th>Bela Negara Non-Fisik</th></tr></thead>
-            <tbody>
-              <tr>
-                <td>Mengikuti wajib militer / latihan tempur</td>
-                <td>Belajar dengan sungguh-sungguh</td>
-              </tr>
-              <tr>
-                <td>Bergabung dengan TNI/Polri</td>
-                <td>Tidak menyebarkan hoaks / konten pemecah belah</td>
-              </tr>
-              <tr>
-                <td>Mengikuti latihan Komponen Cadangan</td>
-                <td>Mengikuti upacara bendera dengan khidmat</td>
-              </tr>
-              <tr>
-                <td>Pertahanan terhadap ancaman bersenjata</td>
-                <td>Berprestasi di olimpiade internasional</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>Menjaga kebersihan dan ketertiban lingkungan</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>Membangun tanggul untuk mencegah banjir (gotong royong)</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="kasus-box">
-            <div class="kasus-label">📝 Contoh Soal — Mengapa Ini Bela Negara?</div>
-            <p>Warga Kampung Mekar Jaya secara mandiri dan swadaya membangun tanggul untuk mencegah banjir musim hujan. Mereka bergotong royong selama sebulan penuh. Ketua RT menyebut ini sebagai bela negara.</p>
-            <div class="kasus-jawab">✅ Ini bela negara non-fisik karena: menjaga ketahanan wilayah dari ancaman bencana adalah wujud cinta tanah air. Bela negara tidak harus melibatkan militer — melindungi warga dari ancaman internal (banjir) juga termasuk.</div>
-          </div>
-
-          <div class="tip-box">
-            <strong>🧠 Tips Menjawab Soal Bela Negara</strong>
-            <ul class="tip-list">
-              <li>Kata kunci bela negara non-fisik: belajar, berprestasi, tidak hoaks, upacara, gotong royong, melestarikan budaya.</li>
-              <li>Bela negara fisik: militer, latihan tempur, wajib militer.</li>
-              <li>Membolos sekolah atau menyebarkan hoaks = justru berlawanan dengan bela negara.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Topik 4.3: Menjaga Persatuan NKRI -->
-      <div class="topik-card">
-        <div class="topik-header">
-          <span class="topik-header-icon">🤲</span>
-          <div class="topik-title">Menjaga Persatuan NKRI dalam Kehidupan Sehari-hari</div>
-          <span class="topik-tag">Kisi-Kisi</span>
-        </div>
-        <div class="topik-body">
-          <p>Persatuan NKRI dijaga mulai dari lingkup terkecil: RT, kelas, dan keluarga. Soal sering menampilkan situasi musyawarah atau konflik warga, lalu meminta sikap yang paling mendukung persatuan.</p>
-
-          <p><strong>Sikap yang Mendukung Persatuan NKRI:</strong></p>
-          <ul class="ul-materi">
-            <li>Mendengarkan usulan pihak lain dengan tenang, meskipun berbeda pendapat</li>
-            <li>Bersedia menerima dan melaksanakan keputusan bersama, meskipun bukan pilihan yang diinginkan</li>
-            <li>Mengajukan argumen dengan data dan alasan yang jelas, <strong>tanpa menyerang pribadi</strong> lawan bicara</li>
-            <li>Memverifikasi kebenaran informasi sebelum menyebarkan (cegah hoaks)</li>
-            <li>Tidak mengancam atau memboikot keputusan bersama hanya karena tidak setuju</li>
-          </ul>
-
-          <div class="kasus-box">
-            <div class="kasus-label">📝 Contoh Kasus — Musyawarah RT</div>
-            <p>Rapat warga RT membahas lokasi pos ronda baru. Warga terbagi dua kubu dan mulai emosi. Beberapa mengancam boikot jika usulannya tidak menang. Ketua RT mengingatkan untuk menjaga nilai warga NKRI yang baik.</p>
-            <div class="kasus-jawab">✅ Sikap yang mendukung persatuan: <br>
-              (1) Mendengar usulan pihak lain dengan tenang<br>
-              (2) Menerima dan melaksanakan keputusan bersama<br>
-              (3) Mengajukan argumen dengan data, bukan menyerang pribadi<br>
-              ❌ Mengancam boikot = tidak mendukung persatuan
-            </div>
-          </div>
-
-          <div class="info-box">
-            <strong>💡 Hoaks sebagai Ancaman Persatuan NKRI</strong>
-            Konten deepfake atau hoaks yang sengaja disebarkan untuk memecah belah warga adalah ancaman nyata bagi persatuan. Tindakan terbaik: <strong>verifikasi dulu, sebarkan kemudian</strong>. Tidak meneruskan jika belum terbukti kebenarannya.
-          </div>
-
-          <div class="tip-box">
-            <strong>🧠 Ringkasan Tips Seluruh Materi PP</strong>
-            <ul class="tip-list">
-              <li>Soal selalu berbasis <strong>studi kasus kehidupan nyata</strong> (kelas, RT, sekolah) — bukan teori murni.</li>
-              <li>Untuk soal PG Kompleks: baca semua opsi dulu, tentukan yang <em>jelas benar</em>, baru eliminasi yang meragukan.</li>
-              <li>Untuk PG Kategori: baca kembali definisi kategori yang diberikan di stimulus, jangan andalkan "feeling".</li>
-              <li>Hafalkan: <strong>4 alinea UUD → Alinea IV berisi tujuan negara; 4 norma → Hukum paling tegas; 7 tingkat wilayah → RT terkecil.</strong></li>
-              <li>Kunci jawaban sering ada pada kata: "konsisten", "bersama", "tanpa memandang", "demi kepentingan bangsa".</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-    </section><!-- /elemen-4 -->
-
-  </main>
-
-  <footer class="footer">
-    SD Muhammadiyah 01 Kukusan · Materi Pendidikan Pancasila Kelas 6 · Ujian Sekolah 4 Mei 2026 🦅
-  </footer>
-
-  <script>
-    // ─── Muat gambar dari URL jika tersedia ───────────────────────
-    // Setelah gambar diupload ke ibb.co, isi URL di sini:
-    const IMAGE_ASSETS = {
-      "lambang-lima-sila":   "",   // ganti dengan URL aktual
-      "timeline-pancasila":  "",
-      "pembukaan-uud1945":   "",
-      "empat-jenis-norma":   "",
-      "hierarki-wilayah":    ""
-    };
-
-    const imgMap = [
-      { key: "lambang-lima-sila",  elId: "imgEl1", phId: "imgPh1" },
-      { key: "timeline-pancasila", elId: "imgEl2", phId: "imgPh2" },
-      { key: "pembukaan-uud1945",  elId: "imgEl3", phId: "imgPh3" },
-      { key: "empat-jenis-norma",  elId: "imgEl4", phId: "imgPh4" },
-      { key: "hierarki-wilayah",   elId: "imgEl5", phId: "imgPh5" }
-    ];
-
-    imgMap.forEach(({ key, elId, phId }) => {
-      const url = IMAGE_ASSETS[key];
-      if (url) {
-        const img = document.getElementById(elId);
-        const ph  = document.getElementById(phId);
-        if (img && ph) {
-          img.src = url;
-          img.style.display = "block";
-          ph.style.display = "none";
-        }
-      }
-    });
-
-    // ─── Highlight tab navigasi yang aktif saat scroll ────────────
-    const sections = document.querySelectorAll('.elemen-section');
-    const tabs     = document.querySelectorAll('.nav-tab');
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          tabs.forEach(t => t.classList.remove('active'));
-          const id = '#' + entry.target.id;
-          const activeTab = document.querySelector(`.nav-tab[href="${id}"]`);
-          if (activeTab) activeTab.classList.add('active');
-        }
-      });
-    }, { rootMargin: '-40% 0px -55% 0px' });
-
-    sections.forEach(s => observer.observe(s));
-  </script>
+<header class="header"><div class="header-brand"><span class="logo">🏛️</span><div><div class="brand-name">Materi Pendidikan Pancasila</div><div class="sub-brand">Ujian Sekolah · Kelas 6</div></div></div><a href="index.html" class="header-back">← Hub Materi</a></header>
+
+<section class="hero"><span class="hero-emoji">🏛️</span><h1>Pendidikan Pancasila</h1><p>Materi lengkap 4 elemen: Pancasila, UUD 1945, Bhinneka Tunggal Ika, dan NKRI. Soal ujian berbasis studi kasus — pahami konsep, bukan hafalan.</p></section>
+
+<nav class="nav-pills"><div class="nav-pills-inner"><a href="#e1" class="nav-pill">🦅 Pancasila</a><a href="#e2" class="nav-pill">📜 UUD 1945</a><a href="#e3" class="nav-pill">🤝 Bhinneka Tunggal Ika</a><a href="#e4" class="nav-pill">🗺️ NKRI</a></div></nav>
+
+<main class="container">
+
+<!-- ═══ ELEMEN 1: PANCASILA ═══ -->
+<div class="section-block" id="e1"><div class="section-header"><div class="section-num e1">1</div><div class="section-title-group"><div class="section-title">Pancasila</div><div class="section-subtitle">Sila-sila, fungsi ganda, kronologi kelahiran, tokoh perumus, lambang, dan implementasi</div></div></div>
+
+<div class="content-card"><h3>🦅 Lima Sila Pancasila dan Lambangnya</h3>
+<p>Pancasila adalah dasar negara Indonesia yang terdiri dari lima sila. Setiap sila memiliki lambang dengan makna mendalam.</p>
+<div class="table-wrap"><table><thead><tr><th>Sila</th><th>Bunyi</th><th>Lambang</th><th>Makna Lambang</th></tr></thead><tbody>
+<tr><td><strong>1</strong></td><td>Ketuhanan Yang Maha Esa</td><td>⭐ Bintang</td><td>Cahaya ketuhanan yang menerangi kehidupan</td></tr>
+<tr><td><strong>2</strong></td><td>Kemanusiaan yang Adil dan Beradab</td><td>⛓️ Rantai</td><td>Hubungan manusia yang saling terkait; rantai emas = perempuan, rantai persegi = laki-laki</td></tr>
+<tr><td><strong>3</strong></td><td>Persatuan Indonesia</td><td>🌳 Pohon Beringin</td><td>Akar kuat & rindang → tempat berlindung bagi semua suku bangsa; persatuan yang kokoh</td></tr>
+<tr><td><strong>4</strong></td><td>Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan</td><td>🐂 Kepala Banteng</td><td>Hewan sosial yang kuat; simbol kerakyatan & musyawarah</td></tr>
+<tr><td><strong>5</strong></td><td>Keadilan Sosial bagi Seluruh Rakyat Indonesia</td><td>🌾 Padi dan Kapas</td><td>Padi = pangan, kapas = sandang → kemakmuran bagi seluruh rakyat</td></tr>
+</tbody></table></div>
+
+<div class="info-box teal"><strong>🔑 Sila-sila sebagai Satu Kesatuan</strong>Kelima sila tidak berdiri sendiri — saling terkait. Satu kegiatan bisa mencerminkan beberapa sila sekaligus. Misalnya, gotong royong bersih sungai oleh warga beragam latar belakang → Sila 3 (persatuan), Sila 4 (inisiatif rakyat), dan Sila 5 (hasilnya dinikmati bersama).</div>
+</div>
+
+<div class="content-card"><h3>⚖️ Fungsi Ganda Pancasila</h3>
+<p>Pancasila memiliki dua fungsi utama yang berbeda orientasinya:</p>
+<div class="compare-grid">
+<div class="compare-box" style="background:var(--red-light);"><h4 style="color:var(--red);margin-top:0;">📋 Dasar Negara</h4><p style="font-size:.82rem;"><strong>Orientasi:</strong> Hukum & konstitusi</p><p style="font-size:.82rem;">Seluruh peraturan perundang-undangan harus bersumber dari Pancasila. Undang-undang yang bertentangan dengan Pancasila dapat dibatalkan oleh Mahkamah Konstitusi.</p><p style="font-size:.82rem;"><strong>Analogi:</strong> Seperti kebijakan sekolah → semua aturan kelas harus sesuai kebijakan sekolah yang lebih tinggi.</p><p style="font-size:.82rem;"><em>= Sumber dari segala sumber hukum</em></p></div>
+<div class="compare-box" style="background:var(--blue-light);"><h4 style="color:#1e40af;margin-top:0;">🧭 Pandangan Hidup Bangsa</h4><p style="font-size:.82rem;"><strong>Orientasi:</strong> Nilai & perilaku sehari-hari</p><p style="font-size:.82rem;">Pancasila menjadi pedoman dalam bersikap dan berperilaku. Gotong royong, toleransi, menghargai sesama — ini semua wujud Pancasila sebagai pandangan hidup.</p><p style="font-size:.82rem;"><strong>Contoh:</strong> Pak Budi yang berpartisipasi tulus dalam kerja bakti dan mengajak tetangga lain.</p><p style="font-size:.82rem;"><em>= Kompas nilai dalam kehidupan</em></p></div>
+</div>
+</div>
+
+<div class="content-card"><h3>📅 Kronologi Kelahiran Pancasila</h3>
+<p>Pancasila yang kita kenal saat ini adalah hasil proses panjang dan penuh kompromi. Urutan kronologisnya:</p>
+<div class="diagram-container">
+<svg viewBox="0 0 700 130" xmlns="http://www.w3.org/2000/svg" style="font-family:Nunito,sans-serif;">
+<line x1="100" y1="45" x2="600" y2="45" stroke="#c4b5fd" stroke-width="4" stroke-linecap="round"/>
+<circle cx="130" cy="45" r="18" fill="#7c3aed"/><text x="130" y="50" text-anchor="middle" font-size="14" fill="#fff" font-weight="800">1</text>
+<circle cx="350" cy="45" r="18" fill="#7c3aed"/><text x="350" y="50" text-anchor="middle" font-size="14" fill="#fff" font-weight="800">2</text>
+<circle cx="570" cy="45" r="18" fill="#7c3aed"/><text x="570" y="50" text-anchor="middle" font-size="14" fill="#fff" font-weight="800">3</text>
+<text x="130" y="80" text-anchor="middle" font-size="10" font-weight="800" fill="#5b21b6">1 Juni 1945</text><text x="130" y="94" text-anchor="middle" font-size="9" fill="#374151">Pidato Soekarno</text><text x="130" y="106" text-anchor="middle" font-size="9" fill="#374151">"Panca Sila" di BPUPK</text>
+<text x="350" y="80" text-anchor="middle" font-size="10" font-weight="800" fill="#5b21b6">22 Juni 1945</text><text x="350" y="94" text-anchor="middle" font-size="9" fill="#374151">Piagam Jakarta</text><text x="350" y="106" text-anchor="middle" font-size="9" fill="#374151">(masih ada 7 kata)</text>
+<text x="570" y="80" text-anchor="middle" font-size="10" font-weight="800" fill="#5b21b6">18 Agustus 1945</text><text x="570" y="94" text-anchor="middle" font-size="9" fill="#374151">Pengesahan UUD 1945</text><text x="570" y="106" text-anchor="middle" font-size="9" fill="#374151">(7 kata dihapus)</text>
+<text x="350" y="20" text-anchor="middle" font-size="12" font-weight="800" fill="#1f2a37">Kronologi Kelahiran Pancasila</text>
+</svg>
+<div class="diagram-caption">Urutan: Pidato Soekarno → Piagam Jakarta → Pengesahan UUD 1945</div>
+</div>
+
+<h4>Tokoh-Tokoh Perumus</h4>
+<ul>
+<li><strong>Ir. Soekarno</strong> — mengusulkan konsep "Panca Sila" pada 1 Juni 1945 (kini diperingati sebagai Hari Lahir Pancasila)</li>
+<li><strong>Mohammad Hatta</strong> — aktif menjembatani dialog antar golongan; memfasilitasi kompromi agar rumusan diterima semua pihak</li>
+<li><strong>Mr. Muhammad Yamin</strong> — menyampaikan usulan dasar negara dalam sidang BPUPK</li>
+<li><strong>Dr. Soepomo</strong> — menyampaikan usulan dasar negara berdasarkan konsep negara integralistik</li>
+</ul>
+
+<div class="info-box purple"><strong>💡 Teladan yang Bisa Diikuti</strong>
+Sikap para tokoh: <strong>rela berkorban</strong> demi kepentingan bangsa, bersedia <strong>mengubah usulan pribadi</strong> demi persatuan, dan aktif <strong>menjembatani perbedaan</strong>. Dalam kehidupan sehari-hari: saat kelompok belajar berbeda pendapat → jadilah penengah yang menjembatani agar semua pihak merasa didengar (meneladani sikap Hatta).</div>
+</div>
+
+<div class="content-card"><h3>🔗 Implementasi Sila Pancasila dalam Kehidupan</h3>
+<div class="table-wrap"><table><thead><tr><th>Sila</th><th>Contoh Implementasi di Sekolah</th><th>Contoh Pelanggaran</th></tr></thead><tbody>
+<tr><td><strong>Sila 1</strong> Ketuhanan</td><td>Menghormati teman yang sedang beribadah, berdoa sebelum belajar</td><td>Mengganggu teman yang sedang shalat</td></tr>
+<tr><td><strong>Sila 2</strong> Kemanusiaan</td><td>Bertanggung jawab atas barang pinjaman, mengakui hak milik orang lain</td><td>Meminjam buku lalu merusaknya tanpa mau mengganti</td></tr>
+<tr><td><strong>Sila 3</strong> Persatuan</td><td>Berteman tanpa membedakan suku, mengajak teman baru bergabung</td><td>Memilih teman bermain berdasarkan latar belakang</td></tr>
+<tr><td><strong>Sila 4</strong> Kerakyatan</td><td>Mengambil keputusan melalui musyawarah, mendengarkan semua pendapat</td><td>Ketua OSIS mengesahkan keputusan tanpa musyawarah</td></tr>
+<tr><td><strong>Sila 5</strong> Keadilan Sosial</td><td>Membagi tugas secara adil, berbagi hasil bersama</td><td>Memonopoli fasilitas kelas untuk diri sendiri</td></tr>
+</tbody></table></div>
+</div>
+</div>
+
+<!-- ═══ ELEMEN 2: UUD 1945 ═══ -->
+<div class="section-block" id="e2"><div class="section-header"><div class="section-num e2">2</div><div class="section-title-group"><div class="section-title">UUD 1945</div><div class="section-subtitle">Hak & kewajiban, norma, musyawarah mufakat, Pembukaan UUD 1945, konsekuensi aturan</div></div></div>
+
+<div class="content-card"><h3>⚖️ Hak dan Kewajiban Warga Negara</h3>
+<p>Setiap warga negara memiliki <span class="key-term">hak</span> (sesuatu yang wajib diterima) dan <span class="key-term">kewajiban</span> (sesuatu yang harus dipenuhi). Keduanya harus seimbang — hak tidak dapat dinikmati jika kewajiban tidak dilaksanakan.</p>
+<div class="compare-grid">
+<div class="compare-box" style="background:var(--green-light);"><h4 style="color:var(--green-dark);margin-top:0;">✅ Hak (Wajib Diterima)</h4><ul style="font-size:.82rem;"><li>Mendapat pengajaran yang layak dari guru</li><li>Menggunakan ruang UKS saat sakit</li><li>Mendapat bimbingan dari guru BK</li><li>Mengikuti kegiatan ekstrakurikuler</li><li>Mendapat perlindungan hukum</li><li>Menerima layanan kesehatan dari negara</li></ul></div>
+<div class="compare-box" style="background:var(--red-light);"><h4 style="color:var(--red);margin-top:0;">📋 Kewajiban (Harus Dipenuhi)</h4><ul style="font-size:.82rem;"><li>Membayar SPP/iuran tepat waktu</li><li>Mematuhi jadwal piket kelas</li><li>Membayar iuran sampah/ronda</li><li>Mengikuti ronda malam sesuai giliran</li><li>Tidak memarkir kendaraan sembarangan</li><li>Ikut serta dalam pembelaan negara</li></ul></div>
+</div>
+
+<div class="info-box amber"><strong>⚖️ Prinsip Keseimbangan</strong>
+Hak meminjam buku di perpustakaan harus diimbangi dengan kewajiban mengembalikan tepat waktu. Jika kewajiban dilanggar → sanksi berupa pencabutan hak pinjam. Ini bukan "ketidakadilan" melainkan konsekuensi logis.</div>
+</div>
+
+<div class="content-card"><h3>📏 Empat Jenis Norma</h3>
+<p>Norma adalah aturan yang mengatur perilaku manusia di masyarakat. Ada empat jenis norma, masing-masing dengan sumber dan sanksi berbeda:</p>
+<div class="table-wrap"><table><thead><tr><th>Norma</th><th>Sumber</th><th>Sanksi</th><th>Contoh Pelanggaran</th></tr></thead><tbody>
+<tr><td><strong>Agama</strong></td><td>Ajaran Tuhan / kitab suci</td><td>Dosa (dari Tuhan)</td><td>Tidak menjalankan ibadah wajib</td></tr>
+<tr><td><strong>Kesusilaan</strong></td><td>Hati nurani manusia</td><td>Rasa bersalah, malu</td><td>Menyontek saat ulangan meski tak ada yang melihat; memotong antrean</td></tr>
+<tr><td><strong>Kesopanan</strong></td><td>Kebiasaan/adat masyarakat</td><td>Dikucilkan, dicemooh</td><td>Tidak menyapa tetangga, berkata kasar</td></tr>
+<tr><td><strong>Hukum</strong></td><td>Negara / pemerintah (tertulis)</td><td>Denda, penjara — <strong>sanksi paling tegas</strong></td><td>Mengendarai motor tanpa SIM, memasang spanduk yang membahayakan umum</td></tr>
+</tbody></table></div>
+
+<div class="info-box red"><strong>⚠️ Norma Hukum = Sanksi Paling Tegas</strong>
+Norma hukum memiliki sanksi paling tegas karena dibuat secara formal oleh negara dan bersifat <strong>memaksa</strong>. Jika seseorang melanggar aturan yang mengancam keselamatan umum (contoh: memasang spanduk yang menutupi pandangan pengemudi) → yang paling dominan dilanggar adalah <strong>norma hukum</strong>.</div>
+</div>
+
+<div class="content-card"><h3>🤝 Musyawarah untuk Mufakat</h3>
+<p><span class="key-term">Musyawarah mufakat</span> adalah prinsip pengambilan keputusan dalam Sila ke-4 yang mengutamakan <strong>kesepakatan semua pihak</strong>, bukan sekadar suara terbanyak (voting).</p>
+
+<h4>Prinsip Musyawarah yang Benar</h4>
+<ul>
+<li><strong>Semua peserta diberi kesempatan bicara</strong> — setiap calon/usulan mendapat waktu yang sama</li>
+<li><strong>Mendengarkan dengan terbuka</strong> — meskipun berbeda pendapat</li>
+<li><strong>Mengutamakan konsensus</strong> — mencari solusi yang diterima semua pihak, bukan hanya mayoritas</li>
+<li><strong>Menerima keputusan bersama</strong> — dilaksanakan dengan lapang dada meskipun bukan pilihan pribadi</li>
+</ul>
+
+<h4>Yang BUKAN Musyawarah yang Benar</h4>
+<ul>
+<li>❌ Ketua langsung memutuskan tanpa diskusi</li>
+<li>❌ Peserta diam saja agar rapat cepat selesai (menyembunyikan keberatan)</li>
+<li>❌ Kelompok suara terbanyak ngotot karena merasa "sudah menang"</li>
+</ul>
+
+<div class="info-box green"><strong>💡 Contoh Musyawarah yang Baik</strong>
+Saat memilih destinasi karyawisata, tidak ada suara mutlak. Daripada memaksakan suara terbanyak, satu kelompok mengusulkan <strong>kompromi</strong>: memilih destinasi kelompok lain tapi menambah unsur program mereka. Solusi ini diterima semua pihak → inilah musyawarah mufakat.</div>
+</div>
+
+<div class="content-card"><h3>📜 Pembukaan UUD 1945: Empat Alinea</h3>
+<p>Pembukaan UUD 1945 terdiri dari empat alinea, masing-masing memiliki muatan berbeda:</p>
+
+<div class="table-wrap"><table><thead><tr><th>Alinea</th><th>Inti Kandungan</th><th>Kata Kunci</th></tr></thead><tbody>
+<tr><td><strong>Alinea 1</strong></td><td>Kemerdekaan adalah hak segala bangsa → penjajahan harus dihapuskan</td><td>Hak kemerdekaan, anti-penjajahan</td></tr>
+<tr><td><strong>Alinea 2</strong></td><td>Perjuangan pergerakan kemerdekaan Indonesia telah sampai ke pintu gerbang negara merdeka</td><td>Perjuangan, kemerdekaan</td></tr>
+<tr><td><strong>Alinea 3</strong></td><td>Pernyataan kemerdekaan Indonesia — atas berkat rahmat Allah Yang Maha Kuasa</td><td>Proklamasi, rahmat Tuhan</td></tr>
+<tr><td style="background:#dbeafe;"><strong>Alinea 4</strong></td><td style="background:#dbeafe;"><strong>Tujuan negara Indonesia</strong>: (1) melindungi segenap bangsa, (2) memajukan kesejahteraan umum, (3) mencerdaskan kehidupan bangsa, (4) ikut melaksanakan ketertiban dunia</td><td style="background:#dbeafe;"><strong>4 tujuan negara</strong></td></tr>
+</tbody></table></div>
+
+<div class="info-box blue"><strong>📘 Alinea Keempat = Yang Paling Sering Diujikan</strong>
+Empat tujuan negara: (1) <strong>Melindungi</strong> seluruh bangsa dari ancaman, (2) <strong>Memajukan kesejahteraan</strong> umum, (3) <strong>Mencerdaskan</strong> kehidupan bangsa, (4) Ikut menjaga <strong>ketertiban dunia</strong>. Jika ada janji/program yang mencakup perlindungan, kesejahteraan, pendidikan, dan perdamaian → itu merujuk ke Alinea Keempat.</div>
+</div>
+</div>
+
+<!-- ═══ ELEMEN 3: BHINNEKA TUNGGAL IKA ═══ -->
+<div class="section-block" id="e3"><div class="section-header"><div class="section-num e3">3</div><div class="section-title-group"><div class="section-title">Bhinneka Tunggal Ika</div><div class="section-subtitle">Makna semboyan, keberagaman, toleransi vs intoleransi, pelestarian budaya, penyelesaian konflik</div></div></div>
+
+<div class="content-card"><h3>🤝 Makna Bhinneka Tunggal Ika</h3>
+<p><span class="key-term">Bhinneka Tunggal Ika</span> berasal dari bahasa Jawa Kuno, artinya <strong>"Berbeda-beda tetapi tetap satu"</strong>. Semboyan ini menegaskan bahwa perbedaan (suku, agama, bahasa, budaya) bukanlah penghalang untuk bersatu sebagai satu bangsa Indonesia.</p>
+
+<div class="info-box teal"><strong>🔑 Makna Inti</strong>
+Perbedaan keyakinan <strong>tidak menghalangi kerja sama</strong> dalam kepentingan bersama. Contoh: warga berbeda agama bergotong royong memperbaiki masjid, gereja, dan pura secara bergantian — mereka bersatu dalam tujuan bersama melampaui batas agama.</div>
+</div>
+
+<div class="content-card"><h3>🌍 Unsur-Unsur Keberagaman Indonesia</h3>
+<div class="table-wrap"><table><thead><tr><th>Unsur</th><th>Penjelasan</th><th>Contoh</th></tr></thead><tbody>
+<tr><td><strong>Suku Bangsa</strong></td><td>Kelompok berdasarkan garis keturunan & budaya</td><td>Jawa, Sunda, Batak, Minang, Papua, Dayak, Bugis</td></tr>
+<tr><td><strong>Agama</strong></td><td>Keyakinan yang dianut</td><td>Islam, Kristen, Katolik, Hindu, Buddha, Konghucu</td></tr>
+<tr><td><strong>Bahasa Daerah</strong></td><td>Bahasa yang digunakan sehari-hari di rumah</td><td>Bahasa Batak, Sunda, Jawa, Minang, Papua</td></tr>
+<tr><td><strong>Adat Istiadat</strong></td><td>Tradisi turun-temurun dari daerah</td><td>Upacara adat, makanan khas, pakaian tradisional</td></tr>
+</tbody></table></div>
+
+<div class="info-box amber"><strong>⚠️ Yang BUKAN Unsur Keberagaman</strong>
+Warna kulit, tinggi badan, atau penampilan fisik <strong>bukan</strong> unsur keberagaman budaya yang dijadikan dasar klasifikasi. Unsur yang valid: suku bangsa, agama, bahasa daerah, dan adat istiadat/budaya.</div>
+</div>
+
+<div class="content-card"><h3>✅ Toleran vs ❌ Intoleran</h3>
+<div class="compare-grid">
+<div class="compare-box" style="background:var(--green-light);"><h4 style="color:var(--green-dark);margin-top:0;">✅ Sikap Toleran</h4><ul style="font-size:.82rem;">
+<li>Makan jauh dari teman yang berpuasa agar tidak menggoda</li>
+<li>Mengucapkan selamat hari raya kepada teman beda agama</li>
+<li>Membantu teman menyiapkan perayaan keagamaannya</li>
+<li>Belajar bersama tanpa memandang perbedaan agama</li>
+<li>Menyediakan ruang ibadah untuk karyawan beda agama</li>
+<li>Menjaga keamanan saat umat agama lain merayakan hari besar</li>
+</ul></div>
+<div class="compare-box" style="background:var(--red-light);"><h4 style="color:var(--red);margin-top:0;">❌ Sikap Intoleran</h4><ul style="font-size:.82rem;">
+<li>Menyebarkan konten yang mendiskreditkan ritual agama tertentu</li>
+<li>Memilih teman berdasarkan agama atau suku</li>
+<li>Menolak bekerja kelompok dengan teman beda latar belakang</li>
+<li>Memaksakan budaya sendiri dalam acara bersama</li>
+<li>Melarang orang lain beribadah sesuai keyakinannya</li>
+</ul></div>
+</div>
+</div>
+
+<div class="content-card"><h3>🏛️ Budaya Lokal vs Budaya Nasional</h3>
+<div class="compare-grid">
+<div class="compare-box" style="background:var(--amber-light);"><h4 style="color:var(--amber);margin-top:0;">🏘️ Budaya Lokal (Kedaerahan)</h4><p style="font-size:.82rem;">Berasal dari daerah tertentu, dimiliki komunitas/suku tertentu.</p><ul style="font-size:.82rem;"><li>Tari Kecak (Bali)</li><li>Rumah Honai (Papua)</li><li>Tari Saman (Aceh)</li><li>Angklung (Sunda)</li><li>Batik motif tertentu</li></ul></div>
+<div class="compare-box" style="background:var(--blue-light);"><h4 style="color:#1e40af;margin-top:0;">🇮🇩 Budaya Nasional (Pemersatu)</h4><p style="font-size:.82rem;">Milik seluruh bangsa, menjadi simbol persatuan.</p><ul style="font-size:.82rem;"><li>Bahasa Indonesia</li><li>Garuda Pancasila</li><li>Lagu Indonesia Raya</li><li>Bendera Merah Putih</li><li>Batik sebagai warisan nasional</li></ul></div>
+</div>
+
+<h4>Manfaat Keberagaman</h4>
+<p>Keberagaman budaya bukan masalah — justru kekayaan. Kearifan lokal dari berbagai daerah (Subak Bali, mangrove Sulawesi, pengelolaan hutan Kalimantan) <strong>memperkaya sumber pengetahuan</strong> yang relevan dan melengkapi pemahaman ilmiah.</p>
+</div>
+
+<div class="content-card"><h3>🎭 Pelestarian Budaya di Sekolah</h3>
+<p>Ekstrakurikuler yang berkontribusi langsung pada pelestarian budaya nasional Indonesia:</p>
+<ul>
+<li>✅ <strong>Tari Tradisional Nusantara</strong> — melestarikan seni tari daerah</li>
+<li>✅ <strong>Angklung dan Gamelan</strong> — melestarikan alat musik tradisional</li>
+<li>✅ <strong>Membatik Nusantara</strong> — melestarikan warisan budaya UNESCO</li>
+<li>❌ Karate Internasional — bukan budaya Indonesia</li>
+</ul>
+<p>Tindakan paling efektif: <strong>menginisiasi klub</strong> permainan/kesenian tradisional dan mengajarkannya secara rutin, bukan sekadar menempel poster atau menyimpan peralatan.</p>
+</div>
+
+<div class="content-card"><h3>🕊️ Penyelesaian Konflik Bhinneka Tunggal Ika</h3>
+<p>Ketika terjadi konflik terkait perbedaan budaya, prinsip utamanya adalah <strong>mengakomodasi keberagaman, bukan menyeragamkan</strong>.</p>
+
+<div class="info-box green"><strong>💡 Contoh Penyelesaian yang Tepat</strong>
+Konflik Hari Batik: ada yang ingin batik Jawa saja, ada yang merasa tidak nyaman. Solusi Bhinneka Tunggal Ika: <strong>memperbolehkan setiap siswa memakai batik dari daerah manapun</strong> — keberagaman menyatu dalam satu perayaan. Bukan membatalkan acara, memaksakan satu jenis, atau memaksa kelompok tertentu ikut.</div>
+
+<h4>Hambatan terhadap Bhinneka Tunggal Ika</h4>
+<p><span class="key-term">Etnosentrisme</span> — sikap menganggap budaya sendiri paling baik dan merendahkan budaya lain. Cara mengatasinya: keterbukaan untuk mempelajari dan menghargai budaya lain. Contoh: siswa yang awalnya tidak antusias mempelajari budaya Papua, setelah mempelajarinya justru sangat bersemangat.</p>
+</div>
+</div>
+
+<!-- ═══ ELEMEN 4: NKRI ═══ -->
+<div class="section-block" id="e4"><div class="section-header"><div class="section-num e4">4</div><div class="section-title-group"><div class="section-title">Negara Kesatuan Republik Indonesia (NKRI)</div><div class="section-subtitle">Wilayah administrasi, hierarki pemerintahan, bela negara, gotong royong, literasi digital</div></div></div>
+
+<div class="content-card"><h3>🗺️ Hierarki Wilayah Administrasi NKRI</h3>
+<p>Indonesia memiliki sistem pemerintahan bertingkat dari yang paling luas hingga yang paling kecil:</p>
+
+<div class="diagram-container">
+<svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" style="font-family:Nunito,sans-serif;">
+<text x="300" y="22" text-anchor="middle" font-size="13" font-weight="800" fill="#1f2a37">Hierarki Wilayah Administrasi NKRI</text>
+<rect x="170" y="35" width="260" height="32" rx="8" fill="#065f46"/><text x="300" y="56" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">🇮🇩 NKRI (Negara)</text>
+<line x1="300" y1="67" x2="300" y2="78" stroke="#9ca3af" stroke-width="2"/>
+<rect x="170" y="78" width="260" height="32" rx="8" fill="#059669"/><text x="300" y="99" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">Provinsi (38 provinsi)</text>
+<line x1="300" y1="110" x2="300" y2="121" stroke="#9ca3af" stroke-width="2"/>
+<rect x="160" y="121" width="280" height="32" rx="8" fill="#10b981"/><text x="300" y="142" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">Kabupaten / Kota</text>
+<line x1="300" y1="153" x2="300" y2="164" stroke="#9ca3af" stroke-width="2"/>
+<rect x="185" y="164" width="230" height="32" rx="8" fill="#34d399"/><text x="300" y="185" text-anchor="middle" font-size="12" font-weight="800" fill="#065f46">Kecamatan</text>
+<line x1="300" y1="196" x2="300" y2="207" stroke="#9ca3af" stroke-width="2"/>
+<rect x="185" y="207" width="230" height="32" rx="8" fill="#6ee7b7"/><text x="300" y="228" text-anchor="middle" font-size="12" font-weight="800" fill="#065f46">Desa / Kelurahan</text>
+<line x1="300" y1="239" x2="300" y2="250" stroke="#9ca3af" stroke-width="2"/>
+<rect x="210" y="250" width="180" height="26" rx="8" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/><text x="300" y="268" text-anchor="middle" font-size="11" font-weight="800" fill="#065f46">RT / RW (terkecil)</text>
+<text x="92" y="56" text-anchor="end" font-size="9" fill="#6b7280">TERBESAR →</text>
+<text x="92" y="268" text-anchor="end" font-size="9" fill="#6b7280">TERKECIL →</text>
+</svg>
+<div class="diagram-caption">Urutan dari terbesar ke terkecil: NKRI → Provinsi → Kab/Kota → Kecamatan → Desa/Kelurahan → RT/RW</div>
+</div>
+
+<div class="info-box blue"><strong>📍 Kota Depok dalam Struktur NKRI</strong>
+Kota Depok adalah bagian dari <strong>Provinsi Jawa Barat</strong> (bukan DKI Jakarta meskipun berbatasan langsung). Kabupaten Bogor juga merupakan bagian dari Provinsi Jawa Barat dan merupakan unit wilayah di dalam NKRI — bukan wilayah otonom yang berdiri sendiri.</div>
+</div>
+
+<div class="content-card"><h3>🛡️ Bela Negara: Fisik vs Non-Fisik</h3>
+<p>Bela negara adalah hak dan kewajiban setiap warga negara (UU No. 3 Tahun 2002). Bela negara <strong>bukan hanya soal angkat senjata</strong> — ada dua bentuk:</p>
+
+<div class="compare-grid">
+<div class="compare-box" style="background:var(--red-light);"><h4 style="color:var(--red);margin-top:0;">⚔️ Bela Negara Fisik</h4><p style="font-size:.82rem;">Menghadapi ancaman secara langsung/bersenjata.</p><ul style="font-size:.82rem;"><li>Mengikuti wajib militer</li><li>Latihan bela diri/tempur</li><li>Menjadi anggota TNI/Polri</li></ul></div>
+<div class="compare-box" style="background:var(--green-light);"><h4 style="color:var(--green-dark);margin-top:0;">💚 Bela Negara Non-Fisik</h4><p style="font-size:.82rem;">Kontribusi positif dalam kehidupan bermasyarakat.</p><ul style="font-size:.82rem;"><li><strong>Belajar sungguh-sungguh</strong> untuk jadi generasi cerdas</li><li><strong>Tidak menyebarkan hoaks</strong> yang memecah belah</li><li><strong>Mengikuti upacara bendera</strong> dengan khidmat</li><li>Menjaga lingkungan (misal: membangun tanggul)</li><li><strong>Berprestasi</strong> di olimpiade internasional</li></ul></div>
+</div>
+
+<div class="info-box orange"><strong>⚠️ Mengapa Gotong Royong Membangun Tanggul = Bela Negara?</strong>
+Menjaga ketahanan wilayah dari ancaman bencana adalah wujud <strong>cinta tanah air</strong> yang nyata. Bela negara tidak harus melibatkan militer — setiap tindakan yang memperkuat ketahanan bangsa adalah bela negara.</div>
+</div>
+
+<div class="content-card"><h3>📱 Literasi Digital dan Persatuan NKRI</h3>
+<p>Di era digital, ancaman terhadap persatuan NKRI bisa datang dari informasi palsu (hoaks) dan konten yang memecah belah.</p>
+
+<h4>Menghadapi Hoaks dan Konten Provokatif</h4>
+<p>Tindakan yang paling tepat sebagai warga NKRI yang bijak:</p>
+<ol>
+<li><strong>Verifikasi kebenaran</strong> melalui sumber terpercaya sebelum bersikap</li>
+<li><strong>Jangan menyebarkan</strong> jika belum terbukti kebenarannya</li>
+<li>Laporkan konten yang jelas-jelas menyesatkan</li>
+</ol>
+
+<p><strong>Yang BUKAN tindakan bijak:</strong> langsung meneruskan dengan komentar pribadi, memblokir semua akun media sosial (terlalu ekstrem), atau melaporkan tanpa memeriksa kebenarannya.</p>
+</div>
+
+<div class="content-card"><h3>🤲 Gotong Royong dan Persatuan</h3>
+<p>Gotong royong bukan hanya tradisi — ini adalah wujud nyata persatuan NKRI dalam kehidupan sehari-hari.</p>
+
+<h4>Manfaat Utama Gotong Royong</h4>
+<p>Manfaat yang paling langsung memperkuat persatuan bukan hadiahnya, bukan paksaan bagi yang malas, dan bukan nilai dari atasan — melainkan: <strong>proses bekerja bersama yang menciptakan rasa kebersamaan dan tanggung jawab kolektif</strong>, yang merekatkan hubungan antar anggota.</p>
+
+<h4>Sikap dalam Musyawarah yang Mendukung Persatuan</h4>
+<ul>
+<li>✅ Mendengarkan usulan pihak lain dengan tenang meski berbeda pendapat</li>
+<li>✅ Bersedia menerima dan melaksanakan keputusan bersama meskipun bukan pilihan yang diinginkan</li>
+<li>✅ Mengajukan argumen dengan data dan alasan jelas tanpa menyerang pribadi</li>
+<li>❌ Meninggalkan rapat dan mengorganisir orang untuk melawan keputusan</li>
+</ul>
+</div>
+</div>
+
+<!-- ═══ RINGKASAN ═══ -->
+<div class="content-card" style="border:2px solid var(--purple);background:var(--purple-light);">
+<h3 style="color:var(--purple-dark);font-size:1.1rem;">📝 Ringkasan Poin Kunci untuk Ujian</h3>
+
+<h4>1. Pancasila</h4>
+<ul>
+<li>5 sila + lambang: Bintang, Rantai, Pohon Beringin (Sila 3), Kepala Banteng, Padi & Kapas</li>
+<li><strong>Dasar Negara</strong> = sumber hukum. <strong>Pandangan Hidup</strong> = pedoman perilaku</li>
+<li>Kronologi: <strong>Pidato Soekarno (1 Juni) → Piagam Jakarta (22 Juni) → Pengesahan UUD 1945 (18 Agustus)</strong></li>
+<li>Teladan tokoh: rela berkorban, mengubah usulan demi persatuan, menjembatani perbedaan</li>
+<li>Satu kegiatan bisa mencerminkan beberapa sila sekaligus</li>
+</ul>
+
+<h4>2. UUD 1945</h4>
+<ul>
+<li><strong>Hak</strong> = diterima (pengajaran, UKS, bimbingan BK). <strong>Kewajiban</strong> = dipenuhi (SPP, piket, iuran). Harus seimbang</li>
+<li>4 norma: Agama, Kesusilaan, Kesopanan, <strong>Hukum</strong> (sanksi paling tegas)</li>
+<li><strong>Musyawarah mufakat</strong> = kesepakatan semua pihak > suara terbanyak</li>
+<li><strong>Alinea Keempat</strong> Pembukaan UUD 1945 = 4 tujuan negara (melindungi, sejahtera, cerdas, damai)</li>
+<li>Aturan yang disepakati bersama harus ditegakkan konsisten — tanpa pandang alasan pribadi</li>
+</ul>
+
+<h4>3. Bhinneka Tunggal Ika</h4>
+<ul>
+<li>Berbeda-beda tetapi tetap satu — perbedaan bukan penghalang kerja sama</li>
+<li>4 unsur keberagaman: suku, agama, bahasa, adat (bukan penampilan fisik)</li>
+<li><strong>Toleran</strong> = menghormati aktif (membantu, mengucapkan selamat). <strong>Intoleran</strong> = mendiskreditkan, memaksa</li>
+<li>Budaya Lokal (Tari Kecak, Honai) vs Budaya Nasional (Bahasa Indonesia, Garuda)</li>
+<li>Penyelesaian konflik: <strong>akomodasi keberagaman</strong>, bukan penyeragaman</li>
+<li>Etnosentrisme diatasi dengan keterbukaan mempelajari budaya lain</li>
+</ul>
+
+<h4>4. NKRI</h4>
+<ul>
+<li>Hierarki: NKRI → Provinsi → Kab/Kota → Kecamatan → Desa → RT/RW</li>
+<li><strong>Kota Depok = Provinsi Jawa Barat</strong></li>
+<li>Bela negara <strong>Fisik</strong> (militer) vs <strong>Non-Fisik</strong> (belajar, tidak sebar hoaks, upacara, prestasi)</li>
+<li>Gotong royong → manfaat utama: rasa kebersamaan & tanggung jawab kolektif</li>
+<li>Hadapi hoaks: <strong>verifikasi dulu, jangan sebar jika belum terbukti</strong></li>
+</ul>
+</div>
+
+</main>
+
+<footer class="footer">SD Muhammadiyah 01 Kukusan · Materi Pendidikan Pancasila Kelas 6 · Tahun Pelajaran 2025/2026 🏛️</footer>
 </body>
 </html>
