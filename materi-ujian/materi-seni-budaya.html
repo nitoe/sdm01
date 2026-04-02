@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materi Seni Budaya – Ujian Sekolah Kelas 6</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--purple:#7c3aed;--purple-dark:#5b21b6;--purple-light:#f5f3ff;--purple-pale:#ede9fe;--green:#059669;--green-dark:#065f46;--green-light:#d1fae5;--blue:#2563eb;--blue-light:#dbeafe;--orange:#ea580c;--orange-light:#fff7ed;--red:#dc2626;--red-light:#fef2f2;--amber:#d97706;--amber-light:#fef3c7;--teal:#0d9488;--teal-light:#ccfbf1;--text:#1f2a37;--text-muted:#6b7280;--bg:#f0f4ff;--white:#fff;--border:#e5e7eb;--radius:14px;--shadow:0 4px 20px rgba(0,0,0,.06)}
+    *{box-sizing:border-box;margin:0;padding:0}html{font-size:clamp(14px,3.2vw,16px);scroll-behavior:smooth}body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.75}
+    .header{position:sticky;top:0;z-index:100;background:linear-gradient(135deg,#3b0764,#5b21b6 50%,#7c3aed);color:#fff;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(0,0,0,.25)}.header-brand{display:flex;align-items:center;gap:10px}.logo{font-size:1.5rem}.brand-name{font-family:'Baloo 2',cursive;font-size:clamp(.82rem,2.6vw,1rem);font-weight:800;line-height:1.1}.sub-brand{font-size:.62rem;opacity:.8;font-weight:600}.header-back{display:flex;align-items:center;gap:5px;color:#fff;text-decoration:none;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 14px;font-size:.72rem;font-weight:700;transition:background .2s}.header-back:hover{background:rgba(255,255,255,.3)}
+    .hero{background:linear-gradient(160deg,#3b0764,#5b21b6 40%,#7c3aed);color:#fff;padding:40px 20px 48px;text-align:center;position:relative;overflow:hidden}.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M50 50v-6h-2v6h-6v2h6v6h2v-6h6v-2h-6zM50 10V4h-2v6h-6v2h6v6h2v-6h6v-2h-6zM10 50v-6H8v6H2v2h6v6h2v-6h6v-2h-6zM10 10V4H8v6H2v2h6v6h2v-6h6v-2h-6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}.hero-emoji{font-size:3rem;display:block;margin-bottom:10px;position:relative}.hero h1{font-family:'Baloo 2',cursive;font-size:clamp(1.4rem,4.5vw,2rem);font-weight:800;margin-bottom:6px;position:relative}.hero p{font-size:clamp(.8rem,2.2vw,.92rem);opacity:.88;font-weight:600;max-width:620px;margin:0 auto;position:relative;line-height:1.6}
+    .nav-pills{background:var(--white);border-bottom:1px solid var(--border);padding:12px 16px;position:sticky;top:56px;z-index:90;box-shadow:0 2px 8px rgba(0,0,0,.04)}.nav-pills-inner{max-width:920px;margin:0 auto;display:flex;gap:6px;flex-wrap:wrap;justify-content:center}.nav-pill{font-size:.7rem;font-weight:700;padding:4px 12px;border-radius:20px;text-decoration:none;background:var(--purple-light);color:var(--purple-dark);border:1px solid transparent;transition:all .2s;white-space:nowrap}.nav-pill:hover{background:var(--purple-pale);border-color:var(--purple)}
+    .container{max-width:920px;margin:0 auto;padding:32px 16px 56px}
+    .section-block{margin-bottom:40px}.section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:3px solid var(--purple)}.section-num{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;color:#fff;flex-shrink:0}
+    .sn1{background:linear-gradient(135deg,#ea580c,#fb923c)}.sn2{background:linear-gradient(135deg,#7c3aed,#a78bfa)}
+    .section-title-group{flex:1}.section-title{font-family:'Baloo 2',cursive;font-size:1.15rem;font-weight:800}.section-subtitle{font-size:.73rem;font-weight:600;color:var(--text-muted)}
+    .cc{background:var(--white);border-radius:var(--radius);padding:24px;margin-bottom:20px;box-shadow:var(--shadow);border:1px solid var(--border)}.cc h3{font-family:'Baloo 2',cursive;font-size:1.02rem;font-weight:800;margin-bottom:12px;color:var(--purple-dark);display:flex;align-items:center;gap:8px}.cc h4{font-size:.9rem;font-weight:800;margin:16px 0 8px;color:var(--text)}.cc p{font-size:.86rem;margin-bottom:10px;color:#374151}.cc ul,.cc ol{padding-left:20px;margin-bottom:10px}.cc li{font-size:.84rem;margin-bottom:5px;color:#374151}.cc li strong{color:var(--text)}
+    .ib{border-radius:10px;padding:14px 16px;margin:14px 0;font-size:.82rem}.ib.green{background:var(--green-light);border-left:4px solid var(--green)}.ib.blue{background:var(--blue-light);border-left:4px solid var(--blue)}.ib.orange{background:var(--orange-light);border-left:4px solid var(--orange)}.ib.red{background:var(--red-light);border-left:4px solid var(--red)}.ib.amber{background:var(--amber-light);border-left:4px solid var(--amber)}.ib.teal{background:var(--teal-light);border-left:4px solid var(--teal)}.ib.purple{background:var(--purple-light);border-left:4px solid var(--purple)}
+    .ib strong{display:block;margin-bottom:4px}.ib.green strong{color:var(--green-dark)}.ib.blue strong{color:#1e40af}.ib.orange strong{color:var(--orange)}.ib.red strong{color:var(--red)}.ib.amber strong{color:var(--amber)}.ib.teal strong{color:var(--teal)}.ib.purple strong{color:var(--purple-dark)}
+    .tw{overflow-x:auto;margin:12px 0;-webkit-overflow-scrolling:touch}table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:320px}th{background:var(--purple-light);color:var(--purple-dark);padding:9px 12px;text-align:left;font-weight:800;font-size:.76rem;text-transform:uppercase;letter-spacing:.3px;border-bottom:2px solid var(--purple)}td{padding:9px 12px;border-bottom:1px solid var(--border)}tr:nth-child(even) td{background:#fafbff}
+    .kt{display:inline-block;background:var(--purple-light);color:var(--purple-dark);padding:1px 8px;border-radius:6px;font-weight:800;font-size:.82rem}
+    .cg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}@media(max-width:500px){.cg{grid-template-columns:1fr}}.cb{border-radius:10px;padding:14px;font-size:.82rem}
+    .footer{text-align:center;padding:24px 16px;font-size:.76rem;color:var(--text-muted);font-weight:600;border-top:1px solid var(--border)}
+  </style>
+</head>
+<body>
+
+<header class="header"><div class="header-brand"><span class="logo">🎨</span><div><div class="brand-name">Materi Seni Budaya</div><div class="sub-brand">Ujian Sekolah · Kelas 6</div></div></div><a href="index.html" class="header-back">← Hub Materi</a></header>
+
+<section class="hero"><span class="hero-emoji">🎨</span><h1>Seni Budaya</h1><p>Materi lengkap 2 kelompok: Seni Rupa (unsur, prinsip, teknik, bahan, apresiasi) dan Seni Musik (irama, tempo, dinamika, notasi, alat musik, ansambel, kearifan lokal).</p></section>
+
+<nav class="nav-pills"><div class="nav-pills-inner">
+<a href="#r1" class="nav-pill">🖌️ Unsur Rupa</a><a href="#r2" class="nav-pill">⚖️ Prinsip Desain</a><a href="#r3" class="nav-pill">✏️ Teknik & Bahan</a><a href="#r4" class="nav-pill">💬 Apresiasi Rupa</a><a href="#m1" class="nav-pill">🎵 Irama & Notasi</a><a href="#m2" class="nav-pill">🎺 Alat Musik</a><a href="#m3" class="nav-pill">🎭 Ansambel & Budaya</a><a href="#m4" class="nav-pill">💬 Apresiasi Musik</a>
+</div></nav>
+
+<main class="container">
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  BAGIAN 1: SENI RUPA                              -->
+<!-- ═══════════════════════════════════════════════════ -->
+
+<div class="section-block" id="r1"><div class="section-header"><div class="section-num sn1">🖌️</div><div class="section-title-group"><div class="section-title">Unsur-Unsur Seni Rupa</div><div class="section-subtitle">Garis, bidang, bentuk, warna (primer/sekunder/tersier), tekstur (nyata vs semu)</div></div></div>
+
+<div class="cc"><h3>📐 Garis vs Bidang</h3>
+<div class="cg">
+<div class="cb" style="background:var(--blue-light);"><h4 style="color:#1e40af;margin-top:0;">➖ Garis (1 Dimensi)</h4><p>Punya panjang, tidak punya lebar berarti. Arah: lurus, lengkung, zigzag.</p><p>Contoh: garis zigzag diagonal, kurva huruf S</p></div>
+<div class="cb" style="background:var(--orange-light);"><h4 style="color:var(--orange);margin-top:0;">⬜ Bidang (2 Dimensi)</h4><p>Punya panjang DAN lebar, dibatasi garis tepi. Bisa geometris atau organis.</p><p>Contoh: persegi panjang merah, lingkaran biru</p></div>
+</div>
+<p>Objek alam juga menampilkan unsur rupa berbeda: <strong>daun</strong> didominasi garis lengkung dan bidang organis, sedangkan <strong>batu</strong> menampilkan bentuk masif tanpa tepi yang tegas.</p>
+</div>
+
+<div class="cc"><h3>🎨 Teori Warna</h3>
+<div class="tw"><table><thead><tr><th>Kategori</th><th>Cara Terbentuk</th><th>Contoh</th></tr></thead><tbody>
+<tr><td><strong>Primer</strong></td><td>Tidak bisa dicampur dari warna lain</td><td>Merah, Kuning, Biru</td></tr>
+<tr><td><strong>Sekunder</strong></td><td>Campuran 2 warna primer</td><td>Merah+Kuning = <strong>Oranye</strong>; Biru+Kuning = <strong>Hijau</strong>; Merah+Biru = <strong>Ungu</strong></td></tr>
+<tr><td><strong>Tersier</strong></td><td>Campuran primer + sekunder berdekatan</td><td>Biru+Hijau = <strong>Biru-hijau</strong>; Merah+Oranye = <strong>Merah-oranye</strong></td></tr>
+</tbody></table></div>
+<div class="ib amber"><strong>⚠️ Jangan Tertukar!</strong>Oranye (merah+kuning) = warna <strong>sekunder</strong>, BUKAN tersier. Biru-hijau (biru+hijau) = warna <strong>tersier</strong> karena campuran primer (biru) + sekunder (hijau).</div>
+</div>
+
+<div class="cc"><h3>🧱 Tekstur: Nyata vs Semu</h3>
+<div class="cg">
+<div class="cb" style="background:var(--green-light);"><h4 style="color:var(--green-dark);margin-top:0;">✋ Tekstur Nyata</h4><p>Terasa bila diraba — ada dimensi fisik.</p><p>Contoh: kulit jeruk asli (kasar, berbintil)</p></div>
+<div class="cb" style="background:var(--purple-light);"><h4 style="color:var(--purple-dark);margin-top:0;">👁️ Tekstur Semu/Visual</h4><p>Hanya terlihat bertekstur, tapi <strong>halus bila diraba</strong>.</p><p>Contoh: gambar kayu di meja laminat, foto batu di kertas glossy, kaca frosted</p></div>
+</div>
+</div>
+</div>
+
+<div class="section-block" id="r2"><div class="section-header"><div class="section-num sn1">⚖️</div><div class="section-title-group"><div class="section-title">Prinsip Desain Seni Rupa</div><div class="section-subtitle">Keseimbangan, kesatuan (unity), irama/ritme, proporsi</div></div></div>
+
+<div class="cc"><h3>⚖️ Keseimbangan (Balance)</h3>
+<div class="cg">
+<div class="cb" style="background:var(--blue-light);"><h4 style="color:#1e40af;margin-top:0;">🪞 Simetris</h4><p>Kiri dan kanan <strong>identik</strong>/sama persis, seperti cermin.</p></div>
+<div class="cb" style="background:var(--amber-light);"><h4 style="color:var(--amber);margin-top:0;">⚖️ Asimetris</h4><p>Kiri dan kanan <strong>tidak identik</strong>, tapi tetap seimbang. Satu objek besar di kiri diimbangi beberapa objek kecil di kanan yang bobot visualnya setara.</p></div>
+</div>
+</div>
+
+<div class="cc"><h3>🔗 Kesatuan (Unity)</h3>
+<p>Karya memiliki kesatuan ketika semua elemennya terasa "satu" — palet warna konsisten, tema terpusat, dan ritme ukuran yang membangun kesan kohesif. Karya dengan 12 warna acak tanpa pola = <strong>tidak punya kesatuan</strong>.</p>
+
+<h4>Irama/Ritme dalam Seni Rupa</h4>
+<p>Irama tercipta melalui <strong>pengulangan</strong> elemen visual secara teratur atau bervariasi. Contoh pada batik: motif bunga kecil diulang dengan jarak konsisten, garis diagonal berulang dengan ketebalan sama, atau motif daun yang ukurannya semakin mengecil membentuk gradasi.</p>
+
+<h4>Proporsi</h4>
+<p>Hubungan ukuran antarelemen. Proporsi kepala manusia normal = sekitar 1:8 (kepala:tinggi badan). Jika kepala digambar lebih besar = proporsi tidak realistis (bisa disengaja untuk efek stilisasi).</p>
+</div>
+</div>
+
+<div class="section-block" id="r3"><div class="section-header"><div class="section-num sn1">✏️</div><div class="section-title-group"><div class="section-title">Teknik, Bahan & Proses Berkarya</div><div class="section-subtitle">Arsir, dusel, pointilis, cetak tinggi, 2D vs 3D, bahan alam vs buatan, observasi vs imajinasi</div></div></div>
+
+<div class="cc"><h3>✏️ Teknik Menggambar Tekstur</h3>
+<div class="tw"><table><thead><tr><th>Teknik</th><th>Cara</th><th>Hasil</th><th>Cocok untuk</th></tr></thead><tbody>
+<tr><td><strong>Arsir</strong></td><td>Garis-garis paralel rapat</td><td>Tekstur tegas, kasar</td><td>Objek berserat, kayu, kain</td></tr>
+<tr><td><strong>Dusel (gosok)</strong></td><td>Bidang warna digosok hingga menyatu</td><td>Transisi <strong>halus</strong> gelap-terang</td><td><strong>Bulu hewan</strong>, kulit, awan</td></tr>
+<tr><td><strong>Pointilis</strong></td><td>Titik-titik kecil kepadatan bervariasi</td><td>Gradasi dari titik</td><td>Efek cahaya, pasir, tekstur berpori</td></tr>
+</tbody></table></div>
+<div class="ib green"><strong>💡 Soal Klasik</strong>"Teknik untuk gradasi halus bulu hewan?" → <strong>Dusel (gosok)</strong> — karena menghasilkan transisi mulus, bukan garis tegas seperti arsir atau titik-titik seperti pointilis.</div>
+</div>
+
+<div class="cc"><h3>🪵 Cetak Tinggi (Cukil)</h3>
+<p>Proses: (1) Gambar desain pada hardboard → (2) <strong>Cukil bagian yang tidak tercetak</strong> menggunakan <strong>alat cukil (pahat ukir)</strong> → (3) Beri tinta pada permukaan tersisa → (4) Cetak ke kertas. Alat kuas, cutter, dan penggaris BUKAN alat yang tepat untuk tahap mencukil.</p>
+</div>
+
+<div class="cc"><h3>📐 Karya 2D vs 3D</h3>
+<div class="tw"><table><thead><tr><th>Aspek</th><th>2 Dimensi</th><th>3 Dimensi</th></tr></thead><tbody>
+<tr><td>Dimensi</td><td>Panjang & lebar</td><td>Panjang, lebar, & tinggi/kedalaman</td></tr>
+<tr><td>Sudut pandang</td><td>Satu arah (depan)</td><td>Berbagai arah</td></tr>
+<tr><td>Contoh</td><td>Gambar pensil, lukisan, kolase datar</td><td>Patung, keramik, relief, topeng, miniatur</td></tr>
+<tr><td>Teknik 3D</td><td colspan="2"><strong>Konstruksi/merakit</strong> (las potongan besi, anyam bambu); <strong>Membentuk</strong> (memijit tanah liat); <strong>Cetak/tuang</strong> (tuang perunggu ke cetakan)</td></tr>
+</tbody></table></div>
+<div class="ib blue"><strong>📘 Relief = 3 Dimensi!</strong>Meskipun menempel di dinding, relief memiliki tonjolan/kedalaman → 3D. Topeng paper mache juga 3D karena bisa dikenakan.</div>
+</div>
+
+<div class="cc"><h3>🌿 Bahan Alam vs Bahan Buatan</h3>
+<div class="cg">
+<div class="cb" style="background:var(--green-light);"><h4 style="color:var(--green-dark);margin-top:0;">🌿 Bahan Alam</h4><ul style="font-size:.82rem;"><li>Tanah liat (patung, keramik)</li><li>Daun kering, biji-bijian (kolase)</li><li>Bambu (rangka konstruksi 3D)</li><li>Ranting, batu kerikil (miniatur)</li></ul></div>
+<div class="cb" style="background:var(--red-light);"><h4 style="color:var(--red);margin-top:0;">🏭 Bahan Buatan</h4><ul style="font-size:.82rem;"><li>Styrofoam (dari industri)</li><li>Plastik bekas</li><li>Cat akrilik, cat minyak</li><li>Kertas (sudah diproses pabrik)</li></ul></div>
+</div>
+
+<h4>Observasi vs Imajinasi dalam Karya</h4>
+<p>Bagian karya yang sesuai bentuk asli di alam = <strong>observasi</strong>. Bagian yang ditambahkan seniman dan tidak ada di alam = <strong>imajinasi</strong>. Contoh: merak dengan mahkota emas dan sayap berisi peta Jawa → mahkota emas & peta = <strong>imajinasi</strong> (tidak ada di merak asli).</p>
+</div>
+
+<div class="cc"><h3>🎯 Fungsi Karya Seni Rupa</h3>
+<div class="tw"><table><thead><tr><th>Fungsi</th><th>Pengertian</th><th>Contoh</th></tr></thead><tbody>
+<tr><td><strong>Seni Pakai (Terapan)</strong></td><td>Punya fungsi praktis + estetis</td><td>Kendi tanah liat (wadah air), kursi ukir (tempat duduk)</td></tr>
+<tr><td><strong>Seni Hias/Murni</strong></td><td>Hanya untuk dinikmati keindahannya</td><td>Lukisan pemandangan di dinding</td></tr>
+</tbody></table></div>
+</div>
+</div>
+
+<div class="section-block" id="r4"><div class="section-header"><div class="section-num sn1">💬</div><div class="section-title-group"><div class="section-title">Apresiasi Seni Rupa</div><div class="section-subtitle">Komentar konstruktif, kosakata seni, objektif vs subjektif, minat & media karya</div></div></div>
+
+<div class="cc"><h3>💬 Apresiasi Karya yang Baik</h3>
+<p>Komentar yang <strong>konstruktif</strong>: menggunakan istilah seni rupa, mengakui kelebihan, DAN memberikan saran perbaikan spesifik.</p>
+<div class="tw"><table><thead><tr><th>Komentar</th><th>Kategori</th></tr></thead><tbody>
+<tr><td>"Komposisinya sudah seimbang, tapi coba perkuat <strong>kontras</strong> warna agar <strong>fokus</strong> lebih terpusat."</td><td style="color:var(--green);font-weight:700;">✅ Konstruktif + Teknis</td></tr>
+<tr><td>"Aku tidak suka karyamu." / "Warnanya mengganggu."</td><td style="color:var(--red);font-weight:700;">❌ Subjektif, tidak konstruktif</td></tr>
+<tr><td>"Karyamu paling bagus di kelas!"</td><td style="color:var(--amber);font-weight:700;">⚠️ Positif tapi tidak spesifik</td></tr>
+</tbody></table></div>
+
+<h4>Kosakata Seni Rupa untuk Apresiasi</h4>
+<ul>
+<li><span class="kt">Komposisi</span> — cara unsur rupa disusun dalam bidang gambar</li>
+<li><span class="kt">Estetika</span> — nilai keindahan dan apresiasi karya</li>
+<li><span class="kt">Perspektif</span> — teknik menggambarkan kedalaman/jauh-dekat</li>
+<li><span class="kt">Kontras</span> — perbedaan terang-gelap atau warna yang mencolok</li>
+<li><span class="kt">Proporsi</span> — hubungan ukuran antarbagian</li>
+</ul>
+<p>Catatan: "Kalkulasi" (perhitungan matematika) BUKAN istilah seni rupa.</p>
+
+<h4>Umpan Balik Objektif vs Subjektif</h4>
+<div class="cg">
+<div class="cb" style="background:var(--blue-light);"><h4 style="color:#1e40af;margin-top:0;">📐 Objektif</h4><p>Berdasarkan elemen <strong>yang bisa diamati/diukur</strong>.</p><p>"Proporsi kepala lebih besar dari normal 1:8."</p><p>"Komposisi mengikuti rule of thirds."</p></div>
+<div class="cb" style="background:var(--amber-light);"><h4 style="color:var(--amber);margin-top:0;">💭 Subjektif</h4><p>Berdasarkan <strong>perasaan/selera pribadi</strong>.</p><p>"Karya ini membuatku merasa tenang."</p><p>"Aku tidak suka warnanya."</p></div>
+</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  BAGIAN 2: SENI MUSIK                             -->
+<!-- ═══════════════════════════════════════════════════ -->
+
+<div class="section-block" id="m1"><div class="section-header"><div class="section-num sn2">🎵</div><div class="section-title-group"><div class="section-title">Irama, Tempo, Dinamika & Notasi</div><div class="section-subtitle">Birama 4/4, nilai not, tempo (Adagio–Presto), dinamika (pp–ff), crescendo/decrescendo, melodi</div></div></div>
+
+<div class="cc"><h3>🎵 Birama dan Nilai Not</h3>
+<p>Birama <strong>4/4</strong> = setiap birama berisi <strong>4 ketukan</strong>.</p>
+<div class="tw"><table><thead><tr><th>Jenis Not</th><th>Nilai Ketukan</th></tr></thead><tbody>
+<tr><td>Not Penuh (whole note) ○</td><td><strong>4</strong> ketukan</td></tr>
+<tr><td>Not Setengah (half note) 𝅗𝅥</td><td><strong>2</strong> ketukan</td></tr>
+<tr><td>Not Seperempat (quarter note) ♩</td><td><strong>1</strong> ketukan</td></tr>
+<tr><td>Not Seperdelapan (eighth note) ♪</td><td><strong>½</strong> ketukan</td></tr>
+</tbody></table></div>
+<div class="ib green"><strong>💡 Cara Menghitung Birama 4/4</strong>
+Jumlahkan nilai semua not → harus = 4 ketukan tepat.<br>
+Contoh: 1 not setengah + 1 not seperempat + 2 not seperdelapan = 2 + 1 + (0,5 × 2) = <strong>4 ketukan → penuh!</strong><br>
+Contoh: 1 not setengah + 2 not seperempat = 2 + 1 + 1 = <strong>4 ketukan → penuh!</strong></div>
+</div>
+
+<div class="cc"><h3>⏱️ Tempo — Kecepatan Musik</h3>
+<div class="tw"><table><thead><tr><th>Istilah</th><th>Kecepatan</th><th>BPM (perkiraan)</th><th>Karakter</th></tr></thead><tbody>
+<tr><td><strong>Grave</strong></td><td rowspan="3">Lambat</td><td>20–40</td><td>Sangat lambat, hikmat</td></tr>
+<tr><td><strong>Largo</strong></td><td>40–60</td><td>Lambat, luas</td></tr>
+<tr><td><strong>Adagio</strong></td><td>66–76</td><td>Lambat, ekspresif → <strong>cocok untuk prosesi khidmat</strong></td></tr>
+<tr><td><strong>Andante</strong></td><td rowspan="2">Sedang</td><td>76–108</td><td>Sedang, seperti langkah kaki</td></tr>
+<tr><td><strong>Moderato</strong></td><td>108–120</td><td>Sedang</td></tr>
+<tr><td><strong>Allegro</strong></td><td rowspan="3">Cepat</td><td>120–156</td><td>Cepat, riang</td></tr>
+<tr><td><strong>Vivace</strong></td><td>156–176</td><td>Sangat hidup, bersemangat</td></tr>
+<tr><td><strong>Presto</strong></td><td>168–200</td><td>Sangat cepat</td></tr>
+</tbody></table></div>
+</div>
+
+<div class="cc"><h3>🔊 Dinamika — Kekuatan Bunyi</h3>
+<div class="tw"><table><thead><tr><th>Simbol</th><th>Istilah</th><th>Arti</th></tr></thead><tbody>
+<tr><td><strong>pp</strong></td><td>Pianissimo</td><td>Sangat lembut</td></tr>
+<tr><td><strong>p</strong></td><td>Piano</td><td>Lembut</td></tr>
+<tr><td><strong>mp</strong></td><td>Mezzo piano</td><td>Agak lembut</td></tr>
+<tr><td><strong>mf</strong></td><td>Mezzo forte</td><td>Agak keras</td></tr>
+<tr><td><strong>f</strong></td><td>Forte</td><td>Keras</td></tr>
+<tr><td><strong>ff</strong></td><td>Fortissimo</td><td>Sangat keras</td></tr>
+</tbody></table></div>
+<p><span class="kt">Crescendo</span> (—<) = semakin mengeras. <span class="kt">Decrescendo</span> (>—) = semakin melemah.</p>
+<div class="ib purple"><strong>📝 Contoh Soal</strong>Lagu dimulai <strong>pp</strong> → <strong>crescendo</strong> → <strong>f</strong> di reff → <strong>decrescendo</strong> → <strong>p</strong> di akhir. Cara menyanyi: mulai sangat lembut → semakin keras → keras di reff → melemah lagi di akhir.</div>
+</div>
+
+<div class="cc"><h3>🎶 Melodi: Naik vs Turun</h3>
+<p><strong>Melodi naik</strong> = nada bergerak dari rendah ke tinggi. <strong>Melodi turun</strong> = tinggi ke rendah.</p>
+<div class="tw"><table><thead><tr><th>Pola</th><th>Jenis</th></tr></thead><tbody>
+<tr><td>Do–Re–Mi–Fa–Sol</td><td style="color:var(--green);font-weight:700;">↑ Naik (konsisten)</td></tr>
+<tr><td>Do–Mi–Sol–Si–Do'</td><td style="color:var(--green);font-weight:700;">↑ Naik (lompatan)</td></tr>
+<tr><td>Mi–Re–Do–Si–La</td><td style="color:var(--red);font-weight:700;">↓ Turun (konsisten)</td></tr>
+<tr><td>Sol–Mi–Do–Re–Fa</td><td style="color:var(--amber);font-weight:700;">↕ Bergelombang (turun lalu naik)</td></tr>
+</tbody></table></div>
+</div>
+</div>
+
+<div class="section-block" id="m2"><div class="section-header"><div class="section-num sn2">🎺</div><div class="section-title-group"><div class="section-title">Alat Musik — Klasifikasi & Perawatan</div><div class="section-subtitle">Ritmis vs melodis, organologi, cara memainkan, bahan alat musik sederhana, perawatan</div></div></div>
+
+<div class="cc"><h3>🥁 Ritmis vs Melodis</h3>
+<div class="cg">
+<div class="cb" style="background:var(--amber-light);"><h4 style="color:var(--amber);margin-top:0;">🥁 Ritmis</h4><p>Menjaga ketukan/ritme. <strong>Tidak menghasilkan nada berbeda</strong> untuk melodi.</p><p>Contoh: Castanet, Kendang, Triangle, Tamborin, Rebana, Drum</p></div>
+<div class="cb" style="background:var(--blue-light);"><h4 style="color:#1e40af;margin-top:0;">🎹 Melodis</h4><p>Menghasilkan <strong>rangkaian nada berbeda</strong> (tinggi-rendah) → bisa memainkan melodi lagu.</p><p>Contoh: Pianika, Recorder, Gitar, Biola, Angklung, Sasando</p></div>
+</div>
+</div>
+
+<div class="cc"><h3>🎻 Klasifikasi Organologi (Berdasarkan Sumber Bunyi)</h3>
+<div class="tw"><table><thead><tr><th>Kategori</th><th>Sumber Bunyi</th><th>Contoh</th></tr></thead><tbody>
+<tr><td><strong>Chordophone</strong></td><td>Getaran <strong>senar</strong></td><td>Gitar (petik), Biola (gesek), Rebab (gesek), Sitar (petik), Sasando (petik)</td></tr>
+<tr><td><strong>Aerophone</strong></td><td>Getaran <strong>kolom udara</strong></td><td>Seruling, Saksofon, Terompet, Recorder, Harmonika, Suling bambu</td></tr>
+<tr><td><strong>Membranophone</strong></td><td>Getaran <strong>membran/kulit</strong></td><td>Drum, Kendang, Rebana, Tifa</td></tr>
+<tr><td><strong>Idiophone</strong></td><td>Getaran <strong>badan alat sendiri</strong></td><td><strong>Angklung</strong> (bambu bergetar saat digoyangkan), Gong, Triangle, Castanet</td></tr>
+</tbody></table></div>
+<div class="ib teal"><strong>🔑 Angklung = Idiophone!</strong>Bukan aerophone (meski dari bambu). Angklung berbunyi karena bilah bambu bergetar saat digoyangkan — bukan karena kolom udara.</div>
+
+<h4>Cara Memainkan</h4>
+<div class="tw"><table><thead><tr><th>Cara</th><th>Alat Musik</th></tr></thead><tbody>
+<tr><td><strong>Digesek</strong> (dengan busur/bow)</td><td>Biola, Rebab</td></tr>
+<tr><td><strong>Dipetik</strong></td><td>Gitar, Sasando, Sitar, Kecapi</td></tr>
+<tr><td><strong>Ditiup</strong></td><td>Seruling, Saksofon, Terompet, Recorder, Suling bambu</td></tr>
+<tr><td><strong>Dipukul</strong></td><td>Drum, Kendang, Gong, Gamelan</td></tr>
+<tr><td><strong>Digoyangkan</strong></td><td>Angklung, Marakas</td></tr>
+</tbody></table></div>
+</div>
+
+<div class="cc"><h3>🔧 Perawatan Alat Musik</h3>
+<p>Biola setelah digunakan dan terkena keringat: <strong>dilap dengan kain lembut kering</strong> pada seluruh permukaan, senar, dan fingerboard → kemudian disimpan di kotak yang sesuai. Jangan dicuci dengan air!</p>
+
+<h4>Alat Musik Ritmis dari Bahan Sekitar</h4>
+<p>Kriteria: bunyi konsisten, volume bisa diatur, aman, tahan lama. <strong>Kaleng logam kosong</strong> paling memenuhi semua kriteria — bunyi jelas saat dipukul, konsisten, dan tahan lama. Botol kaca berisiko pecah, bantal terlalu lembut, buku tidak menghasilkan bunyi yang baik.</p>
+</div>
+</div>
+
+<div class="section-block" id="m3"><div class="section-header"><div class="section-num sn2">🎭</div><div class="section-title-group"><div class="section-title">Ansambel & Musik Daerah</div><div class="section-subtitle">Peran dalam ansambel, gamelan, fungsi musik daerah, bunyi alam vs buatan</div></div></div>
+
+<div class="cc"><h3>🎼 Peran dalam Ansambel</h3>
+<p>Dua peran yang <strong>mutlak</strong> harus ada agar ansambel terstruktur:</p>
+<ul>
+<li>✅ <strong>Pemain melodi</strong> — tanpa melodi, tidak ada tema lagu yang dikenali</li>
+<li>✅ <strong>Pemain ritme / konduktor</strong> — tanpa pengatur ketukan, musik berantakan</li>
+</ul>
+<p>Peran tambahan (penting tapi tidak mutlak): pemain harmoni, bass, penonton.</p>
+
+<h4>Mencocokkan Minat Siswa dengan Kegiatan Bermusik</h4>
+<div class="tw"><table><thead><tr><th>Profil Siswa</th><th>Kegiatan yang Cocok</th></tr></thead><tbody>
+<tr><td>Suka menyanyi, suara merdu, suka tampil</td><td><strong>Paduan Suara / Solo Vokal</strong></td></tr>
+<tr><td>Suka mengetuk-ngetuk, sensitif ritme</td><td><strong>Grup Perkusi / Drum</strong></td></tr>
+<tr><td>Suka mendengar banyak lagu, tertarik harmoni</td><td><strong>Ansambel campuran / Paduan suara multi-suara</strong></td></tr>
+</tbody></table></div>
+</div>
+
+<div class="cc"><h3>🏛️ Gamelan & Kreasi Pola Irama Lokal</h3>
+<p>Gamelan Jawa memiliki struktur khas: tempo stabil (Andante–Moderato), gong besar menandai akhir siklus, kenong di tengah, instrumen lain saling melengkapi. Untuk mengiringi lagu dolanan Jawa: irama stabil dengan <strong>aksen siklis</strong> mencerminkan struktur gongan-kenong — bukan Presto (terlalu cepat) atau irama bebas.</p>
+
+<h4>Fungsi Musik Daerah</h4>
+<ul>
+<li>✅ <strong>Upacara adat</strong> pernikahan dan selamatan</li>
+<li>✅ <strong>Ritual panen padi</strong> sebagai ungkapan syukur</li>
+<li>✅ <strong>Penyambutan tamu kehormatan</strong></li>
+<li>❌ Belajar mandiri di rumah (tidak diiringi musik tradisional)</li>
+</ul>
+
+<h4>Bunyi Alam vs Bunyi Buatan</h4>
+<div class="cg">
+<div class="cb" style="background:var(--green-light);"><h4 style="color:var(--green-dark);margin-top:0;">🌿 Bunyi Alam</h4><p>Kicauan burung, ombak laut, gemericik air sungai, angin, guntur</p></div>
+<div class="cb" style="background:var(--red-light);"><h4 style="color:var(--red);margin-top:0;">🏭 Bunyi Buatan</h4><p>Klakson mobil, bel sekolah, suara mesin, musik dari speaker</p></div>
+</div>
+</div>
+</div>
+
+<div class="section-block" id="m4"><div class="section-header"><div class="section-num sn2">💬</div><div class="section-title-group"><div class="section-title">Apresiasi Seni Musik</div><div class="section-subtitle">Kosakata teknis, umpan balik konstruktif, teknis vs non-teknis</div></div></div>
+
+<div class="cc"><h3>💬 Umpan Balik Musik yang Baik</h3>
+<p>Umpan balik yang tepat menggunakan <strong>istilah teknis musik</strong> DAN memberikan <strong>saran spesifik</strong>.</p>
+<div class="tw"><table><thead><tr><th>Komentar</th><th>Kategori</th></tr></thead><tbody>
+<tr><td>"Tempo awal bagus, tapi birama ke-8 ada yang terlambat masuk."</td><td style="color:var(--green);font-weight:700;">✅ Teknis + Konstruktif</td></tr>
+<tr><td>"Dinamikanya bervariasi, tapi crescendo bisa lebih bertahap."</td><td style="color:var(--green);font-weight:700;">✅ Teknis + Konstruktif</td></tr>
+<tr><td>"Suaranya berisik." / "Aku tidak suka lagu ini."</td><td style="color:var(--red);font-weight:700;">❌ Non-teknis, tidak konstruktif</td></tr>
+<tr><td>"Kostum pemain sangat menarik."</td><td style="color:var(--amber);font-weight:700;">⚠️ Non-teknis (bukan tentang musik)</td></tr>
+<tr><td>"Intonasi nada fa di baris ketiga sedikit meleset."</td><td style="color:var(--green);font-weight:700;">✅ Teknis</td></tr>
+</tbody></table></div>
+
+<h4>Kosakata Teknis untuk Apresiasi Musik</h4>
+<ul>
+<li><span class="kt">Tempo</span> — kecepatan sajian musik (BPM)</li>
+<li><span class="kt">Dinamika</span> — variasi kekuatan bunyi (p/f/crescendo)</li>
+<li><span class="kt">Birama</span> — pengelompokan ketukan dalam siklus teratur</li>
+<li><span class="kt">Intonasi</span> — ketepatan nada yang dimainkan/dinyanyikan</li>
+<li><span class="kt">Artikulasi</span> — kejelasan pemisahan antarnada</li>
+</ul>
+<p>Catatan: "Melisma" (teknik vokal banyak nada per suku kata) bukan istilah untuk kecepatan/kekuatan bunyi.</p>
+</div>
+</div>
+
+<!-- ═══ RINGKASAN ═══ -->
+<div class="cc" style="border:2px solid var(--purple);background:var(--purple-light);">
+<h3 style="color:var(--purple-dark);font-size:1.08rem;">📝 Ringkasan Poin Kunci untuk Ujian</h3>
+
+<h4>Seni Rupa</h4>
+<ul>
+<li><strong>Unsur:</strong> Garis (1D) vs Bidang (2D). Warna: Primer → Sekunder → Tersier. Tekstur Nyata (teraba) vs Semu (hanya terlihat)</li>
+<li><strong>Prinsip:</strong> Keseimbangan simetris vs <strong>asimetris</strong> (bobot visual setara meski tidak identik). Kesatuan = konsistensi palet + tema. Irama = pengulangan elemen</li>
+<li><strong>Teknik:</strong> Arsir (garis), <strong>Dusel (gosok → bulu hewan)</strong>, Pointilis (titik). Cetak tinggi pakai <strong>alat cukil/pahat</strong></li>
+<li><strong>Karya:</strong> 2D (gambar, lukisan) vs 3D (patung, relief, topeng). Bahan alam (tanah liat, daun, bambu) vs buatan (styrofoam)</li>
+<li><strong>Fungsi:</strong> Seni Pakai (kendi, kursi ukir) vs Seni Hias/Murni (lukisan dinding)</li>
+<li><strong>Apresiasi:</strong> Gunakan istilah teknis (komposisi, kontras, perspektif). Objektif (bisa diukur) vs Subjektif (perasaan)</li>
+</ul>
+
+<h4>Seni Musik</h4>
+<ul>
+<li><strong>Notasi:</strong> Not penuh=4, setengah=2, seperempat=1, seperdelapan=½. Birama 4/4 = total 4 ketukan</li>
+<li><strong>Tempo:</strong> Grave/Adagio = lambat. Andante/Moderato = sedang. Allegro/Vivace/Presto = cepat</li>
+<li><strong>Dinamika:</strong> pp = sangat lembut → ff = sangat keras. Crescendo = mengeras. Decrescendo = melemah</li>
+<li><strong>Melodi:</strong> Do-Re-Mi-Fa-Sol = naik. Mi-Re-Do-Si-La = turun</li>
+<li><strong>Klasifikasi:</strong> Ritmis (kendang, castanet) vs Melodis (pianika, gitar). Angklung = <strong>Idiophone</strong></li>
+<li><strong>Cara main:</strong> Gesek (biola, rebab), petik (gitar, sasando), tiup (seruling, recorder), pukul (drum, gong)</li>
+<li><strong>Ansambel:</strong> Mutlak ada = pemain melodi + pemain ritme/konduktor</li>
+<li><strong>Apresiasi:</strong> Teknis (intonasi, tempo, dinamika) vs Non-teknis (kostum, perasaan). Gunakan istilah: tempo, dinamika, birama</li>
+</ul>
+</div>
+
+</main>
+
+<footer class="footer">SD Muhammadiyah 01 Kukusan · Materi Seni Budaya Kelas 6 · Tahun Pelajaran 2025/2026 🎨</footer>
+</body>
+</html>
