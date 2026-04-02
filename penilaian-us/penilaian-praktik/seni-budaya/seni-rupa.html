@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Penilaian Seni Budaya – Seni Musik | SD Muhammadiyah 01 Kukusan</title>
+<title>Penilaian Seni Budaya – Seni Rupa | SD Muhammadiyah 01 Kukusan</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --green: #be123c; --green-dark: #881337; --green-light: #fff1f2;
+    --green: #b45309; --green-dark: #78350f; --green-light: #fffbeb;
     --red: #dc2626; --red-light: #fef2f2;
     --orange: #ea580c; --orange-light: #fff7ed;
     --blue: #2563eb; --blue-light: #eff6ff;
     --emerald: #059669; --emerald-light: #ecfdf5;
     --text: #1f2937; --text-muted: #6b7280;
-    --bg: #fff1f2; --white: #fff; --border: #d1d5db;
+    --bg: #fffbeb; --white: #fff; --border: #d1d5db;
     --shadow: 0 1px 3px rgba(0,0,0,0.1);
     --radius: 10px;
   }
@@ -283,7 +283,7 @@
   <div class="header-left">
     <a class="header-back" href="../" title="Kembali">←</a>
     <div>
-      <div class="header-title">Seni Budaya – Seni Musik</div>
+      <div class="header-title">Seni Budaya – Seni Rupa</div>
       <div class="header-sub">Penilaian Praktik · SD Muhammadiyah 01 Kukusan</div>
     </div>
   </div>
@@ -332,19 +332,19 @@
     <div class="rubric-inner">
       <div class="rubric-grid">
         <div class="rubric-card">
-          <strong>🎤 Teknik Vokal/Instrumen (50%)</strong><br>
-          Ketepatan nada, ritme, intonasi, teknik permainan alat musik, pernapasan (vokal).
+          <strong>🎨 Ide & Kreativitas (40%)</strong><br>
+          Orisinalitas gagasan, keberanian mencoba teknik baru, keunikan konsep karya.
         </div>
         <div class="rubric-card">
-          <strong>💖 Ekspresi & Penjiwaan (30%)</strong><br>
-          Penghayatan lagu, dinamika, komunikasi dengan penonton, kepercayaan diri.
+          <strong>✏️ Teknik & Komposisi (40%)</strong><br>
+          Penggunaan warna, garis, ruang, kerapian teknis, proporsi, keseimbangan komposisi.
         </div>
         <div class="rubric-card">
-          <strong>🎵 Kreativitas Aransemen (20%)</strong><br>
-          Variasi yang ditambahkan, improvisasi yang relevan, keunikan interpretasi.
+          <strong>💭 Refleksi Karya (20%)</strong><br>
+          Mampu menjelaskan makna karya, filosofi di balik pilihan warna/bentuk, proses kreatif.
         </div>
       </div>
-      <div class="rubric-note">Penilaian fokus pada <em>ekspresi musikal</em>, bukan kesempurnaan teknis. Siswa bebas memilih lagu dan alat musik sesuai minat.</div>
+      <div class="rubric-note">Penilaian fokus pada <em>proses kreatif</em>, bukan keindahan produk akhir. Karya yang &#34;tidak sempurna&#34; tetap bernilai jika proses kreatifnya bermakna.</div>
       <div class="rubric-scale">
         <span class="rubric-chip" style="background:var(--red-light);color:var(--red)">1 = Perlu Perbaikan</span>
         <span class="rubric-chip" style="background:var(--orange-light);color:var(--orange)">2 = Cukup</span>
@@ -361,9 +361,9 @@
     <thead>
       <tr>
         <th style="min-width:180px">Nama Siswa</th>
-        <th>Teknik Vokal/Instrumen (50%)</th>
-        <th>Ekspresi & Penjiwaan (30%)</th>
-        <th>Kreativitas Aransemen (20%)</th>
+        <th>Ide & Kreativitas (40%)</th>
+        <th>Teknik & Komposisi (40%)</th>
+        <th>Refleksi Karya (20%)</th>
         <th>Total</th>
         <th>Status</th>
       </tr>
@@ -375,8 +375,8 @@
 <div class="nav-footer">
   <div class="nav-footer-title">🔗 Navigasi Seni Budaya</div>
   <div class="nav-links">
-    <a class="nav-link current" href="#">🎵 Seni Musik</a>
-    <a class="nav-link" href="seni-rupa.html">🖼️ Seni Rupa</a>
+    <a class="nav-link" href="seni-musik.html">🎵 Seni Musik</a>
+    <a class="nav-link current" href="#">🖼️ Seni Rupa</a>
   </div>
   <div class="nav-links" style="margin-top:8px">
     <a class="nav-link" href="../">📋 Penilaian Praktik</a>
@@ -446,13 +446,13 @@ const STUDENTS = [
 ];
 
 const ASPECTS = [
-  {key:'teknik_vokal', label:'Teknik Vokal/Instrumen', emoji:'🎤', weight:50},
-  {key:'ekspresi', label:'Ekspresi & Penjiwaan', emoji:'💖', weight:30},
-  {key:'kreativitas', label:'Kreativitas Aransemen', emoji:'🎵', weight:20},
+  {key:'ide_kreativitas', label:'Ide & Kreativitas', emoji:'🎨', weight:40},
+  {key:'teknik_komposisi', label:'Teknik & Komposisi', emoji:'✏️', weight:40},
+  {key:'refleksi', label:'Refleksi Karya', emoji:'💭', weight:20},
 ];
 
 const SCORE_OPTIONS = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4];
-const STORAGE_KEY = 'sb-seni-musik-v2';
+const STORAGE_KEY = 'sb-seni-rupa-v2';
 
 let scores = {};
 let currentFilter = 'all';
@@ -462,7 +462,7 @@ function initScores() {
   const saved = localStorage.getItem(STORAGE_KEY);
   if (saved) { try { scores = JSON.parse(saved); return; } catch(e) {} }
   scores = {};
-  STUDENTS.forEach((_, i) => { scores[i] = { teknik_vokal: null, ekspresi: null, kreativitas: null }; });
+  STUDENTS.forEach((_, i) => { scores[i] = { ide_kreativitas: null, teknik_komposisi: null, refleksi: null }; });
 }
 
 function saveScores() { localStorage.setItem(STORAGE_KEY, JSON.stringify(scores)); }
@@ -475,7 +475,7 @@ function renderTable() {
     if (currentFilter !== 'all' && s.c !== currentFilter) return;
     visibleNum++;
     const sc = scores[i];
-    const allScored = sc.teknik_vokal !== null && sc.ekspresi !== null && sc.kreativitas !== null;
+    const allScored = sc.ide_kreativitas !== null && sc.teknik_komposisi !== null && sc.refleksi !== null;
     const total = calcTotal(sc);
     const row = document.createElement('tr');
     row.className = allScored ? 'scored' : 'unscored';
@@ -514,8 +514,8 @@ function scoreBadgeClass(val) {
 }
 
 function calcTotal(sc) {
-  if (!(sc.teknik_vokal !== null && sc.ekspresi !== null && sc.kreativitas !== null)) return null;
-  return Math.round((sc.teknik_vokal/4)*50 + (sc.ekspresi/4)*30 + (sc.kreativitas/4)*20);
+  if (!(sc.ide_kreativitas !== null && sc.teknik_komposisi !== null && sc.refleksi !== null)) return null;
+  return Math.round((sc.ide_kreativitas/4)*40 + (sc.teknik_komposisi/4)*40 + (sc.refleksi/4)*20);
 }
 
 function updateProgress() {
@@ -523,7 +523,7 @@ function updateProgress() {
   let scored = 0;
   STUDENTS.forEach((_, i) => {
     const sc = scores[i];
-    if (sc.teknik_vokal !== null && sc.ekspresi !== null && sc.kreativitas !== null) scored++;
+    if (sc.ide_kreativitas !== null && sc.teknik_komposisi !== null && sc.refleksi !== null) scored++;
   });
   const pct = Math.round((scored / total) * 100);
   document.getElementById('progFill').style.width = pct + '%';
@@ -645,13 +645,13 @@ document.querySelectorAll('.filter-tab').forEach(tab => {
 });
 
 function exportCSV() {
-  let csv = 'No;Nama Siswa;Kelas;Teknik Vokal/Instrumen (50%);Ekspresi & Penjiwaan (30%);Kreativitas Aransemen (20%);Total;Status\n';
+  let csv = 'No;Nama Siswa;Kelas;Ide & Kreativitas (40%);Teknik & Komposisi (40%);Refleksi Karya (20%);Total;Status\n';
   STUDENTS.forEach((s, i) => {
     const sc = scores[i];
     const total = calcTotal(sc);
-    const v0 = sc.teknik_vokal !== null ? sc.teknik_vokal.toFixed(2).replace('.', ',') : '';
-    const v1 = sc.ekspresi !== null ? sc.ekspresi.toFixed(2).replace('.', ',') : '';
-    const v2 = sc.kreativitas !== null ? sc.kreativitas.toFixed(2).replace('.', ',') : '';
+    const v0 = sc.ide_kreativitas !== null ? sc.ide_kreativitas.toFixed(2).replace('.', ',') : '';
+    const v1 = sc.teknik_komposisi !== null ? sc.teknik_komposisi.toFixed(2).replace('.', ',') : '';
+    const v2 = sc.refleksi !== null ? sc.refleksi.toFixed(2).replace('.', ',') : '';
     const status = total === null ? 'Belum Dinilai' : total >= 70 ? 'LULUS' : 'PERLU PERBAIKAN';
     csv += `${i+1};"${s.n}";${s.c};${v0};${v1};${v2};${total || ''};${status}\n`;
   });
@@ -659,7 +659,7 @@ function exportCSV() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `Penilaian_SeniBudaya-SeniMusik_${new Date().toISOString().slice(0,10)}.csv`;
+  a.download = `Penilaian_SeniBudaya-SeniRupa_${new Date().toISOString().slice(0,10)}.csv`;
   a.click();
   URL.revokeObjectURL(url);
   showToast('📊 CSV berhasil diunduh!');
@@ -669,7 +669,7 @@ function confirmReset() {
   showModal('⚠️', 'Reset Semua Nilai?', 'Semua nilai akan dihapus dan tidak bisa dikembalikan.', [
     { text: 'Batal', cls: 'cancel', fn: closeModal },
     { text: 'Reset', cls: 'danger', fn: () => {
-      STUDENTS.forEach((_, i) => { scores[i] = { teknik_vokal: null, ekspresi: null, kreativitas: null }; });
+      STUDENTS.forEach((_, i) => { scores[i] = { ide_kreativitas: null, teknik_komposisi: null, refleksi: null }; });
       saveScores(); renderTable(); closeModal();
       showToast('🗑️ Semua nilai telah direset.');
     }}
