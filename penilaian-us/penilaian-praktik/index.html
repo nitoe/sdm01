@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Penilaian Praktik US – SD Muhammadiyah 01 Kukusan</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --emerald: #059669; --emerald-dark: #047857; --emerald-deep: #064e3b;
+    --emerald-light: #d1fae5; --emerald-bg: #ecfdf5;
+    --text: #1f2937; --text-muted: #6b7280; --bg: #f0fdf4;
+    --white: #fff; --border: #d1d5db;
+    --shadow: 0 4px 24px rgba(0,0,0,0.08);
+    --radius: 16px;
+    /* Subject colors */
+    --pjok: #059669; --pjok-light: #d1fae5; --pjok-dark: #047857;
+    --kmh: #7c3aed; --kmh-light: #f5f3ff; --kmh-dark: #5b21b6;
+    --arab: #0284c7; --arab-light: #e0f2fe; --arab-dark: #0369a1;
+    --sunda: #d97706; --sunda-light: #fef3c7; --sunda-dark: #b45309;
+    --sb: #e11d48; --sb-light: #fff1f2; --sb-dark: #be123c;
+    --islam: #0f766e; --islam-light: #ccfbf1; --islam-dark: #115e59;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: clamp(14px, 3.5vw, 16px); scroll-behavior: smooth; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* ── HEADER ── */
+  .header {
+    position: sticky; top: 0; z-index: 100;
+    background: linear-gradient(135deg, var(--emerald-deep), var(--emerald-dark) 50%, var(--emerald));
+    color: #fff; padding: 0 20px; height: 58px;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  }
+  .header-brand { display: flex; align-items: center; gap: 10px; }
+  .logo { font-size: 1.5rem; }
+  .brand-name { font-family: 'Baloo 2', cursive; font-size: clamp(0.85rem, 2.8vw, 1.05rem); font-weight: 800; line-height: 1.1; }
+  .sub-brand { font-size: 0.65rem; opacity: 0.8; font-weight: 600; }
+  .header-badge {
+    background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px; padding: 4px 12px; font-size: 0.7rem; font-weight: 700;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(160deg, var(--emerald-deep) 0%, var(--emerald-dark) 40%, var(--emerald) 100%);
+    color: #fff; padding: 44px 20px 52px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M50 50v-6h-2v6h-6v2h6v6h2v-6h6v-2h-6zM50 10V4h-2v6h-6v2h6v6h2v-6h6v-2h-6zM10 50v-6H8v6H2v2h6v6h2v-6h6v-2h-6zM10 10V4H8v6H2v2h6v6h2v-6h6v-2h-6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: #fff; text-decoration: none; font-size: 0.8rem; font-weight: 700;
+    opacity: 0.8; transition: opacity 0.2s; position: relative; margin-bottom: 14px;
+  }
+  .back-link:hover { opacity: 1; }
+  .hero-emoji { font-size: 3rem; display: block; margin-bottom: 10px; position: relative; }
+  .hero h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(1.5rem, 5vw, 2.2rem);
+    font-weight: 800; margin-bottom: 8px; position: relative;
+  }
+  .hero p {
+    font-size: clamp(0.82rem, 2.5vw, 0.95rem);
+    opacity: 0.88; font-weight: 600; max-width: 520px;
+    margin: 0 auto; position: relative; line-height: 1.6;
+  }
+
+  /* ── MAIN ── */
+  .container { max-width: 800px; margin: 0 auto; padding: 32px 16px 56px; }
+  .section-label {
+    text-align: center; font-size: 0.75rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    color: var(--text-muted); margin-bottom: 20px;
+  }
+
+  /* ── SUBJECT CARDS ── */
+  .subjects { display: flex; flex-direction: column; gap: 14px; }
+
+  .subject-card {
+    background: var(--white); border-radius: var(--radius);
+    border: 2px solid transparent; overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    animation: fadeUp 0.4s ease both;
+  }
+  .subject-card:nth-child(1) { animation-delay: 0.05s; }
+  .subject-card:nth-child(2) { animation-delay: 0.10s; }
+  .subject-card:nth-child(3) { animation-delay: 0.15s; }
+  .subject-card:nth-child(4) { animation-delay: 0.20s; }
+  .subject-card:nth-child(5) { animation-delay: 0.25s; }
+  .subject-card:nth-child(6) { animation-delay: 0.30s; }
+
+  .subject-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+
+  .card-banner { height: 5px; }
+
+  /* ─ Link card (no sub-items) ─ */
+  .card-link {
+    display: flex; align-items: center; gap: 14px;
+    padding: 18px 20px; text-decoration: none; color: var(--text);
+    transition: background 0.15s;
+  }
+  .card-link:hover { background: #f9fafb; }
+
+  .card-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; flex-shrink: 0;
+  }
+
+  .card-info { flex: 1; min-width: 0; }
+  .card-title {
+    font-family: 'Baloo 2', cursive; font-size: 1.05rem; font-weight: 800;
+    line-height: 1.2; margin-bottom: 2px;
+  }
+  .card-desc { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; line-height: 1.4; }
+
+  .card-arrow {
+    font-size: 1.1rem; color: var(--text-muted); flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  .card-link:hover .card-arrow { transform: translateX(3px); }
+
+  .card-count {
+    font-size: 0.62rem; font-weight: 800; padding: 2px 8px;
+    border-radius: 8px; white-space: nowrap;
+  }
+
+  /* ─ Expandable card (with sub-items) ─ */
+  .card-toggle {
+    display: flex; align-items: center; gap: 14px;
+    padding: 18px 20px; width: 100%; border: none; background: none;
+    cursor: pointer; font-family: inherit; color: var(--text);
+    text-align: left; transition: background 0.15s;
+  }
+  .card-toggle:hover { background: #f9fafb; }
+
+  .toggle-arrow {
+    font-size: 0.8rem; color: var(--text-muted); flex-shrink: 0;
+    transition: transform 0.25s ease;
+    width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
+    background: #f3f4f6; border-radius: 6px;
+  }
+  .subject-card.open .toggle-arrow { transform: rotate(180deg); }
+
+  .sub-panel {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.35s ease;
+    background: #f9fafb; border-top: 1px solid #f3f4f6;
+  }
+  .subject-card.open .sub-panel { max-height: 500px; }
+
+  .sub-list { padding: 8px 12px; }
+
+  .sub-link {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; border-radius: 10px;
+    text-decoration: none; color: var(--text);
+    transition: background 0.15s; font-size: 0.88rem;
+  }
+  .sub-link:hover { background: var(--white); }
+
+  .sub-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  .sub-info { flex: 1; }
+  .sub-title { font-weight: 700; font-size: 0.84rem; }
+  .sub-detail { font-size: 0.7rem; color: var(--text-muted); font-weight: 600; }
+  .sub-arrow { color: var(--text-muted); font-size: 0.85rem; }
+
+  /* ─ Color assignments ─ */
+  .subject-card.pjok .card-banner { background: linear-gradient(90deg, #047857, #059669, #34d399); }
+  .subject-card.pjok .card-icon { background: var(--pjok-light); }
+  .subject-card.pjok .card-title { color: var(--pjok-dark); }
+  .subject-card.pjok .card-count { background: var(--pjok-light); color: var(--pjok-dark); }
+  .subject-card.pjok:hover { border-color: #a7f3d0; }
+  .subject-card.pjok .sub-icon { background: var(--pjok-light); }
+
+  .subject-card.kmh .card-banner { background: linear-gradient(90deg, #5b21b6, #7c3aed, #a78bfa); }
+  .subject-card.kmh .card-icon { background: var(--kmh-light); }
+  .subject-card.kmh .card-title { color: var(--kmh-dark); }
+  .subject-card.kmh:hover { border-color: #c4b5fd; }
+
+  .subject-card.arab .card-banner { background: linear-gradient(90deg, #0369a1, #0284c7, #38bdf8); }
+  .subject-card.arab .card-icon { background: var(--arab-light); }
+  .subject-card.arab .card-title { color: var(--arab-dark); }
+  .subject-card.arab:hover { border-color: #bae6fd; }
+
+  .subject-card.sunda .card-banner { background: linear-gradient(90deg, #b45309, #d97706, #fbbf24); }
+  .subject-card.sunda .card-icon { background: var(--sunda-light); }
+  .subject-card.sunda .card-title { color: var(--sunda-dark); }
+  .subject-card.sunda:hover { border-color: #fde68a; }
+
+  .subject-card.sb .card-banner { background: linear-gradient(90deg, #be123c, #e11d48, #fb7185); }
+  .subject-card.sb .card-icon { background: var(--sb-light); }
+  .subject-card.sb .card-title { color: var(--sb-dark); }
+  .subject-card.sb .card-count { background: var(--sb-light); color: var(--sb-dark); }
+  .subject-card.sb:hover { border-color: #fda4af; }
+  .subject-card.sb .sub-icon { background: var(--sb-light); }
+
+  .subject-card.islam .card-banner { background: linear-gradient(90deg, #115e59, #0f766e, #2dd4bf); }
+  .subject-card.islam .card-icon { background: var(--islam-light); }
+  .subject-card.islam .card-title { color: var(--islam-dark); }
+  .subject-card.islam:hover { border-color: #99f6e4; }
+
+  /* ── INFO BOX ── */
+  .info-box {
+    background: var(--white); border-radius: var(--radius);
+    border-left: 5px solid var(--emerald);
+    padding: 16px 18px; display: flex; gap: 12px; align-items: flex-start;
+    box-shadow: var(--shadow); margin-top: 28px;
+    animation: fadeUp 0.4s 0.35s ease both;
+  }
+  .info-box-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+  .info-box strong { color: var(--emerald-dark); font-size: 0.82rem; display: block; margin-bottom: 3px; }
+  .info-box p { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; line-height: 1.5; }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center; padding: 24px 16px;
+    font-size: 0.76rem; color: var(--text-muted); font-weight: 600;
+    border-top: 1px solid var(--border);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-brand">
+    <span class="logo">✅</span>
+    <div>
+      <div class="brand-name">Penilaian Praktik US</div>
+      <div class="sub-brand">SD Muhammadiyah 01 Kukusan · Kelas 6</div>
+    </div>
+  </div>
+  <div class="header-badge">GURU</div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <a class="back-link" href="../">← Portal Penilaian</a>
+  <span class="hero-emoji">✅</span>
+  <h1>Penilaian Ujian Praktik</h1>
+  <p>Pilih mata pelajaran di bawah untuk mulai menilai ujian praktik siswa kelas 6. Setiap mapel memiliki instrumen penilaian dan rubriknya sendiri.</p>
+</section>
+
+<!-- MAIN -->
+<main class="container">
+  <p class="section-label">Pilih Mata Pelajaran</p>
+
+  <div class="subjects">
+
+    <!-- ══════ 1. PJOK (expandable) ══════ -->
+    <div class="subject-card pjok" id="card-pjok">
+      <div class="card-banner"></div>
+      <button class="card-toggle" onclick="toggleCard('card-pjok')">
+        <div class="card-icon">⚽</div>
+        <div class="card-info">
+          <div class="card-title">PJOK</div>
+          <div class="card-desc">Pendidikan Jasmani, Olahraga & Kesehatan</div>
+        </div>
+        <span class="card-count">4 materi</span>
+        <div class="toggle-arrow">▼</div>
+      </button>
+      <div class="sub-panel">
+        <div class="sub-list">
+          <a class="sub-link" href="pjok/bola-kecil.html">
+            <div class="sub-icon">⚾</div>
+            <div class="sub-info">
+              <div class="sub-title">Bola Kecil</div>
+              <div class="sub-detail">Kasti, Rounders, Bulu Tangkis</div>
+            </div>
+            <span class="sub-arrow">→</span>
+          </a>
+          <a class="sub-link" href="pjok/bola-besar.html">
+            <div class="sub-icon">🏀</div>
+            <div class="sub-info">
+              <div class="sub-title">Bola Besar</div>
+              <div class="sub-detail">Sepak Bola, Bola Voli, Bola Basket</div>
+            </div>
+            <span class="sub-arrow">→</span>
+          </a>
+          <a class="sub-link" href="pjok/atletik.html">
+            <div class="sub-icon">🏃</div>
+            <div class="sub-info">
+              <div class="sub-title">Atletik</div>
+              <div class="sub-detail">Lari, Lompat, Lempar</div>
+            </div>
+            <span class="sub-arrow">→</span>
+          </a>
+          <a class="sub-link" href="pjok/permainan-tradisional.html">
+            <div class="sub-icon">🎯</div>
+            <div class="sub-info">
+              <div class="sub-title">Permainan Tradisional</div>
+              <div class="sub-detail">Gobak Sodor, Engklek, dll</div>
+            </div>
+            <span class="sub-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ 2. Kemuhammadiyahan ══════ -->
+    <div class="subject-card kmh">
+      <div class="card-banner"></div>
+      <a class="card-link" href="kemuhammadiyahan.html">
+        <div class="card-icon">🕌</div>
+        <div class="card-info">
+          <div class="card-title">Kemuhammadiyahan</div>
+          <div class="card-desc">Praktik ibadah dan nilai-nilai Kemuhammadiyahan</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+    </div>
+
+    <!-- ══════ 3. Bahasa Arab ══════ -->
+    <div class="subject-card arab">
+      <div class="card-banner"></div>
+      <a class="card-link" href="bahasa-arab.html">
+        <div class="card-icon">🌙</div>
+        <div class="card-info">
+          <div class="card-title">Bahasa Arab</div>
+          <div class="card-desc">Maharah Kalam, Qiro'ah & Kitabah</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+    </div>
+
+    <!-- ══════ 4. Bahasa Sunda ══════ -->
+    <div class="subject-card sunda">
+      <div class="card-banner"></div>
+      <a class="card-link" href="bahasa-sunda.html">
+        <div class="card-icon">🎋</div>
+        <div class="card-info">
+          <div class="card-title">Bahasa Sunda</div>
+          <div class="card-desc">Biantara, Maca Sajak & Paguneman</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+    </div>
+
+    <!-- ══════ 5. Seni Budaya (expandable) ══════ -->
+    <div class="subject-card sb" id="card-sb">
+      <div class="card-banner"></div>
+      <button class="card-toggle" onclick="toggleCard('card-sb')">
+        <div class="card-icon">🎨</div>
+        <div class="card-info">
+          <div class="card-title">Seni Budaya</div>
+          <div class="card-desc">Siswa memilih seni musik, seni rupa, atau keduanya</div>
+        </div>
+        <span class="card-count">2 pilihan</span>
+        <div class="toggle-arrow">▼</div>
+      </button>
+      <div class="sub-panel">
+        <div class="sub-list">
+          <a class="sub-link" href="seni-budaya/seni-musik.html">
+            <div class="sub-icon">🎵</div>
+            <div class="sub-info">
+              <div class="sub-title">Seni Musik</div>
+              <div class="sub-detail">Vokal, instrumen, atau ansambel</div>
+            </div>
+            <span class="sub-arrow">→</span>
+          </a>
+          <a class="sub-link" href="seni-budaya/seni-rupa.html">
+            <div class="sub-icon">🖼️</div>
+            <div class="sub-info">
+              <div class="sub-title">Seni Rupa</div>
+              <div class="sub-detail">Menggambar, melukis, atau karya 3D</div>
+            </div>
+            <span class="sub-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ 6. Al-Islam ══════ -->
+    <div class="subject-card islam">
+      <div class="card-banner"></div>
+      <a class="card-link" href="al-islam.html">
+        <div class="card-icon">☪️</div>
+        <div class="card-info">
+          <div class="card-title">Al-Islam</div>
+          <div class="card-desc">Praktik ibadah, hafalan & tajwid</div>
+        </div>
+        <span class="card-arrow">→</span>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- INFO BOX -->
+  <div class="info-box">
+    <div class="info-box-icon">📋</div>
+    <div>
+      <strong>Petunjuk Penggunaan</strong>
+      <p>Pilih mata pelajaran, lalu gunakan instrumen penilaian tabel untuk menilai seluruh siswa sekaligus. Gunakan fitur Quick Fill untuk mengisi nilai default, lalu sesuaikan siswa yang perlu. Semua data otomatis tersimpan di perangkat dan bisa diekspor ke spreadsheet.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  SD Muhammadiyah 01 Kukusan · Penilaian Praktik Ujian Sekolah · TP 2025/2026
+</footer>
+
+<script>
+function toggleCard(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+}
+</script>
+</body>
+</html>
