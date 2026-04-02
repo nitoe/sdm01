@@ -314,8 +314,8 @@ window.hashPin = hashPin; // expose ke console
 
 // ── GAMBAR SOAL ──
 const IMAGE_ASSETS = {
-  "ruang_kelas": "https://i.ibb.co.com/DDX35bSb/img-1-ruang-kelas.png",
-  "siswa_laki":  "https://i.ibb.co.com/WWgvnSsM/img-2-siswa-laki.png"
+  "ruang_kelas": "https://i.ibb.co/DDX35bSb/img-1-ruang-kelas.png",
+  "siswa_laki":  "https://i.ibb.co/WWgvnSsM/img-2-siswa-laki.png"
 };
 function getImg(key, alt="Ilustrasi Soal") {
   const url = IMAGE_ASSETS[key];
@@ -359,7 +359,7 @@ const QUESTIONS = [
     opt:["di sini rumah saya","di sana rumah saya","ini rumahku","rumahku besar"], ans:"di sana rumah saya" },
 
   { id:20, cat:"Pemahaman Teks", type:"pg", score:1,
-    stim:`<div class='stimulus-box'><div class='stimulus-head'>Identitas Siswa</div><div class='visual-frame'><img src="https://i.postimg.cc/6pdZtfzY/20260309_2156_Image_Generation_simple_compose_01kk9hhaysfgb9mz10385jf9g9.png" alt="Siswa Laki-laki" class="stimulus-img" loading="eager"></div><p class='arabic-text' style='text-align:center;font-size:1.6rem;'>هَلْ هُوَ تِلْمِيْذٌ؟</p></div>`,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Identitas Siswa</div><div class='visual-frame'>${getImg("siswa_laki","Siswa Laki-laki")}</div><p class='arabic-text' style='text-align:center;font-size:1.6rem;'>هَلْ هُوَ تِلْمِيْذٌ؟</p></div>`,
     q:"Jawaban yang tepat untuk pertanyaan di atas adalah...",
     opt:["نَعَمْ هُوَ أُسْتَاذٌ","نَعَمْ هُوَ تِلْمِيْذٌ","لَا هُوَ مُهَنْدِسٌ","لَا هُوَ خَيَّاطٌ"], ans:"نَعَمْ هُوَ تِلْمِيْذٌ" },
 
@@ -405,7 +405,7 @@ const QUESTIONS = [
     opt:["مُمَرِّضَةٌ","مُمَرِّضٌ","صَيَّادٌ","خَيَّاطٌ"], ans:"مُمَرِّضَةٌ" },
 
   { id:13, cat:"Kosakata", type:"pg", score:1,
-    stim:`<div class='stimulus-box'><div class='stimulus-head'>Tempat di Sekolah</div><div class='visual-frame'><img src="https://i.postimg.cc/R04HFJbf/20260309_2151_Image_Generation_simple_compose_01kk9h8jqkfjkrg1egz0aw5f4j.png" alt="Ruang Kelas" class="stimulus-img" loading="eager"></div></div>`,
+    stim:`<div class='stimulus-box'><div class='stimulus-head'>Tempat di Sekolah</div><div class='visual-frame'>${getImg("ruang_kelas","Ruang Kelas")}</div></div>`,
     q:"Kosa kata yang sesuai dengan gambar tersebut adalah...",
     opt:["الْفَصْلِ","الْمَقْصَفِ","الْمَيْدَانِ","الشَّارِعِ"], ans:"الْفَصْلِ" },
 
