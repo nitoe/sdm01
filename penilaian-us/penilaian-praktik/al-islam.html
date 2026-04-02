@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Penilaian Praktik Al-Islam | SD Muhammadiyah 01 Kukusan</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #0f766e; --green-dark: #115e59; --green-light: #f0fdfa;
+    --red: #dc2626; --red-light: #fef2f2;
+    --orange: #ea580c; --orange-light: #fff7ed;
+    --blue: #2563eb; --blue-light: #eff6ff;
+    --emerald: #059669; --emerald-light: #ecfdf5;
+    --text: #1f2937; --text-muted: #6b7280;
+    --bg: #f0fdfa; --white: #fff; --border: #d1d5db;
+    --shadow: 0 1px 3px rgba(0,0,0,0.1);
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 15px; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 120px; }
+
+  /* ── HEADER ── */
+  .header {
+    position: sticky; top: 0; z-index: 100;
+    background: linear-gradient(135deg, var(--green-dark), var(--green));
+    color: #fff; padding: 0 16px; height: 52px;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .header-left { display: flex; align-items: center; gap: 10px; }
+  .header-back {
+    color: #fff; text-decoration: none; font-size: 1.2rem;
+    width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+    border-radius: 8px; transition: background 0.2s;
+  }
+  .header-back:hover { background: rgba(255,255,255,0.15); }
+  .header-title { font-family: 'Baloo 2', cursive; font-size: 1rem; font-weight: 800; line-height: 1.1; }
+  .header-sub { font-size: 0.65rem; opacity: 0.8; font-weight: 600; }
+  .header-badge {
+    background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 16px; padding: 3px 10px; font-size: 0.65rem; font-weight: 700;
+  }
+
+  /* ── TOOLBAR ── */
+  .toolbar {
+    position: sticky; top: 52px; z-index: 90;
+    background: var(--white); border-bottom: 1px solid var(--border);
+    padding: 10px 16px; box-shadow: var(--shadow);
+  }
+  .toolbar-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .toolbar-row + .toolbar-row { margin-top: 8px; }
+
+  .filter-tabs { display: flex; gap: 0; }
+  .filter-tab {
+    padding: 5px 14px; font-size: 0.75rem; font-weight: 700;
+    border: 1px solid var(--border); background: var(--white); color: var(--text-muted);
+    cursor: pointer; transition: all 0.15s; font-family: inherit;
+  }
+  .filter-tab:first-child { border-radius: 8px 0 0 8px; }
+  .filter-tab:last-child { border-radius: 0 8px 8px 0; }
+  .filter-tab + .filter-tab { border-left: none; }
+  .filter-tab.active { background: var(--green); color: #fff; border-color: var(--green); }
+
+  .progress-bar { flex: 1; min-width: 120px; display: flex; align-items: center; gap: 8px; }
+  .progress-track { flex: 1; height: 6px; background: #e5e7eb; border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--green); border-radius: 3px; transition: width 0.3s ease; }
+  .progress-text { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); white-space: nowrap; }
+
+  .qf-wrap { display: flex; align-items: center; gap: 6px; flex: 1; }
+  .qf-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); white-space: nowrap; }
+  .qf-select {
+    padding: 4px 8px; border: 1px solid var(--border); border-radius: 6px;
+    font-size: 0.8rem; font-family: inherit; font-weight: 700; background: var(--white); color: var(--text);
+  }
+  .qf-btn {
+    padding: 5px 10px; border: none; border-radius: 6px;
+    font-size: 0.7rem; font-weight: 800; cursor: pointer;
+    font-family: inherit; transition: opacity 0.15s; white-space: nowrap;
+  }
+  .qf-btn.primary { background: var(--green); color: #fff; }
+  .qf-btn.secondary { background: #f3f4f6; color: var(--text); }
+  .qf-btn:hover { opacity: 0.85; }
+
+  .toolbar-actions { display: flex; gap: 6px; margin-left: auto; }
+  .t-btn {
+    padding: 5px 10px; border: 1px solid var(--border); border-radius: 6px;
+    background: var(--white); font-size: 0.72rem; font-weight: 700;
+    cursor: pointer; font-family: inherit; color: var(--text-muted);
+    transition: all 0.15s; display: flex; align-items: center; gap: 4px;
+  }
+  .t-btn:hover { border-color: var(--green); color: var(--green); }
+  .t-btn.danger:hover { border-color: var(--red); color: var(--red); }
+
+  /* ── RUBRIC ── */
+  .rubric-bar {
+    margin: 12px 16px 0; background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+  }
+  .rubric-toggle {
+    width: 100%; padding: 10px 14px; border: none; background: none;
+    font-family: inherit; font-size: 0.8rem; font-weight: 700; color: var(--green-dark);
+    cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+    transition: background 0.15s;
+  }
+  .rubric-toggle:hover { background: var(--green-light); }
+  .rubric-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+  .rubric-body.open { max-height: 600px; }
+  .rubric-inner { padding: 0 14px 14px; font-size: 0.78rem; line-height: 1.6; color: #4b5563; }
+  .rubric-grid { display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 10px; }
+  .rubric-card { background: var(--bg); border-radius: 8px; padding: 10px 12px; }
+  .rubric-card strong { color: var(--green-dark); }
+  .rubric-note { font-size: 0.75rem; font-style: italic; color: var(--text-muted); margin-top: 8px; padding: 8px 10px; background: #f9fafb; border-radius: 6px; }
+  .rubric-scale { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .rubric-chip { padding: 2px 8px; border-radius: 6px; font-size: 0.68rem; font-weight: 700; }
+
+  /* ── TABLE ── */
+  .table-wrap {
+    margin: 12px 16px; background: var(--white);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    overflow-x: auto; box-shadow: var(--shadow); -webkit-overflow-scrolling: touch;
+  }
+  table { width: 100%; border-collapse: collapse; min-width: 640px; }
+  thead th {
+    position: sticky; top: 0; z-index: 5;
+    background: var(--green-dark); color: #fff;
+    padding: 8px 6px; font-size: 0.7rem; font-weight: 700;
+    text-align: center; white-space: nowrap; letter-spacing: 0.3px; text-transform: uppercase;
+  }
+  thead th:first-child { text-align: left; padding-left: 12px; }
+  tbody td {
+    padding: 4px 6px; border-bottom: 1px solid #f3f4f6;
+    font-size: 0.8rem; text-align: center; vertical-align: middle;
+  }
+  tbody tr { transition: background 0.1s; }
+  tbody tr:hover { background: var(--green-light); }
+
+  .student-cell {
+    text-align: left; padding-left: 12px; white-space: nowrap;
+    font-weight: 600; font-size: 0.78rem; min-width: 180px;
+    position: sticky; left: 0; background: var(--white); z-index: 2;
+  }
+  tbody tr:hover .student-cell { background: var(--green-light); }
+  .student-num { color: var(--text-muted); font-size: 0.68rem; margin-right: 4px; font-weight: 700; }
+  .student-class {
+    font-size: 0.6rem; font-weight: 800; padding: 1px 5px;
+    border-radius: 4px; margin-left: 4px;
+    background: var(--green-light); color: var(--green-dark);
+  }
+
+  /* ── SCORE BADGE ── */
+  .score-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 48px; height: 32px; padding: 0 8px;
+    border-radius: 8px; font-size: 0.8rem; font-weight: 800;
+    cursor: pointer; transition: all 0.15s; border: 2px solid transparent;
+    user-select: none; -webkit-tap-highlight-color: transparent;
+  }
+  .score-badge:active { transform: scale(0.95); }
+  .score-badge.empty { background: #f3f4f6; color: #9ca3af; border-color: #e5e7eb; }
+  .score-badge.s1 { background: var(--red-light); color: var(--red); }
+  .score-badge.s2 { background: var(--orange-light); color: var(--orange); }
+  .score-badge.s3 { background: var(--blue-light); color: var(--blue); }
+  .score-badge.s4 { background: var(--emerald-light); color: var(--emerald); }
+  .score-badge.active-pick { border-color: var(--green); box-shadow: 0 0 0 2px rgba(0,0,0,0.1); }
+
+  .total-cell { font-weight: 800; font-size: 0.85rem; }
+  .status-cell { font-size: 0.72rem; font-weight: 800; }
+  .status-cell.pass { color: var(--emerald); }
+  .status-cell.fail { color: var(--red); }
+  .status-cell.pending { color: #9ca3af; }
+
+  /* ── SCORE PICKER ── */
+  .picker-overlay {
+    position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.3);
+    opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s;
+  }
+  .picker-overlay.open { opacity: 1; visibility: visible; }
+  .picker-sheet {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 201;
+    background: var(--white); border-radius: 20px 20px 0 0;
+    padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.15);
+    transform: translateY(100%); transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    max-width: 480px; margin: 0 auto;
+  }
+  .picker-overlay.open .picker-sheet { transform: translateY(0); }
+  .picker-handle { width: 36px; height: 4px; background: #d1d5db; border-radius: 2px; margin: 0 auto 12px; }
+  .picker-header { text-align: center; margin-bottom: 14px; }
+  .picker-student { font-family: 'Baloo 2', cursive; font-size: 1rem; font-weight: 800; color: var(--green-dark); }
+  .picker-aspect { font-size: 0.78rem; font-weight: 700; color: var(--text-muted); }
+  .picker-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 12px; }
+  .picker-btn {
+    padding: 12px 4px; border: 2px solid #e5e7eb; border-radius: 10px;
+    background: var(--white); font-family: inherit;
+    font-size: 0.95rem; font-weight: 800; cursor: pointer;
+    transition: all 0.12s; display: flex; flex-direction: column;
+    align-items: center; gap: 2px; -webkit-tap-highlight-color: transparent;
+  }
+  .picker-btn:active { transform: scale(0.95); }
+  .picker-btn .pv { font-size: 1.05rem; }
+  .picker-btn .pl { font-size: 0.58rem; font-weight: 600; color: var(--text-muted); }
+  .picker-btn.sel { border-color: var(--green); background: var(--green-light); }
+  .picker-btn.c1 { color: var(--red); }
+  .picker-btn.c1.sel, .picker-btn.c1:hover { background: var(--red-light); border-color: var(--red); }
+  .picker-btn.c2 { color: var(--orange); }
+  .picker-btn.c2.sel, .picker-btn.c2:hover { background: var(--orange-light); border-color: var(--orange); }
+  .picker-btn.c3 { color: var(--blue); }
+  .picker-btn.c3.sel, .picker-btn.c3:hover { background: var(--blue-light); border-color: var(--blue); }
+  .picker-btn.c4 { color: var(--emerald); }
+  .picker-btn.c4.sel, .picker-btn.c4:hover { background: var(--emerald-light); border-color: var(--emerald); }
+  .picker-footer { display: flex; gap: 8px; justify-content: space-between; align-items: center; }
+  .picker-nav-btn {
+    padding: 8px 16px; border: none; border-radius: 8px;
+    font-family: inherit; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: opacity 0.15s;
+  }
+  .picker-skip { background: #f3f4f6; color: var(--text-muted); }
+  .picker-next { background: var(--green); color: #fff; }
+  .picker-nav-btn:hover { opacity: 0.85; }
+  .autonext-toggle { display: flex; align-items: center; gap: 6px; font-size: 0.72rem; font-weight: 700; color: var(--text-muted); }
+  .autonext-toggle input { accent-color: var(--green); }
+
+  /* ── NAV FOOTER ── */
+  .nav-footer {
+    margin: 20px 16px; background: var(--white);
+    border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; text-align: center;
+  }
+  .nav-footer-title { font-size: 0.8rem; font-weight: 700; color: var(--green-dark); margin-bottom: 10px; }
+  .nav-links { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .nav-link {
+    padding: 6px 14px; border: 1px solid var(--border); border-radius: 8px;
+    text-decoration: none; font-size: 0.72rem; font-weight: 700;
+    color: var(--text-muted); transition: all 0.15s; background: var(--white);
+  }
+  .nav-link:hover, .nav-link.current { background: var(--green); color: #fff; border-color: var(--green); }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: #1f2937; color: #fff; padding: 10px 20px; border-radius: 10px;
+    font-size: 0.8rem; font-weight: 700; box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    z-index: 300; opacity: 0; transition: all 0.3s ease; white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ── MODAL ── */
+  .modal-bg {
+    position: fixed; inset: 0; z-index: 250; background: rgba(0,0,0,0.4);
+    display: none; align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-bg.open { display: flex; }
+  .modal-box {
+    background: #fff; border-radius: 16px; padding: 28px 24px;
+    max-width: 360px; width: 100%; text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2); animation: scaleIn 0.2s ease;
+  }
+  @keyframes scaleIn { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
+  .modal-icon { font-size: 2.5rem; margin-bottom: 8px; }
+  .modal-title { font-family: 'Baloo 2', cursive; font-size: 1.1rem; font-weight: 800; color: var(--green-dark); margin-bottom: 6px; }
+  .modal-msg { font-size: 0.82rem; color: #4b5563; line-height: 1.5; margin-bottom: 18px; }
+  .modal-btns { display: flex; gap: 10px; justify-content: center; }
+  .modal-btn {
+    padding: 8px 20px; border: none; border-radius: 8px;
+    font-family: inherit; font-size: 0.82rem; font-weight: 700; cursor: pointer;
+  }
+  .modal-btn.ok { background: var(--green); color: #fff; }
+  .modal-btn.cancel { background: #f3f4f6; color: var(--text); }
+  .modal-btn.danger { background: var(--red); color: #fff; }
+
+  @media (max-width: 480px) {
+    .toolbar-row { gap: 6px; }
+    .qf-label { display: none; }
+    .header-sub { display: none; }
+    .picker-grid { gap: 6px; }
+    .picker-btn { padding: 10px 2px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <a class="header-back" href="../" title="Kembali">←</a>
+    <div>
+      <div class="header-title">Al-Islam – Gerakan & Bacaan Sholat</div>
+      <div class="header-sub">Penilaian Praktik · SD Muhammadiyah 01 Kukusan</div>
+    </div>
+  </div>
+  <div class="header-badge">PRAKTIK</div>
+</header>
+
+<div class="toolbar">
+  <div class="toolbar-row">
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-filter="all">Semua</button>
+      <button class="filter-tab" data-filter="6A">6A</button>
+      <button class="filter-tab" data-filter="6B">6B</button>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-track"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
+      <span class="progress-text" id="progText">0/57</span>
+    </div>
+    <div class="toolbar-actions">
+      <button class="t-btn" onclick="exportCSV()" title="Ekspor CSV">📊 Ekspor</button>
+      <button class="t-btn danger" onclick="confirmReset()" title="Reset">🗑️</button>
+    </div>
+  </div>
+  <div class="toolbar-row">
+    <div class="qf-wrap">
+      <span class="qf-label">Quick Fill:</span>
+      <select class="qf-select" id="qfValue">
+        <option value="1">1.00</option><option value="1.25">1.25</option>
+        <option value="1.5">1.50</option><option value="1.75">1.75</option>
+        <option value="2">2.00</option><option value="2.25">2.25</option>
+        <option value="2.5">2.50</option><option value="2.75">2.75</option>
+        <option value="3" selected>3.00</option><option value="3.25">3.25</option>
+        <option value="3.5">3.50</option><option value="3.75">3.75</option>
+        <option value="4">4.00</option>
+      </select>
+      <button class="qf-btn primary" onclick="quickFill('all')">Isi Semua</button>
+      <button class="qf-btn secondary" onclick="quickFill('empty')">Isi Kosong</button>
+    </div>
+  </div>
+</div>
+
+<div class="rubric-bar">
+  <button class="rubric-toggle" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('span:last-child').textContent = this.nextElementSibling.classList.contains('open') ? '▲' : '▼'">
+    <span>📖 Rubrik Penilaian</span><span>▼</span>
+  </button>
+  <div class="rubric-body">
+    <div class="rubric-inner">
+      <div class="rubric-grid">
+        <div class="rubric-card">
+          <strong>📖 Bacaan (40%)</strong><br>
+          Kejelasan makhraj, kelancaran hafalan, ketepatan bacaan per gerakan sholat.
+        </div>
+        <div class="rubric-card">
+          <strong>🤲 Gerakan (40%)</strong><br>
+          Ketepatan urutan rukun, ketenangan (tuma'ninah), kesempurnaan posisi tiap gerakan.
+        </div>
+        <div class="rubric-card">
+          <strong>🙏 Adab & Kekhusyukan (20%)</strong><br>
+          Fokus tidak menoleh-noleh, sopan, memahami makna gerakan dan bacaan.
+        </div>
+      </div>
+      <div class="rubric-note">Penilaian mencakup seluruh rangkaian sholat dari takbiratul ihram hingga salam. Siswa dinilai secara individual.</div>
+      <div class="rubric-scale">
+        <span class="rubric-chip" style="background:var(--red-light);color:var(--red)">1 = Perlu Perbaikan</span>
+        <span class="rubric-chip" style="background:var(--orange-light);color:var(--orange)">2 = Cukup</span>
+        <span class="rubric-chip" style="background:var(--blue-light);color:var(--blue)">3 = Baik</span>
+        <span class="rubric-chip" style="background:var(--emerald-light);color:var(--emerald)">4 = Sangat Baik</span>
+        <span class="rubric-chip" style="background:#f3f4f6;color:var(--text-muted)">KKM: 70</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th style="min-width:180px">Nama Siswa</th>
+        <th>Bacaan (40%)</th>
+        <th>Gerakan (40%)</th>
+        <th>Adab & Kekhusyukan (20%)</th>
+        <th>Total</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+</div>
+
+<div class="nav-footer">
+  <div class="nav-footer-title">🔗 Navigasi Penilaian Praktik</div>
+  <div class="nav-links">
+    <a class="nav-link current" href="#">☪️ Al-Islam</a>
+  </div>
+  <div class="nav-links" style="margin-top:8px">
+    <a class="nav-link" href="./">📋 Penilaian Praktik</a>
+    <a class="nav-link" href="../">🏠 Portal Penilaian</a>
+  </div>
+</div>
+
+<div class="picker-overlay" id="pickerOverlay">
+  <div class="picker-sheet" id="pickerSheet">
+    <div class="picker-handle"></div>
+    <div class="picker-header">
+      <div class="picker-student" id="pickerStudent">—</div>
+      <div class="picker-aspect" id="pickerAspect">—</div>
+    </div>
+    <div class="picker-grid" id="pickerGrid"></div>
+    <div class="picker-footer">
+      <button class="picker-nav-btn picker-skip" onclick="closePicker()">Tutup</button>
+      <label class="autonext-toggle">
+        <input type="checkbox" id="autoNext" checked> Otomatis lanjut
+      </label>
+      <button class="picker-nav-btn picker-next" onclick="goNext()">Berikutnya →</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="modal-bg" id="modalBg">
+  <div class="modal-box">
+    <div class="modal-icon" id="modalIcon">⚠️</div>
+    <div class="modal-title" id="modalTitle">—</div>
+    <div class="modal-msg" id="modalMsg">—</div>
+    <div class="modal-btns" id="modalBtns"></div>
+  </div>
+</div>
+
+<script>
+const STUDENTS = [
+  {n:"Abiyyu Gibran Al Khalifi",c:"6A"},{n:"Akrim Ghazi Al Hudzaifah",c:"6A"},
+  {n:"Alika Jasmine Arizki",c:"6A"},{n:"Alyssa Pratita",c:"6A"},
+  {n:"Arinda Arfaun Nisa",c:"6A"},{n:"Brilyan Alifah Rahman",c:"6A"},
+  {n:"Devan Muhammad Faiq",c:"6A"},{n:"Fairuzzaman Daffa Zulhannan",c:"6A"},
+  {n:"Farrel Ahza Naufal",c:"6A"},{n:"Farrel Nur Syafiq",c:"6A"},
+  {n:"Faysha Aliya Nafira",c:"6A"},{n:"Fildza Dhira Azkadina",c:"6A"},
+  {n:"Gadiza Chyntia Nugroho",c:"6A"},{n:"Haafiz Nur Fazil",c:"6A"},
+  {n:"Hangga Abid Prasetyo",c:"6A"},{n:"Hasan Imam Rasyidin",c:"6A"},
+  {n:"Imam Hanafi",c:"6A"},{n:"Irshad Faheem Alfany",c:"6A"},
+  {n:"Jihan Thalita Ulfa",c:"6A"},{n:"Khansa Kirana",c:"6A"},
+  {n:"Luthfi Radhitya Bima Rohim",c:"6A"},{n:"Michaila Azqiara",c:"6A"},
+  {n:"Muhammad Syakir Arrafif",c:"6A"},{n:"Nurrizqi Danish Alvaro",c:"6A"},
+  {n:"Rhandy Anindita Wibowo",c:"6A"},{n:"Sakha Arkan Radhika",c:"6A"},
+  {n:"Shakila Alyzie",c:"6A"},{n:"Syifa Sauqiya",c:"6A"},
+  {n:"Ahmad Faarih As Sunni",c:"6B"},{n:"Akhdan Naufal Muhammad Dzaki",c:"6B"},
+  {n:"Al Rayyan Syafi Assyauqie",c:"6B"},{n:"Altair Zakaria Saleh",c:"6B"},
+  {n:"Annisa Nandira Ramadhani",c:"6B"},{n:"Arkana Daffa Prayuda",c:"6B"},
+  {n:"Azima Wasilah Nur Fatimah",c:"6B"},{n:"Boma Damario Aksa",c:"6B"},
+  {n:"Chennysa La Viola Salsabila",c:"6B"},{n:"Dafina Fakhira Azzahra",c:"6B"},
+  {n:"Fikri Aulia",c:"6B"},{n:"Ganesh Sabian Wiranata",c:"6B"},
+  {n:"Ibrahimovic Ayyubi Fahri Mulya",c:"6B"},{n:"Jasmine Azia Keisyah",c:"6B"},
+  {n:"Khaira Nursalsabila Putri Muharam",c:"6B"},{n:"Luqyana Farha Izzatunnisa",c:"6B"},
+  {n:"Mikhaila Khanaya Afrizal",c:"6B"},{n:"Muhammad Al Baghdadi Ruby",c:"6B"},
+  {n:"Muhammad Hafidz Ramadhan",c:"6B"},{n:"Muhammad Ishomuddin",c:"6B"},
+  {n:"Muhammad Rafiq Alfattah",c:"6B"},{n:"Ophelia Delisha Suaidi",c:"6B"},
+  {n:"Putri Ani Maulidah",c:"6B"},{n:"Qismika Yumnaa Shalimar",c:"6B"},
+  {n:"Rossa Rania Saragih",c:"6B"},{n:"Zaskiya Jameela Mursyida",c:"6B"},
+  {n:"Zufar Fadhil",c:"6B"},{n:"Fadhlan Ahnaf",c:"6B"},
+  {n:"Yusuf Majiid Wahyudhi",c:"6B"}
+];
+
+const ASPECTS = [
+  {key:'bacaan', label:'Bacaan', emoji:'📖', weight:40},
+  {key:'gerakan', label:'Gerakan', emoji:'🤲', weight:40},
+  {key:'adab', label:'Adab & Kekhusyukan', emoji:'🙏', weight:20},
+];
+
+const SCORE_OPTIONS = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4];
+const STORAGE_KEY = 'al-islam-v2';
+
+let scores = {};
+let currentFilter = 'all';
+let pickerTarget = null;
+
+function initScores() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) { try { scores = JSON.parse(saved); return; } catch(e) {} }
+  scores = {};
+  STUDENTS.forEach((_, i) => { scores[i] = { bacaan: null, gerakan: null, adab: null }; });
+}
+
+function saveScores() { localStorage.setItem(STORAGE_KEY, JSON.stringify(scores)); }
+
+function renderTable() {
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = '';
+  let visibleNum = 0;
+  STUDENTS.forEach((s, i) => {
+    if (currentFilter !== 'all' && s.c !== currentFilter) return;
+    visibleNum++;
+    const sc = scores[i];
+    const allScored = sc.bacaan !== null && sc.gerakan !== null && sc.adab !== null;
+    const total = calcTotal(sc);
+    const row = document.createElement('tr');
+    row.className = allScored ? 'scored' : 'unscored';
+    row.innerHTML = `<td class="student-cell"><span class="student-num">${visibleNum}.</span>${s.n}<span class="student-class">${s.c}</span></td>`;
+    ASPECTS.forEach(asp => {
+      const val = sc[asp.key];
+      const td = document.createElement('td');
+      const badge = document.createElement('div');
+      badge.className = 'score-badge ' + scoreBadgeClass(val);
+      badge.textContent = val !== null ? val.toFixed(2) : '—';
+      badge.setAttribute('data-si', i);
+      badge.setAttribute('data-ak', asp.key);
+      badge.addEventListener('click', () => openPicker(i, asp.key));
+      td.appendChild(badge);
+      row.appendChild(td);
+    });
+    const tdTotal = document.createElement('td');
+    tdTotal.className = 'total-cell';
+    tdTotal.textContent = total !== null ? total : '—';
+    row.appendChild(tdTotal);
+    const tdStatus = document.createElement('td');
+    tdStatus.className = 'status-cell ' + (total === null ? 'pending' : total >= 70 ? 'pass' : 'fail');
+    tdStatus.textContent = total === null ? '⏳' : total >= 70 ? '✅ Lulus' : '⚠️ Perbaikan';
+    row.appendChild(tdStatus);
+    tbody.appendChild(row);
+  });
+  updateProgress();
+}
+
+function scoreBadgeClass(val) {
+  if (val === null) return 'empty';
+  if (val >= 3.75) return 's4';
+  if (val >= 2.75) return 's3';
+  if (val >= 1.75) return 's2';
+  return 's1';
+}
+
+function calcTotal(sc) {
+  if (!(sc.bacaan !== null && sc.gerakan !== null && sc.adab !== null)) return null;
+  return Math.round((sc.bacaan/4)*40 + (sc.gerakan/4)*40 + (sc.adab/4)*20);
+}
+
+function updateProgress() {
+  const total = STUDENTS.length;
+  let scored = 0;
+  STUDENTS.forEach((_, i) => {
+    const sc = scores[i];
+    if (sc.bacaan !== null && sc.gerakan !== null && sc.adab !== null) scored++;
+  });
+  const pct = Math.round((scored / total) * 100);
+  document.getElementById('progFill').style.width = pct + '%';
+  document.getElementById('progText').textContent = `${scored}/${total} ✓`;
+}
+
+function openPicker(studentIdx, aspectKey) {
+  pickerTarget = { studentIdx, aspectKey };
+  const student = STUDENTS[studentIdx];
+  const aspect = ASPECTS.find(a => a.key === aspectKey);
+  const currentVal = scores[studentIdx][aspectKey];
+  document.getElementById('pickerStudent').textContent = student.n + ' (' + student.c + ')';
+  document.getElementById('pickerAspect').textContent = aspect.emoji + ' ' + aspect.label + ' (' + aspect.weight + '%)';
+  const grid = document.getElementById('pickerGrid');
+  grid.innerHTML = '';
+  SCORE_OPTIONS.forEach(v => {
+    const btn = document.createElement('button');
+    const colorClass = v >= 3.75 ? 'c4' : v >= 2.75 ? 'c3' : v >= 1.75 ? 'c2' : 'c1';
+    btn.className = 'picker-btn ' + colorClass + (v === currentVal ? ' sel' : '');
+    btn.innerHTML = `<span class="pv">${v.toFixed(2)}</span><span class="pl">${getLabel(v)}</span>`;
+    btn.addEventListener('click', () => selectScore(v));
+    grid.appendChild(btn);
+  });
+  document.querySelectorAll('.score-badge.active-pick').forEach(el => el.classList.remove('active-pick'));
+  const activeBadge = document.querySelector(`.score-badge[data-si="${studentIdx}"][data-ak="${aspectKey}"]`);
+  if (activeBadge) activeBadge.classList.add('active-pick');
+  document.getElementById('pickerOverlay').classList.add('open');
+}
+
+function closePicker() {
+  document.getElementById('pickerOverlay').classList.remove('open');
+  document.querySelectorAll('.score-badge.active-pick').forEach(el => el.classList.remove('active-pick'));
+  pickerTarget = null;
+}
+
+function selectScore(val) {
+  if (!pickerTarget) return;
+  const { studentIdx, aspectKey } = pickerTarget;
+  scores[studentIdx][aspectKey] = val;
+  saveScores();
+  const badge = document.querySelector(`.score-badge[data-si="${studentIdx}"][data-ak="${aspectKey}"]`);
+  if (badge) {
+    badge.textContent = val.toFixed(2);
+    badge.className = 'score-badge ' + scoreBadgeClass(val);
+  }
+  const sc = scores[studentIdx];
+  const total = calcTotal(sc);
+  const row = badge.closest('tr');
+  if (row) {
+    const cells = row.querySelectorAll('td');
+    const totalCell = cells[cells.length - 2];
+    const statusCell = cells[cells.length - 1];
+    totalCell.textContent = total !== null ? total : '—';
+    statusCell.className = 'status-cell ' + (total === null ? 'pending' : total >= 70 ? 'pass' : 'fail');
+    statusCell.textContent = total === null ? '⏳' : total >= 70 ? '✅ Lulus' : '⚠️ Perbaikan';
+    row.className = total !== null ? 'scored' : 'unscored';
+  }
+  updateProgress();
+  if (document.getElementById('autoNext').checked) { setTimeout(() => goNext(), 150); }
+  else { closePicker(); }
+}
+
+function goNext() {
+  if (!pickerTarget) return;
+  let { studentIdx, aspectKey } = pickerTarget;
+  const aspectKeys = ASPECTS.map(a => a.key);
+  let ai = aspectKeys.indexOf(aspectKey);
+  ai++;
+  if (ai >= aspectKeys.length) {
+    ai = 0;
+    studentIdx = findNextVisibleStudent(studentIdx);
+    if (studentIdx === null) { closePicker(); showToast('🎉 Semua siswa sudah terisi!'); return; }
+  }
+  openPicker(studentIdx, aspectKeys[ai]);
+}
+
+function findNextVisibleStudent(currentIdx) {
+  for (let i = currentIdx + 1; i < STUDENTS.length; i++) {
+    if (currentFilter === 'all' || STUDENTS[i].c === currentFilter) return i;
+  }
+  return null;
+}
+
+function getLabel(v) {
+  if (v >= 3.75) return 'Sangat Baik';
+  if (v >= 3) return 'Baik+';
+  if (v >= 2.75) return 'Baik';
+  if (v >= 2) return 'Cukup+';
+  if (v >= 1.75) return 'Cukup';
+  if (v >= 1) return 'Kurang+';
+  return 'Kurang';
+}
+
+document.getElementById('pickerOverlay').addEventListener('click', function(e) { if (e.target === this) closePicker(); });
+
+function quickFill(mode) {
+  const val = parseFloat(document.getElementById('qfValue').value);
+  let count = 0;
+  STUDENTS.forEach((s, i) => {
+    if (currentFilter !== 'all' && s.c !== currentFilter) return;
+    ASPECTS.forEach(asp => {
+      if (mode === 'all' || (mode === 'empty' && scores[i][asp.key] === null)) {
+        scores[i][asp.key] = val;
+        count++;
+      }
+    });
+  });
+  saveScores(); renderTable();
+  showToast(`✅ ${count} nilai diisi dengan ${val.toFixed(2)}`);
+}
+
+document.querySelectorAll('.filter-tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+    currentFilter = this.dataset.filter;
+    renderTable();
+  });
+});
+
+function exportCSV() {
+  let csv = 'No;Nama Siswa;Kelas;Bacaan (40%);Gerakan (40%);Adab & Kekhusyukan (20%);Total;Status\n';
+  STUDENTS.forEach((s, i) => {
+    const sc = scores[i];
+    const total = calcTotal(sc);
+    const v0 = sc.bacaan !== null ? sc.bacaan.toFixed(2).replace('.', ',') : '';
+    const v1 = sc.gerakan !== null ? sc.gerakan.toFixed(2).replace('.', ',') : '';
+    const v2 = sc.adab !== null ? sc.adab.toFixed(2).replace('.', ',') : '';
+    const status = total === null ? 'Belum Dinilai' : total >= 70 ? 'LULUS' : 'PERLU PERBAIKAN';
+    csv += `${i+1};"${s.n}";${s.c};${v0};${v1};${v2};${total || ''};${status}\n`;
+  });
+  const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Penilaian_AlIslam_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('📊 CSV berhasil diunduh!');
+}
+
+function confirmReset() {
+  showModal('⚠️', 'Reset Semua Nilai?', 'Semua nilai akan dihapus dan tidak bisa dikembalikan.', [
+    { text: 'Batal', cls: 'cancel', fn: closeModal },
+    { text: 'Reset', cls: 'danger', fn: () => {
+      STUDENTS.forEach((_, i) => { scores[i] = { bacaan: null, gerakan: null, adab: null }; });
+      saveScores(); renderTable(); closeModal();
+      showToast('🗑️ Semua nilai telah direset.');
+    }}
+  ]);
+}
+
+function showModal(icon, title, msg, buttons) {
+  document.getElementById('modalIcon').textContent = icon;
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalMsg').textContent = msg;
+  const container = document.getElementById('modalBtns');
+  container.innerHTML = '';
+  buttons.forEach(b => {
+    const btn = document.createElement('button');
+    btn.className = 'modal-btn ' + b.cls;
+    btn.textContent = b.text;
+    btn.onclick = b.fn;
+    container.appendChild(btn);
+  });
+  document.getElementById('modalBg').classList.add('open');
+}
+function closeModal() { document.getElementById('modalBg').classList.remove('open'); }
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+initScores();
+renderTable();
+</script>
+</body>
+</html>
