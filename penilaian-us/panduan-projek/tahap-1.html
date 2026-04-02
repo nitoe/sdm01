@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panduan Guru - Tahap 1: Pertanyaan | SD Muhammadiyah 01 Kukusan</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #ffffff;
+        color: #333333;
+        line-height: 1.6;
+    }
+    
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 30px 20px;
+    }
+    
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        color: #1a4d2e;
+        text-decoration: none;
+        font-weight: 500;
+        margin-bottom: 20px;
+        padding: 10px 15px;
+        border: 1px solid #1a4d2e;
+        border-radius: 6px;
+        transition: all 0.3s;
+    }
+    
+    .back-button:hover {
+        background: #1a4d2e;
+        color: #ffffff;
+    }
+    
+    .page-header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid #e0e0e0;
+    }
+    
+    .page-title {
+        font-size: 1.8rem;
+        color: #1a4d2e;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+    
+    .page-subtitle {
+        font-size: 1rem;
+        color: #666666;
+    }
+    
+    .section {
+        background: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .section-title {
+        font-size: 1.3rem;
+        color: #1a4d2e;
+        margin-bottom: 20px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .warning-box {
+        background: #f8d7da;
+        border: 1px solid #d32f2f;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .warning-title {
+        font-size: 1.1rem;
+        color: #721c24;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+    
+    .warning-content {
+        color: #721c24;
+        line-height: 1.8;
+    }
+    
+    .prompt-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+    }
+    
+    .prompt-card {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px;
+        border-left: 4px solid #1a4d2e;
+    }
+    
+    .prompt-category {
+        font-size: 0.95rem;
+        color: #1a4d2e;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+    
+    .prompt-list {
+        list-style: none;
+    }
+    
+    .prompt-list li {
+        padding: 8px 0;
+        border-bottom: 1px solid #e0e0e0;
+        font-size: 0.9rem;
+        color: #333333;
+    }
+    
+    .prompt-list li:last-child {
+        border-bottom: none;
+    }
+    
+    .lks-box {
+        background: #f0f7f4;
+        border: 2px solid #1a4d2e;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .lks-title {
+        font-size: 1.2rem;
+        color: #1a4d2e;
+        margin-bottom: 15px;
+        font-weight: 700;
+        text-align: center;
+    }
+    
+    .lks-content {
+        background: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 25px;
+        margin-top: 15px;
+    }
+    
+    .lks-section {
+        margin-bottom: 25px;
+    }
+    
+    .lks-section-title {
+        font-size: 1rem;
+        color: #1a4d2e;
+        margin-bottom: 10px;
+        font-weight: 600;
+        border-bottom: 2px solid #1a4d2e;
+        padding-bottom: 5px;
+    }
+    
+    .lks-question {
+        font-size: 0.95rem;
+        color: #333333;
+        margin-bottom: 15px;
+        padding-left: 15px;
+        border-left: 3px solid #1a4d2e;
+    }
+    
+    .lks-space {
+        background: #f8f9fa;
+        border: 1px dashed #e0e0e0;
+        border-radius: 6px;
+        padding: 15px;
+        min-height: 60px;
+        margin-top: 10px;
+        font-size: 0.9rem;
+        color: #666666;
+        font-style: italic;
+    }
+    
+    .checklist-box {
+        background: #fff9e6;
+        border: 1px solid #f0c040;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .checklist-title {
+        font-size: 1.2rem;
+        color: #b8860b;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+    
+    .checklist-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 12px 0;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .checklist-item:last-child {
+        border-bottom: none;
+    }
+    
+    .checklist-checkbox {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #b8860b;
+        border-radius: 4px;
+        flex-shrink: 0;
+        margin-top: 3px;
+    }
+    
+    .checklist-text {
+        font-size: 0.95rem;
+        color: #333333;
+    }
+    
+    .checklist-subtext {
+        font-size: 0.85rem;
+        color: #666666;
+        margin-top: 5px;
+        font-style: italic;
+    }
+    
+    .guide-box {
+        background: #e8f4fd;
+        border: 1px solid #1a4d2e;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .guide-title {
+        font-size: 1.2rem;
+        color: #1a4d2e;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+    
+    .guide-content {
+        color: #333333;
+        line-height: 1.8;
+    }
+    
+    .guide-content ul {
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+    
+    .guide-content li {
+        margin-bottom: 8px;
+    }
+    
+    .nav-footer {
+        background: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 25px;
+        text-align: center;
+        margin-top: 40px;
+    }
+    
+    .nav-footer-title {
+        font-size: 1.1rem;
+        color: #1a4d2e;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+    
+    .nav-footer-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .nav-btn {
+        padding: 12px 25px;
+        border: 1px solid #1a4d2e;
+        background: #ffffff;
+        color: #1a4d2e;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .nav-btn:hover {
+        background: #1a4d2e;
+        color: #ffffff;
+    }
+    
+    .nav-btn.primary {
+        background: #1a4d2e;
+        color: #ffffff;
+    }
+    
+    .nav-btn.primary:hover {
+        background: #2d6a4f;
+    }
+    
+    @media (max-width: 768px) {
+        .container {
+            padding: 20px 15px;
+        }
+        
+        .page-title {
+            font-size: 1.5rem;
+        }
+        
+        .prompt-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .nav-footer-buttons {
+            flex-direction: column;
+        }
+        
+        .nav-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+    
+    @media print {
+        .back-button, .nav-footer {
+            display: none;
+        }
+        
+        .container {
+            max-width: 100%;
+        }
+        
+        .section {
+            border: none;
+            padding: 0;
+        }
+        
+        .lks-box {
+            border: 2px solid #000;
+            page-break-inside: avoid;
+        }
+        
+        .checklist-box {
+            border: 2px solid #000;
+            page-break-inside: avoid;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <a href="./" class="back-button">
+            ← Kembali ke Landing Panduan
+        </a>
+        
+        <header class="page-header">
+            <h1 class="page-title">📍 Tahap 1: Perumusan Pertanyaan</h1>
+            <p class="page-subtitle">Panduan Praktis untuk Guru - Student-Driven Inquiry</p>
+        </header>
+
+        <!-- PERINGATAN PENTING -->
+        <section class="section">
+            <div class="warning-box">
+                <div class="warning-title">⚠️ JANGAN BERI CONTOH TOPIK DI AWAL!</div>
+                <div class="warning-content">
+                    <p><strong>Kesalahan paling umum:</strong> Guru memberikan contoh topik projek seperti "Bagaimana mengurangi sampah plastik?" Siswa akan meniru contoh ini dan kehilangan orisinalitas.</p>
+                    <p style="margin-top: 10px;"><strong>Yang benar:</strong> Gunakan pertanyaan pemantik di bawah untuk membantu siswa menemukan topik mereka SENDIRI. Contoh baru diberikan SETELAH siswa memiliki ide awal.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1. PERTANYAAN PEMANTIK -->
+        <section class="section">
+            <h2 class="section-title">💭 1. Pertanyaan Pemantik (20+ Contoh)</h2>
+            <p>Gunakan pertanyaan ini untuk brainstorming di awal Tahap 1. Pilih 3-5 yang paling relevan dengan kelas Anda.</p>
+            
+            <div class="prompt-grid">
+                
+                <div class="prompt-card">
+                    <div class="prompt-category">🏠 Kehidupan Sehari-hari di Rumah</div>
+                    <ul class="prompt-list">
+                        <li>Apa yang paling membuatmu penasaran di rumahmu?</li>
+                        <li>Masalah apa di rumah yang ingin kamu selesaikan?</li>
+                        <li>Apa kebiasaan keluargamu yang ingin kamu perbaiki?</li>
+                        <li>Apa yang sering membuatmu bertanya "kenapa" di rumah?</li>
+                        <li>Bagaimana cara membuat pekerjaan rumah lebih mudah?</li>
+                    </ul>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="prompt-category">🏫 Sekolah & Teman</div>
+                    <ul class="prompt-list">
+                        <li>Apa yang membuat belajar lebih menyenangkan bagimu?</li>
+                        <li>Masalah apa yang sering terjadi antar teman kelasmu?</li>
+                        <li>Apa yang ingin kamu ubah di sekolahmu?</li>
+                        <li>Bagaimana cara membuat tugas kelompok lebih adil?</li>
+                        <li>Apa yang membuatmu bingung saat belajar?</li>
+                    </ul>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="prompt-category">🌍 Lingkungan Sekitar</div>
+                    <ul class="prompt-list">
+                        <li>Apa masalah lingkungan di tempat tinggalmu?</li>
+                        <li>Bagaimana cara membantu orang di sekitarmu?</li>
+                        <li>Apa yang bisa kamu lakukan untuk mengurangi sampah?</li>
+                        <li>Bagaimana cara mengajak teman hidup lebih sehat?</li>
+                        <li>Apa yang membuat lingkunganmu tidak nyaman?</li>
+                    </ul>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="prompt-category">💡 Hobi & Minat Pribadi</div>
+                    <ul class="prompt-list">
+                        <li>Apa hobimu yang ingin kamu kembangkan?</li>
+                        <li>Bagaimana cara membagikan hobimu ke orang lain?</li>
+                        <li>Apa yang ingin kamu ciptakan dari hobimu?</li>
+                        <li>Bagaimana hobimu bisa bermanfaat untuk orang lain?</li>
+                        <li>Apa yang membuatmu senang saat melakukan hobimu?</li>
+                    </ul>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="prompt-category">📱 Teknologi & Digital</div>
+                    <ul class="prompt-list">
+                        <li>Apa yang membuatmu penasaran tentang gadget?</li>
+                        <li>Bagaimana cara menggunakan media sosial dengan bijak?</li>
+                        <li>Apa masalah yang kamu hadapi saat bermain game?</li>
+                        <li>Bagaimana teknologi bisa membantumu belajar?</li>
+                        <li>Apa yang ingin kamu buat di internet?</li>
+                    </ul>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="prompt-category">💰 Ekonomi & Kewirausahaan</div>
+                    <ul class="prompt-list">
+                        <li>Apa yang ingin kamu jual kepada temanmu?</li>
+                        <li>Bagaimana cara menghemat uang jajanmu?</li>
+                        <li>Apa yang membuatmu ingin membeli sesuatu?</li>
+                        <li>Bagaimana cara mendapatkan uang dengan cara halal?</li>
+                        <li>Apa yang bisa kamu buat untuk dijual?</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 2. LEMBAR KERJA SISWA -->
+        <section class="lks-box">
+            <h2 class="lks-title">📄 2. Lembar Kerja Siswa (LKS) - Tahap 1</h2>
+            <p style="text-align: center; color: #666666; font-size: 0.9rem;">Cetak halaman ini dan bagikan kepada setiap siswa/kelompok</p>
+            
+            <div class="lks-content">
+                
+                <div class="lks-section">
+                    <h3 class="lks-section-title">A. Ide Awalku</h3>
+                    <div class="lks-question">1. Apa yang paling membuatmu penasaran akhir-akhir ini?</div>
+                    <div class="lks-space">Tulis di sini: ________________________________________________________________</div>
+                    
+                    <div class="lks-question" style="margin-top: 15px;">2. Mengapa hal ini penting bagimu?</div>
+                    <div class="lks-space">Tulis di sini: ________________________________________________________________</div>
+                </div>
+
+                <div class="lks-section">
+                    <h3 class="lks-section-title">B. Menyempurnakan Pertanyaan</h3>
+                    <div class="lks-question">3. Tulis pertanyaan penelitianmu dalam satu kalimat:</div>
+                    <div class="lks-space">Pertanyaanku: ____________________________________________________________</div>
+                    
+                    <div class="lks-question" style="margin-top: 15px;">4. Apakah pertanyaanmu jelas? (Centang yang sesuai)</div>
+                    <div class="lks-space">
+                        ☐ Ya, orang lain bisa memahami pertanyaanku<br>
+                        ☐ Belum, masih ada yang bingung
+                    </div>
+                    
+                    <div class="lks-question" style="margin-top: 15px;">5. Apakah pertanyaanmu dapat diselidiki? (Centang yang sesuai)</div>
+                    <div class="lks-space">
+                        ☐ Ya, aku bisa mengumpulkan data untuk menjawabnya<br>
+                        ☐ Belum, aku butuh bantuan untuk memikirkan cara mengumpulkan data
+                    </div>
+                </div>
+
+                <div class="lks-section">
+                    <h3 class="lks-section-title">C. Mata Pelajaran yang Akan Digunakan</h3>
+                    <div class="lks-question">6. Mata pelajaran apa yang akan membantumu menjawab pertanyaan ini? (Boleh lebih dari satu)</div>
+                    <div class="lks-space">
+                        ☐ Pendidikan Pancasila &nbsp; ☐ Bahasa Indonesia &nbsp; ☐ Matematika<br>
+                        ☐ IPAS &nbsp; ☐ Bahasa Inggris &nbsp; ☐ Lainnya: _______________
+                    </div>
+                    
+                    <div class="lks-question" style="margin-top: 15px;">7. Bagaimana mata pelajaran tersebut membantumu?</div>
+                    <div class="lks-space">Tulis di sini: ________________________________________________________________</div>
+                </div>
+
+                <div class="lks-section">
+                    <h3 class="lks-section-title">D. Persetujuanku</h3>
+                    <div class="lks-question">8. Aku siap melanjutkan ke tahap perencanaan</div>
+                    <div class="lks-space">
+                        Nama: ________________________ &nbsp;&nbsp;&nbsp; Tanggal: _______________<br><br>
+                        Tanda Tangan Siswa: ________________ &nbsp;&nbsp;&nbsp; Paraf Guru: ________________
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. CHECKLIST TANYA JAWAB GURU-SISWA -->
+        <section class="checklist-box">
+            <h2 class="checklist-title">✅ 3. Checklist Tanya Jawab Guru-Siswa</h2>
+            <p style="color: #666666; font-size: 0.9rem; margin-bottom: 20px;">Gunakan saat conference perorangan (5-10 menit per siswa/kelompok)</p>
+            
+            <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div>
+                    <div class="checklist-text"><strong>Siswa dapat menjelaskan pertanyaan penelitiannya dengan kata-kata sendiri</strong></div>
+                    <div class="checklist-subtext">Tanya: "Coba jelaskan dengan bahasamu sendiri, apa yang ingin kamu teliti?"</div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div>
+                    <div class="checklist-text"><strong>Pertanyaan jelas dan spesifik (bukan terlalu luas)</strong></div>
+                    <div class="checklist-subtext">Tanya: "Siapa yang akan kamu teliti? Di mana? Kapan?"</div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div>
+                    <div class="checklist-text"><strong>Siswa dapat menyebutkan minimal 1 cara mengumpulkan data</strong></div>
+                    <div class="checklist-subtext">Tanya: "Bagaimana kamu akan mencari jawaban untuk pertanyaanmu?"</div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div>
+                    <div class="checklist-text"><strong>Siswa memahami mengapa pertanyaan ini penting baginya</strong></div>
+                    <div class="checklist-subtext">Tanya: "Mengapa kamu memilih pertanyaan ini? Apa yang membuatmu penasaran?"</div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div>
+                    <div class="checklist-text"><strong>Siswa dapat mengidentifikasi minimal 1 mata pelajaran yang relevan</strong></div>
+                    <div class="checklist-subtext">Tanya: "Pelajaran apa yang akan membantumu menjawab pertanyaan ini?"</div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div>
+                    <div class="checklist-text"><strong>Siswa realistis tentang waktu yang dibutuhkan</strong></div>
+                    <div class="checklist-subtext">Tanya: "Berapa lama kira-kira kamu butuh untuk menyelesaikan ini?"</div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div>
+                    <div class="checklist-text"><strong>Keputusan: Lanjut / Revisi / Bimbingan Intensif</strong></div>
+                    <div class="checklist-subtext">
+                        ☐ Lanjut ke Tahap 2 &nbsp;&nbsp; ☐ Perlu Revisi Pertanyaan &nbsp;&nbsp; ☐ Perlu Bimbingan Intensif (Level 3)
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- 4. PANDUAN PENGGUNAAN UNTUK GURU -->
+        <section class="guide-box">
+            <h2 class="guide-title">📖 4. Panduan Penggunaan untuk Guru</h2>
+            <div class="guide-content">
+                <p><strong>Kapan Menggunakan:</strong> Minggu 3-4 Semester 2 (sesuai jadwal projek 10 hari)</p>
+                
+                <p style="margin-top: 15px;"><strong>Langkah-langkah:</strong></p>
+                <ul>
+                    <li><strong>Hari 1-2:</strong> Gunakan pertanyaan pemantik untuk brainstorming. Bagikan LKS Bagian A-B.</li>
+                    <li><strong>Hari 3-4:</strong> Lakukan tanya jawab perorangan (5-10 menit). Gunakan checklist untuk memandu.</li>
+                    <li><strong>Hari 5:</strong> Siswa menyempurnakan pertanyaan berdasarkan feedback. Lengkapi LKS Bagian C-D.</li>
+                    <li><strong>Hari 6:</strong> Kumpulkan LKS sebagai portofolio. Berikan persetujuan untuk lanjut ke Tahap 2.</li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>Tips Penting:</strong></p>
+                <ul>
+                    <li>Jangan koreksi seluruh pertanyaan siswa. Fokus pada 1 aspek kritis saja (misal: "Perjelas siapa yang akan kamu teliti").</li>
+                    <li>Jika siswa buntu, ajukan pertanyaan pemantik lagi. JANGAN beri contoh topik.</li>
+                    <li>Simpan LKS sebagai bukti fisik penilaian proses. Ini portofolio siswa.</li>
+                    <li>Untuk Level 3 (perlu pendampingan intensif), lakukan tanya jawab lebih sering (2-3x selama Tahap 1).</li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>Kriteria Pertanyaan yang Baik:</strong></p>
+                <ul>
+                    <li>✅ Jelas: Orang lain bisa memahami tanpa penjelasan tambahan</li>
+                    <li>✅ Terukur: Bisa dikumpulkan datanya (wawancara, observasi, dokumen)</li>
+                    <li>✅ Relevan: Penting bagi siswa secara personal</li>
+                    <li>✅ Realistis: Bisa diselesaikan dalam waktu yang tersedia</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- NAVIGATION FOOTER -->
+        <section class="nav-footer">
+            <h2 class="nav-footer-title">🔗 Lanjut ke Tahap Berikutnya</h2>
+            <div class="nav-footer-buttons">
+                <a href="./" class="nav-btn">
+                    🏠 Landing Panduan
+                </a>
+                <a href="tahap-2.html" class="nav-btn primary">
+                    📍 Tahap 2: Perencanaan →
+                </a>
+                <a href="tahap-1.html" class="nav-btn">
+                    💻 Penilaian Tahap 1
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>

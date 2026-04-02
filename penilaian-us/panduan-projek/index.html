@@ -1,1 +1,335 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panduan Projek US – SD Muhammadiyah 01 Kukusan</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --amber: #d97706; --amber-dark: #92400e; --amber-deep: #78350f;
+    --amber-light: #fef3c7; --amber-bg: #fffbeb;
+    --text: #1f2937; --text-muted: #6b7280; --bg: #fffbeb;
+    --white: #fff; --border: #d1d5db;
+    --shadow: 0 4px 24px rgba(0,0,0,0.08);
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: clamp(14px, 3.5vw, 16px); scroll-behavior: smooth; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
+  /* ── HEADER ── */
+  .header {
+    position: sticky; top: 0; z-index: 100;
+    background: linear-gradient(135deg, var(--amber-deep), var(--amber-dark) 50%, var(--amber));
+    color: #fff; padding: 0 20px; height: 58px;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  }
+  .header-brand { display: flex; align-items: center; gap: 10px; }
+  .logo { font-size: 1.5rem; }
+  .brand-name { font-family: 'Baloo 2', cursive; font-size: clamp(0.85rem, 2.8vw, 1.05rem); font-weight: 800; line-height: 1.1; }
+  .sub-brand { font-size: 0.65rem; opacity: 0.8; font-weight: 600; }
+  .header-badge {
+    background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px; padding: 4px 12px; font-size: 0.7rem; font-weight: 700;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(160deg, var(--amber-deep) 0%, var(--amber-dark) 40%, var(--amber) 100%);
+    color: #fff; padding: 44px 20px 52px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M50 50v-6h-2v6h-6v2h6v6h2v-6h6v-2h-6zM50 10V4h-2v6h-6v2h6v6h2v-6h6v-2h-6zM10 50v-6H8v6H2v2h6v6h2v-6h6v-2h-6zM10 10V4H8v6H2v2h6v6h2v-6h6v-2h-6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: #fff; text-decoration: none; font-size: 0.8rem; font-weight: 700;
+    opacity: 0.8; transition: opacity 0.2s; position: relative; margin-bottom: 14px;
+  }
+  .back-link:hover { opacity: 1; }
+  .hero-emoji { font-size: 3rem; display: block; margin-bottom: 10px; position: relative; }
+  .hero h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(1.5rem, 5vw, 2.2rem);
+    font-weight: 800; margin-bottom: 8px; position: relative;
+  }
+  .hero p {
+    font-size: clamp(0.82rem, 2.5vw, 0.95rem);
+    opacity: 0.88; font-weight: 600; max-width: 560px;
+    margin: 0 auto; position: relative; line-height: 1.6;
+  }
+
+  /* ── MAIN ── */
+  .container { max-width: 720px; margin: 0 auto; padding: 32px 16px 56px; }
+  .section-label {
+    text-align: center; font-size: 0.75rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    color: var(--text-muted); margin-bottom: 24px;
+  }
+
+  /* ── STEP CARDS ── */
+  .steps { display: flex; flex-direction: column; gap: 0; position: relative; }
+
+  /* Vertical connector line */
+  .steps::before {
+    content: ''; position: absolute;
+    left: 28px; top: 40px; bottom: 40px;
+    width: 3px; background: #fde68a; border-radius: 2px;
+  }
+
+  .step-card {
+    display: flex; gap: 16px; align-items: flex-start;
+    position: relative; z-index: 1;
+    padding: 10px 0;
+    animation: fadeUp 0.4s ease both;
+  }
+  .step-card:nth-child(1) { animation-delay: 0.05s; }
+  .step-card:nth-child(2) { animation-delay: 0.12s; }
+  .step-card:nth-child(3) { animation-delay: 0.19s; }
+  .step-card:nth-child(4) { animation-delay: 0.26s; }
+  .step-card:nth-child(5) { animation-delay: 0.33s; }
+
+  .step-number {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--amber-dark), var(--amber));
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    font-family: 'Baloo 2', cursive; font-size: 1.3rem; font-weight: 800;
+    flex-shrink: 0; box-shadow: 0 4px 12px rgba(217,119,6,0.3);
+    border: 3px solid var(--amber-bg);
+  }
+
+  .step-body {
+    flex: 1; background: var(--white); border-radius: var(--radius);
+    border: 2px solid transparent; overflow: hidden;
+    box-shadow: var(--shadow);
+    text-decoration: none; color: var(--text);
+    display: block;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+  .step-body:hover {
+    border-color: #fde68a;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    transform: translateY(-2px);
+  }
+
+  .step-banner { height: 5px; background: linear-gradient(90deg, var(--amber-deep), var(--amber-dark), var(--amber)); }
+
+  .step-content { padding: 18px 20px; }
+
+  .step-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.05rem; font-weight: 800;
+    color: var(--amber-dark); margin-bottom: 4px; line-height: 1.2;
+  }
+  .step-subtitle {
+    font-size: 0.78rem; color: var(--text-muted); font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .step-desc {
+    font-size: 0.82rem; color: #4b5563; line-height: 1.6;
+    margin-bottom: 14px;
+  }
+  .step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .step-tag {
+    font-size: 0.65rem; font-weight: 700; padding: 3px 9px;
+    border-radius: 8px; background: var(--amber-light); color: var(--amber-dark);
+  }
+  .step-cta {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 12px; border-radius: 8px;
+    background: var(--amber-light); color: var(--amber-dark);
+    font-size: 0.78rem; font-weight: 800;
+  }
+
+  /* ── INFO BOX ── */
+  .info-box {
+    background: var(--white); border-radius: var(--radius);
+    border-left: 5px solid var(--amber);
+    padding: 16px 18px; display: flex; gap: 12px; align-items: flex-start;
+    box-shadow: var(--shadow); margin-top: 28px;
+    animation: fadeUp 0.4s 0.4s ease both;
+  }
+  .info-box-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+  .info-box strong { color: var(--amber-dark); font-size: 0.82rem; display: block; margin-bottom: 3px; }
+  .info-box p { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; line-height: 1.5; }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center; padding: 24px 16px;
+    font-size: 0.76rem; color: var(--text-muted); font-weight: 600;
+    border-top: 1px solid var(--border);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 480px) {
+    .steps::before { left: 24px; }
+    .step-number { width: 48px; height: 48px; font-size: 1.1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-brand">
+    <span class="logo">📘</span>
+    <div>
+      <div class="brand-name">Panduan Projek US</div>
+      <div class="sub-brand">SD Muhammadiyah 01 Kukusan · Kelas 6</div>
+    </div>
+  </div>
+  <div class="header-badge">GURU</div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <a class="back-link" href="../">← Portal Penilaian</a>
+  <span class="hero-emoji">📘</span>
+  <h1>Panduan Projek Guru</h1>
+  <p>Panduan lengkap pelaksanaan projek Student-Driven Inquiry untuk guru pendamping. Ikuti 5 tahap secara berurutan untuk mendampingi siswa dari perumusan pertanyaan hingga refleksi.</p>
+</section>
+
+<!-- MAIN -->
+<main class="container">
+  <p class="section-label">5 Tahap Student-Driven Inquiry</p>
+
+  <div class="steps">
+
+    <!-- Tahap 1 -->
+    <div class="step-card">
+      <div class="step-number">1</div>
+      <a class="step-body" href="tahap-1.html">
+        <div class="step-banner"></div>
+        <div class="step-content">
+          <div class="step-title">Perumusan Pertanyaan</div>
+          <div class="step-subtitle">Siswa menemukan topik dan menyusun pertanyaan penelitian</div>
+          <p class="step-desc">Gunakan pertanyaan pemantik untuk membantu siswa menemukan topik orisinal. Jangan beri contoh topik di awal — biarkan ide muncul dari keingintahuan siswa sendiri.</p>
+          <div class="step-tags">
+            <span class="step-tag">Brainstorming</span>
+            <span class="step-tag">Pertanyaan Pemantik</span>
+            <span class="step-tag">LKS Ide Awal</span>
+          </div>
+          <div class="step-cta">
+            <span>Buka Panduan Tahap 1</span>
+            <span>→</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Tahap 2 -->
+    <div class="step-card">
+      <div class="step-number">2</div>
+      <a class="step-body" href="tahap-2.html">
+        <div class="step-banner"></div>
+        <div class="step-content">
+          <div class="step-title">Perencanaan Proposal</div>
+          <div class="step-subtitle">Siswa menyusun rencana dan metode pencarian jawaban</div>
+          <p class="step-desc">Bantu siswa merencanakan langkah pencarian jawaban: tujuan projek, metode yang digunakan, sumber data, dan timeline pelaksanaan.</p>
+          <div class="step-tags">
+            <span class="step-tag">Tujuan Projek</span>
+            <span class="step-tag">Metode Riset</span>
+            <span class="step-tag">LKS Proposal</span>
+          </div>
+          <div class="step-cta">
+            <span>Buka Panduan Tahap 2</span>
+            <span>→</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Tahap 3 -->
+    <div class="step-card">
+      <div class="step-number">3</div>
+      <a class="step-body" href="tahap-3.html">
+        <div class="step-banner"></div>
+        <div class="step-content">
+          <div class="step-title">Pelaksanaan & Pengumpulan Data</div>
+          <div class="step-subtitle">Siswa melakukan riset dan mengumpulkan data di lapangan</div>
+          <p class="step-desc">Dampingi siswa saat mengumpulkan data melalui observasi, wawancara, eksperimen, atau studi literatur. Pastikan mereka mendokumentasikan proses di logbook.</p>
+          <div class="step-tags">
+            <span class="step-tag">Logbook</span>
+            <span class="step-tag">Wawancara</span>
+            <span class="step-tag">Observasi</span>
+            <span class="step-tag">Dokumentasi</span>
+          </div>
+          <div class="step-cta">
+            <span>Buka Panduan Tahap 3</span>
+            <span>→</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Tahap 4 -->
+    <div class="step-card">
+      <div class="step-number">4</div>
+      <a class="step-body" href="tahap-4.html">
+        <div class="step-banner"></div>
+        <div class="step-content">
+          <div class="step-title">Penyajian Hasil</div>
+          <div class="step-subtitle">Siswa menyusun dan mempresentasikan temuan projek</div>
+          <p class="step-desc">Bantu siswa merencanakan cara menyajikan hasil: poster, presentasi, video, atau produk kreatif lainnya. Fokus pada struktur penyajian dan kejelasan pesan.</p>
+          <div class="step-tags">
+            <span class="step-tag">Perencanaan Penyajian</span>
+            <span class="step-tag">Struktur</span>
+            <span class="step-tag">Presentasi</span>
+          </div>
+          <div class="step-cta">
+            <span>Buka Panduan Tahap 4</span>
+            <span>→</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Tahap 5 -->
+    <div class="step-card">
+      <div class="step-number">5</div>
+      <a class="step-body" href="tahap-5.html">
+        <div class="step-banner"></div>
+        <div class="step-content">
+          <div class="step-title">Refleksi & Pembelajaran</div>
+          <div class="step-subtitle">Siswa merefleksikan proses dan pembelajaran yang diperoleh</div>
+          <p class="step-desc">Fasilitasi siswa untuk merefleksikan seluruh perjalanan projek: apa yang dipelajari, tantangan yang dihadapi, dan bagaimana pengalaman ini membentuk mereka.</p>
+          <div class="step-tags">
+            <span class="step-tag">Refleksi Proses</span>
+            <span class="step-tag">Tantangan</span>
+            <span class="step-tag">Pembelajaran</span>
+          </div>
+          <div class="step-cta">
+            <span>Buka Panduan Tahap 5</span>
+            <span>→</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- INFO BOX -->
+  <div class="info-box">
+    <div class="info-box-icon">💡</div>
+    <div>
+      <strong>Tips untuk Guru</strong>
+      <p>Setiap tahap berisi pertanyaan pemantik, panduan teknis, LKS siswa yang bisa dicetak, dan checklist ketuntasan. Ikuti tahapan secara berurutan — setiap tahap dibangun di atas fondasi tahap sebelumnya. Beri kebebasan siswa untuk berproses, intervensi hanya saat benar-benar diperlukan.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  SD Muhammadiyah 01 Kukusan · Panduan Projek Student-Driven Inquiry · TP 2025/2026
+</footer>
+
+</body>
+</html>
