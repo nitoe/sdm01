@@ -21,6 +21,9 @@
       --purple:      #7c3aed;
       --purple-dark: #5b21b6;
       --purple-light:#f5f3ff;
+      --rose:        #e11d48;
+      --rose-dark:   #be123c;
+      --rose-light:  #fff1f2;
       --text:        #1f2a37;
       --text-muted:  #6b7280;
       --bg:          #f0f4ff;
@@ -163,9 +166,6 @@
     @media (min-width: 860px) {
       .programs-grid { grid-template-columns: 1fr 1fr 1fr; }
     }
-    @media (min-width: 1300px) {
-      .programs-grid { grid-template-columns: repeat(5, 1fr); }
-    }
 
     .program-card {
       background: var(--white);
@@ -185,6 +185,7 @@
     .program-card:nth-child(3) { animation-delay: 0.25s; }
     .program-card:nth-child(4) { animation-delay: 0.35s; }
     .program-card:nth-child(5) { animation-delay: 0.45s; }
+    .program-card:nth-child(6) { animation-delay: 0.55s; }
 
     .program-card:hover {
       transform: translateY(-6px);
@@ -196,6 +197,7 @@
     .program-card.ucoba:hover { border-color: #fed7aa; }
     .program-card.ust:hover   { border-color: #99f6e4; }
     .program-card.materi:hover { border-color: #c4b5fd; }
+    .program-card.penilaian:hover { border-color: #fda4af; }
 
     .card-banner {
       height: 7px;
@@ -206,6 +208,7 @@
     .program-card.ucoba .card-banner { background: linear-gradient(90deg, #c2410c, #ea580c, #fb923c); }
     .program-card.ust   .card-banner { background: linear-gradient(90deg, #0f766e, #0d9488, #2dd4bf); }
     .program-card.materi .card-banner { background: linear-gradient(90deg, #5b21b6, #7c3aed, #a78bfa); }
+    .program-card.penilaian .card-banner { background: linear-gradient(90deg, #be123c, #e11d48, #fb7185); }
 
     .card-body {
       padding: 24px 22px 22px;
@@ -225,6 +228,7 @@
     .program-card.ucoba .card-icon { background: var(--orange-light); }
     .program-card.ust   .card-icon { background: #ccfbf1; }
     .program-card.materi .card-icon { background: var(--purple-light); }
+    .program-card.penilaian .card-icon { background: var(--rose-light); }
 
     .card-title {
       font-family: 'Baloo 2', cursive;
@@ -238,6 +242,7 @@
     .program-card.ucoba .card-title { color: var(--orange-dark); }
     .program-card.ust   .card-title { color: #0f766e; }
     .program-card.materi .card-title { color: var(--purple-dark); }
+    .program-card.penilaian .card-title { color: var(--rose-dark); }
 
     .card-subtitle {
       font-size: 0.75rem; font-weight: 600;
@@ -263,6 +268,7 @@
     .program-card.ucoba .tag { background: var(--orange-light); color: var(--orange-dark); }
     .program-card.ust   .tag { background: #ccfbf1; color: #0f766e; }
     .program-card.materi .tag { background: var(--purple-light); color: var(--purple-dark); }
+    .program-card.penilaian .tag { background: var(--rose-light); color: var(--rose-dark); }
 
     .card-cta {
       display: flex; align-items: center; justify-content: space-between;
@@ -277,9 +283,20 @@
     .program-card.ucoba .card-cta { background: var(--orange-light); color: var(--orange-dark); }
     .program-card.ust   .card-cta { background: #ccfbf1; color: #0f766e; }
     .program-card.materi .card-cta { background: var(--purple-light); color: var(--purple-dark); }
+    .program-card.penilaian .card-cta { background: var(--rose-light); color: var(--rose-dark); }
 
     .card-cta:hover { opacity: 0.8; }
     .arrow { font-size: 1rem; }
+
+    .guru-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      position: absolute; top: 14px; right: 14px;
+      background: var(--rose-dark);
+      color: white;
+      font-size: 0.6rem; font-weight: 800;
+      padding: 3px 9px; border-radius: 8px;
+      letter-spacing: 0.5px; text-transform: uppercase;
+    }
 
     /* ─── INFO BANNER ─── */
     .info-banner {
@@ -416,7 +433,7 @@
     <div class="hero-pills">
       <div class="pill">🗓️ Ujian: Apr – Mei 2026</div>
       <div class="pill">💻 Lab Komputer</div>
-      <div class="pill">📚 5 Program</div>
+      <div class="pill">📚 6 Program</div>
     </div>
   </section>
 
@@ -536,6 +553,29 @@
           </div>
           <div class="card-cta">
             <span>Buka Materi Belajar</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- PENILAIAN UJIAN SEKOLAH (GURU) -->
+      <a class="program-card penilaian" href="penilaian-us/">
+        <div class="card-banner"></div>
+        <div class="card-body" style="position:relative;">
+          <span class="guru-badge">🔒 Guru</span>
+          <div class="card-icon">📝</div>
+          <div class="card-title">Penilaian US</div>
+          <div class="card-subtitle">Khusus guru · Dilindungi PIN</div>
+          <p class="card-desc">
+            Portal penilaian Ujian Sekolah untuk guru. Berisi form penilaian ujian praktik, penilaian projek, dan panduan pelaksanaan projek siswa.
+          </p>
+          <div class="card-tags">
+            <span class="tag">Penilaian Praktik</span>
+            <span class="tag">Penilaian Projek</span>
+            <span class="tag">Panduan Projek</span>
+          </div>
+          <div class="card-cta">
+            <span>Buka Portal Penilaian</span>
             <span class="arrow">→</span>
           </div>
         </div>
