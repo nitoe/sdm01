@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panduan Guru - Tahap 5: Refleksi | SD Muhammadiyah 01 Kukusan</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #ffffff;
+        color: #333333;
+        line-height: 1.6;
+    }
+    
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 30px 20px;
+    }
+    
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        color: #1a4d2e;
+        text-decoration: none;
+        font-weight: 500;
+        margin-bottom: 20px;
+        padding: 10px 15px;
+        border: 1px solid #1a4d2e;
+        border-radius: 6px;
+        transition: all 0.3s;
+    }
+    
+    .back-button:hover {
+        background: #1a4d2e;
+        color: #ffffff;
+    }
+    
+    .page-header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid #e0e0e0;
+    }
+    
+    .page-title {
+        font-size: 1.8rem;
+        color: #1a4d2e;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+    
+    .page-subtitle {
+        font-size: 1rem;
+        color: #666666;
+    }
+    
+    .section {
+        background: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .section-title {
+        font-size: 1.3rem;
+        color: #1a4d2e;
+        margin-bottom: 20px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .warning-box {
+        background: #f8d7da;
+        border: 1px solid #d32f2f;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .warning-title {
+        font-size: 1.1rem;
+        color: #721c24;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+    
+    .warning-content {
+        color: #721c24;
+        line-height: 1.8;
+    }
+    
+    .prompt-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+    }
+    
+    .prompt-card {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px;
+        border-left: 4px solid #1a4d2e;
+    }
+    
+    .prompt-category {
+        font-size: 0.95rem;
+        color: #1a4d2e;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+    
+    .prompt-list {
+        list-style: none;
+    }
+    
+    .prompt-list li {
+        padding: 8px 0;
+        border-bottom: 1px solid #e0e0e0;
+        font-size: 0.9rem;
+        color: #333333;
+    }
+    
+    .prompt-list li:last-child {
+        border-bottom: none;
+    }
+    
+    .lks-box {
+        background: #f0f7f4;
+        border: 2px solid #1a4d2e;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .lks-title {
+        font-size: 1.2rem;
+        color: #1a4d2e;
+        margin-bottom: 15px;
+        font-weight: 700;
+        text-align: center;
+    }
+    
+    .lks-content {
+        background: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 25px;
+        margin-top: 15px;
+    }
+    
+    .lks-section {
+        margin-bottom: 25px;
+    }
+    
+    .lks-section-title {
+        font-size: 1rem;
+        color: #1a4d2e;
+        margin-bottom: 10px;
+        font-weight: 600;
+        border-bottom: 2px solid #1a4d2e;
+        padding-bottom: 5px;
+    }
+    
+    .lks-question {
+        font-size: 0.95rem;
+        color: #333333;
+        margin-bottom: 15px;
+        padding-left: 15px;
+        border-left: 3px solid #1a4d2e;
+    }
+    
+    .lks-space {
+        background: #f8f9fa;
+        border: 1px dashed #e0e0e0;
+        border-radius: 6px;
+        padding: 15px;
+        min-height: 60px;
+        margin-top: 10px;
+        font-size: 0.9rem;
+        color: #666666;
+        font-style: italic;
+    }
+    
+    .checklist-box {
+        background: #fff9e6;
+        border: 1px solid #f0c040;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .checklist-title {
+        font-size: 1.2rem;
+        color: #b8860b;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+    
+    .checklist-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 12px 0;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .checklist-item:last-child {
+        border-bottom: none;
+    }
+    
+    .checklist-checkbox {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #b8860b;
+        border-radius: 4px;
+        flex-shrink: 0;
+        margin-top: 3px;
+    }
+    
+    .checklist-text {
+        font-size: 0.95rem;
+        color: #333333;
+    }
+    
+    .checklist-subtext {
+        font-size: 0.85rem;
+        color: #666666;
+        margin-top: 5px;
+        font-style: italic;
+    }
+    
+    .guide-box {
+        background: #e8f4fd;
+        border: 1px solid #1a4d2e;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .guide-title {
+        font-size: 1.2rem;
+        color: #1a4d2e;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+    
+    .guide-content {
+        color: #333333;
+        line-height: 1.8;
+    }
+    
+    .guide-content ul {
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+    
+    .guide-content li {
+        margin-bottom: 8px;
+    }
+    
+    .nav-footer {
+        background: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 25px;
+        text-align: center;
+        margin-top: 40px;
+    }
+    
+    .nav-footer-title {
+        font-size: 1.1rem;
+        color: #1a4d2e;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+    
+    .nav-footer-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .nav-btn {
+        padding: 12px 25px;
+        border: 1px solid #1a4d2e;
+        background: #ffffff;
+        color: #1a4d2e;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .nav-btn:hover {
+        background: #1a4d2e;
+        color: #ffffff;
+    }
+    
+    .nav-btn.primary {
+        background: #1a4d2e;
+        color: #ffffff;
+    }
+    
+    .nav-btn.primary:hover {
+        background: #2d6a4f;
+    }
+    
+    @media (max-width: 768px) {
+        .container {
+            padding: 20px 15px;
+        }
+        
+        .page-title {
+            font-size: 1.5rem;
+        }
+        
+        .prompt-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .nav-footer-buttons {
+            flex-direction: column;
+        }
+        
+        .nav-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+    
+    @media print {
+        .back-button, .nav-footer {
+            display: none;
+        }
+        
+        .container {
+            max-width: 100%;
+        }
+        
+        .section {
+            border: none;
+            padding: 0;
+        }
+        
+        .lks-box {
+            border: 2px solid #000;
+            page-break-inside: avoid;
+        }
+        
+        .checklist-box {
+            border: 2px solid #000;
+            page-break-inside: avoid;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <a href="./" class="back-button">
+            ← Kembali ke Landing Panduan
+        </a>
+        
+        <header class="page-header">
+            <h1 class="page-title">📍 Tahap 5: Refleksi & Pembelajaran</h1>
+            <p class="page-subtitle">Panduan Praktis untuk Guru - Student-Driven Inquiry</p>
+        </header>
+
+        <!-- PERINGATAN PENTING -->
+        <section class="section">
+            <div class="warning-box">
+                <div class="warning-title">⚠️ JANGAN PAKSA REFLEKSI YANG "SEMPURNA"!</div>
+                <div class="warning-content">
+                    <p><strong>Kesalahan paling umum:</strong> Guru mengharapkan refleksi yang terdengar "dalam" atau "filosofis". Siswa kemudian menulis apa yang menurut mereka ingin guru dengar, bukan refleksi jujur.</p>
+                    <p style="margin-top: 10px;"><strong>Yang benar:</strong> Refleksi yang jujur tentang kegagalan lebih bernilai daripada refleksi "sempurna" yang tidak tulus. Terima refleksi sederhana asal jujur. Gunakan wawancara untuk menggali lebih dalam, bukan untuk mengoreksi.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1. PERTANYAAN PEMANTIK -->
+        <section class="section">
+            <h2 class="section-title">💭 1. Pertanyaan Pemantik (20+ Contoh)</h2>
+            <p>Gunakan pertanyaan ini saat wawancara refleksi untuk menggali pembelajaran siswa tanpa memaksa jawaban "yang benar".</p>
+            
+            <div class="prompt-grid">
+                
+                <div class="prompt-card">
+                    <div class="prompt-category">🎯 Tentang Proses Belajar</div>
+                    <ul class="prompt-list">
+                        <li>Apa yang paling kamu pelajari dari projek ini?</li>
+                        <li>Apa yang mengejutkanmu selama proses pengerjaan?</li>
+                        <li>Apa yang akan kamu lakukan berbeda jika mengulang projek ini?</li>
+                        <li>Kapan kamu merasa paling bingung? Bagaimana kamu mengatasinya?</li>
+                        <li>Apa yang tidak kamu ketahui di awal tapi sekarang sudah kamu pahami?</li>
+                    </ul>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="prompt-category">💪 Tentang Tantangan</div>
+                    <ul class="prompt-list">
+                        <li>Apa hambatan terbesar yang kamu hadapi?</li>
+                        <li>Bagaimana perasaanmu saat menghadapi hambatan tersebut?</li>
+                        <li>Siapa yang membantumu? Bagaimana mereka membantu?</li>
+                        <li>Apa yang kamu lakukan ketika kamu ingin menyerah?</li>
+                        <li>Apa yang kamu pelajari tentang dirimu sendiri saat menghadapi tantangan?</li>
+                    </ul>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="prompt-category">🤝 Tentang Kerja Sama</div>
+                    <ul class="prompt-list">
+                        <li>Apa yang kamu pelajari tentang bekerja dalam tim?</li>
+                        <li>Konflik apa yang muncul? Bagaimana kamu menyelesaikannya?</li>
+                        <li>Apa kontribusi terbesarmu dalam kelompok?</li>
+                        <li>Apa yang kamu pelajari dari teman sekelompokmu?</li>
+                        <li>Jika bekerja lagi dengan tim ini, apa yang akan kamu ubah?</li>
+                    </ul>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="prompt-category">📚 Tentang Kompetensi yang Dikembangkan</div>
+                    <ul class="prompt-list">
+                        <li>Keterampilan apa yang kamu gunakan dari pelajaran Bahasa Indonesia?</li>
+                        <li>Bagaimana Matematika membantumu dalam projek ini?</li>
+                        <li>Apa yang kamu pelajari tentang cara mencari informasi yang benar?</li>
+                        <li>Bagaimana projek ini mengubah cara berpikirmu tentang [topik projek]?</li>
+                        <li>Kompetensi apa yang paling berkembang selama projek ini?</li>
+                    </ul>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="prompt-category">🌱 Tentang Perubahan Diri</div>
+                    <ul class="prompt-list">
+                        <li>Apa yang kamu ketahui tentang dirimu sendiri setelah mengerjakan ini?</li>
+                        <li>Apakah ada kepercayaan dirimu yang berubah? Bagaimana?</li>
+                        <li>Apa kekuatanmu yang kamu sadari selama proses ini?</li>
+                        <li>Apa kelemahanmu yang kamu sadari? Apa yang akan kamu lakukan?</li>
+                        <li>Bagaimana projek ini mengubah cara kamu melihat masalah di sekitarmu?</li>
+                    </ul>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="prompt-category">🔮 Tentang Masa Depan</div>
+                    <ul class="prompt-list">
+                        <li>Apa yang akan kamu lakukan selanjutnya dengan pembelajaran ini?</li>
+                        <li>Apakah ada yang ingin kamu lanjutkan setelah projek selesai?</li>
+                        <li>Bagaimana pengalaman ini membantumu siap untuk SMP?</li>
+                        <li>Apa saranmu untuk adik kelasmu yang akan mengerjakan projek serupa?</li>
+                        <li>Jika ada teman yang menghadapi masalah serupa, apa yang akan kamu katakan?</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 2. LEMBAR KERJA SISWA -->
+        <section class="lks-box">
+            <h2 class="lks-title">📄 2. Lembar Kerja Siswa (LKS) - Tahap 5</h2>
+            <p style="text-align: center; color: #666666; font-size: 0.9rem;">Cetak halaman ini dan bagikan kepada setiap siswa/kelompok</p>
+            
+            <div class="lks-content">
+                
+                <div class="lks-section">
+                    <h3 class="lks-section-title">A. Refleksi Proses</h3>
+                    <div class="lks-question">1. Apa yang paling kamu pelajari dari projek ini?</div>
+                    <div class="lks-space">Tulis di sini: ________________________________________________________________</div>
+                    
+                    <div class="lks-question" style="margin-top: 15px;">2. Apa yang mengejutkanmu selama proses pengerjaan?</div>
+                    <div class="lks-space">Tulis di sini: ________________________________________________________________</div>
+                    
+                    <div class="lks-question" style="margin-top: 15px;">3. Jika kamu bisa mengulang projek ini, apa yang akan kamu lakukan berbeda?</div>
+                    <div class="lks-space">Tulis di sini: ________________________________________________________________</div>
+                </div>
+
+                <div class="lks-section">
+                    <h3 class="lks-section-title">B. Refleksi Tantangan</h3>
+                    <div class="lks-question">4. Apa hambatan terbesar yang kamu hadapi?</div>
+                    <div class="lks-space">Hambatan: _________________________________________________________________</div>
+                    
+                    <div class="lks-question" style="margin-top: 15px;">5. Bagaimana kamu mengatasi hambatan tersebut?</div>
+                    <div class="lks-space">Cara mengatasi: ____________________________________________________________</div>
+                    
+                    <div class="lks-question" style="margin-top: 15px;">6. Apa yang kamu pelajari tentang dirimu sendiri saat menghadapi tantangan ini?</div>
+                    <div class="lks-space">Pembelajaran: _______________________________________________________________</div>
+                </div>
+
+                <div class="lks-section">
+                    <h3 class="lks-section-title">C. Refleksi Kompetensi</h3>
+                    <div class="lks-question">7. Mata pelajaran apa yang paling membantumu dalam projek ini?</div>
+                    <div class="lks-space">
+                        ☐ Pendidikan Pancasila &nbsp; ☐ Bahasa Indonesia &nbsp; ☐ Matematika<br>
+                        ☐ IPAS &nbsp; ☐ Bahasa Inggris &nbsp; ☐ Lainnya: _______________
+                    </div>
+                    
+                    <div class="lks-question" style="margin-top: 15px;">8. Bagaimana mata pelajaran tersebut membantumu?</div>
+                    <div class="lks-space">Tulis di sini: ________________________________________________________________</div>
+                    
+                    <div class="lks-question" style="margin-top: 15px;">9. Keterampilan baru apa yang kamu dapatkan dari projek ini?</div>
+                    <div class="lks-space">Tulis di sini: ________________________________________________________________</div>
+                </div>
+
+                <div class="lks-section">
+                    <h3 class="lks-section-title">D. Refleksi Manfaat untuk Orang Lain</h3>
+                    <div class="lks-question">10. Siapa yang mendapat manfaat dari hasil projekmu?</div>
+                    <div class="lks-space">Tulis di sini: ________________________________________________________________</div>
+                    
+                    <div class="lks-question" style="margin-top: 15px;">11. Bagaimana projek ini dapat bermanfaat bagi sesama?</div>
+                    <div class="lks-space">Tulis di sini: ________________________________________________________________</div>
+                </div>
+
+                <div class="lks-section">
+                    <h3 class="lks-section-title">E. Pesan untuk Diri Sendiri</h3>
+                    <div class="lks-question">12. Lengkapi kalimat berikut:</div>
+                    <div class="lks-space">
+                        "Setelah mengerjakan projek ini, aku sadar bahwa aku _______________________<br>
+                        ____________________________________________________________________<br><br>
+                        "Untuk teman-teman yang akan mengerjakan projek serupa, aku berpesan ___________<br>
+                        ____________________________________________________________________<br><br>
+                        "Aku bangga pada diriku karena _________________________________________<br>
+                        ____________________________________________________________________
+                    </div>
+                </div>
+
+                <div class="lks-section">
+                    <h3 class="lks-section-title">F. Persetujuan Selesai</h3>
+                    <div class="lks-question">13. Aku telah menyelesaikan seluruh rangkaian projek Student-Driven Inquiry</div>
+                    <div class="lks-space">
+                        Nama: ________________________ &nbsp;&nbsp;&nbsp; Tanggal: _______________<br><br>
+                        Tanda Tangan Siswa: ________________ &nbsp;&nbsp;&nbsp; Paraf Guru: ________________
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. PANDUAN WAWANCARA GURU-SISWA -->
+        <section class="checklist-box">
+            <h2 class="checklist-title">💬 3. Panduan Wawancara Guru-Siswa</h2>
+            <p style="color: #666666; font-size: 0.9rem; margin-bottom: 20px;">Gunakan saat wawancara refleksi perorangan (10-15 menit per siswa/kelompok)</p>
+            
+            <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div>
+                    <div class="checklist-text"><strong>Siswa dapat menjelaskan pembelajaran utama dengan kata-kata sendiri</strong></div>
+                    <div class="checklist-subtext">Tanya: "Apa satu hal paling penting yang kamu pelajari dari projek ini?"</div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div>
+                    <div class="checklist-text"><strong>Siswa mengakui hambatan yang dihadapi dengan jujur</strong></div>
+                    <div class="checklist-subtext">Tanya: "Kapan kamu merasa paling ingin menyerah? Apa yang terjadi?"</div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div>
+                    <div class="checklist-text"><strong>Siswa dapat mengidentifikasi strategi yang digunakan untuk mengatasi hambatan</strong></div>
+                    <div class="checklist-subtext">Tanya: "Bagaimana kamu mengatasi masalah tersebut? Siapa yang membantumu?"</div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div>
+                    <div class="checklist-text"><strong>Siswa menghubungkan pengalaman dengan kompetensi mata pelajaran</strong></div>
+                    <div class="checklist-subtext">Tanya: "Pelajaran apa yang paling membantumu? Bagaimana caranya?"</div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div>
+                    <div class="checklist-text"><strong>Siswa menunjukkan kesadaran tentang perubahan diri (growth mindset)</strong></div>
+                    <div class="checklist-subtext">Tanya: "Apa yang kamu ketahui tentang dirimu sendiri setelah mengerjakan ini?"</div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div>
+                    <div class="checklist-text"><strong>Siswa dapat memberikan saran untuk perbaikan di masa depan</strong></div>
+                    <div class="checklist-subtext">Tanya: "Jika mengulang, apa yang akan kamu lakukan berbeda? Mengapa?"</div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div>
+                    <div class="checklist-text"><strong>Keputusan: Selesai / Perlu Refleksi Tambahan / Bimbingan Intensif</strong></div>
+                    <div class="checklist-subtext">
+                        ☐ Selesai &nbsp;&nbsp; ☐ Perlu Refleksi Tambahan &nbsp;&nbsp; ☐ Perlu Bimbingan Intensif (Level 3)
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- 4. PANDUAN PENGGUNAAN UNTUK GURU -->
+        <section class="guide-box">
+            <h2 class="guide-title">📖 4. Panduan Penggunaan untuk Guru</h2>
+            <div class="guide-content">
+                <p><strong>Kapan Menggunakan:</strong> Minggu 13 Semester 2 (tahap akhir setelah presentasi di Tahap 4)</p>
+                
+                <p style="margin-top: 15px;"><strong>Langkah-langkah:</strong></p>
+                <ul>
+                    <li><strong>Hari 1 Tahap 5:</strong> Bagikan LKS Tahap 5. Biarkan siswa mengisi secara mandiri di rumah atau kelas.</li>
+                    <li><strong>Hari 1 Tahap 5:</strong> Lakukan wawancara perorangan (10-15 menit). Gunakan panduan wawancara untuk memandu.</li>
+                    <li><strong>Hari 1 Tahap 5:</strong> Siswa menyempurnakan refleksi berdasarkan diskusi. Lengkapi LKS Bagian E-F.</li>
+                    <li><strong>Hari 1 Tahap 5:</strong> Kumpulkan LKS sebagai portofolio akhir. Ini adalah dokumen kelulusan projek.</li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>Tips Penting:</strong></p>
+                <ul>
+                    <li>Jangan koreksi refleksi siswa. Terima apa adanya asal jujur. Refleksi "sederhana" lebih baik daripada yang "dipaksakan mendalam".</li>
+                    <li>Gunakan pertanyaan pemantik untuk menggali, bukan untuk mengarahkan ke jawaban "yang benar".</li>
+                    <li>Untuk Level 3, wawancara bisa lebih terstruktur dengan pertanyaan tertutup. Yang penting siswa bisa mengungkapkan sesuatu.</li>
+                    <li>Simpan LKS sebagai bukti fisik penilaian proses. Ini portofolio akhir siswa.</li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>Kriteria Refleksi yang Baik:</strong></p>
+                <ul>
+                    <li>✅ Jujur: Siswa mengakui kegagalan atau kesulitan, bukan hanya keberhasilan</li>
+                    <li>✅ Spesifik: Menyebutkan contoh konkret, bukan pernyataan umum</li>
+                    <li>✅ Growth mindset: Menunjukkan pembelajaran dari pengalaman, bukan sekadar deskripsi</li>
+                    <li>✅ Forward-looking: Ada rencana atau saran untuk perbaikan di masa depan</li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>Perbedaan Level Scaffolding:</strong></p>
+                <ul>
+                    <li><strong>Level 1 (Mandiri):</strong> Refleksi tertulis bebas, wawancara mendalam dengan pertanyaan terbuka</li>
+                    <li><strong>Level 2 (Semi-Mandiri):</strong> LKS terstruktur, wawancara dengan panduan pertanyaan, boleh bawa catatan</li>
+                    <li><strong>Level 3 (Intensif):</strong> LKS dengan pilihan jawaban/prompt lebih spesifik, wawancara dengan pertanyaan tertutup</li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>Catatan Akhir:</strong></p>
+                <ul>
+                    <li>LKS Tahap 5 adalah dokumen terakhir dari rangkaian projek SDI.</li>
+                    <li>Setelah Tahap 5 selesai, siswa dianggap telah menyelesaikan seluruh proses Student-Driven Inquiry.</li>
+                    <li>Nilai projek dihitung dari keseluruhan 5 tahap, bukan hanya dari produk akhir.</li>
+                    <li>Rayakan penyelesaian projek dengan siswa—ini adalah perayaan belajar mereka!</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- NAVIGATION FOOTER -->
+        <section class="nav-footer">
+            <h2 class="nav-footer-title">🔗 Panduan Telah Selesai!</h2>
+            <div class="nav-footer-buttons">
+                <a href="./" class="nav-btn">
+                    🏠 Landing Panduan
+                </a>
+                <a href="tahap-4.html" class="nav-btn">
+                    ← Tahap 4: Penyajian
+                </a>
+                <a href="./" class="nav-btn primary">
+                    💻 Landing Penilaian Projek
+                </a>
+            </div>
+            <p style="margin-top: 20px; color: #666666; font-size: 0.9rem;">
+                🎉 Selamat! Seluruh panduan 5 tahap Student-Driven Inquiry telah lengkap.
+            </p>
+        </section>
+
+    </div>
+
+</body>
+</html>

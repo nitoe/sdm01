@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panduan Guru - Tahap 4: Penyajian | SD Muhammadiyah 01 Kukusan</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #ffffff;
+        color: #333333;
+        line-height: 1.6;
+    }
+    
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 30px 20px;
+    }
+    
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        color: #1a4d2e;
+        text-decoration: none;
+        font-weight: 500;
+        margin-bottom: 20px;
+        padding: 10px 15px;
+        border: 1px solid #1a4d2e;
+        border-radius: 6px;
+        transition: all 0.3s;
+    }
+    
+    .back-button:hover {
+        background: #1a4d2e;
+        color: #ffffff;
+    }
+    
+    .page-header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid #e0e0e0;
+    }
+    
+    .page-title {
+        font-size: 1.8rem;
+        color: #1a4d2e;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+    
+    .page-subtitle {
+        font-size: 1rem;
+        color: #666666;
+    }
+    
+    .section {
+        background: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .section-title {
+        font-size: 1.3rem;
+        color: #1a4d2e;
+        margin-bottom: 20px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .warning-box {
+        background: #f8d7da;
+        border: 1px solid #d32f2f;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .warning-title {
+        font-size: 1.1rem;
+        color: #721c24;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+    
+    .warning-content {
+        color: #721c24;
+        line-height: 1.8;
+    }
+    
+    .prompt-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+    }
+    
+    .prompt-card {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px;
+        border-left: 4px solid #1a4d2e;
+    }
+    
+    .prompt-category {
+        font-size: 0.95rem;
+        color: #1a4d2e;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+    
+    .prompt-list {
+        list-style: none;
+    }
+    
+    .prompt-list li {
+        padding: 8px 0;
+        border-bottom: 1px solid #e0e0e0;
+        font-size: 0.9rem;
+        color: #333333;
+    }
+    
+    .prompt-list li:last-child {
+        border-bottom: none;
+    }
+    
+    .lks-box {
+        background: #f0f7f4;
+        border: 2px solid #1a4d2e;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .lks-title {
+        font-size: 1.2rem;
+        color: #1a4d2e;
+        margin-bottom: 15px;
+        font-weight: 700;
+        text-align: center;
+    }
+    
+    .lks-content {
+        background: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 25px;
+        margin-top: 15px;
+    }
+    
+    .lks-section {
+        margin-bottom: 25px;
+    }
+    
+    .lks-section-title {
+        font-size: 1rem;
+        color: #1a4d2e;
+        margin-bottom: 10px;
+        font-weight: 600;
+        border-bottom: 2px solid #1a4d2e;
+        padding-bottom: 5px;
+    }
+    
+    .lks-question {
+        font-size: 0.95rem;
+        color: #333333;
+        margin-bottom: 15px;
+        padding-left: 15px;
+        border-left: 3px solid #1a4d2e;
+    }
+    
+    .lks-space {
+        background: #f8f9fa;
+        border: 1px dashed #e0e0e0;
+        border-radius: 6px;
+        padding: 15px;
+        min-height: 60px;
+        margin-top: 10px;
+        font-size: 0.9rem;
+        color: #666666;
+        font-style: italic;
+    }
+    
+    .checklist-box {
+        background: #fff9e6;
+        border: 1px solid #f0c040;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .checklist-title {
+        font-size: 1.2rem;
+        color: #b8860b;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+    
+    .checklist-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 12px 0;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .checklist-item:last-child {
+        border-bottom: none;
+    }
+    
+    .checklist-checkbox {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #b8860b;
+        border-radius: 4px;
+        flex-shrink: 0;
+        margin-top: 3px;
+    }
+    
+    .checklist-text {
+        font-size: 0.95rem;
+        color: #333333;
+    }
+    
+    .checklist-subtext {
+        font-size: 0.85rem;
+        color: #666666;
+        margin-top: 5px;
+        font-style: italic;
+    }
+    
+    .guide-box {
+        background: #e8f4fd;
+        border: 1px solid #1a4d2e;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .guide-title {
+        font-size: 1.2rem;
+        color: #1a4d2e;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+    
+    .guide-content {
+        color: #333333;
+        line-height: 1.8;
+    }
+    
+    .guide-content ul {
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+    
+    .guide-content li {
+        margin-bottom: 8px;
+    }
+    
+    .nav-footer {
+        background: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 25px;
+        text-align: center;
+        margin-top: 40px;
+    }
+    
+    .nav-footer-title {
+        font-size: 1.1rem;
+        color: #1a4d2e;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+    
+    .nav-footer-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .nav-btn {
+        padding: 12px 25px;
+        border: 1px solid #1a4d2e;
+        background: #ffffff;
+        color: #1a4d2e;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .nav-btn:hover {
+        background: #1a4d2e;
+        color: #ffffff;
+    }
+    
+    .nav-btn.primary {
+        background: #1a4d2e;
+        color: #ffffff;
+    }
+    
+    .nav-btn.primary:hover {
+        background: #2d6a4f;
+    }
+    
+    @media (max-width: 768px) {
+        .container {
+            padding: 20px 15px;
+        }
+        
+        .page-title {
+            font-size: 1.5rem;
+        }
+        
+        .prompt-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .nav-footer-buttons {
+            flex-direction: column;
+        }
+        
+        .nav-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+    
+    @media print {
+        .back-button, .nav-footer {
+            display: none;
+        }
+        
+        .container {
+            max-width: 100%;
+        }
+        
+        .section {
+            border: none;
+            padding: 0;
+        }
+        
+        .lks-box {
+            border: 2px solid #000;
+            page-break-inside: avoid;
+        }
+        
+        .checklist-box {
+            border: 2px solid #000;
+            page-break-inside: avoid;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <a href="./" class="back-button">
+            ← Kembali ke Landing Panduan
+        </a>
+        
+        <header class="page-header">
+            <h1 class="page-title">📍 Tahap 4: Penyajian Hasil</h1>
+            <p class="page-subtitle">Panduan Praktis untuk Guru - Student-Driven Inquiry</p>
+        </header>
+
+        <!-- PERINGATAN PENTING -->
+        <section class="section">
+            <div class="warning-box">
+                <div class="warning-title">⚠️ JANGAN NILAI ESTETIKA PRODUK!</div>
+                <div class="warning-content">
+                    <p><strong>Kesalahan paling umum:</strong> Guru menilai keindahan poster, kualitas video, atau desain presentasi. Ini menghukum siswa yang tidak punya akses ke alat mahal atau keterampilan desain.</p>
+                    <p style="margin-top: 10px;"><strong>Yang benar:</strong> Nilai <strong>struktur argumen</strong> (apakah data mendukung kesimpulan?), <strong>kejelasan penyajian</strong> (apakah audiens memahami?), dan <strong>efektivitas komunikasi</strong> (apakah pesan tersampaikan?). Video sederhana dengan argumen kuat lebih bernilai daripada video mewah dengan konten kosong.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1. PERTANYAAN PEMANTIK -->
+        <section class="section">
+            <h2 class="section-title">💭 1. Pertanyaan Pemantik (20+ Contoh)</h2>
+            <p>Gunakan pertanyaan ini untuk membantu siswa mempersiapkan penyajian mereka. Pilih 3-5 yang paling relevan.</p>
+            
+            <div class="prompt-grid">
+                
+                <div class="prompt-card">
+                    <div class="prompt-category">📊 Tentang Struktur Penyajian</div>
+                    <ul class="prompt-list">
+                        <li>Bagaimana kamu akan membuka presentasimu agar audiens tertarik?</li>
+                        <li>Apa poin utama yang ingin kamu sampaikan?</li>
+                        <li>Bagaimana kamu akan menghubungkan data dengan kesimpulanmu?</li>
+                        <li>Apa yang akan kamu sampaikan di bagian penutup?</li>
+                        <li>Bagaimana kamu akan membuat audiens memahami pentingnya temuanmu?</li>
+                    </ul>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="prompt-category">🎯 Tentang Audiens</div>
+                    <ul class="prompt-list">
+                        <li>Siapa yang akan melihat/mendengar presentasimu?</li>
+                        <li>Apa yang sudah mereka ketahui tentang topikmu?</li>
+                        <li>Apa yang perlu kamu jelaskan lebih detail karena audiens belum tahu?</li>
+                        <li>Bahasa seperti apa yang cocok untuk audiensmu?</li>
+                        <li>Bagaimana cara kamu membuat audiens peduli dengan temuanmu?</li>
+                    </ul>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="prompt-category">📁 Tentang Format Penyajian</div>
+                    <ul class="prompt-list">
+                        <li>Mengapa kamu memilih format ini (video/poster/laporan/presentasi)?</li>
+                        <li>Bagaimana format ini membantu menyampaikan pesanmu?</li>
+                        <li>Apa kelebihan format yang kamu pilih dibanding format lain?</li>
+                        <li>Apa keterbatasan format yang kamu pilih? Bagaimana kamu mengatasinya?</li>
+                        <li>Apakah ada elemen lain yang bisa kamu tambahkan untuk memperkuat penyajian?</li>
+                    </ul>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="prompt-category">💬 Tentang Komunikasi</div>
+                    <ul class="prompt-list">
+                        <li>Bagaimana cara kamu agar suaramu terdengar jelas?</li>
+                        <li>Apa yang akan kamu lakukan jika audiens terlihat bingung?</li>
+                        <li>Bagaimana cara kamu menangani pertanyaan yang tidak bisa kamu jawab?</li>
+                        <li>Apa yang akan kamu lakukan jika kamu lupa apa yang ingin disampaikan?</li>
+                        <li>Bagaimana cara kamu menunjukkan kepercayaan diri saat presentasi?</li>
+                    </ul>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="prompt-category">🔗 Tentang Data dan Bukti</div>
+                    <ul class="prompt-list">
+                        <li>Data apa yang akan kamu tampilkan untuk mendukung kesimpulanmu?</li>
+                        <li>Bagaimana kamu akan menampilkan data agar mudah dipahami?</li>
+                        <li>Apakah semua data yang kamu kumpulkan akan kamu tampilkan? Mengapa?</li>
+                        <li>Bagaimana kamu memastikan data yang kamu tampilkan akurat?</li>
+                        <li>Apa yang akan kamu lakukan jika ada data yang bertentangan dengan kesimpulanmu?</li>
+                    </ul>
+                </div>
+
+                <div class="prompt-card">
+                    <div class="prompt-category">❓ Tentang Tanya Jawab</div>
+                    <ul class="prompt-list">
+                        <li>Pertanyaan apa yang kira-kira akan ditanyakan audiens?</li>
+                        <li>Bagaimana kamu akan mempersiapkan jawaban untuk pertanyaan tersebut?</li>
+                        <li>Apa yang akan kamu katakan jika ada yang tidak setuju dengan kesimpulanmu?</li>
+                        <li>Bagaimana cara kamu menanggapi kritik dengan baik?</li>
+                        <li>Apa yang akan kamu pelajari dari sesi tanya jawab ini?</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 2. LEMBAR KERJA SISWA -->
+        <section class="lks-box">
+            <h2 class="lks-title">📄 2. Lembar Kerja Siswa (LKS) - Tahap 4</h2>
+            <p style="text-align: center; color: #666666; font-size: 0.9rem;">Cetak halaman ini dan bagikan kepada setiap siswa/kelompok</p>
+            
+            <div class="lks-content">
+                
+                <div class="lks-section">
+                    <h3 class="lks-section-title">A. Perencanaan Penyajian</h3>
+                    <div class="lks-question">1. Dalam bentuk apa kamu akan menyajikan hasil projekmu?</div>
+                    <div class="lks-space">
+                        ☐ Video &nbsp; ☐ Poster &nbsp; ☐ Laporan Tertulis &nbsp; ☐ Presentasi Lisan<br>
+                        ☐ Lainnya: _____________________________________________________
+                    </div>
+                    
+                    <div class="lks-question" style="margin-top: 15px;">2. Mengapa kamu memilih format ini?</div>
+                    <div class="lks-space">Tulis di sini: ________________________________________________________________</div>
+                    
+                    <div class="lks-question" style="margin-top: 15px;">3. Siapa yang akan melihat/mendengar presentasimu?</div>
+                    <div class="lks-space">Audiens: ___________________________________________________________________</div>
+                </div>
+
+                <div class="lks-section">
+                    <h3 class="lks-section-title">B. Struktur Penyajian</h3>
+                    <div class="lks-question">4. Isi struktur presentasimu di bawah ini:</div>
+                    <div class="lks-space">
+                        <strong>Pembukaan</strong> (bagaimana kamu akan menarik perhatian audiens?):<br>
+                        ____________________________________________________________________<br><br>
+                        <strong>Isi Utama</strong> (3 poin penting yang ingin kamu sampaikan):<br>
+                        1. __________________________________________________________________<br>
+                        2. __________________________________________________________________<br>
+                        3. __________________________________________________________________<br><br>
+                        <strong>Penutup</strong> (pesan apa yang ingin audiens ingat?):<br>
+                        ____________________________________________________________________
+                    </div>
+                </div>
+
+                <div class="lks-section">
+                    <h3 class="lks-section-title">C. Data dan Bukti</h3>
+                    <div class="lks-question">5. Data atau bukti apa yang akan kamu tampilkan untuk mendukung kesimpulanmu?</div>
+                    <div class="lks-space">
+                        Data/Bukti 1: _______________________________________________________<br>
+                        Data/Bukti 2: _______________________________________________________<br>
+                        Data/Bukti 3: _______________________________________________________
+                    </div>
+                    
+                    <div class="lks-question" style="margin-top: 15px;">6. Bagaimana cara kamu menampilkan data agar mudah dipahami?</div>
+                    <div class="lks-space">
+                        ☐ Tabel &nbsp; ☐ Grafik &nbsp; ☐ Foto &nbsp; ☐ Diagram &nbsp; ☐ Lainnya: _______________
+                    </div>
+                </div>
+
+                <div class="lks-section">
+                    <h3 class="lks-section-title">D. Persiapan Tanya Jawab</h3>
+                    <div class="lks-question">7. Prediksi 3 pertanyaan yang mungkin ditanyakan audiens:</div>
+                    <div class="lks-space">
+                        Pertanyaan 1: ______________________________________________________<br>
+                        Jawaban: __________________________________________________________<br><br>
+                        Pertanyaan 2: ______________________________________________________<br>
+                        Jawaban: __________________________________________________________<br><br>
+                        Pertanyaan 3: ______________________________________________________<br>
+                        Jawaban: __________________________________________________________
+                    </div>
+                </div>
+
+                <div class="lks-section">
+                    <h3 class="lks-section-title">E. Checklist Persiapan</h3>
+                    <div class="lks-question">8. Centang yang sudah kamu siapkan:</div>
+                    <div class="lks-space">
+                        ☐ Struktur presentasi sudah jelas<br>
+                        ☐ Data dan bukti sudah dikumpulkan<br>
+                        ☐ Alat/media presentasi sudah siap<br>
+                        ☐ Sudah berlatih minimal 2x<br>
+                        ☐ Sudah memprediksi pertanyaan audiens<br>
+                        ☐ Sudah menyiapkan jawaban untuk pertanyaan tersebut
+                    </div>
+                </div>
+
+                <div class="lks-section">
+                    <h3 class="lks-section-title">F. Persetujuan Lanjut ke Tahap 5</h3>
+                    <div class="lks-question">9. Aku siap menyajikan hasil projekku</div>
+                    <div class="lks-space">
+                        Nama: ________________________ &nbsp;&nbsp;&nbsp; Tanggal: _______________<br><br>
+                        Tanda Tangan Siswa: ________________ &nbsp;&nbsp;&nbsp; Paraf Guru: ________________
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. CHECKLIST OBSERVASI GURU -->
+        <section class="checklist-box">
+            <h2 class="checklist-title">✅ 3. Checklist Observasi Guru</h2>
+            <p style="color: #666666; font-size: 0.9rem; margin-bottom: 20px;">Gunakan saat siswa melakukan presentasi (bukan untuk menilai estetika produk)</p>
+            
+            <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div>
+                    <div class="checklist-text"><strong>Struktur presentasi jelas (pembuka-isi-penutup)</strong></div>
+                    <div class="checklist-subtext">Observasi: Apakah audiens bisa mengikuti alur presentasi dari awal hingga akhir?</div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div>
+                    <div class="checklist-text"><strong>Data yang ditampilkan mendukung kesimpulan</strong></div>
+                    <div class="checklist-subtext">Observasi: Apakah ada hubungan logis antara data yang ditampilkan dengan kesimpulan yang ditarik?</div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div>
+                    <div class="checklist-text"><strong>Penyajian sesuai dengan audiens (bahasa, tingkat kesulitan)</strong></div>
+                    <div class="checklist-subtext">Observasi: Apakah audiens (teman sekelas) dapat memahami isi presentasi?</div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div>
+                    <div class="checklist-text"><strong>Siswa dapat menjawab pertanyaan dengan baik</strong></div>
+                    <div class="checklist-subtext">Observasi: Saat sesi tanya jawab, apakah siswa dapat memberikan jawaban yang relevan?</div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div>
+                    <div class="checklist-text"><strong>Siswa menunjukkan pemahaman mendalam tentang topik (bukan sekadar membaca slide)</strong></div>
+                    <div class="checklist-subtext">Observasi: Apakah siswa menjelaskan dengan kata-kata sendiri atau hanya membaca teks?</div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div>
+                    <div class="checklist-text"><strong>Siswa mengakui keterbatasan projek dengan jujur</strong></div>
+                    <div class="checklist-subtext">Observasi: Apakah siswa menyebutkan apa yang belum bisa dijawab atau keterbatasan metodologi?</div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-checkbox"></div>
+                <div>
+                    <div class="checklist-text"><strong>Keputusan: Lanjut / Perlu Perbaikan Presentasi / Bimbingan Intensif</strong></div>
+                    <div class="checklist-subtext">
+                        ☐ Lanjut ke Tahap 5 &nbsp;&nbsp; ☐ Perlu Perbaikan Presentasi &nbsp;&nbsp; ☐ Perlu Bimbingan Intensif (Level 3)
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- 4. PANDUAN PENGGUNAAN UNTUK GURU -->
+        <section class="guide-box">
+            <h2 class="guide-title">📖 4. Panduan Penggunaan untuk Guru</h2>
+            <div class="guide-content">
+                <p><strong>Kapan Menggunakan:</strong> Hari 9-10 Projek (setelah data cukup dikumpulkan di Tahap 3)</p>
+                
+                <p style="margin-top: 15px;"><strong>Langkah-langkah:</strong></p>
+                <ul>
+                    <li><strong>Hari 1 Tahap 4:</strong> Perkenalkan LKS Tahap 4. Biarkan siswa mengisi Bagian A-C secara mandiri.</li>
+                    <li><strong>Hari 1 Tahap 4:</strong> Siswa mempersiapkan presentasi. Guru observasi menggunakan checklist.</li>
+                    <li><strong>Hari 2 Tahap 4:</strong> Presentasi dilakukan (15 menit per siswa). Lengkapi LKS Bagian D-E.</li>
+                    <li><strong>Hari 2 Tahap 4:</strong> Kumpulkan LKS sebagai portofolio. Berikan persetujuan untuk lanjut ke Tahap 5.</li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>Tips Penting:</strong></p>
+                <ul>
+                    <li>Jangan nilai estetika (keindahan poster, kualitas video). Fokus pada struktur argumen dan kejelasan komunikasi.</li>
+                    <li>Beri waktu 15 menit per siswa (10 menit presentasi + 5 menit tanya jawab).</li>
+                    <li>Untuk Level 3, izinkan mereka membaca dari catatan. Yang penting pesan tersampaikan.</li>
+                    <li>Simpan LKS sebagai bukti fisik penilaian proses. Ini portofolio siswa.</li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>Kriteria Penyajian yang Baik:</strong></p>
+                <ul>
+                    <li>✅ Struktur jelas: Ada pembuka, isi, dan penutup yang terhubung</li>
+                    <li>✅ Data mendukung: Kesimpulan berdasarkan data yang ditampilkan</li>
+                    <li>✅ Sesuai audiens: Bahasa dan tingkat kesulitan sesuai dengan pendengar</li>
+                    <li>✅ Jujur: Mengakui keterbatasan projek, tidak mengklaim lebih dari yang ada</li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>Perbedaan Level Scaffolding:</strong></p>
+                <ul>
+                    <li><strong>Level 1 (Mandiri):</strong> Bebas memilih format, presentasi tanpa catatan, tanya jawab spontan</li>
+                    <li><strong>Level 2 (Semi-Mandiri):</strong> Format bebas dengan panduan struktur, boleh bawa catatan, prediksi pertanyaan</li>
+                    <li><strong>Level 3 (Intensif):</strong> Template presentasi terstruktur, boleh membaca dari naskah, pertanyaan dipandu guru</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- NAVIGATION FOOTER -->
+        <section class="nav-footer">
+            <h2 class="nav-footer-title">🔗 Lanjut ke Tahap Berikutnya</h2>
+            <div class="nav-footer-buttons">
+                <a href="./" class="nav-btn">
+                    🏠 Landing Panduan
+                </a>
+                <a href="tahap-3.html" class="nav-btn">
+                    ← Tahap 3: Pelaksanaan
+                </a>
+                <a href="tahap-5.html" class="nav-btn primary">
+                    📍 Tahap 5: Refleksi →
+                </a>
+                <a href="tahap-4.html" class="nav-btn">
+                    💻 Penilaian Tahap 4
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>
