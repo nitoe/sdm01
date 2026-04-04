@@ -151,6 +151,32 @@ select.wide{min-width:280px}
   .ctrl-row{flex-direction:column}
   .score-bar-bg{display:none}
 }
+
+/* ── KATEGORI BREAKDOWN ── */
+.cat-section{margin-top:24px}
+.cat-section-title{font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--ink-lt);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.cat-section-title::after{content:'';flex:1;height:1px;background:var(--sand-dark)}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.cat-card{background:var(--white);border:1.5px solid var(--sand-dark);border-radius:10px;overflow:hidden}
+.cat-card-head{padding:10px 14px;background:var(--sand-mid);border-bottom:1px solid var(--sand-dark);display:flex;align-items:center;gap:8px}
+.cat-card-icon{font-size:15px}
+.cat-card-name{font-size:12.5px;font-weight:700;color:var(--ink)}
+.cat-rows{padding:10px 14px;display:flex;flex-direction:column;gap:8px}
+.cat-row{display:flex;flex-direction:column;gap:3px}
+.cat-row-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cat-row-label{font-size:12px;font-weight:600;color:var(--ink-mid);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cat-row-val{font-size:13px;font-weight:700;flex-shrink:0;min-width:28px;text-align:right}
+.cat-row-bar-bg{height:5px;background:var(--sand-dark);border-radius:3px;overflow:hidden}
+.cat-row-bar-fill{height:100%;border-radius:3px;transition:width .5s ease}
+.cat-tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:6px;white-space:nowrap;flex-shrink:0}
+.cat-tuntas .cat-row-val{color:var(--skl-sangat)}.cat-tuntas .cat-row-bar-fill{background:var(--forest-lt)}.cat-tuntas .cat-tag{background:var(--skl-sangat-p);color:var(--skl-sangat)}
+.cat-baik .cat-row-val{color:var(--skl-baik)}.cat-baik .cat-row-bar-fill{background:#93c5fd}.cat-baik .cat-tag{background:var(--skl-baik-p);color:var(--skl-baik)}
+.cat-perlu .cat-row-val{color:var(--skl-kurang)}.cat-perlu .cat-row-bar-fill{background:#fca5a5}.cat-perlu .cat-tag{background:var(--skl-kurang-p);color:var(--skl-kurang)}
+.remedial-box{background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 14px;margin-top:14px;font-size:12px;color:#7f1d1d;display:none}
+.remedial-box.show{display:block}
+.remedial-box strong{font-weight:700;display:block;margin-bottom:5px}
+.remedial-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.remedial-pill{background:#fee2e2;color:#991b1b;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
 </style>
 </head>
 <body>
@@ -244,6 +270,1972 @@ select.wide{min-width:280px}
 
 <script>
 /* ─── DATA ─── */
+const CAT_DATA = {
+  "Yusuf Majid Wahyudhi": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 60,
+      "Aqidah & Akhlak": 71,
+      "Fiqh": 80,
+      "Sejarah Kebudayaan Islam": 75,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 79,
+      "UUD 1945": 76,
+      "Bhinneka Tunggal Ika": 93,
+      "NKRI": 89,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 66,
+      "Seni Musik": 78,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 52,
+      "Keterampilan Proses": 69,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 64,
+      "Kosakata": 57,
+      "Muhadatsah": 25,
+      "Tata Bahasa": 50,
+      "Angka": 62,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 74,
+      "Bergaya Hidup Aktif": 42,
+      "Memilih Hidup yang Menyehatkan": 78,
+    },
+  },
+  "Zaskiya Jameela Mursyida": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 80,
+      "Aqidah & Akhlak": 93,
+      "Fiqh": 100,
+      "Sejarah Kebudayaan Islam": 65,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 86,
+      "UUD 1945": 100,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 76,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 80,
+      "Seni Musik": 72,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 57,
+      "Keterampilan Proses": 76,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 91,
+      "Kosakata": 71,
+      "Muhadatsah": 100,
+      "Tata Bahasa": 83,
+      "Angka": 100,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 92,
+      "Bergaya Hidup Aktif": 58,
+      "Memilih Hidup yang Menyehatkan": 87,
+    },
+  },
+  "Boma Damario Aksa": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 65,
+      "Aqidah & Akhlak": 86,
+      "Fiqh": 80,
+      "Sejarah Kebudayaan Islam": 65,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 71,
+      "UUD 1945": 100,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 96,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 93,
+      "Seni Musik": 88,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 75,
+      "Keterampilan Proses": 67,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 82,
+      "Kosakata": 71,
+      "Muhadatsah": 100,
+      "Tata Bahasa": 67,
+      "Angka": 100,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 95,
+      "Bergaya Hidup Aktif": 100,
+      "Memilih Hidup yang Menyehatkan": 83,
+    },
+  },
+  "Ophelia Delisha Suaidi": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 80,
+      "Aqidah & Akhlak": 93,
+      "Fiqh": 87,
+      "Sejarah Kebudayaan Islam": 75,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 71,
+      "UUD 1945": 89,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 100,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 80,
+      "Seni Musik": 71,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 77,
+      "Keterampilan Proses": 93,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 91,
+      "Kosakata": 86,
+      "Muhadatsah": 88,
+      "Tata Bahasa": 83,
+      "Angka": 100,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 90,
+      "Bergaya Hidup Aktif": 79,
+      "Memilih Hidup yang Menyehatkan": 97,
+    },
+  },
+  "Arkana Daffa Prayuda": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 50,
+      "Aqidah & Akhlak": 79,
+      "Fiqh": 87,
+      "Sejarah Kebudayaan Islam": 55,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 55,
+      "UUD 1945": 93,
+      "Bhinneka Tunggal Ika": 73,
+      "NKRI": 87,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 69,
+      "Seni Musik": 76,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 56,
+      "Keterampilan Proses": 100,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 91,
+      "Kosakata": 57,
+      "Muhadatsah": 62,
+      "Tata Bahasa": 50,
+      "Angka": 62,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 50,
+      "Belajar Melalui Gerak": 85,
+      "Bergaya Hidup Aktif": 75,
+      "Memilih Hidup yang Menyehatkan": 67,
+    },
+  },
+  "Chennysa La Viola Salsabila": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 70,
+      "Aqidah & Akhlak": 79,
+      "Fiqh": 80,
+      "Sejarah Kebudayaan Islam": 65,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 64,
+      "UUD 1945": 89,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 93,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 81,
+      "Seni Musik": 84,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 75,
+      "Keterampilan Proses": 74,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 82,
+      "Kosakata": 86,
+      "Muhadatsah": 50,
+      "Tata Bahasa": 67,
+      "Angka": 75,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 90,
+      "Bergaya Hidup Aktif": 96,
+      "Memilih Hidup yang Menyehatkan": 94,
+    },
+  },
+  "Muhammad Ishomuddin": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 70,
+      "Aqidah & Akhlak": 100,
+      "Fiqh": 67,
+      "Sejarah Kebudayaan Islam": 85,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 71,
+      "UUD 1945": 89,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 93,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 93,
+      "Seni Musik": 83,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 61,
+      "Keterampilan Proses": 90,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 73,
+      "Kosakata": 86,
+      "Muhadatsah": 100,
+      "Tata Bahasa": 83,
+      "Angka": 100,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 92,
+      "Bergaya Hidup Aktif": 100,
+      "Memilih Hidup yang Menyehatkan": 90,
+    },
+  },
+  "Al Rayyan Syafi Assyauqie": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 45,
+      "Aqidah & Akhlak": 75,
+      "Fiqh": 80,
+      "Sejarah Kebudayaan Islam": 60,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 64,
+      "UUD 1945": 89,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 87,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 62,
+      "Seni Musik": 70,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 63,
+      "Keterampilan Proses": 55,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 82,
+      "Kosakata": 71,
+      "Muhadatsah": 75,
+      "Tata Bahasa": 67,
+      "Angka": 62,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 100,
+      "Bergaya Hidup Aktif": 79,
+      "Memilih Hidup yang Menyehatkan": 86,
+    },
+  },
+  "Qismika Yumnaa Shalimar": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 80,
+      "Aqidah & Akhlak": 86,
+      "Fiqh": 53,
+      "Sejarah Kebudayaan Islam": 55,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 67,
+      "UUD 1945": 96,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 89,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 79,
+      "Seni Musik": 78,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 51,
+      "Keterampilan Proses": 76,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 82,
+      "Kosakata": 57,
+      "Muhadatsah": 100,
+      "Tata Bahasa": 83,
+      "Angka": 88,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 83,
+      "Belajar Melalui Gerak": 90,
+      "Bergaya Hidup Aktif": 79,
+      "Memilih Hidup yang Menyehatkan": 71,
+    },
+  },
+  "Jasmine Azia Keisyah": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 70,
+      "Aqidah & Akhlak": 79,
+      "Fiqh": 93,
+      "Sejarah Kebudayaan Islam": 55,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 52,
+      "UUD 1945": 76,
+      "Bhinneka Tunggal Ika": 91,
+      "NKRI": 76,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 64,
+      "Seni Musik": 80,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 65,
+      "Keterampilan Proses": 79,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 82,
+      "Kosakata": 57,
+      "Muhadatsah": 88,
+      "Tata Bahasa": 50,
+      "Angka": 88,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 87,
+      "Bergaya Hidup Aktif": 74,
+      "Memilih Hidup yang Menyehatkan": 81,
+    },
+  },
+  "Altair Zakaria Saleh": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 80,
+      "Aqidah & Akhlak": 93,
+      "Fiqh": 73,
+      "Sejarah Kebudayaan Islam": 40,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 64,
+      "UUD 1945": 89,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 91,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 73,
+      "Seni Musik": 64,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 73,
+      "Keterampilan Proses": 79,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 73,
+      "Kosakata": 71,
+      "Muhadatsah": 88,
+      "Tata Bahasa": 83,
+      "Angka": 100,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 67,
+      "Belajar Melalui Gerak": 77,
+      "Bergaya Hidup Aktif": 79,
+      "Memilih Hidup yang Menyehatkan": 78,
+    },
+  },
+  "Putri Ani Maulidah": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 70,
+      "Aqidah & Akhlak": 64,
+      "Fiqh": 60,
+      "Sejarah Kebudayaan Islam": 45,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 57,
+      "UUD 1945": 82,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 84,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 64,
+      "Seni Musik": 71,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 59,
+      "Keterampilan Proses": 64,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 73,
+      "Kosakata": 71,
+      "Muhadatsah": 62,
+      "Tata Bahasa": 67,
+      "Angka": 100,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 67,
+      "Belajar Melalui Gerak": 90,
+      "Bergaya Hidup Aktif": 63,
+      "Memilih Hidup yang Menyehatkan": 71,
+    },
+  },
+  "Dafina Fakhira Azzahra": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 60,
+      "Aqidah & Akhlak": 79,
+      "Fiqh": 80,
+      "Sejarah Kebudayaan Islam": 60,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 50,
+      "UUD 1945": 89,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 87,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 80,
+      "Seni Musik": 73,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 54,
+      "Keterampilan Proses": 86,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 82,
+      "Kosakata": 71,
+      "Muhadatsah": 88,
+      "Tata Bahasa": 67,
+      "Angka": 100,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 67,
+      "Belajar Melalui Gerak": 85,
+      "Bergaya Hidup Aktif": 84,
+      "Memilih Hidup yang Menyehatkan": 97,
+    },
+  },
+  "Ganesh Sabian Wiranata": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 60,
+      "Aqidah & Akhlak": 82,
+      "Fiqh": 73,
+      "Sejarah Kebudayaan Islam": 50,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 81,
+      "UUD 1945": 80,
+      "Bhinneka Tunggal Ika": 87,
+      "NKRI": 96,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 74,
+      "Seni Musik": 68,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 65,
+      "Keterampilan Proses": 79,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 55,
+      "Kosakata": 57,
+      "Muhadatsah": 62,
+      "Tata Bahasa": 50,
+      "Angka": 50,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 83,
+      "Belajar Melalui Gerak": 92,
+      "Bergaya Hidup Aktif": 67,
+      "Memilih Hidup yang Menyehatkan": 62,
+    },
+  },
+  "Rossa Rania Saragih": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 80,
+      "Aqidah & Akhlak": 93,
+      "Fiqh": 93,
+      "Sejarah Kebudayaan Islam": 80,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 64,
+      "UUD 1945": 96,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 93,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 88,
+      "Seni Musik": 84,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 69,
+      "Keterampilan Proses": 95,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 100,
+      "Kosakata": 100,
+      "Muhadatsah": 100,
+      "Tata Bahasa": 67,
+      "Angka": 100,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 100,
+      "Bergaya Hidup Aktif": 100,
+      "Memilih Hidup yang Menyehatkan": 95,
+    },
+  },
+  "Fikri Aulia": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 55,
+      "Aqidah & Akhlak": 93,
+      "Fiqh": 57,
+      "Sejarah Kebudayaan Islam": 80,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 71,
+      "UUD 1945": 96,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 93,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 84,
+      "Seni Musik": 83,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 69,
+      "Keterampilan Proses": 79,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 82,
+      "Kosakata": 86,
+      "Muhadatsah": 100,
+      "Tata Bahasa": 67,
+      "Angka": 100,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 85,
+      "Bergaya Hidup Aktif": 60,
+      "Memilih Hidup yang Menyehatkan": 83,
+    },
+  },
+  "Akhdan Naufal Muhammad Dzaki": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 55,
+      "Aqidah & Akhlak": 54,
+      "Fiqh": 40,
+      "Sejarah Kebudayaan Islam": 0,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 64,
+      "UUD 1945": 76,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 71,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 69,
+      "Seni Musik": 66,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 48,
+      "Keterampilan Proses": 83,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 73,
+      "Kosakata": 86,
+      "Muhadatsah": 100,
+      "Tata Bahasa": 67,
+      "Angka": 88,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 83,
+      "Belajar Melalui Gerak": 100,
+      "Bergaya Hidup Aktif": 95,
+      "Memilih Hidup yang Menyehatkan": 60,
+    },
+  },
+  "Zufar Fadhil": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 70,
+      "Aqidah & Akhlak": 64,
+      "Fiqh": 53,
+      "Sejarah Kebudayaan Islam": 30,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 48,
+      "UUD 1945": 100,
+      "Bhinneka Tunggal Ika": 91,
+      "NKRI": 84,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 71,
+      "Seni Musik": 60,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 65,
+      "Keterampilan Proses": 64,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 91,
+      "Kosakata": 71,
+      "Muhadatsah": 62,
+      "Tata Bahasa": 67,
+      "Angka": 88,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 74,
+      "Bergaya Hidup Aktif": 68,
+      "Memilih Hidup yang Menyehatkan": 65,
+    },
+  },
+  "Annisa Nandira Ramadhani": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 55,
+      "Aqidah & Akhlak": 39,
+      "Fiqh": 80,
+      "Sejarah Kebudayaan Islam": 45,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 64,
+      "UUD 1945": 64,
+      "Bhinneka Tunggal Ika": 64,
+      "NKRI": 60,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 68,
+      "Seni Musik": 62,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 33,
+      "Keterampilan Proses": 48,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 55,
+      "Kosakata": 57,
+      "Muhadatsah": 75,
+      "Tata Bahasa": 67,
+      "Angka": 75,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 83,
+      "Belajar Melalui Gerak": 82,
+      "Bergaya Hidup Aktif": 60,
+      "Memilih Hidup yang Menyehatkan": 43,
+    },
+  },
+  "Muhammad Syakir Arrafif": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 80,
+      "Aqidah & Akhlak": 89,
+      "Fiqh": 80,
+      "Sejarah Kebudayaan Islam": 55,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 64,
+      "UUD 1945": 100,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 100,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 73,
+      "Seni Musik": 83,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 67,
+      "Keterampilan Proses": 88,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 91,
+      "Kosakata": 71,
+      "Muhadatsah": 88,
+      "Tata Bahasa": 83,
+      "Angka": 88,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 83,
+      "Belajar Melalui Gerak": 92,
+      "Bergaya Hidup Aktif": 86,
+      "Memilih Hidup yang Menyehatkan": 76,
+    },
+  },
+  "Akrim Ghazi Al Hudzaifah": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 70,
+      "Aqidah & Akhlak": 68,
+      "Fiqh": 80,
+      "Sejarah Kebudayaan Islam": 75,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 55,
+      "UUD 1945": 89,
+      "Bhinneka Tunggal Ika": 91,
+      "NKRI": 84,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 84,
+      "Seni Musik": 71,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 44,
+      "Keterampilan Proses": 69,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 73,
+      "Kosakata": 71,
+      "Muhadatsah": 100,
+      "Tata Bahasa": 100,
+      "Angka": 100,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 67,
+      "Belajar Melalui Gerak": 82,
+      "Bergaya Hidup Aktif": 89,
+      "Memilih Hidup yang Menyehatkan": 86,
+    },
+  },
+  "Hasan Imam Rasyidin": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 80,
+      "Aqidah & Akhlak": 68,
+      "Fiqh": 67,
+      "Sejarah Kebudayaan Islam": 55,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 50,
+      "UUD 1945": 73,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 73,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 64,
+      "Seni Musik": 70,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 66,
+      "Keterampilan Proses": 90,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 82,
+      "Kosakata": 71,
+      "Muhadatsah": 62,
+      "Tata Bahasa": 67,
+      "Angka": 88,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 74,
+      "Bergaya Hidup Aktif": 68,
+      "Memilih Hidup yang Menyehatkan": 62,
+    },
+  },
+  "Nurrizqi Danish Alvaro": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 30,
+      "Aqidah & Akhlak": 79,
+      "Fiqh": 73,
+      "Sejarah Kebudayaan Islam": 25,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 50,
+      "UUD 1945": 73,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 69,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 51,
+      "Seni Musik": 64,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 39,
+      "Keterampilan Proses": 36,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 36,
+      "Kosakata": 43,
+      "Muhadatsah": 62,
+      "Tata Bahasa": 67,
+      "Angka": 50,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 92,
+      "Bergaya Hidup Aktif": 68,
+      "Memilih Hidup yang Menyehatkan": 76,
+    },
+  },
+  "Farrel Ahza Naufal": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 20,
+      "Aqidah & Akhlak": 29,
+      "Fiqh": 73,
+      "Sejarah Kebudayaan Islam": 25,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 52,
+      "UUD 1945": 89,
+      "Bhinneka Tunggal Ika": 87,
+      "NKRI": 96,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 60,
+      "Seni Musik": 50,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 46,
+      "Keterampilan Proses": 43,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 36,
+      "Kosakata": 29,
+      "Muhadatsah": 38,
+      "Tata Bahasa": 17,
+      "Angka": 0,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 92,
+      "Bergaya Hidup Aktif": 65,
+      "Memilih Hidup yang Menyehatkan": 57,
+    },
+  },
+  "Muhammad Hafidz Ramadhan": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 65,
+      "Aqidah & Akhlak": 64,
+      "Fiqh": 40,
+      "Sejarah Kebudayaan Islam": 45,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 57,
+      "UUD 1945": 87,
+      "Bhinneka Tunggal Ika": 82,
+      "NKRI": 76,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 63,
+      "Seni Musik": 64,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 51,
+      "Keterampilan Proses": 79,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 82,
+      "Kosakata": 57,
+      "Muhadatsah": 88,
+      "Tata Bahasa": 67,
+      "Angka": 50,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 92,
+      "Bergaya Hidup Aktif": 75,
+      "Memilih Hidup yang Menyehatkan": 56,
+    },
+  },
+  "Irshad Faheem Alfany": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 25,
+      "Aqidah & Akhlak": 54,
+      "Fiqh": 73,
+      "Sejarah Kebudayaan Islam": 10,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 33,
+      "UUD 1945": 49,
+      "Bhinneka Tunggal Ika": 73,
+      "NKRI": 69,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 49,
+      "Seni Musik": 61,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 36,
+      "Keterampilan Proses": 52,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 27,
+      "Kosakata": 57,
+      "Muhadatsah": 75,
+      "Tata Bahasa": 50,
+      "Angka": 25,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 74,
+      "Bergaya Hidup Aktif": 58,
+      "Memilih Hidup yang Menyehatkan": 65,
+    },
+  },
+  "Muhammad Al Baghdadi Ruby": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 70,
+      "Aqidah & Akhlak": 71,
+      "Fiqh": 53,
+      "Sejarah Kebudayaan Islam": 25,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 40,
+      "UUD 1945": 60,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 69,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 53,
+      "Seni Musik": 68,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 45,
+      "Keterampilan Proses": 52,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 55,
+      "Kosakata": 29,
+      "Muhadatsah": 12,
+      "Tata Bahasa": 0,
+      "Angka": 25,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 82,
+      "Bergaya Hidup Aktif": 68,
+      "Memilih Hidup yang Menyehatkan": 75,
+    },
+  },
+  "Haafiz Nur Fazil": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 45,
+      "Aqidah & Akhlak": 36,
+      "Fiqh": 67,
+      "Sejarah Kebudayaan Islam": 45,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 48,
+      "UUD 1945": 87,
+      "Bhinneka Tunggal Ika": 76,
+      "NKRI": 62,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 34,
+      "Seni Musik": 64,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 29,
+      "Keterampilan Proses": 48,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 45,
+      "Kosakata": 43,
+      "Muhadatsah": 50,
+      "Tata Bahasa": 83,
+      "Angka": 38,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 77,
+      "Bergaya Hidup Aktif": 58,
+      "Memilih Hidup yang Menyehatkan": 56,
+    },
+  },
+  "Mikhaila Khanaya Afrizal": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 60,
+      "Aqidah & Akhlak": 43,
+      "Fiqh": 50,
+      "Sejarah Kebudayaan Islam": 55,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 79,
+      "UUD 1945": 96,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 96,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 60,
+      "Seni Musik": 62,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 54,
+      "Keterampilan Proses": 62,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 55,
+      "Kosakata": 71,
+      "Muhadatsah": 88,
+      "Tata Bahasa": 100,
+      "Angka": 75,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 67,
+      "Bergaya Hidup Aktif": 70,
+      "Memilih Hidup yang Menyehatkan": 83,
+    },
+  },
+  "Khaira Nursalsabila Putri Muharam": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 35,
+      "Aqidah & Akhlak": 46,
+      "Fiqh": 40,
+      "Sejarah Kebudayaan Islam": 45,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 64,
+      "UUD 1945": 87,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 67,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 73,
+      "Seni Musik": 83,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 51,
+      "Keterampilan Proses": 76,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 82,
+      "Kosakata": 57,
+      "Muhadatsah": 75,
+      "Tata Bahasa": 83,
+      "Angka": 38,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 82,
+      "Bergaya Hidup Aktif": 79,
+      "Memilih Hidup yang Menyehatkan": 62,
+    },
+  },
+  "Ahmad Faarih Assunni": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 50,
+      "Aqidah & Akhlak": 61,
+      "Fiqh": 60,
+      "Sejarah Kebudayaan Islam": 60,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 45,
+      "UUD 1945": 64,
+      "Bhinneka Tunggal Ika": 78,
+      "NKRI": 62,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 66,
+      "Seni Musik": 71,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 40,
+      "Keterampilan Proses": 67,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 45,
+      "Kosakata": 71,
+      "Muhadatsah": 50,
+      "Tata Bahasa": 50,
+      "Angka": 50,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 83,
+      "Belajar Melalui Gerak": 51,
+      "Bergaya Hidup Aktif": 35,
+      "Memilih Hidup yang Menyehatkan": 68,
+    },
+  },
+  "Luthfi Radhitya Bima Rohim": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 60,
+      "Aqidah & Akhlak": 68,
+      "Fiqh": 53,
+      "Sejarah Kebudayaan Islam": 20,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 62,
+      "UUD 1945": 73,
+      "Bhinneka Tunggal Ika": 87,
+      "NKRI": 80,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 62,
+      "Seni Musik": 64,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 41,
+      "Keterampilan Proses": 55,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 91,
+      "Kosakata": 57,
+      "Muhadatsah": 75,
+      "Tata Bahasa": 67,
+      "Angka": 62,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 83,
+      "Belajar Melalui Gerak": 92,
+      "Bergaya Hidup Aktif": 93,
+      "Memilih Hidup yang Menyehatkan": 78,
+    },
+  },
+  "Muhammad Rafiq Alfattah": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 70,
+      "Aqidah & Akhlak": 79,
+      "Fiqh": 60,
+      "Sejarah Kebudayaan Islam": 55,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 64,
+      "UUD 1945": 71,
+      "Bhinneka Tunggal Ika": 78,
+      "NKRI": 84,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 60,
+      "Seni Musik": 68,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 51,
+      "Keterampilan Proses": 79,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 100,
+      "Kosakata": 71,
+      "Muhadatsah": 100,
+      "Tata Bahasa": 100,
+      "Angka": 75,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 83,
+      "Belajar Melalui Gerak": 100,
+      "Bergaya Hidup Aktif": 89,
+      "Memilih Hidup yang Menyehatkan": 84,
+    },
+  },
+  "Luqyana Farha Izzatunnisa": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 35,
+      "Aqidah & Akhlak": 54,
+      "Fiqh": 80,
+      "Sejarah Kebudayaan Islam": 20,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 60,
+      "UUD 1945": 40,
+      "Bhinneka Tunggal Ika": 87,
+      "NKRI": 56,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 50,
+      "Seni Musik": 56,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 31,
+      "Keterampilan Proses": 57,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 45,
+      "Kosakata": 43,
+      "Muhadatsah": 25,
+      "Tata Bahasa": 50,
+      "Angka": 62,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 50,
+      "Belajar Melalui Gerak": 69,
+      "Bergaya Hidup Aktif": 39,
+      "Memilih Hidup yang Menyehatkan": 63,
+    },
+  },
+  "Fadhlan Ahnaf": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 50,
+      "Aqidah & Akhlak": 43,
+      "Fiqh": 73,
+      "Sejarah Kebudayaan Islam": 25,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 57,
+      "UUD 1945": 67,
+      "Bhinneka Tunggal Ika": 91,
+      "NKRI": 80,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 73,
+      "Seni Musik": 80,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 54,
+      "Keterampilan Proses": 60,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 45,
+      "Kosakata": 57,
+      "Muhadatsah": 75,
+      "Tata Bahasa": 83,
+      "Angka": 75,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 83,
+      "Belajar Melalui Gerak": 69,
+      "Bergaya Hidup Aktif": 68,
+      "Memilih Hidup yang Menyehatkan": 76,
+    },
+  },
+  "Brilyan Alifah Rahman": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 70,
+      "Aqidah & Akhlak": 79,
+      "Fiqh": 67,
+      "Sejarah Kebudayaan Islam": 35,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 64,
+      "UUD 1945": 84,
+      "Bhinneka Tunggal Ika": 91,
+      "NKRI": 71,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 77,
+      "Seni Musik": 72,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 62,
+      "Keterampilan Proses": 71,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 91,
+      "Kosakata": 71,
+      "Muhadatsah": 100,
+      "Tata Bahasa": 67,
+      "Angka": 88,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 83,
+      "Belajar Melalui Gerak": 77,
+      "Bergaya Hidup Aktif": 63,
+      "Memilih Hidup yang Menyehatkan": 81,
+    },
+  },
+  "Gadiza Chyntia Nugroho": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 70,
+      "Aqidah & Akhlak": 93,
+      "Fiqh": 87,
+      "Sejarah Kebudayaan Islam": 50,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 71,
+      "UUD 1945": 96,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 89,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 81,
+      "Seni Musik": 71,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 62,
+      "Keterampilan Proses": 79,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 91,
+      "Kosakata": 71,
+      "Muhadatsah": 88,
+      "Tata Bahasa": 83,
+      "Angka": 100,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 83,
+      "Belajar Melalui Gerak": 67,
+      "Bergaya Hidup Aktif": 68,
+      "Memilih Hidup yang Menyehatkan": 70,
+    },
+  },
+  "Sakha Arkan Radhika": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 60,
+      "Aqidah & Akhlak": 57,
+      "Fiqh": 73,
+      "Sejarah Kebudayaan Islam": 35,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 71,
+      "UUD 1945": 93,
+      "Bhinneka Tunggal Ika": 96,
+      "NKRI": 82,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 82,
+      "Seni Musik": 63,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 65,
+      "Keterampilan Proses": 86,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 73,
+      "Kosakata": 71,
+      "Muhadatsah": 88,
+      "Tata Bahasa": 67,
+      "Angka": 62,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 83,
+      "Belajar Melalui Gerak": 92,
+      "Bergaya Hidup Aktif": 58,
+      "Memilih Hidup yang Menyehatkan": 81,
+    },
+  },
+  "Shakila Alyzie": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 50,
+      "Aqidah & Akhlak": 71,
+      "Fiqh": 80,
+      "Sejarah Kebudayaan Islam": 55,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 71,
+      "UUD 1945": 93,
+      "Bhinneka Tunggal Ika": 91,
+      "NKRI": 84,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 83,
+      "Seni Musik": 78,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 60,
+      "Keterampilan Proses": 79,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 64,
+      "Kosakata": 43,
+      "Muhadatsah": 38,
+      "Tata Bahasa": 50,
+      "Angka": 38,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 83,
+      "Belajar Melalui Gerak": 67,
+      "Bergaya Hidup Aktif": 72,
+      "Memilih Hidup yang Menyehatkan": 68,
+    },
+  },
+  "Rhandy Anindita Wibowo": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 70,
+      "Aqidah & Akhlak": 71,
+      "Fiqh": 77,
+      "Sejarah Kebudayaan Islam": 65,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 71,
+      "UUD 1945": 87,
+      "Bhinneka Tunggal Ika": 87,
+      "NKRI": 96,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 70,
+      "Seni Musik": 71,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 53,
+      "Keterampilan Proses": 62,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 91,
+      "Kosakata": 100,
+      "Muhadatsah": 88,
+      "Tata Bahasa": 83,
+      "Angka": 100,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 92,
+      "Bergaya Hidup Aktif": 65,
+      "Memilih Hidup yang Menyehatkan": 90,
+    },
+  },
+  "Khansa Kirana": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 70,
+      "Aqidah & Akhlak": 79,
+      "Fiqh": 80,
+      "Sejarah Kebudayaan Islam": 60,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 57,
+      "UUD 1945": 84,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 67,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 64,
+      "Seni Musik": 70,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 56,
+      "Keterampilan Proses": 74,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 91,
+      "Kosakata": 71,
+      "Muhadatsah": 100,
+      "Tata Bahasa": 83,
+      "Angka": 88,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 67,
+      "Bergaya Hidup Aktif": 68,
+      "Memilih Hidup yang Menyehatkan": 75,
+    },
+  },
+  "Syifa Sauqiya": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 55,
+      "Aqidah & Akhlak": 61,
+      "Fiqh": 73,
+      "Sejarah Kebudayaan Islam": 50,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 50,
+      "UUD 1945": 67,
+      "Bhinneka Tunggal Ika": 78,
+      "NKRI": 84,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 74,
+      "Seni Musik": 68,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 49,
+      "Keterampilan Proses": 71,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 91,
+      "Kosakata": 71,
+      "Muhadatsah": 62,
+      "Tata Bahasa": 67,
+      "Angka": 50,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 50,
+      "Belajar Melalui Gerak": 67,
+      "Bergaya Hidup Aktif": 58,
+      "Memilih Hidup yang Menyehatkan": 63,
+    },
+  },
+  "Arinda Arfaun Nisa": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 55,
+      "Aqidah & Akhlak": 93,
+      "Fiqh": 100,
+      "Sejarah Kebudayaan Islam": 40,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 79,
+      "UUD 1945": 84,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 84,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 69,
+      "Seni Musik": 83,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 63,
+      "Keterampilan Proses": 86,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 82,
+      "Kosakata": 86,
+      "Muhadatsah": 100,
+      "Tata Bahasa": 83,
+      "Angka": 100,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 83,
+      "Belajar Melalui Gerak": 85,
+      "Bergaya Hidup Aktif": 86,
+      "Memilih Hidup yang Menyehatkan": 75,
+    },
+  },
+  "Jihan Thalita Ulfa": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 70,
+      "Aqidah & Akhlak": 46,
+      "Fiqh": 73,
+      "Sejarah Kebudayaan Islam": 40,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 71,
+      "UUD 1945": 82,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 80,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 66,
+      "Seni Musik": 70,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 47,
+      "Keterampilan Proses": 69,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 73,
+      "Kosakata": 43,
+      "Muhadatsah": 38,
+      "Tata Bahasa": 50,
+      "Angka": 38,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 67,
+      "Bergaya Hidup Aktif": 68,
+      "Memilih Hidup yang Menyehatkan": 81,
+    },
+  },
+  "Michaila Azqiara": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 75,
+      "Aqidah & Akhlak": 82,
+      "Fiqh": 60,
+      "Sejarah Kebudayaan Islam": 40,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 57,
+      "UUD 1945": 96,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 71,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 84,
+      "Seni Musik": 74,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 66,
+      "Keterampilan Proses": 60,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 100,
+      "Kosakata": 86,
+      "Muhadatsah": 88,
+      "Tata Bahasa": 67,
+      "Angka": 88,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 83,
+      "Belajar Melalui Gerak": 67,
+      "Bergaya Hidup Aktif": 89,
+      "Memilih Hidup yang Menyehatkan": 90,
+    },
+  },
+  "Fairuzzaman Daffa Zulhannan": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 70,
+      "Aqidah & Akhlak": 50,
+      "Fiqh": 47,
+      "Sejarah Kebudayaan Islam": 60,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 86,
+      "UUD 1945": 78,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 60,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 66,
+      "Seni Musik": 79,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 55,
+      "Keterampilan Proses": 93,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 91,
+      "Kosakata": 71,
+      "Muhadatsah": 88,
+      "Tata Bahasa": 83,
+      "Angka": 100,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 100,
+      "Bergaya Hidup Aktif": 68,
+      "Memilih Hidup yang Menyehatkan": 81,
+    },
+  },
+  "Faysha Aliya Nafira": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 55,
+      "Aqidah & Akhlak": 68,
+      "Fiqh": 80,
+      "Sejarah Kebudayaan Islam": 40,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 71,
+      "UUD 1945": 100,
+      "Bhinneka Tunggal Ika": 91,
+      "NKRI": 87,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 68,
+      "Seni Musik": 60,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 55,
+      "Keterampilan Proses": 64,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 64,
+      "Kosakata": 57,
+      "Muhadatsah": 88,
+      "Tata Bahasa": 67,
+      "Angka": 75,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 83,
+      "Belajar Melalui Gerak": 92,
+      "Bergaya Hidup Aktif": 63,
+      "Memilih Hidup yang Menyehatkan": 63,
+    },
+  },
+  "Farrel Nur Syafiq": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 55,
+      "Aqidah & Akhlak": 50,
+      "Fiqh": 70,
+      "Sejarah Kebudayaan Islam": 45,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 57,
+      "UUD 1945": 93,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 82,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 66,
+      "Seni Musik": 67,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 54,
+      "Keterampilan Proses": 60,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 55,
+      "Kosakata": 57,
+      "Muhadatsah": 88,
+      "Tata Bahasa": 83,
+      "Angka": 50,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 83,
+      "Belajar Melalui Gerak": 95,
+      "Bergaya Hidup Aktif": 100,
+      "Memilih Hidup yang Menyehatkan": 68,
+    },
+  },
+  "Alika Jasmine Arizki": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 70,
+      "Aqidah & Akhlak": 68,
+      "Fiqh": 87,
+      "Sejarah Kebudayaan Islam": 40,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 64,
+      "UUD 1945": 58,
+      "Bhinneka Tunggal Ika": 87,
+      "NKRI": 62,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 57,
+      "Seni Musik": 79,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 50,
+      "Keterampilan Proses": 69,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 82,
+      "Kosakata": 71,
+      "Muhadatsah": 75,
+      "Tata Bahasa": 67,
+      "Angka": 75,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 77,
+      "Bergaya Hidup Aktif": 67,
+      "Memilih Hidup yang Menyehatkan": 65,
+    },
+  },
+  "Fildza Dhira Azkadina": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 65,
+      "Aqidah & Akhlak": 86,
+      "Fiqh": 80,
+      "Sejarah Kebudayaan Islam": 35,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 57,
+      "UUD 1945": 91,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 89,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 64,
+      "Seni Musik": 73,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 55,
+      "Keterampilan Proses": 69,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 45,
+      "Kosakata": 57,
+      "Muhadatsah": 50,
+      "Tata Bahasa": 83,
+      "Angka": 38,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 83,
+      "Belajar Melalui Gerak": 59,
+      "Bergaya Hidup Aktif": 68,
+      "Memilih Hidup yang Menyehatkan": 75,
+    },
+  },
+  "Abiyyu Gibran Al Khalifi": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 45,
+      "Aqidah & Akhlak": 68,
+      "Fiqh": 60,
+      "Sejarah Kebudayaan Islam": 45,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 64,
+      "UUD 1945": 73,
+      "Bhinneka Tunggal Ika": 73,
+      "NKRI": 78,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 66,
+      "Seni Musik": 73,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 51,
+      "Keterampilan Proses": 69,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 100,
+      "Kosakata": 86,
+      "Muhadatsah": 88,
+      "Tata Bahasa": 67,
+      "Angka": 100,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 79,
+      "Bergaya Hidup Aktif": 79,
+      "Memilih Hidup yang Menyehatkan": 78,
+    },
+  },
+  "Hangga Abid Prasetyo": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 60,
+      "Aqidah & Akhlak": 68,
+      "Fiqh": 60,
+      "Sejarah Kebudayaan Islam": 70,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 81,
+      "UUD 1945": 93,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 96,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 69,
+      "Seni Musik": 71,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 56,
+      "Keterampilan Proses": 93,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 91,
+      "Kosakata": 86,
+      "Muhadatsah": 100,
+      "Tata Bahasa": 50,
+      "Angka": 100,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 100,
+      "Bergaya Hidup Aktif": 68,
+      "Memilih Hidup yang Menyehatkan": 84,
+    },
+  },
+  "Imam Hanafi": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 35,
+      "Aqidah & Akhlak": 57,
+      "Fiqh": 53,
+      "Sejarah Kebudayaan Islam": 40,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 71,
+      "UUD 1945": 62,
+      "Bhinneka Tunggal Ika": 96,
+      "NKRI": 56,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 60,
+      "Seni Musik": 63,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 35,
+      "Keterampilan Proses": 38,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 91,
+      "Kosakata": 57,
+      "Muhadatsah": 88,
+      "Tata Bahasa": 50,
+      "Angka": 100,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 100,
+      "Bergaya Hidup Aktif": 65,
+      "Memilih Hidup yang Menyehatkan": 70,
+    },
+  },
+  "Alyssa Pratita": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 65,
+      "Aqidah & Akhlak": 82,
+      "Fiqh": 67,
+      "Sejarah Kebudayaan Islam": 45,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 57,
+      "UUD 1945": 78,
+      "Bhinneka Tunggal Ika": 78,
+      "NKRI": 82,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 62,
+      "Seni Musik": 60,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 53,
+      "Keterampilan Proses": 93,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 73,
+      "Kosakata": 71,
+      "Muhadatsah": 88,
+      "Tata Bahasa": 67,
+      "Angka": 62,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 69,
+      "Bergaya Hidup Aktif": 81,
+      "Memilih Hidup yang Menyehatkan": 86,
+    },
+  },
+  "Devan Muhammad Faiq": {
+    "Al-Islam": {
+      "Al-Qur'an & Hadis": 55,
+      "Aqidah & Akhlak": 68,
+      "Fiqh": 80,
+      "Sejarah Kebudayaan Islam": 30,
+    },
+    "Pendidikan Pancasila": {
+      "Pancasila": 71,
+      "UUD 1945": 100,
+      "Bhinneka Tunggal Ika": 100,
+      "NKRI": 91,
+    },
+    "Seni Budaya": {
+      "Seni Rupa": 77,
+      "Seni Musik": 80,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 57,
+      "Keterampilan Proses": 71,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 91,
+      "Kosakata": 43,
+      "Muhadatsah": 38,
+      "Tata Bahasa": 83,
+      "Angka": 62,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 83,
+      "Belajar Melalui Gerak": 82,
+      "Bergaya Hidup Aktif": 93,
+      "Memilih Hidup yang Menyehatkan": 54,
+    },
+  },
+  "Azima Wasilah Nur Fatimah": {
+    "Seni Budaya": {
+      "Seni Rupa": 59,
+      "Seni Musik": 60,
+    },
+    "IPAS": {
+      "Pengetahuan IPAS": 47,
+      "Keterampilan Proses": 64,
+    },
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 55,
+      "Kosakata": 29,
+      "Muhadatsah": 38,
+      "Tata Bahasa": 50,
+      "Angka": 50,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 100,
+      "Belajar Melalui Gerak": 77,
+      "Bergaya Hidup Aktif": 100,
+      "Memilih Hidup yang Menyehatkan": 84,
+    },
+  },
+  "Ibrahimovic Ayyubi Fahri Mulya": {
+    "Bahasa Arab - ISMUBA": {
+      "Pemahaman Teks": 82,
+      "Kosakata": 86,
+      "Muhadatsah": 88,
+      "Tata Bahasa": 83,
+      "Angka": 88,
+    },
+    "PJOK": {
+      "Terampil Bergerak": 83,
+      "Belajar Melalui Gerak": 92,
+      "Bergaya Hidup Aktif": 89,
+      "Memilih Hidup yang Menyehatkan": 67,
+    },
+  },
+};
+
 const MAPEL = [
   {key:'Al-Islam',           label:'Al-Islam',              icon:'☪️'},
   {key:'Pendidikan Pancasila',label:'Pendidikan Pancasila', icon:'🦅'},
@@ -330,6 +2322,81 @@ function clearScore(){
     <p>Pilih kelas dan nama siswa untuk menampilkan nilai lengkap</p></div>`;
 }
 
+
+/* ─── CATEGORY HELPERS ─── */
+function catClass(v){
+  if(v >= 85) return 'cat-tuntas';
+  if(v >= 70) return 'cat-baik';
+  return 'cat-perlu';
+}
+function catLabel(v){
+  if(v >= 85) return 'Sangat Baik';
+  if(v >= 70) return 'Baik';
+  return 'Perlu Bimbingan';
+}
+
+function renderCatSection(s){
+  const catData = CAT_DATA[s.nama];
+  if(!catData) return '';
+
+  // Map sheet key to MAPEL entry
+  const sheetKeyMap = {
+    'Al-Islam':             {icon:'☪️', label:'Al-Islam'},
+    'Pendidikan Pancasila': {icon:'🦅', label:'Pendidikan Pancasila'},
+    'Seni Budaya':          {icon:'🎨', label:'Seni Budaya'},
+    'IPAS':                 {icon:'🔬', label:'IPAS'},
+    'Bahasa Arab - ISMUBA': {icon:'📖', label:'Bahasa Arab'},
+    'PJOK':                 {icon:'⚽', label:'PJOK'},
+  };
+
+  const sheetOrder = ['Al-Islam','Pendidikan Pancasila','Seni Budaya','IPAS','Bahasa Arab - ISMUBA','PJOK'];
+  let remedialAll = [];
+  let cards = '';
+
+  sheetOrder.forEach(sheetKey => {
+    const cats = catData[sheetKey];
+    if(!cats) return;
+    const meta = sheetKeyMap[sheetKey];
+    let rowsHtml = '';
+    Object.entries(cats).forEach(([catName, score]) => {
+      const cls = catClass(score);
+      rowsHtml += `<div class="cat-row ${cls}">
+        <div class="cat-row-top">
+          <span class="cat-row-label">${catName}</span>
+          <span class="cat-tag">${catLabel(score)}</span>
+          <span class="cat-row-val">${score}</span>
+        </div>
+        <div class="cat-row-bar-bg">
+          <div class="cat-row-bar-fill" style="width:${score}%"></div>
+        </div>
+      </div>`;
+      if(score < 70) remedialAll.push(`${meta.label} — ${catName}`);
+    });
+    cards += `<div class="cat-card">
+      <div class="cat-card-head">
+        <span class="cat-card-icon">${meta.icon}</span>
+        <span class="cat-card-name">${meta.label}</span>
+      </div>
+      <div class="cat-rows">${rowsHtml}</div>
+    </div>`;
+  });
+
+  const remedialHtml = remedialAll.length > 0
+    ? `<div class="remedial-box show">
+        <strong>⚠️ Kategori yang Perlu Perhatian / Remedial:</strong>
+        <div class="remedial-list">${remedialAll.map(r => `<span class="remedial-pill">${r}</span>`).join('')}</div>
+       </div>`
+    : `<div class="remedial-box show" style="background:#f0fdf4;border-color:#bbf7d0;color:#14532d">
+        <strong>✅ Semua kategori tuntas!</strong>
+       </div>`;
+
+  return `<div class="cat-section">
+    <div class="cat-section-title">📂 Capaian per Kategori Materi</div>
+    <div class="cat-grid">${cards}</div>
+    ${remedialHtml}
+  </div>`;
+}
+
 /* ─── RENDER STUDENT ─── */
 function renderStudent(nama){
   const s = DATA.find(x => x.nama === nama);
@@ -391,7 +2458,8 @@ function renderStudent(nama){
         <thead><tr><th>Mata Pelajaran</th><th>Nilai</th><th>Predikat SKL</th></tr></thead>
         <tbody>${rows}</tbody>
       </table>
-    </div>`;
+    </div>
+    ${renderCatSection(s)}`;
 }
 
 /* ─── RANKING ─── */
