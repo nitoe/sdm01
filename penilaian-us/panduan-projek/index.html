@@ -9,6 +9,7 @@
   :root {
     --amber: #d97706; --amber-dark: #92400e; --amber-deep: #78350f;
     --amber-light: #fef3c7; --amber-bg: #fffbeb;
+    --green: #065f46; --green-dark: #064e3b; --green-light: #d1fae5; --green-pale: #f0fdf4;
     --text: #1f2937; --text-muted: #6b7280; --bg: #fffbeb;
     --white: #fff; --border: #d1d5db;
     --shadow: 0 4px 24px rgba(0,0,0,0.08);
@@ -71,28 +72,65 @@
     color: var(--text-muted); margin-bottom: 24px;
   }
 
+  /* ── LK PROMO BANNER ── */
+  .lk-banner {
+    background: linear-gradient(135deg, var(--green-dark), var(--green));
+    border-radius: var(--radius);
+    padding: 20px 22px; margin-bottom: 32px;
+    display: flex; align-items: center; gap: 18px;
+    box-shadow: 0 4px 20px rgba(6,79,70,0.25);
+    text-decoration: none; color: #fff;
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: fadeUp 0.35s ease both;
+    position: relative; overflow: hidden;
+  }
+  .lk-banner::before {
+    content: ''; position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .lk-banner:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(6,79,70,0.35); }
+  .lk-banner-icon {
+    font-size: 2.2rem; flex-shrink: 0;
+    width: 56px; height: 56px;
+    background: rgba(255,255,255,0.15); border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lk-banner-body { flex: 1; }
+  .lk-banner-eyebrow {
+    font-size: 0.62rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 1.5px; opacity: 0.75; margin-bottom: 3px;
+  }
+  .lk-banner-title {
+    font-family: 'Baloo 2', cursive; font-size: 1.05rem; font-weight: 800;
+    line-height: 1.2; margin-bottom: 4px;
+  }
+  .lk-banner-desc { font-size: 0.76rem; opacity: 0.85; font-weight: 600; line-height: 1.4; }
+  .lk-banner-cta {
+    background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.35);
+    color: #fff; padding: 8px 16px; border-radius: 10px;
+    font-size: 0.75rem; font-weight: 800; white-space: nowrap; flex-shrink: 0;
+    display: flex; align-items: center; gap: 5px;
+  }
+
   /* ── STEP CARDS ── */
   .steps { display: flex; flex-direction: column; gap: 0; position: relative; }
-
-  /* Vertical connector line */
   .steps::before {
     content: ''; position: absolute;
     left: 28px; top: 40px; bottom: 40px;
     width: 3px; background: #fde68a; border-radius: 2px;
   }
-
   .step-card {
     display: flex; gap: 16px; align-items: flex-start;
     position: relative; z-index: 1;
     padding: 10px 0;
     animation: fadeUp 0.4s ease both;
   }
-  .step-card:nth-child(1) { animation-delay: 0.05s; }
-  .step-card:nth-child(2) { animation-delay: 0.12s; }
-  .step-card:nth-child(3) { animation-delay: 0.19s; }
-  .step-card:nth-child(4) { animation-delay: 0.26s; }
-  .step-card:nth-child(5) { animation-delay: 0.33s; }
-
+  .step-card:nth-child(1) { animation-delay: 0.08s; }
+  .step-card:nth-child(2) { animation-delay: 0.15s; }
+  .step-card:nth-child(3) { animation-delay: 0.22s; }
+  .step-card:nth-child(4) { animation-delay: 0.29s; }
+  .step-card:nth-child(5) { animation-delay: 0.36s; }
   .step-number {
     width: 56px; height: 56px; border-radius: 50%;
     background: linear-gradient(135deg, var(--amber-dark), var(--amber));
@@ -101,7 +139,6 @@
     flex-shrink: 0; box-shadow: 0 4px 12px rgba(217,119,6,0.3);
     border: 3px solid var(--amber-bg);
   }
-
   .step-body {
     flex: 1; background: var(--white); border-radius: var(--radius);
     border: 2px solid transparent; overflow: hidden;
@@ -115,34 +152,31 @@
     box-shadow: 0 8px 32px rgba(0,0,0,0.12);
     transform: translateY(-2px);
   }
-
   .step-banner { height: 5px; background: linear-gradient(90deg, var(--amber-deep), var(--amber-dark), var(--amber)); }
-
   .step-content { padding: 18px 20px; }
-
   .step-title {
     font-family: 'Baloo 2', cursive;
     font-size: 1.05rem; font-weight: 800;
     color: var(--amber-dark); margin-bottom: 4px; line-height: 1.2;
   }
-  .step-subtitle {
-    font-size: 0.78rem; color: var(--text-muted); font-weight: 600;
-    margin-bottom: 10px;
-  }
-  .step-desc {
-    font-size: 0.82rem; color: #4b5563; line-height: 1.6;
-    margin-bottom: 14px;
-  }
-  .step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .step-subtitle { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; margin-bottom: 10px; }
+  .step-desc { font-size: 0.82rem; color: #4b5563; line-height: 1.6; margin-bottom: 14px; }
+  .step-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .step-tags { display: flex; flex-wrap: wrap; gap: 6px; }
   .step-tag {
     font-size: 0.65rem; font-weight: 700; padding: 3px 9px;
     border-radius: 8px; background: var(--amber-light); color: var(--amber-dark);
+  }
+  .step-lk-pill {
+    font-size: 0.62rem; font-weight: 800; padding: 3px 9px;
+    border-radius: 8px; background: var(--green-light); color: var(--green);
+    white-space: nowrap; border: 1px solid #a7f3d0; flex-shrink: 0;
   }
   .step-cta {
     display: flex; align-items: center; justify-content: space-between;
     padding: 8px 12px; border-radius: 8px;
     background: var(--amber-light); color: var(--amber-dark);
-    font-size: 0.78rem; font-weight: 800;
+    font-size: 0.78rem; font-weight: 800; margin-top: 12px;
   }
 
   /* ── INFO BOX ── */
@@ -151,7 +185,7 @@
     border-left: 5px solid var(--amber);
     padding: 16px 18px; display: flex; gap: 12px; align-items: flex-start;
     box-shadow: var(--shadow); margin-top: 28px;
-    animation: fadeUp 0.4s 0.4s ease both;
+    animation: fadeUp 0.4s 0.44s ease both;
   }
   .info-box-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
   .info-box strong { color: var(--amber-dark); font-size: 0.82rem; display: block; margin-bottom: 3px; }
@@ -172,6 +206,7 @@
   @media (max-width: 480px) {
     .steps::before { left: 24px; }
     .step-number { width: 48px; height: 48px; font-size: 1.1rem; }
+    .lk-banner-cta { display: none; }
   }
 </style>
 </head>
@@ -199,6 +234,18 @@
 
 <!-- MAIN -->
 <main class="container">
+
+  <!-- LK PROMO BANNER -->
+  <a class="lk-banner" href="lk-projek/index.html">
+    <div class="lk-banner-icon">📋</div>
+    <div class="lk-banner-body">
+      <div class="lk-banner-eyebrow">✨ Baru tersedia</div>
+      <div class="lk-banner-title">Lembar Kerja Projek Siap Cetak</div>
+      <div class="lk-banner-desc">5 LK terstruktur untuk setiap tahap — cetak &amp; bagikan langsung ke siswa.</div>
+    </div>
+    <div class="lk-banner-cta">Buka &amp; Cetak →</div>
+  </a>
+
   <p class="section-label">5 Tahap Student-Driven Inquiry</p>
 
   <div class="steps">
@@ -212,10 +259,12 @@
           <div class="step-title">Perumusan Pertanyaan</div>
           <div class="step-subtitle">Siswa menemukan topik dan menyusun pertanyaan penelitian</div>
           <p class="step-desc">Gunakan pertanyaan pemantik untuk membantu siswa menemukan topik orisinal. Jangan beri contoh topik di awal — biarkan ide muncul dari keingintahuan siswa sendiri.</p>
-          <div class="step-tags">
-            <span class="step-tag">Brainstorming</span>
-            <span class="step-tag">Pertanyaan Pemantik</span>
-            <span class="step-tag">LKS Ide Awal</span>
+          <div class="step-meta">
+            <div class="step-tags">
+              <span class="step-tag">Brainstorming</span>
+              <span class="step-tag">Pertanyaan Pemantik</span>
+            </div>
+            <a class="step-lk-pill" href="lk-projek/lk-1.html" onclick="event.stopPropagation()">📋 LK 1 Siap Cetak</a>
           </div>
           <div class="step-cta">
             <span>Buka Panduan Tahap 1</span>
@@ -234,10 +283,12 @@
           <div class="step-title">Perencanaan Proposal</div>
           <div class="step-subtitle">Siswa menyusun rencana dan metode pencarian jawaban</div>
           <p class="step-desc">Bantu siswa merencanakan langkah pencarian jawaban: tujuan projek, metode yang digunakan, sumber data, dan timeline pelaksanaan.</p>
-          <div class="step-tags">
-            <span class="step-tag">Tujuan Projek</span>
-            <span class="step-tag">Metode Riset</span>
-            <span class="step-tag">LKS Proposal</span>
+          <div class="step-meta">
+            <div class="step-tags">
+              <span class="step-tag">Tujuan Projek</span>
+              <span class="step-tag">Metode Riset</span>
+            </div>
+            <a class="step-lk-pill" href="lk-projek/lk-2.html" onclick="event.stopPropagation()">📋 LK 2 Siap Cetak</a>
           </div>
           <div class="step-cta">
             <span>Buka Panduan Tahap 2</span>
@@ -253,14 +304,16 @@
       <a class="step-body" href="tahap-3.html">
         <div class="step-banner"></div>
         <div class="step-content">
-          <div class="step-title">Pelaksanaan & Pengumpulan Data</div>
+          <div class="step-title">Pelaksanaan &amp; Pengumpulan Data</div>
           <div class="step-subtitle">Siswa melakukan riset dan mengumpulkan data di lapangan</div>
           <p class="step-desc">Dampingi siswa saat mengumpulkan data melalui observasi, wawancara, eksperimen, atau studi literatur. Pastikan mereka mendokumentasikan proses di logbook.</p>
-          <div class="step-tags">
-            <span class="step-tag">Logbook</span>
-            <span class="step-tag">Wawancara</span>
-            <span class="step-tag">Observasi</span>
-            <span class="step-tag">Dokumentasi</span>
+          <div class="step-meta">
+            <div class="step-tags">
+              <span class="step-tag">Logbook</span>
+              <span class="step-tag">Wawancara</span>
+              <span class="step-tag">Observasi</span>
+            </div>
+            <a class="step-lk-pill" href="lk-projek/lk-3.html" onclick="event.stopPropagation()">📋 LK 3 Siap Cetak</a>
           </div>
           <div class="step-cta">
             <span>Buka Panduan Tahap 3</span>
@@ -279,10 +332,12 @@
           <div class="step-title">Penyajian Hasil</div>
           <div class="step-subtitle">Siswa menyusun dan mempresentasikan temuan projek</div>
           <p class="step-desc">Bantu siswa merencanakan cara menyajikan hasil: poster, presentasi, video, atau produk kreatif lainnya. Fokus pada struktur penyajian dan kejelasan pesan.</p>
-          <div class="step-tags">
-            <span class="step-tag">Perencanaan Penyajian</span>
-            <span class="step-tag">Struktur</span>
-            <span class="step-tag">Presentasi</span>
+          <div class="step-meta">
+            <div class="step-tags">
+              <span class="step-tag">Storyboard</span>
+              <span class="step-tag">Presentasi</span>
+            </div>
+            <a class="step-lk-pill" href="lk-projek/lk-4.html" onclick="event.stopPropagation()">📋 LK 4 Siap Cetak</a>
           </div>
           <div class="step-cta">
             <span>Buka Panduan Tahap 4</span>
@@ -298,13 +353,15 @@
       <a class="step-body" href="tahap-5.html">
         <div class="step-banner"></div>
         <div class="step-content">
-          <div class="step-title">Refleksi & Pembelajaran</div>
+          <div class="step-title">Refleksi &amp; Pembelajaran</div>
           <div class="step-subtitle">Siswa merefleksikan proses dan pembelajaran yang diperoleh</div>
           <p class="step-desc">Fasilitasi siswa untuk merefleksikan seluruh perjalanan projek: apa yang dipelajari, tantangan yang dihadapi, dan bagaimana pengalaman ini membentuk mereka.</p>
-          <div class="step-tags">
-            <span class="step-tag">Refleksi Proses</span>
-            <span class="step-tag">Tantangan</span>
-            <span class="step-tag">Pembelajaran</span>
+          <div class="step-meta">
+            <div class="step-tags">
+              <span class="step-tag">Refleksi Proses</span>
+              <span class="step-tag">Pertumbuhan Diri</span>
+            </div>
+            <a class="step-lk-pill" href="lk-projek/lk-5.html" onclick="event.stopPropagation()">📋 LK 5 Siap Cetak</a>
           </div>
           <div class="step-cta">
             <span>Buka Panduan Tahap 5</span>
@@ -321,7 +378,7 @@
     <div class="info-box-icon">💡</div>
     <div>
       <strong>Tips untuk Guru</strong>
-      <p>Setiap tahap berisi pertanyaan pemantik, panduan teknis, LKS siswa yang bisa dicetak, dan checklist ketuntasan. Ikuti tahapan secara berurutan — setiap tahap dibangun di atas fondasi tahap sebelumnya. Beri kebebasan siswa untuk berproses, intervensi hanya saat benar-benar diperlukan.</p>
+      <p>Setiap tahap berisi pertanyaan pemantik, panduan teknis, dan checklist ketuntasan. Kini tersedia juga <a href="lk-projek/index.html" style="color:var(--amber-dark); font-weight:800;">Lembar Kerja Projek siap cetak</a> untuk setiap tahap — bagikan kepada siswa secara bertahap sesuai progres. Ikuti tahapan secara berurutan dan beri kebebasan siswa untuk berproses.</p>
     </div>
   </div>
 
