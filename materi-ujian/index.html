@@ -471,30 +471,9 @@
         <div class="group-title praktik">Ujian Praktik</div>
         <span class="group-badge praktik">6–15 Apr 2026</span>
       </div>
-
-      <div class="subjects-grid">
-
-        <a class="subject-card praktik" href="materi-pjok-praktik.html">
-          <div class="subject-emoji">🤸</div>
-          <div class="subject-info">
-            <div class="subject-name">PJOK Praktik</div>
-            <div class="subject-meta">Teknik gerak, permainan bola, senam, atletik, & kebugaran</div>
-            <span class="status-tag ready">Siap dipelajari</span>
-          </div>
-          <span class="subject-arrow">→</span>
-        </a>
-
-        <a class="subject-card praktik" href="materi-tik-praktik.html">
-          <div class="subject-emoji">🖥️</div>
-          <div class="subject-info">
-            <div class="subject-name">TIK Praktik</div>
-            <div class="subject-meta">Pengoperasian komputer, aplikasi, internet, & keamanan digital</div>
-            <span class="status-tag coming">Segera hadir</span>
-          </div>
-          <span class="subject-arrow">→</span>
-        </a>
-
-      </div>
+      <!-- Kartu dirender otomatis oleh JS — untuk menambah mata pelajaran baru,
+           cukup tambahkan satu objek ke array PRAKTIK_MAPEL di bawah. -->
+      <div class="subjects-grid" id="praktikGrid"></div>
     </div>
 
   </main>
@@ -503,5 +482,82 @@
     SD Muhammadiyah 01 Kukusan · Materi Ujian Kelas 6 · Tahun Pelajaran 2025/2026 📖
   </footer>
 
+<script>
+  // ─────────────────────────────────────────────────────────
+  // UJIAN PRAKTIK — Konfigurasi Mata Pelajaran
+  // Untuk menambah mata pelajaran baru, cukup tambahkan satu
+  // objek baru ke array ini. Tidak perlu menyentuh HTML lain.
+  //
+  // Field:
+  //   emoji   – ikon kartu
+  //   name    – nama mata pelajaran
+  //   meta    – deskripsi singkat di bawah nama
+  //   href    – link ke halaman materi
+  //   ready   – true = "Siap dipelajari" (hijau)
+  //             false = "Segera hadir" (abu-abu)
+  // ─────────────────────────────────────────────────────────
+  const PRAKTIK_MAPEL = [
+    {
+      emoji: '🤸',
+      name:  'PJOK Praktik',
+      meta:  'Bola kecil, bola besar, atletik, & permainan tradisional',
+      href:  'materi-pjok-praktik.html',
+      ready: true
+    },
+    {
+      emoji: '🌙',
+      name:  'Bahasa Arab Praktik',
+      meta:  'Maharah istima\', kitabah, qira\'ah, & kalam',
+      href:  'materi-bahasa-arab-praktik.html',
+      ready: true
+    },
+    {
+      emoji: '🎨',
+      name:  'Seni Budaya Praktik',
+      meta:  'Teknik seni rupa, vokal, gerak tari, & ekspresi',
+      href:  'materi-seni-budaya-praktik.html',
+      ready: true
+    },
+    {
+      emoji: '🌺',
+      name:  'Bahasa Sunda Praktik',
+      meta:  'Maca, nulis, paguneman, & nembang pupuh',
+      href:  'materi-bahasa-sunda-praktik.html',
+      ready: true
+    },
+    {
+      emoji: '🖥️',
+      name:  'TIK Praktik',
+      meta:  'Pengoperasian komputer, aplikasi, internet, & keamanan digital',
+      href:  'materi-tik-praktik.html',
+      ready: false
+    },
+  ];
+
+  // Render kartu secara otomatis
+  (function renderPraktikCards() {
+    const grid = document.getElementById('praktikGrid');
+    if (!grid) return;
+
+    PRAKTIK_MAPEL.forEach(mapel => {
+      const statusClass = mapel.ready ? 'ready' : 'coming';
+      const statusLabel = mapel.ready ? 'Siap dipelajari' : 'Segera hadir';
+
+      const a = document.createElement('a');
+      a.className = 'subject-card praktik';
+      a.href = mapel.href;
+      a.innerHTML = `
+        <div class="subject-emoji">${mapel.emoji}</div>
+        <div class="subject-info">
+          <div class="subject-name">${mapel.name}</div>
+          <div class="subject-meta">${mapel.meta}</div>
+          <span class="status-tag ${statusClass}">${statusLabel}</span>
+        </div>
+        <span class="subject-arrow">→</span>
+      `;
+      grid.appendChild(a);
+    });
+  })();
+</script>
 </body>
 </html>
