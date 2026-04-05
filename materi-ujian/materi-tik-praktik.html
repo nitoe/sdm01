@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materi TIK Praktik – Ujian Sekolah Kelas 6</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --indigo:#4f46e5;--indigo-dark:#3730a3;--indigo-xdark:#1e1b4b;--indigo-light:#eef2ff;--indigo-pale:#f5f3ff;
+      --blue:#2563eb;--blue-light:#dbeafe;--cyan:#0891b2;--cyan-light:#cffafe;
+      --green:#059669;--green-light:#d1fae5;--amber:#d97706;--amber-light:#fef3c7;
+      --red:#dc2626;--red-light:#fef2f2;--orange:#ea580c;--orange-light:#fff7ed;
+      --emerald:#059669;--emerald-light:#d1fae5;
+      --text:#1f2a37;--text-muted:#6b7280;--bg:#eef2ff;--white:#fff;--border:#e5e7eb;
+      --radius:14px;--shadow:0 4px 20px rgba(0,0,0,0.06);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:clamp(14px,3.2vw,16px);scroll-behavior:smooth;}
+    body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.75;}
+
+    kbd{display:inline-flex;align-items:center;justify-content:center;background:#1e1b4b;color:#c7d2fe;font-family:'JetBrains Mono',monospace;font-size:.72em;font-weight:700;padding:2px 7px;border-radius:5px;border-bottom:2px solid #312e81;white-space:nowrap;letter-spacing:.3px;}
+    .kbd-plus{color:var(--text-muted);font-size:.7em;font-weight:900;}
+    .formula{font-family:'JetBrains Mono',monospace;font-size:.85em;background:#1e1b4b;color:#a5f3fc;padding:2px 8px;border-radius:5px;}
+    .menu-path{display:inline-flex;align-items:center;gap:4px;font-size:.78em;font-weight:700;color:var(--indigo-dark);background:var(--indigo-light);padding:2px 8px;border-radius:5px;}
+    .menu-path span{opacity:.5;}
+
+    .header{position:sticky;top:0;z-index:100;background:linear-gradient(135deg,var(--indigo-xdark),var(--indigo-dark) 50%,var(--indigo));color:white;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(0,0,0,.3);}
+    .header-brand{display:flex;align-items:center;gap:10px;}
+    .logo{font-size:1.5rem;}
+    .brand-name{font-family:'Baloo 2',cursive;font-size:clamp(.82rem,2.6vw,1rem);font-weight:800;line-height:1.1;}
+    .sub-brand{font-size:.62rem;opacity:.8;font-weight:600;}
+    .header-back{display:flex;align-items:center;gap:5px;color:white;text-decoration:none;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:4px 14px;font-size:.72rem;font-weight:700;transition:background .2s;}
+    .header-back:hover{background:rgba(255,255,255,.25);}
+
+    .hero{background:linear-gradient(150deg,var(--indigo-xdark) 0%,var(--indigo-dark) 45%,var(--indigo) 100%);color:white;padding:42px 20px 52px;text-align:center;position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 20% 50%,rgba(165,180,252,.08) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(99,102,241,.12) 0%,transparent 50%);}
+    .hero::after{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:28px 28px;}
+    .hero-inner{position:relative;z-index:1;}
+    .hero-emoji{font-size:3rem;display:block;margin-bottom:10px;animation:floatTech 3.5s ease-in-out infinite;}
+    @keyframes floatTech{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
+    .hero h1{font-family:'Baloo 2',cursive;font-size:clamp(1.4rem,4.5vw,2rem);font-weight:800;margin-bottom:8px;}
+    .hero p{font-size:clamp(.8rem,2.2vw,.92rem);opacity:.88;font-weight:600;max-width:560px;margin:0 auto;line-height:1.6;}
+    .hero-badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px;}
+    .hero-badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:4px 14px;font-size:.72rem;font-weight:700;}
+
+    .container{max-width:900px;margin:0 auto;padding:32px 16px 60px;}
+
+    .info-box{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--indigo);border-radius:var(--radius);padding:14px 16px;margin-bottom:20px;display:flex;gap:10px;align-items:flex-start;font-size:.82rem;line-height:1.6;}
+    .info-box .icon{font-size:1.2rem;flex-shrink:0;margin-top:1px;}
+    .info-box strong{display:block;color:var(--indigo-dark);font-size:.88rem;margin-bottom:2px;}
+
+    .bobot-overview{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:28px;}
+    @media(min-width:600px){.bobot-overview{grid-template-columns:repeat(4,1fr);}}
+    .bobot-card{border-radius:12px;padding:14px 12px;text-align:center;text-decoration:none;transition:transform .15s,box-shadow .15s;border:1px solid transparent;}
+    .bobot-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.1);}
+    .bobot-card .bc-icon{font-size:1.8rem;margin-bottom:6px;}
+    .bobot-card .bc-name{font-family:'Baloo 2',cursive;font-size:.82rem;font-weight:800;line-height:1.2;}
+    .bobot-card .bc-pct{font-size:1.2rem;font-weight:900;margin-top:4px;}
+    .bobot-card.so{background:var(--cyan-light);border-color:#a5f3fc;}.bobot-card.so .bc-name,.bobot-card.so .bc-pct{color:var(--cyan);}
+    .bobot-card.wd{background:var(--blue-light);border-color:#bfdbfe;}.bobot-card.wd .bc-name,.bobot-card.wd .bc-pct{color:var(--blue);}
+    .bobot-card.xl{background:var(--green-light);border-color:#a7f3d0;}.bobot-card.xl .bc-name,.bobot-card.xl .bc-pct{color:var(--green);}
+    .bobot-card.pp{background:var(--orange-light);border-color:#fed7aa;}.bobot-card.pp .bc-name,.bobot-card.pp .bc-pct{color:var(--orange);}
+
+    .toc{background:var(--white);border:2px solid var(--indigo-light);border-radius:var(--radius);padding:16px 18px;margin-bottom:28px;}
+    .toc-title{font-family:'Baloo 2',cursive;font-size:.9rem;font-weight:800;color:var(--indigo-dark);margin-bottom:10px;}
+    .toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+    @media(min-width:600px){.toc-grid{grid-template-columns:repeat(4,1fr);}}
+    .toc-link{display:flex;align-items:center;gap:6px;padding:8px 10px;border-radius:10px;text-decoration:none;font-size:.76rem;font-weight:700;transition:all .15s;}
+    .toc-link.cyan{background:var(--cyan-light);color:var(--cyan);}
+    .toc-link.blue{background:var(--blue-light);color:var(--blue);}
+    .toc-link.green{background:var(--green-light);color:var(--green);}
+    .toc-link.orange{background:var(--orange-light);color:var(--orange);}
+    .toc-link:hover{filter:brightness(.92);transform:translateY(-1px);}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+    .section{margin-bottom:44px;animation:fadeUp .5s ease both;}
+    .section:nth-child(2){animation-delay:.08s;}.section:nth-child(3){animation-delay:.16s;}
+    .section:nth-child(4){animation-delay:.24s;}.section:nth-child(5){animation-delay:.32s;}
+    .section:nth-child(6){animation-delay:.40s;}
+
+    .section-header{display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:var(--radius) var(--radius) 0 0;color:white;}
+    .section-header.cyan{background:linear-gradient(135deg,#164e63,var(--cyan));}
+    .section-header.blue{background:linear-gradient(135deg,#1e3a8a,var(--blue));}
+    .section-header.green{background:linear-gradient(135deg,#064e3b,var(--green));}
+    .section-header.orange{background:linear-gradient(135deg,#7c2d12,var(--orange));}
+    .section-header.dark{background:linear-gradient(135deg,#111827,#374151);}
+    .section-icon{font-size:2rem;}
+    .section-title{font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;}
+    .section-sub{font-size:.7rem;opacity:.82;font-weight:600;margin-top:2px;}
+    .bobot-pill{background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.35);border-radius:12px;padding:3px 12px;font-size:.68rem;font-weight:800;margin-left:auto;flex-shrink:0;}
+    .section-body{background:var(--white);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--radius) var(--radius);padding:22px 20px;}
+
+    .shortcut-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:16px;}
+    @media(min-width:600px){.shortcut-grid{grid-template-columns:repeat(3,1fr);}}
+    .shortcut-item{display:flex;align-items:center;gap:8px;background:#f8f9ff;border:1px solid var(--indigo-light);border-radius:8px;padding:7px 10px;font-size:.76rem;}
+    .shortcut-item .sc-desc{font-weight:600;color:var(--text);}
+
+    .steps-title{font-family:'Baloo 2',cursive;font-size:.9rem;font-weight:800;color:var(--text);margin:16px 0 9px;display:flex;align-items:center;gap:6px;}
+    .steps-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+    .steps-list li{display:flex;gap:10px;align-items:flex-start;font-size:.82rem;line-height:1.55;background:#f9fafb;border-radius:8px;padding:8px 12px;}
+    .step-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:900;color:white;}
+    .step-num.cyan{background:var(--cyan);}.step-num.blue{background:var(--blue);}
+    .step-num.green{background:var(--green);}.step-num.orange{background:var(--orange);}
+
+    .two-col{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:16px;}
+    .three-col{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:16px;}
+    @media(min-width:580px){.two-col{grid-template-columns:1fr 1fr;}.three-col{grid-template-columns:1fr 1fr 1fr;}}
+
+    .mini-card{border-radius:10px;padding:13px 15px;font-size:.8rem;line-height:1.6;}
+    .mini-card .mc-title{font-weight:800;margin-bottom:6px;font-size:.82rem;}
+    .mini-card ul{padding-left:16px;}.mini-card li{margin-bottom:3px;}
+    .mini-card.cyan{background:var(--cyan-light);}.mini-card.cyan .mc-title{color:var(--cyan);}
+    .mini-card.blue{background:var(--blue-light);}.mini-card.blue .mc-title{color:var(--blue);}
+    .mini-card.green{background:var(--green-light);}.mini-card.green .mc-title{color:var(--green);}
+    .mini-card.orange{background:var(--orange-light);}.mini-card.orange .mc-title{color:var(--orange);}
+    .mini-card.indigo{background:var(--indigo-light);}.mini-card.indigo .mc-title{color:var(--indigo-dark);}
+    .mini-card.amber{background:var(--amber-light);}.mini-card.amber .mc-title{color:var(--amber);}
+
+    .highlight{background:var(--white);border:1px solid var(--border);border-left:4px solid;border-radius:8px;padding:11px 14px;font-size:.8rem;line-height:1.6;margin-bottom:12px;}
+    .highlight.cyan{border-left-color:var(--cyan);}.highlight.blue{border-left-color:var(--blue);}
+    .highlight.green{border-left-color:var(--green);}.highlight.orange{border-left-color:var(--orange);}
+    .highlight.indigo{border-left-color:var(--indigo);}
+    .highlight strong{display:block;margin-bottom:3px;font-size:.83rem;}
+    .highlight.cyan strong{color:var(--cyan);}.highlight.blue strong{color:var(--blue);}
+    .highlight.green strong{color:var(--green);}.highlight.orange strong{color:var(--orange);}
+    .highlight.indigo strong{color:var(--indigo-dark);}
+
+    .tips-box{background:var(--indigo-light);border:1px solid #c7d2fe;border-radius:var(--radius);padding:14px 16px;margin-top:14px;}
+    .tips-box-title{font-family:'Baloo 2',cursive;font-size:.88rem;font-weight:800;color:var(--indigo-dark);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+    .tips-list{list-style:none;display:flex;flex-direction:column;gap:5px;}
+    .tips-list li{font-size:.8rem;line-height:1.5;display:flex;gap:7px;align-items:flex-start;}
+    .tips-list li::before{content:'✓';color:var(--indigo);font-weight:900;flex-shrink:0;}
+
+    .formula-grid{display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:16px;}
+    @media(min-width:500px){.formula-grid{grid-template-columns:1fr 1fr;}}
+    .formula-card{background:#0f172a;border-radius:10px;padding:12px 14px;border:1px solid #334155;}
+    .formula-card .fc-name{font-size:.72rem;font-weight:800;color:#94a3b8;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+    .formula-card .fc-syntax{font-family:'JetBrains Mono',monospace;font-size:.9rem;color:#67e8f9;margin-bottom:5px;}
+    .formula-card .fc-example{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:#86efac;margin-bottom:5px;}
+    .formula-card .fc-desc{font-size:.73rem;color:#94a3b8;line-height:1.5;}
+
+    .ui-mock{background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:14px;font-size:.78rem;}
+    .ui-mock .um-title{font-weight:800;color:var(--text-muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;}
+    .ui-cell-row{display:flex;gap:4px;align-items:center;margin-bottom:4px;}
+    .ui-cell-addr{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text-muted);min-width:30px;}
+    .ui-cell{background:white;border:1px solid #e2e8f0;border-radius:4px;padding:3px 6px;font-size:.75rem;flex:1;}
+    .ui-cell.header{background:var(--indigo-light);font-weight:800;color:var(--indigo-dark);}
+    .ui-cell.formula{color:var(--green);font-family:'JetBrains Mono',monospace;}
+
+    .slide-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:14px;}
+    @media(min-width:500px){.slide-grid{grid-template-columns:repeat(3,1fr);}}
+    .slide-card{border-radius:10px;overflow:hidden;border:1px solid var(--border);background:var(--white);}
+    .slide-num{background:var(--orange);color:white;font-size:.62rem;font-weight:800;padding:3px 8px;text-transform:uppercase;letter-spacing:.3px;}
+    .slide-content{padding:10px 12px;}
+    .slide-title{font-weight:800;font-size:.8rem;color:var(--orange);margin-bottom:4px;}
+    .slide-desc{font-size:.73rem;color:var(--text-muted);line-height:1.5;}
+
+    .skala-table{width:100%;border-collapse:collapse;font-size:.78rem;margin-bottom:14px;border-radius:10px;overflow:hidden;border:1px solid var(--border);}
+    .skala-table th{background:#1f2937;color:white;padding:7px 10px;text-align:left;font-size:.72rem;font-weight:700;}
+    .skala-table td{padding:8px 10px;border-bottom:1px solid #f3f4f6;vertical-align:top;}
+    .skala-table tr:last-child td{border-bottom:none;}
+    .skala-table tr:nth-child(even) td{background:#f9fafb;}
+    .badge-nilai{display:inline-block;padding:1px 8px;border-radius:6px;font-weight:800;font-size:.7rem;}
+    .badge-sb{background:var(--emerald-light);color:var(--emerald);}
+    .badge-b{background:var(--blue-light);color:var(--blue);}
+    .badge-c{background:var(--amber-light);color:var(--amber);}
+    .badge-pp{background:var(--red-light);color:var(--red);}
+
+    .bobot-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;}
+    .bobot-chip{padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:800;border:1px solid currentColor;}
+    .divider{border:none;border-top:2px dashed #e0e7ff;margin:20px 0;}
+
+    .footer{text-align:center;padding:20px;font-size:.72rem;color:var(--text-muted);border-top:1px solid var(--border);background:var(--white);}
+    .back-top{position:fixed;bottom:20px;right:16px;background:var(--indigo);color:white;border:none;border-radius:50%;width:40px;height:40px;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(79,70,229,.45);opacity:0;transition:opacity .3s;z-index:50;}
+    .back-top.visible{opacity:1;}
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-brand">
+    <span class="logo">💻</span>
+    <div>
+      <div class="brand-name">TIK – Praktik Komputer</div>
+      <div class="sub-brand">Materi Ujian Sekolah · SD Muhammadiyah 01 Kukusan · Kelas 6</div>
+    </div>
+  </div>
+  <a href="index.html" class="header-back">← Kembali</a>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-emoji">🖥️</span>
+    <h1>Materi Ujian Praktik TIK</h1>
+    <p>Kuasai empat kompetensi komputer yang diujikan langsung di Lab: Sistem Operasi, Microsoft Word, Excel, dan PowerPoint. Semua langkah dijelaskan step-by-step.</p>
+    <div class="hero-badges">
+      <span class="hero-badge">🖥️ Sistem Operasi (20%)</span>
+      <span class="hero-badge">📝 Word (25%)</span>
+      <span class="hero-badge">📊 Excel (25%)</span>
+      <span class="hero-badge">🎞️ PowerPoint (30%)</span>
+      <span class="hero-badge">KKM: 70</span>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+
+  <div class="info-box">
+    <span class="icon">💡</span>
+    <div>
+      <strong>Tentang Ujian Praktik TIK</strong>
+      Ujian dilakukan langsung di Lab Komputer. Kamu akan mengerjakan tugas nyata — membuat folder, memformat dokumen Word, membuat tabel dengan rumus Excel, dan menyusun presentasi PowerPoint 6 slide. Pelajari setiap langkah dan hafalkan shortcut keyboard untuk bekerja lebih cepat.
+    </div>
+  </div>
+
+  <div class="bobot-overview">
+    <a href="#sistem-operasi" class="bobot-card so"><div class="bc-icon">🖥️</div><div class="bc-name">Sistem Operasi Windows</div><div class="bc-pct">20%</div></a>
+    <a href="#ms-word" class="bobot-card wd"><div class="bc-icon">📝</div><div class="bc-name">Microsoft Word</div><div class="bc-pct">25%</div></a>
+    <a href="#ms-excel" class="bobot-card xl"><div class="bc-icon">📊</div><div class="bc-name">Microsoft Excel</div><div class="bc-pct">25%</div></a>
+    <a href="#ms-ppt" class="bobot-card pp"><div class="bc-icon">🎞️</div><div class="bc-name">Microsoft PowerPoint</div><div class="bc-pct">30%</div></a>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">🗺️ Navigasi Cepat</div>
+    <div class="toc-grid">
+      <a href="#sistem-operasi" class="toc-link cyan">🖥️ Sistem Operasi</a>
+      <a href="#ms-word" class="toc-link blue">📝 Microsoft Word</a>
+      <a href="#ms-excel" class="toc-link green">📊 Microsoft Excel</a>
+      <a href="#ms-ppt" class="toc-link orange">🎞️ PowerPoint</a>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════ SISTEM OPERASI ════════════════════════════ -->
+  <div class="section" id="sistem-operasi">
+    <div class="section-header cyan">
+      <span class="section-icon">🖥️</span>
+      <div><div class="section-title">Sistem Operasi Windows</div><div class="section-sub">Desktop · File Explorer · Manajemen File &amp; Folder · Shortcut Keyboard</div></div>
+      <span class="bobot-pill">20%</span>
+    </div>
+    <div class="section-body">
+
+      <div class="bobot-bar">
+        <span class="bobot-chip" style="color:var(--cyan);border-color:var(--cyan);background:var(--cyan-light)">Bobot: 20%</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Manajemen file &amp; folder</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Shortcut keyboard</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Navigasi antarmuka</span>
+      </div>
+
+      <div class="two-col">
+        <div class="mini-card cyan">
+          <div class="mc-title">🖥️ Mengenal Desktop Windows</div>
+          <ul>
+            <li><b>Desktop</b> — layar utama setelah Windows menyala</li>
+            <li><b>Taskbar</b> — bar bawah untuk beralih antar program</li>
+            <li><b>Start Menu</b> — tekan <kbd>⊞ Win</kbd> untuk membuka semua program</li>
+            <li><b>System Tray</b> — kanan bawah, berisi jam, volume, Wi-Fi</li>
+            <li><b>File Explorer</b> — buka dengan <kbd>⊞ Win</kbd><span class="kbd-plus">+</span><kbd>E</kbd></li>
+          </ul>
+        </div>
+        <div class="mini-card indigo">
+          <div class="mc-title">📁 Struktur Folder Windows</div>
+          <ul>
+            <li><b>This PC</b> — akses ke semua drive</li>
+            <li><b>Drive C:</b> — tempat Windows dan program terinstal</li>
+            <li><b>Documents</b> — folder default untuk dokumen kerja</li>
+            <li><b>Desktop</b> — apa yang terlihat di layar utama</li>
+            <li><b>Downloads</b> — file yang diunduh dari internet</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="steps-title">📁 Membuat &amp; Mengelola Folder</div>
+      <ul class="steps-list">
+        <li><span class="step-num cyan">1</span><div><b>Membuat folder baru (Cara 1):</b> Buka File Explorer atau Desktop → klik kanan di area kosong → pilih <span class="menu-path">New <span>›</span> Folder</span> → ketik nama → tekan <kbd>Enter</kbd>.</div></li>
+        <li><span class="step-num cyan">2</span><div><b>Membuat folder baru (Cara 2 — shortcut):</b> Di File Explorer, tekan <kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>Shift</kbd><span class="kbd-plus">+</span><kbd>N</kbd> → folder baru langsung siap diberi nama.</div></li>
+        <li><span class="step-num cyan">3</span><div><b>Mengganti nama (Rename):</b> Klik folder sekali → tekan <kbd>F2</kbd> → ketik nama baru → <kbd>Enter</kbd>. Atau klik kanan → <span class="menu-path">Rename</span>.</div></li>
+        <li><span class="step-num cyan">4</span><div><b>Menghapus:</b> Pilih item → <kbd>Delete</kbd> → file masuk Recycle Bin. Untuk hapus permanen: <kbd>Shift</kbd><span class="kbd-plus">+</span><kbd>Delete</kbd>. Jika salah hapus, segera tekan <kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>Z</kbd>.</div></li>
+      </ul>
+
+      <div class="steps-title">📋 Copy, Cut, dan Paste File</div>
+      <ul class="steps-list">
+        <li><span class="step-num cyan">1</span><div><b>Memilih file:</b> Klik sekali untuk memilih satu item. <kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>Klik</kbd> untuk memilih beberapa item. <kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>A</kbd> untuk pilih semua.</div></li>
+        <li><span class="step-num cyan">2</span><div><b>Copy (Salin):</b> Pilih file → <kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>C</kbd> → pindah ke folder tujuan → <kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>V</kbd>. File asli tetap ada di tempat semula.</div></li>
+        <li><span class="step-num cyan">3</span><div><b>Cut (Pindah):</b> Pilih file → <kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>X</kbd> → pindah ke folder tujuan → <kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>V</kbd>. File asli akan hilang dari lokasi awal setelah di-paste.</div></li>
+        <li><span class="step-num cyan">4</span><div><b>Menjalankan program:</b> Double-click ikon program di Desktop, atau tekan <kbd>⊞ Win</kbd> → ketik nama program → tekan <kbd>Enter</kbd>. Beralih antar program: <kbd>Alt</kbd><span class="kbd-plus">+</span><kbd>Tab</kbd>.</div></li>
+      </ul>
+
+      <div class="steps-title">⌨️ Shortcut Keyboard Wajib Dikuasai</div>
+      <div class="shortcut-grid">
+        <div class="shortcut-item"><kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>C</kbd> <span class="sc-desc">Copy (salin)</span></div>
+        <div class="shortcut-item"><kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>X</kbd> <span class="sc-desc">Cut (pindah)</span></div>
+        <div class="shortcut-item"><kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>V</kbd> <span class="sc-desc">Paste (tempel)</span></div>
+        <div class="shortcut-item"><kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>Z</kbd> <span class="sc-desc">Undo (batalkan)</span></div>
+        <div class="shortcut-item"><kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>Y</kbd> <span class="sc-desc">Redo (ulangi)</span></div>
+        <div class="shortcut-item"><kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>S</kbd> <span class="sc-desc">Save (simpan)</span></div>
+        <div class="shortcut-item"><kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>A</kbd> <span class="sc-desc">Select All</span></div>
+        <div class="shortcut-item"><kbd>F2</kbd> <span class="sc-desc">Rename file/folder</span></div>
+        <div class="shortcut-item"><kbd>Delete</kbd> <span class="sc-desc">Hapus ke Recycle Bin</span></div>
+        <div class="shortcut-item"><kbd>⊞ Win</kbd><span class="kbd-plus">+</span><kbd>E</kbd> <span class="sc-desc">Buka File Explorer</span></div>
+        <div class="shortcut-item"><kbd>Alt</kbd><span class="kbd-plus">+</span><kbd>Tab</kbd> <span class="sc-desc">Beralih program</span></div>
+        <div class="shortcut-item"><kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>Shift</kbd><span class="kbd-plus">+</span><kbd>N</kbd> <span class="sc-desc">Folder baru</span></div>
+      </div>
+
+      <div class="tips-box">
+        <div class="tips-box-title">💡 Tips Ujian — Sistem Operasi</div>
+        <ul class="tips-list">
+          <li>Hafal <kbd>Ctrl</kbd>+C/V/X/Z/S sampai terasa otomatis — ini fondasi semua pekerjaan komputer.</li>
+          <li>Saat membuat folder, langsung ketik nama begitu folder terbuat — tidak perlu klik lagi.</li>
+          <li>Jika tidak sengaja menghapus file, tekan <kbd>Ctrl</kbd>+<kbd>Z</kbd> segera sebelum melakukan hal lain.</li>
+          <li>Cari program lebih cepat dengan tekan <kbd>⊞ Win</kbd> lalu ketik nama program, daripada cari ikon di desktop.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════════════ MICROSOFT WORD ════════════════════════════ -->
+  <div class="section" id="ms-word">
+    <div class="section-header blue">
+      <span class="section-icon">📝</span>
+      <div><div class="section-title">Microsoft Word</div><div class="section-sub">Ukuran Kertas &amp; Margin · Format Font · Paragraf · Insert Gambar</div></div>
+      <span class="bobot-pill">25%</span>
+    </div>
+    <div class="section-body">
+
+      <div class="bobot-bar">
+        <span class="bobot-chip" style="color:var(--blue);border-color:var(--blue);background:var(--blue-light)">Bobot: 25%</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Page setup</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Format font</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Paragraf</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Insert gambar</span>
+      </div>
+
+      <div class="steps-title">📄 Mengatur Ukuran Kertas &amp; Margin</div>
+      <ul class="steps-list">
+        <li><span class="step-num blue">1</span><div><b>Ukuran kertas:</b> Tab <span class="menu-path">Layout <span>›</span> Size</span> → pilih ukuran. Ukuran paling umum: <b>A4</b> (21×29,7 cm) untuk dokumen standar Indonesia.</div></li>
+        <li><span class="step-num blue">2</span><div><b>Margin:</b> <span class="menu-path">Layout <span>›</span> Margins</span> → pilih preset (Normal, Narrow, Wide) atau <span class="menu-path">Custom Margins...</span> untuk angka tepat. Margin standar Normal: semua sisi 2,54 cm.</div></li>
+        <li><span class="step-num blue">3</span><div><b>Orientasi:</b> <span class="menu-path">Layout <span>›</span> Orientation</span> → <b>Portrait</b> (tegak) atau <b>Landscape</b> (rebah/horizontal).</div></li>
+        <li><span class="step-num blue">4</span><div><b>Cara cepat:</b> Klik tanda panah kecil (↘) di sudut grup "Page Setup" untuk membuka semua pengaturan halaman sekaligus dalam satu dialog.</div></li>
+      </ul>
+
+      <div class="steps-title">🔤 Mengatur Format Font</div>
+      <ul class="steps-list">
+        <li><span class="step-num blue">1</span><div><b>Jenis font:</b> Seleksi teks → klik kotak nama font di tab Home (biasanya "Calibri") → ketik atau pilih font. Shortcut: <kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>Shift</kbd><span class="kbd-plus">+</span><kbd>F</kbd>.</div></li>
+        <li><span class="step-num blue">2</span><div><b>Ukuran font:</b> Seleksi teks → klik kotak angka ukuran → ketik angka → <kbd>Enter</kbd>. Atau: <kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>]</kbd> (perbesar), <kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>[</kbd> (perkecil).</div></li>
+        <li><span class="step-num blue">3</span><div><b>Bold / Italic / Underline:</b> Seleksi teks → <kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>B</kbd> (tebal), <kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>I</kbd> (miring), <kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>U</kbd> (garis bawah). Klik lagi shortcut yang sama untuk mematikannya.</div></li>
+        <li><span class="step-num blue">4</span><div><b>Warna font:</b> Seleksi teks → klik panah di sebelah tombol <b>A</b> (Font Color) di tab Home → pilih warna dari color picker.</div></li>
+        <li><span class="step-num blue">5</span><div><b>Hapus semua format:</b> Seleksi teks → klik tombol <b>Clear All Formatting</b> (ikon A dengan penghapus) di tab Home, atau tekan <kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>Space</kbd>.</div></li>
+      </ul>
+
+      <div class="shortcut-grid">
+        <div class="shortcut-item"><kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>B</kbd> <span class="sc-desc">Bold (tebal)</span></div>
+        <div class="shortcut-item"><kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>I</kbd> <span class="sc-desc">Italic (miring)</span></div>
+        <div class="shortcut-item"><kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>U</kbd> <span class="sc-desc">Underline (garis bawah)</span></div>
+        <div class="shortcut-item"><kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>]</kbd> <span class="sc-desc">Perbesar font</span></div>
+        <div class="shortcut-item"><kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>[</kbd> <span class="sc-desc">Perkecil font</span></div>
+        <div class="shortcut-item"><kbd>Ctrl</kbd><span class="kbd-plus">+</span><kbd>Space</kbd> <span class="sc-desc">Hapus format</span></div>
+      </div>
+
+      <div class="steps-title">¶ Pengaturan Paragraf</div>
+      <ul class="steps-list">
+        <li><span class="step-num blue">1</span><div><b>Alignment (perataan):</b> <kbd>Ctrl</kbd>+<kbd>L</kbd> = Rata kiri &nbsp;·&nbsp; <kbd>Ctrl</kbd>+<kbd>E</kbd> = Rata tengah &nbsp;·&nbsp; <kbd>Ctrl</kbd>+<kbd>R</kbd> = Rata kanan &nbsp;·&nbsp; <kbd>Ctrl</kbd>+<kbd>J</kbd> = Justify (rata kiri-kanan). Untuk dokumen formal Indonesia biasanya menggunakan <b>Justify</b>.</div></li>
+        <li><span class="step-num blue">2</span><div><b>Line Spacing (spasi baris):</b> Seleksi paragraf → <span class="menu-path">Home <span>›</span> Line and Paragraph Spacing</span> (ikon garis dengan panah) → pilih angka (1.0, 1.5, 2.0) atau <span class="menu-path">Line Spacing Options...</span> untuk kustom.</div></li>
+        <li><span class="step-num blue">3</span><div><b>Indentasi:</b> <kbd>Tab</kbd> untuk menjorokkan ke kanan, <kbd>Shift</kbd>+<kbd>Tab</kbd> untuk mengurangi. Atau atur angka di <span class="menu-path">Layout <span>›</span> Indent Left/Right</span>.</div></li>
+        <li><span class="step-num blue">4</span><div><b>Bullet &amp; Numbering:</b> Seleksi teks → klik tombol <b>Bullets</b> atau <b>Numbering</b> di tab Home. Klik panah kecil di sebelah tombol untuk memilih gaya bullet/nomor.</div></li>
+      </ul>
+
+      <div class="steps-title">🖼️ Memasukkan Gambar &amp; Mengatur Posisi</div>
+      <ul class="steps-list">
+        <li><span class="step-num blue">1</span><div><b>Insert gambar:</b> Tab <span class="menu-path">Insert <span>›</span> Pictures <span>›</span> This Device...</span> → pilih file gambar → klik <b>Insert</b>.</div></li>
+        <li><span class="step-num blue">2</span><div><b>Ubah ukuran gambar:</b> Klik gambar → seret <b>handle di sudut</b> (bukan sisi) untuk mengubah ukuran proporsional tanpa distorsi. Untuk ukuran tepat: klik kanan → <span class="menu-path">Size and Position...</span>.</div></li>
+        <li><span class="step-num blue">3</span><div><b>Text Wrapping (tata letak gambar):</b> Klik gambar → klik ikon Layout Options (muncul di kanan gambar) → pilih: <b>In Line with Text</b> (gambar seperti karakter teks), <b>Square/Tight</b> (teks mengelilingi gambar), <b>Top and Bottom</b> (teks di atas dan bawah), atau <b>Behind/In Front of Text</b>.</div></li>
+        <li><span class="step-num blue">4</span><div><b>Memindahkan gambar:</b> Ubah wrap ke selain "In Line with Text" → klik dan seret gambar ke posisi yang diinginkan. Gambar tidak bisa dipindah bebas jika masih "In Line with Text".</div></li>
+        <li><span class="step-num blue">5</span><div><b>Crop gambar:</b> Klik gambar → tab <span class="menu-path">Picture Format <span>›</span> Crop</span> → seret tepi hitam yang muncul → klik di luar gambar untuk selesai.</div></li>
+      </ul>
+
+      <div class="highlight blue">
+        <strong>💾 Menyimpan Dokumen Word</strong>
+        <kbd>Ctrl</kbd>+<kbd>S</kbd> untuk menyimpan cepat. Pertama kali: <span class="menu-path">File <span>›</span> Save As</span> → pilih lokasi → beri nama → pilih format <b>.docx</b> → klik Save. Biasakan simpan setiap beberapa menit agar tidak kehilangan pekerjaan.
+      </div>
+
+      <div class="tips-box">
+        <div class="tips-box-title">💡 Tips Ujian — Microsoft Word</div>
+        <ul class="tips-list">
+          <li>Atur page setup di awal sebelum mulai mengetik — lebih mudah dari mengubah di tengah pekerjaan.</li>
+          <li>Seleksi semua teks dengan <kbd>Ctrl</kbd>+<kbd>A</kbd> untuk mengatur font sekaligus jika diminta seragam.</li>
+          <li>Gambar tidak bisa dipindah bebas? Cek Text Wrapping — harus bukan "In Line with Text".</li>
+          <li>Gunakan <kbd>Ctrl</kbd>+<kbd>Z</kbd> jika format tidak sesuai — lebih cepat dari mengatur ulang manual.</li>
+          <li>Simpan dengan <kbd>Ctrl</kbd>+<kbd>S</kbd> setiap selesai satu bagian besar.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════════════ MICROSOFT EXCEL ════════════════════════════ -->
+  <div class="section" id="ms-excel">
+    <div class="section-header green">
+      <span class="section-icon">📊</span>
+      <div><div class="section-title">Microsoft Excel</div><div class="section-sub">Membuat Tabel · Lebar Kolom/Baris · Rumus SUM, AVERAGE, MAX, MIN · Format Tabel</div></div>
+      <span class="bobot-pill">25%</span>
+    </div>
+    <div class="section-body">
+
+      <div class="bobot-bar">
+        <span class="bobot-chip" style="color:var(--green);border-color:var(--green);background:var(--green-light)">Bobot: 25%</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Membuat tabel data</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Lebar kolom &amp; tinggi baris</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">SUM · AVERAGE · MAX · MIN</span>
+      </div>
+
+      <div class="two-col">
+        <div class="mini-card green">
+          <div class="mc-title">📊 Mengenal Antarmuka Excel</div>
+          <ul>
+            <li><b>Cell</b> — kotak data, nama pakai kolom+baris (A1, B3, C10)</li>
+            <li><b>Row (Baris)</b> — horizontal, bernomor (1, 2, 3...)</li>
+            <li><b>Column (Kolom)</b> — vertikal, berhuruf (A, B, C...)</li>
+            <li><b>Name Box</b> — pojok kiri atas, tampilkan alamat cell aktif</li>
+            <li><b>Formula Bar</b> — bar di atas tabel, tampilkan isi cell</li>
+          </ul>
+        </div>
+        <div class="mini-card indigo">
+          <div class="mc-title">✏️ Navigasi &amp; Input Data</div>
+          <ul>
+            <li>Klik cell → ketik data → <kbd>Enter</kbd> (turun) atau <kbd>Tab</kbd> (ke kanan)</li>
+            <li>Edit isi cell: tekan <kbd>F2</kbd> atau double-click</li>
+            <li>Hapus isi cell: pilih → tekan <kbd>Delete</kbd></li>
+            <li>Pilih banyak cell: klik pertama → <kbd>Shift</kbd>+klik terakhir</li>
+            <li>Pilih seluruh kolom: klik huruf kolom di header</li>
+            <li>Pilih seluruh baris: klik angka baris di header kiri</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="steps-title">📋 Membuat Tabel Data</div>
+      <div class="ui-mock">
+        <div class="um-title">Contoh: Tabel Nilai Siswa</div>
+        <div class="ui-cell-row">
+          <div class="ui-cell-addr">A1</div>
+          <div class="ui-cell header">No</div>
+          <div class="ui-cell header">Nama Siswa</div>
+          <div class="ui-cell header">Nilai Harian</div>
+          <div class="ui-cell header">Nilai UTS</div>
+          <div class="ui-cell header">Nilai UAS</div>
+          <div class="ui-cell header">Rata-rata</div>
+        </div>
+        <div class="ui-cell-row">
+          <div class="ui-cell-addr">A2</div>
+          <div class="ui-cell">1</div>
+          <div class="ui-cell">Ahmad Faarih</div>
+          <div class="ui-cell">85</div>
+          <div class="ui-cell">80</div>
+          <div class="ui-cell">88</div>
+          <div class="ui-cell formula">=AVERAGE(C2:E2)</div>
+        </div>
+        <div class="ui-cell-row">
+          <div class="ui-cell-addr">A3</div>
+          <div class="ui-cell">2</div>
+          <div class="ui-cell">Brilyan Alifah</div>
+          <div class="ui-cell">90</div>
+          <div class="ui-cell">85</div>
+          <div class="ui-cell">92</div>
+          <div class="ui-cell formula">=AVERAGE(C3:E3)</div>
+        </div>
+      </div>
+
+      <ul class="steps-list">
+        <li><span class="step-num green">1</span><div><b>Buat header tabel:</b> Ketik nama kolom di baris pertama. Header biasanya dibuat Bold dan diberi background warna agar mudah dibedakan dari data.</div></li>
+        <li><span class="step-num green">2</span><div><b>Isi data:</b> Gunakan <kbd>Tab</kbd> untuk bergerak ke kanan dan <kbd>Enter</kbd> untuk turun ke baris berikutnya. Masukkan data sistematis kiri ke kanan, atas ke bawah.</div></li>
+        <li><span class="step-num green">3</span><div><b>Merge &amp; Center (gabung sel):</b> Pilih beberapa cell → <span class="menu-path">Home <span>›</span> Merge &amp; Center</span>. Sering untuk judul tabel yang mencakup beberapa kolom.</div></li>
+        <li><span class="step-num green">4</span><div><b>Border (garis tabel):</b> Pilih semua cell tabel → klik panah di tombol <b>Border</b> → pilih <span class="menu-path">All Borders</span> untuk memberi garis di semua sisi.</div></li>
+        <li><span class="step-num green">5</span><div><b>Warna background:</b> Pilih cell → klik panah di tombol <b>Fill Color</b> (ember cat) → pilih warna. Digunakan untuk membedakan header dari data.</div></li>
+      </ul>
+
+      <div class="steps-title">↔️ Mengatur Lebar Kolom &amp; Tinggi Baris</div>
+      <ul class="steps-list">
+        <li><span class="step-num green">1</span><div><b>Seret batas kolom:</b> Arahkan kursor ke batas antara dua huruf kolom di header hingga berubah menjadi panah dua arah (↔) → seret untuk mengubah lebar.</div></li>
+        <li><span class="step-num green">2</span><div><b>AutoFit lebar kolom:</b> Double-click pada batas kolom di header → lebar otomatis menyesuaikan konten terpanjang. Atau klik kanan header kolom → <span class="menu-path">Column Width...</span> untuk masukkan angka tepat.</div></li>
+        <li><span class="step-num green">3</span><div><b>AutoFit semua sekaligus:</b> Pilih semua (<kbd>Ctrl</kbd>+<kbd>A</kbd>) → klik kanan di header kolom mana saja → pilih Column Width, atau double-click batas header kolom mana saja.</div></li>
+        <li><span class="step-num green">4</span><div><b>Tinggi baris:</b> Arahkan ke batas antara dua nomor baris di header kiri → seret. Atau klik kanan nomor baris → <span class="menu-path">Row Height...</span></div></li>
+      </ul>
+
+      <div class="steps-title">🔢 Rumus Dasar yang Wajib Dikuasai</div>
+      <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:12px;line-height:1.6;">Semua rumus Excel diawali dengan tanda <span class="formula">=</span>. Tanpa tanda ini, Excel menganggap isi cell sebagai teks biasa, bukan perhitungan.</p>
+
+      <div class="formula-grid">
+        <div class="formula-card">
+          <div class="fc-name">SUM — Penjumlahan</div>
+          <div class="fc-syntax">=SUM(range)</div>
+          <div class="fc-example">=SUM(B2:B10)</div>
+          <div class="fc-desc">Menjumlahkan semua angka dari B2 sampai B10. Bisa juga sel terpisah: =SUM(B2,C2,D2)</div>
+        </div>
+        <div class="formula-card">
+          <div class="fc-name">AVERAGE — Rata-rata</div>
+          <div class="fc-syntax">=AVERAGE(range)</div>
+          <div class="fc-example">=AVERAGE(C2:C10)</div>
+          <div class="fc-desc">Menghitung rata-rata angka dari C2 sampai C10. Otomatis membagi total dengan jumlah data.</div>
+        </div>
+        <div class="formula-card">
+          <div class="fc-name">MAX — Nilai Tertinggi</div>
+          <div class="fc-syntax">=MAX(range)</div>
+          <div class="fc-example">=MAX(D2:D10)</div>
+          <div class="fc-desc">Menemukan angka tertinggi dari D2 sampai D10. Berguna mencari nilai ujian tertinggi.</div>
+        </div>
+        <div class="formula-card">
+          <div class="fc-name">MIN — Nilai Terendah</div>
+          <div class="fc-syntax">=MIN(range)</div>
+          <div class="fc-example">=MIN(D2:D10)</div>
+          <div class="fc-desc">Menemukan angka terendah dari D2 sampai D10. Berguna mencari nilai terendah dari data.</div>
+        </div>
+      </div>
+
+      <div class="highlight green">
+        <strong>⚡ Cara Menggunakan Rumus — Step by Step</strong>
+        (1) Klik cell tempat hasil akan ditampilkan (misal F2). (2) Ketik <span class="formula">=SUM(</span>. (3) Klik dan <b>seret</b> untuk memilih range (misal C2 sampai E2). (4) Ketik <span class="formula">)</span>. (5) Tekan <kbd>Enter</kbd>. Hasilnya langsung muncul. Untuk menyalin rumus ke baris bawah: klik cell F2 → arahkan ke pojok kanan bawah hingga muncul tanda <b>+</b> → seret ke bawah (AutoFill).
+      </div>
+
+      <div class="tips-box">
+        <div class="tips-box-title">💡 Tips Ujian — Microsoft Excel</div>
+        <ul class="tips-list">
+          <li>Selalu awali rumus dengan <span class="formula">=</span> — tanpa ini Excel tidak menghitung apapun.</li>
+          <li>Saat menulis rumus, pilih range dengan klik-seret langsung di spreadsheet — lebih cepat dan akurat dari mengetik alamat.</li>
+          <li>Rumus menampilkan <b>#VALUE!</b> atau <b>#REF!</b>? Cek apakah range benar dan semua cell berisi angka, bukan teks.</li>
+          <li>Gunakan AutoFit (double-click batas kolom) setelah mengisi data agar konten tidak terpotong.</li>
+          <li>Gunakan Fill Color untuk header agar tabel terlihat lebih rapi dan profesional.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════════════ POWERPOINT ════════════════════════════ -->
+  <div class="section" id="ms-ppt">
+    <div class="section-header orange">
+      <span class="section-icon">🎞️</span>
+      <div><div class="section-title">Microsoft PowerPoint</div><div class="section-sub">Presentasi 6 Slide · Desain &amp; Tema · Animasi &amp; Transisi · Konsistensi Tampilan</div></div>
+      <span class="bobot-pill">30% — Bobot Terbesar</span>
+    </div>
+    <div class="section-body">
+
+      <div class="bobot-bar">
+        <span class="bobot-chip" style="color:var(--orange);border-color:var(--orange);background:var(--orange-light)">Bobot: 30% — Terbesar</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Presentasi sistematis 6 slide</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Design &amp; animasi</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Konsistensi tampilan</span>
+      </div>
+
+      <div class="steps-title">📑 Struktur Presentasi 6 Slide yang Sistematis</div>
+      <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:12px;line-height:1.6;">PowerPoint memiliki bobot terbesar (30%) karena menilai kemampuan menyampaikan informasi secara terstruktur dan visual. Presentasi yang baik harus memiliki alur yang jelas dari awal hingga akhir, dengan tampilan yang konsisten di seluruh slide.</p>
+
+      <div class="slide-grid">
+        <div class="slide-card"><div class="slide-num">Slide 1</div><div class="slide-content"><div class="slide-title">🏷️ Cover / Judul</div><div class="slide-desc">Judul presentasi besar dan jelas. Nama pembuat. Sub-judul jika perlu. Ini kesan pertama — buat menarik.</div></div></div>
+        <div class="slide-card"><div class="slide-num">Slide 2</div><div class="slide-content"><div class="slide-title">📋 Daftar Isi / Pendahuluan</div><div class="slide-desc">Daftar topik yang akan dibahas, atau pengantar singkat. Memberi gambaran kepada penonton tentang isi presentasi.</div></div></div>
+        <div class="slide-card"><div class="slide-num">Slide 3</div><div class="slide-content"><div class="slide-title">📝 Konten Utama 1</div><div class="slide-desc">Poin atau topik pertama. Gunakan bullet points singkat, bukan kalimat panjang. Tambah gambar/ikon relevan.</div></div></div>
+        <div class="slide-card"><div class="slide-num">Slide 4</div><div class="slide-content"><div class="slide-title">📝 Konten Utama 2</div><div class="slide-desc">Poin atau topik kedua. Variasikan layout dari slide 3 agar tidak monoton — tapi warna dan font tetap konsisten.</div></div></div>
+        <div class="slide-card"><div class="slide-num">Slide 5</div><div class="slide-content"><div class="slide-title">📊 Elemen Visual</div><div class="slide-desc">Gambar, tabel, diagram, atau infografis. PowerPoint bukan hanya teks — visual memperkuat pesan secara signifikan.</div></div></div>
+        <div class="slide-card"><div class="slide-num">Slide 6</div><div class="slide-content"><div class="slide-title">✅ Penutup / Kesimpulan</div><div class="slide-desc">Ringkasan poin utama. Ucapan terima kasih. Boleh tambah pertanyaan diskusi atau call-to-action.</div></div></div>
+      </div>
+
+      <div class="steps-title">🎨 Menggunakan Fitur Desain (Design Theme)</div>
+      <ul class="steps-list">
+        <li><span class="step-num orange">1</span><div><b>Memilih tema:</b> Tab <span class="menu-path">Design</span> → bagian "Themes" → pilih tema. Tema otomatis mengubah warna latar, font, dan elemen dekoratif seluruh presentasi sekaligus. <b>Pilih tema di awal sebelum mengisi konten.</b></div></li>
+        <li><span class="step-num orange">2</span><div><b>Variasi warna tema:</b> Setelah pilih tema → di bagian "Variants" (kanan Themes) → pilih variasi warna. Mengubah palet warna tanpa mengganti desain dasar.</div></li>
+        <li><span class="step-num orange">3</span><div><b>Format Background:</b> Klik kanan area slide → <span class="menu-path">Format Background...</span> → pilih warna solid, gradien, gambar, atau tekstur. Centang "Apply to All" untuk seluruh slide.</div></li>
+        <li><span class="step-num orange">4</span><div><b>Slide Layout:</b> Klik kanan area slide → <span class="menu-path">Layout</span> → pilih tata letak (Title Slide, Title and Content, Blank, Picture with Caption, dll.).</div></li>
+        <li><span class="step-num orange">5</span><div><b>Konsistensi adalah kunci:</b> Satu tema untuk seluruh presentasi. Font, warna, ukuran elemen harus konsisten antar slide. Presentasi yang terlihat "campur aduk" menunjukkan kurangnya perencanaan.</div></li>
+      </ul>
+
+      <div class="steps-title">✨ Animasi Objek &amp; Transisi Slide</div>
+      <ul class="steps-list">
+        <li><span class="step-num orange">1</span><div><b>Menambahkan animasi:</b> Klik objek (teks, gambar, dll.) → tab <span class="menu-path">Animations</span> → pilih efek (Appear, Fade, Fly In, dll.). Di bagian "Timing": atur Start (On Click / With Previous / After Previous), Duration, dan Delay.</div></li>
+        <li><span class="step-num orange">2</span><div><b>Prinsip animasi baik:</b> Gunakan animasi secara <b>selektif</b>, bukan semua objek. Animasi berlebihan justru mengganggu. <b>Fade</b> atau <b>Appear</b> menghasilkan tampilan paling bersih dan profesional.</div></li>
+        <li><span class="step-num orange">3</span><div><b>Transisi antar slide:</b> Klik slide di panel kiri → tab <span class="menu-path">Transitions</span> → pilih efek (Fade, Push, Wipe, dll.) → klik <b>Apply to All</b> untuk konsistensi di seluruh slide sekaligus.</div></li>
+        <li><span class="step-num orange">4</span><div><b>Kecepatan transisi:</b> Atur Duration di bagian Timing. Kecepatan ideal: 0,5–1 detik. Terlalu lambat (&gt;2 detik) membosankan, terlalu cepat (&lt;0,3 detik) terasa tergesa-gesa.</div></li>
+      </ul>
+
+      <div class="two-col">
+        <div class="mini-card orange">
+          <div class="mc-title">🖼️ Memasukkan Gambar di Slide</div>
+          <ul>
+            <li><span class="menu-path">Insert <span>›</span> Pictures <span>›</span> This Device</span> — dari file lokal</li>
+            <li>Klik gambar → seret handle <b>sudut</b> untuk resize proporsional</li>
+            <li>Tab <span class="menu-path">Picture Format</span> → Crop, Style, Color, Effects</li>
+            <li>Klik kanan → <span class="menu-path">Send to Back / Bring to Front</span> untuk atur layer</li>
+          </ul>
+        </div>
+        <div class="mini-card indigo">
+          <div class="mc-title">▶️ Mode Presentasi &amp; Simpan</div>
+          <ul>
+            <li><kbd>F5</kbd> — mulai dari slide pertama</li>
+            <li><kbd>Shift</kbd>+<kbd>F5</kbd> — mulai dari slide saat ini</li>
+            <li><kbd>→</kbd> atau klik — ke slide berikutnya</li>
+            <li><kbd>←</kbd> — ke slide sebelumnya</li>
+            <li><kbd>Esc</kbd> — keluar dari mode presentasi</li>
+            <li><kbd>Ctrl</kbd>+<kbd>S</kbd> — simpan file .pptx</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="highlight orange">
+        <strong>⚠️ Kesalahan Paling Umum dalam Ujian PowerPoint</strong>
+        (1) Terlalu banyak teks di satu slide — setiap slide idealnya hanya 5–7 poin singkat, bukan paragraf panjang. (2) Font terlalu kecil — minimal 18pt untuk isi, 28pt+ untuk judul. (3) Warna teks tidak kontras dengan latar — teks gelap di latar gelap tidak bisa dibaca. (4) Setiap slide tampil berbeda tanpa tema — terlihat tidak profesional. (5) Animasi berlebihan dan tidak perlu — mengganggu, bukan memperindah.
+      </div>
+
+      <div class="tips-box">
+        <div class="tips-box-title">💡 Tips Ujian — Microsoft PowerPoint</div>
+        <ul class="tips-list">
+          <li>Pilih tema desain di awal sebelum mengisi konten — memastikan konsistensi dari slide pertama.</li>
+          <li>Rencanakan urutan 6 slide (Cover → Daftar Isi → Konten 1 → Konten 2 → Visual → Penutup) sebelum mulai mengetik.</li>
+          <li>Gunakan <kbd>Ctrl</kbd>+<kbd>D</kbd> untuk menduplikasi slide dengan cepat sambil menjaga konsistensi layout.</li>
+          <li>Tambahkan nomor slide: <span class="menu-path">Insert <span>›</span> Slide Number</span> — tampak profesional dan memudahkan navigasi.</li>
+          <li>Preview seluruh presentasi dengan <kbd>F5</kbd> sebelum menyimpan — pastikan animasi dan transisi berjalan seperti yang diinginkan.</li>
+          <li>Simpan dalam format <b>.pptx</b> agar bisa diedit kembali. Gunakan <span class="menu-path">Save As <span>›</span> PDF</span> jika ingin mengunci tampilan.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════════════ RUBRIK ════════════════════════════ -->
+  <div class="section" id="rubrik">
+    <div class="section-header dark">
+      <span class="section-icon">📊</span>
+      <div><div class="section-title">Rubrik Penilaian &amp; Cara Hitung Nilai</div><div class="section-sub">Deskriptor per nilai untuk semua aspek TIK Praktik</div></div>
+    </div>
+    <div class="section-body">
+
+      <table class="skala-table">
+        <thead>
+          <tr>
+            <th>Nilai</th>
+            <th>🖥️ Sistem Operasi (20%)</th>
+            <th>📝 Word (25%)</th>
+            <th>📊 Excel (25%)</th>
+            <th>🎞️ PowerPoint (30%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge-nilai badge-sb">4 – SB</span><br><small>90–100</small></td>
+            <td>Mahir buat/kelola folder, copy-paste lancar, shortcut dikuasai, navigasi cepat dan tepat</td>
+            <td>Page setup tepat, format font beragam dan konsisten, paragraf rapi dengan spacing sesuai, gambar berposisi dan berukuran benar</td>
+            <td>Tabel rapi dan lengkap, kolom/baris disesuaikan dengan baik, semua rumus benar dan digunakan tepat, format tabel profesional</td>
+            <td>6 slide sistematis, tema konsisten di semua slide, animasi &amp; transisi tepat dan tidak berlebihan, visual menarik dan teks ringkas</td>
+          </tr>
+          <tr>
+            <td><span class="badge-nilai badge-b">3 – B</span><br><small>70–89</small></td>
+            <td>Bisa buat folder dan copy-paste, tahu beberapa shortcut dasar, navigasi cukup baik</td>
+            <td>Page setup benar, format font diterapkan dengan baik, paragraf cukup rapi, gambar bisa dimasukkan meski posisi belum sempurna</td>
+            <td>Tabel ada dengan data lengkap, lebar kolom disesuaikan, sebagian besar rumus diterapkan dengan benar</td>
+            <td>6 slide ada dengan konten yang cukup sistematis, tema dipilih, ada animasi atau transisi meski belum optimal</td>
+          </tr>
+          <tr>
+            <td><span class="badge-nilai badge-c">2 – C</span><br><small>50–69</small></td>
+            <td>Bisa buat folder tapi kesulitan shortcut, copy-paste hanya via menu klik kanan</td>
+            <td>Bisa mengetik dan atur font dasar, page setup dan paragraf kurang diperhatikan, gambar ada tapi tidak diatur</td>
+            <td>Ada tabel tapi kurang rapi, kolom tidak disesuaikan, hanya satu jenis rumus atau rumus ada kesalahan</td>
+            <td>Kurang dari 6 slide atau tidak sistematis, tema ada tapi tidak konsisten, tanpa animasi atau transisi bermakna</td>
+          </tr>
+          <tr>
+            <td><span class="badge-nilai badge-pp">1 – PP</span><br><small>&lt;50</small></td>
+            <td>Kesulitan dasar Windows, tidak bisa buat folder atau copy-paste</td>
+            <td>Hanya mengetik teks biasa tanpa format, tidak bisa atur page setup atau masukkan gambar</td>
+            <td>Tidak bisa buat tabel benar atau tidak menggunakan rumus sama sekali</td>
+            <td>Presentasi tidak selesai, kurang dari 4 slide, tidak ada tema, tidak ada animasi, konten tidak terstruktur</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="two-col" style="margin-top:18px;">
+        <div>
+          <div class="steps-title">🔢 Rumus Nilai Akhir TIK</div>
+          <div class="highlight indigo">
+            <strong>Formula Perhitungan</strong>
+            Nilai = (SO/4×20) + (Word/4×25) + (Excel/4×25) + (PPT/4×30)
+            <br><br>
+            <b>Contoh:</b> SO=3, Word=3, Excel=4, PPT=3<br>
+            = (3/4×20)+(3/4×25)+(4/4×25)+(3/4×30)<br>
+            = 15+18,75+25+22,5 = <b>81,25 ✅ Lulus</b>
+          </div>
+        </div>
+        <div>
+          <div class="steps-title">📋 Checklist Persiapan Ujian</div>
+          <div class="mini-card indigo">
+            <div class="mc-title">✅ Yang Harus Siap Hari Ujian</div>
+            <ul>
+              <li>Hafal shortcut: <kbd>Ctrl</kbd>+C/V/X/Z/S/A</li>
+              <li>Bisa buat, rename, dan delete folder</li>
+              <li>Tahu cara atur page setup dan format font di Word</li>
+              <li>Bisa insert gambar dan atur Text Wrapping</li>
+              <li>Hafal cara tulis rumus =SUM(), =AVERAGE(), =MAX(), =MIN()</li>
+              <li>Tahu cara pilih tema dan tambah animasi di PowerPoint</li>
+              <li>Rencana struktur 6 slide sudah disiapkan</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;margin-bottom:12px;">
+    <div style="font-family:'Baloo 2',cursive;font-size:.88rem;font-weight:800;color:var(--indigo-dark);margin-bottom:10px;">🔗 Navigasi Materi</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+      <a href="materi-tik.html" style="padding:6px 14px;border:1px solid var(--border);border-radius:8px;text-decoration:none;font-size:.72rem;font-weight:700;color:var(--text-muted);">💻 TIK Teori</a>
+      <a href="index.html" style="padding:6px 14px;border:1px solid var(--border);border-radius:8px;text-decoration:none;font-size:.72rem;font-weight:700;color:var(--text-muted);">📚 Semua Materi</a>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">SD Muhammadiyah 01 Kukusan · Materi Ujian Praktik TIK Kelas 6 · Tahun Pelajaran 2025/2026 💻</footer>
+
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Kembali ke atas">↑</button>
+
+<script>
+const bt=document.getElementById('backTop');
+window.addEventListener('scroll',()=>bt.classList.toggle('visible',window.scrollY>300));
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-70,behavior:'smooth'});}
+  });
+});
+</script>
+</body>
+</html>
