@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materi Bahasa Sunda Praktik – Ujian Sekolah Kelas 6</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ac:#d97706;--ac-dark:#b45309;--ac-xdark:#78350f;
+      --ac-light:#fef3c7;--ac-pale:#fffbeb;
+      --blue:#2563eb;--blue-light:#dbeafe;--green:#059669;--green-light:#d1fae5;
+      --red:#dc2626;--red-light:#fef2f2;--teal:#0d9488;--teal-light:#ccfbf1;
+      --emerald:#059669;--emerald-light:#d1fae5;
+      --text:#1f2a37;--text-muted:#6b7280;--bg:#fffbeb;--white:#fff;--border:#e5e7eb;
+      --radius:14px;--shadow:0 4px 20px rgba(0,0,0,.06);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:clamp(14px,3.2vw,16px);scroll-behavior:smooth;}
+    body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.75;}
+    .sunda{font-style:italic;color:var(--ac-dark);font-weight:700;}
+    .header{position:sticky;top:0;z-index:100;background:linear-gradient(135deg,var(--ac-xdark),var(--ac-dark) 50%,var(--ac));color:white;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(0,0,0,.25);}
+    .header-brand{display:flex;align-items:center;gap:10px;}
+    .logo{font-size:1.5rem;}
+    .brand-name{font-family:'Baloo 2',cursive;font-size:clamp(.82rem,2.6vw,1rem);font-weight:800;line-height:1.1;}
+    .sub-brand{font-size:.62rem;opacity:.8;font-weight:600;}
+    .header-back{display:flex;align-items:center;gap:5px;color:white;text-decoration:none;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 14px;font-size:.72rem;font-weight:700;transition:background .2s;}
+    .header-back:hover{background:rgba(255,255,255,.3);}
+    .hero{background:linear-gradient(160deg,var(--ac-xdark) 0%,var(--ac-dark) 40%,var(--ac) 100%);color:white;padding:42px 20px 50px;text-align:center;position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);background-size:24px 24px;}
+    .hero-inner{position:relative;z-index:1;}
+    .hero-emoji{font-size:3rem;display:block;margin-bottom:10px;animation:float 3s ease-in-out infinite;}
+    @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
+    .hero h1{font-family:'Baloo 2',cursive;font-size:clamp(1.35rem,4.3vw,1.95rem);font-weight:800;margin-bottom:8px;}
+    .hero p{font-size:clamp(.8rem,2.2vw,.92rem);opacity:.88;font-weight:600;max-width:560px;margin:0 auto;line-height:1.6;}
+    .hero-badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px;}
+    .hero-badge{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 14px;font-size:.72rem;font-weight:700;}
+    .container{max-width:900px;margin:0 auto;padding:32px 16px 60px;}
+    .info-box{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--ac);border-radius:var(--radius);padding:14px 16px;margin-bottom:24px;display:flex;gap:10px;align-items:flex-start;font-size:.82rem;line-height:1.6;}
+    .info-box .icon{font-size:1.2rem;flex-shrink:0;margin-top:1px;}
+    .info-box strong{display:block;color:var(--ac-dark);font-size:.88rem;margin-bottom:2px;}
+    .toc{background:var(--white);border:2px solid var(--ac-light);border-radius:var(--radius);padding:16px 18px;margin-bottom:28px;}
+    .toc-title{font-family:'Baloo 2',cursive;font-size:.9rem;font-weight:800;color:var(--ac-dark);margin-bottom:10px;}
+    .toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+    @media(min-width:600px){.toc-grid{grid-template-columns:repeat(3,1fr);}}
+    .toc-link{display:flex;align-items:center;gap:6px;padding:8px 10px;border-radius:10px;text-decoration:none;font-size:.76rem;font-weight:700;background:var(--ac-light);color:var(--ac-dark);transition:all .15s;}
+    .toc-link:hover{filter:brightness(.92);transform:translateY(-1px);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+    .section{margin-bottom:44px;animation:fadeUp .5s ease both;}
+    .section:nth-child(2){animation-delay:.08s;}.section:nth-child(3){animation-delay:.16s;}
+    .section:nth-child(4){animation-delay:.24s;}.section:nth-child(5){animation-delay:.32s;}
+    .section-header{display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:var(--radius) var(--radius) 0 0;color:white;background:linear-gradient(135deg,var(--ac-xdark),var(--ac-dark) 50%,var(--ac));}
+    .section-icon{font-size:2rem;}
+    .section-title{font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;}
+    .section-sub{font-size:.7rem;opacity:.82;font-weight:600;margin-top:2px;}
+    .bobot-pill{background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.35);border-radius:12px;padding:3px 12px;font-size:.68rem;font-weight:800;margin-left:auto;flex-shrink:0;}
+    .section-body{background:var(--white);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--radius) var(--radius);padding:22px 20px;}
+    .rubrik-row{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:18px;}
+    @media(min-width:600px){.rubrik-row{grid-template-columns:repeat(3,1fr);}}
+    .rc{border-radius:10px;padding:12px 14px;font-size:.78rem;line-height:1.6;}
+    .rc .rl{font-weight:800;font-size:.82rem;display:block;margin-bottom:4px;}
+    .rc.r1{background:#eff6ff;}.rc.r1 .rl{color:var(--blue);}
+    .rc.r2{background:var(--ac-light);}.rc.r2 .rl{color:var(--ac-dark);}
+    .rc.r3{background:var(--teal-light);}.rc.r3 .rl{color:var(--teal);}
+    .bobot-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;}
+    .bobot-chip{padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:800;border:1px solid currentColor;}
+    .steps-title{font-family:'Baloo 2',cursive;font-size:.9rem;font-weight:800;color:var(--text);margin:16px 0 9px;display:flex;align-items:center;gap:6px;}
+    .steps-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+    .steps-list li{display:flex;gap:10px;align-items:flex-start;font-size:.82rem;line-height:1.55;background:#f9fafb;border-radius:8px;padding:8px 12px;}
+    .sn{flex-shrink:0;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:900;color:white;background:var(--ac);}
+    .two-col{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:16px;}
+    .three-col{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:16px;}
+    @media(min-width:580px){.two-col{grid-template-columns:1fr 1fr;}.three-col{grid-template-columns:1fr 1fr 1fr;}}
+    .mc{border-radius:10px;padding:13px 15px;font-size:.8rem;line-height:1.6;}
+    .mc .mt{font-weight:800;margin-bottom:6px;font-size:.82rem;}
+    .mc ul{padding-left:16px;}.mc li{margin-bottom:3px;}
+    .mc.ac{background:var(--ac-light);}.mc.ac .mt{color:var(--ac-dark);}
+    .mc.bl{background:var(--blue-light);}.mc.bl .mt{color:var(--blue);}
+    .mc.gn{background:var(--green-light);}.mc.gn .mt{color:var(--green);}
+    .mc.tl{background:var(--teal-light);}.mc.tl .mt{color:var(--teal);}
+    .mc.rd{background:var(--red-light);}.mc.rd .mt{color:var(--red);}
+    .vocab-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px;}
+    @media(min-width:500px){.vocab-grid{grid-template-columns:repeat(3,1fr);}}
+    @media(min-width:700px){.vocab-grid{grid-template-columns:repeat(4,1fr);}}
+    .vocab-card{background:var(--ac-pale);border:1px solid var(--ac-light);border-radius:9px;padding:8px 10px;text-align:center;}
+    .vocab-sunda{font-size:1rem;font-weight:800;color:var(--ac-dark);display:block;margin-bottom:2px;}
+    .vocab-arti{font-size:.68rem;color:var(--text-muted);}
+    .pcq{background:var(--ac-pale);border:1px solid var(--ac-light);border-radius:12px;padding:14px 16px;margin-bottom:12px;}
+    .pcq-label{font-size:.68rem;font-weight:800;color:var(--ac-dark);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px;}
+    .pcq-row{display:flex;flex-direction:column;gap:7px;}
+    .pcq-line{display:grid;grid-template-columns:60px 1fr 1fr;gap:8px;align-items:start;font-size:.8rem;}
+    .pcq-who{font-weight:800;font-size:.7rem;color:var(--ac);}
+    .pcq-sunda{font-style:italic;font-weight:700;color:var(--ac-dark);line-height:1.6;}
+    .pcq-indo{font-size:.74rem;color:var(--text-muted);}
+    .hl{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--ac);border-radius:8px;padding:11px 14px;font-size:.8rem;line-height:1.6;margin-bottom:12px;}
+    .hl strong{display:block;margin-bottom:3px;font-size:.83rem;color:var(--ac-dark);}
+    .hl.rd{border-left-color:var(--red);}.hl.rd strong{color:var(--red);}
+    .tips-box{background:var(--ac-pale);border:1px solid var(--ac-light);border-radius:var(--radius);padding:14px 16px;margin-top:14px;}
+    .tips-box-title{font-family:'Baloo 2',cursive;font-size:.88rem;font-weight:800;color:var(--ac-dark);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+    .tips-list{list-style:none;display:flex;flex-direction:column;gap:5px;}
+    .tips-list li{font-size:.8rem;line-height:1.5;display:flex;gap:7px;align-items:flex-start;}
+    .tips-list li::before{content:'✓';color:var(--ac);font-weight:900;flex-shrink:0;}
+    .skala-table{width:100%;border-collapse:collapse;font-size:.78rem;margin-bottom:14px;border-radius:10px;overflow:hidden;border:1px solid var(--border);}
+    .skala-table th{background:#1f2937;color:white;padding:7px 10px;text-align:left;font-size:.72rem;font-weight:700;}
+    .skala-table td{padding:8px 10px;border-bottom:1px solid #f3f4f6;vertical-align:top;}
+    .skala-table tr:last-child td{border-bottom:none;}.skala-table tr:nth-child(even) td{background:#f9fafb;}
+    .bv{display:inline-block;padding:1px 8px;border-radius:6px;font-weight:800;font-size:.7rem;}
+    .bv-sb{background:var(--emerald-light);color:var(--emerald);}.bv-b{background:var(--blue-light);color:var(--blue);}
+    .bv-c{background:var(--ac-light);color:var(--ac-dark);}.bv-pp{background:var(--red-light);color:var(--red);}
+    .divider{border:none;border-top:2px dashed var(--ac-light);margin:20px 0;}
+    .footer{text-align:center;padding:20px;font-size:.72rem;color:var(--text-muted);border-top:1px solid var(--border);background:var(--white);}
+    .back-top{position:fixed;bottom:20px;right:16px;background:var(--ac);color:white;border:none;border-radius:50%;width:40px;height:40px;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(217,119,6,.4);opacity:0;transition:opacity .3s;z-index:50;}
+    .back-top.visible{opacity:1;}
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-brand">
+    <span class="logo">🎋</span>
+    <div>
+      <div class="brand-name">Bahasa Sunda – Praktik Maharah</div>
+      <div class="sub-brand">Materi Ujian Sekolah · SD Muhammadiyah 01 Kukusan · Kelas 6</div>
+    </div>
+  </div>
+  <a href="index.html" class="header-back">← Kembali</a>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-emoji">🎋</span>
+    <h1>Materi Ujian Praktik Bahasa Sunda</h1>
+    <p>Kuasai tilu kamampuhan basa Sunda: Ngaregepkeun-Nulis, Maca-Nyarita, jeung Apresiasi Budaya. Ujian ieu ngeunteung kana kamampuhan komunikasi dina kahirupan nyata.</p>
+    <div class="hero-badges">
+      <span class="hero-badge">👂 Ngaregepkeun–Nulis (50%)</span>
+      <span class="hero-badge">🗣️ Maca–Nyarita (30%)</span>
+      <span class="hero-badge">🙏 Apresiasi Budaya (20%)</span>
+      <span class="hero-badge">KKM: 70</span>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+
+  <div class="info-box">
+    <span class="icon">💡</span>
+    <div>
+      <strong>Fokus Ujian Praktik Bahasa Sunda</strong>
+      Penilaian berfokus pada <b>kemampuan berkomunikasi</b>, bukan hafalan tata bahasa. Tiga aspek: Ngaregepkeun-Nulis (50%), Maca-Nyarita (30%), dan Apresiasi Budaya & Sikap (20%). KKM: <b>70</b>. Gunakan <em>unggah-ungguh</em> (tata krama berbahasa) yang tepat sesuai lawan bicara.
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">🗺️ Navigasi Cepat</div>
+    <div class="toc-grid">
+      <a href="#ngaregep" class="toc-link">👂 Ngaregepkeun–Nulis</a>
+      <a href="#maca" class="toc-link">🗣️ Maca–Nyarita</a>
+      <a href="#apresiasi" class="toc-link">🙏 Apresiasi Budaya</a>
+    </div>
+  </div>
+
+  <!-- ══ ASPEK 1: NGAREGEPKEUN–NULIS (50%) ══ -->
+  <div class="section" id="ngaregep">
+    <div class="section-header">
+      <span class="section-icon">👂</span>
+      <div>
+        <div class="section-title">Ngaregepkeun &amp; Nulis</div>
+        <div class="section-sub">Mendengarkan &amp; Menulis · Ketepatan tangkap informasi lisan · Akurasi penulisan</div>
+      </div>
+      <span class="bobot-pill">50%</span>
+    </div>
+    <div class="section-body">
+      <div class="rubrik-row">
+        <div class="rc r1"><span class="rl">👂 Ngaregepkeun — 50%</span>Ketepatan menangkap informasi lisan dalam Bahasa Sunda, memahami makna kata dan kalimat yang diucapkan.</div>
+        <div class="rc r2"><span class="rl">✍️ Nulis — (bagian dari 50%)</span>Akurasi penulisan kata-kata Bahasa Sunda sesuai yang didengar, termasuk penulisan aksara dan penggunaan kata yang tepat.</div>
+        <div class="rc r3"><span class="rl">🔤 Pemahaman Kalimat</span>Kemampuan memahami makna kalimat lengkap, tidak hanya kata per kata — konteks dan inti pesan harus ditangkap dengan benar.</div>
+      </div>
+      <div class="bobot-bar">
+        <span class="bobot-chip" style="color:var(--ac);border-color:var(--ac);background:var(--ac-light)">Bobot Terbesar: 50%</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Ketepatan tangkap informasi lisan</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Akurasi penulisan Bahasa Sunda</span>
+      </div>
+
+      <div class="steps-title">🎯 Teknik Ngaregepkeun (Mendengarkan) yang Baik</div>
+      <ul class="steps-list">
+        <li><span class="sn">1</span><div><b>Fokus pada kata kunci:</b> Saat mendengar kalimat Sunda, tangkap kata benda dan kata kerja utamanya dulu. Contoh: dalam <span class="sunda">"Abdi miang ka sakola unggal isuk."</span> — kata kuncinya adalah <em>miang</em> (pergi) dan <em>sakola</em> (sekolah).</div></li>
+        <li><span class="sn">2</span><div><b>Kenali pola kalimat Sunda:</b> Struktur kalimat Sunda dasar: Subjek + Predikat + Objek/Keterangan. Mirip dengan bahasa Indonesia, sehingga lebih mudah dipahami konteksnya.</div></li>
+        <li><span class="sn">3</span><div><b>Manfaatkan kata mirip Indonesia:</b> Banyak kata Sunda memiliki kemiripan dengan bahasa Indonesia (buku → buku, meja → méja, guru → guru). Gunakan ini sebagai petunjuk saat mendengar.</div></li>
+        <li><span class="sn">4</span><div><b>Minta diulang dengan sopan:</b> Jika tidak jelas, ucapkan: <span class="sunda">"Punten, tiasa diulang deui?"</span> (Maaf, bisa diulangi?) dengan nada hormat.</div></li>
+      </ul>
+
+      <div class="steps-title">✍️ Teknik Nulis (Menulis) Bahasa Sunda</div>
+      <ul class="steps-list">
+        <li><span class="sn">1</span><div><b>Perhatikan huruf é (é taling):</b> Bahasa Sunda memiliki huruf <b>é</b> (dibaca seperti "e" pada kata "sate") yang berbeda dari <b>e</b> biasa (dibaca seperti "e" pada "ember"). Contoh: <span class="sunda">méja</span> (meja), <span class="sunda">lémbur</span> (kampung). Dalam ujian, perhatikan instruksi apakah menggunakan tanda diakritik atau tidak.</div></li>
+        <li><span class="sn">2</span><div><b>Perhatikan huruf eu:</b> Huruf gabungan <b>eu</b> dalam Bahasa Sunda diucapkan seperti "eu" dalam bahasa Sunda asli — agak ke belakang. Contoh: <span class="sunda">jeung</span> (dan), <span class="sunda">teureuy</span> (langsung), <span class="sunda">deukeut</span> (dekat).</div></li>
+        <li><span class="sn">3</span><div><b>Tulis sesuai yang didengar:</b> Dalam imla' (dikte) Bahasa Sunda, tuliskan persis kata yang diucapkan guru. Jangan "mengindonesiakan" kata Sunda dalam penulisan.</div></li>
+        <li><span class="sn">4</span><div><b>Penggunaan spasi dan tanda baca:</b> Ikuti aturan yang sama dengan bahasa Indonesia untuk titik, koma, dan tanda tanya. Huruf kapital di awal kalimat dan nama orang/tempat.</div></li>
+      </ul>
+
+      <div class="steps-title">📖 Kosakata Penting (Kecap Penting)</div>
+
+      <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:10px;font-weight:700;">🏫 Di Lingkungan Sekolah (Di Sakola)</p>
+      <div class="vocab-grid">
+        <div class="vocab-card"><span class="vocab-sunda">sakola</span><div class="vocab-arti">sekolah</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">guru</span><div class="vocab-arti">guru</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">murid</span><div class="vocab-arti">murid / siswa</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">buku</span><div class="vocab-arti">buku</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">méja</span><div class="vocab-arti">meja</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">korsi</span><div class="vocab-arti">kursi</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">papan tulis</span><div class="vocab-arti">papan tulis</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">kamar mandi</span><div class="vocab-arti">kamar mandi</div></div>
+      </div>
+
+      <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:10px;font-weight:700;margin-top:12px;">👨‍👩‍👧 Keluarga (Kulawarga)</p>
+      <div class="vocab-grid">
+        <div class="vocab-card"><span class="vocab-sunda">Bapa</span><div class="vocab-arti">Ayah</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">Ibu / Ema</span><div class="vocab-arti">Ibu</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">Akang</span><div class="vocab-arti">Kakak laki-laki</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">Teteh</span><div class="vocab-arti">Kakak perempuan</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">Adi</span><div class="vocab-arti">Adik</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">Aki</span><div class="vocab-arti">Kakek</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">Nini</span><div class="vocab-arti">Nenek</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">Ujang / Eneng</span><div class="vocab-arti">Panggilan anak</div></div>
+      </div>
+
+      <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:10px;font-weight:700;margin-top:12px;">🏃 Kata Kerja Sehari-hari (Kecap Pagawéan)</p>
+      <div class="vocab-grid">
+        <div class="vocab-card"><span class="vocab-sunda">miang</span><div class="vocab-arti">pergi</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">balik</span><div class="vocab-arti">pulang</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">dahar</span><div class="vocab-arti">makan</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">nginum</span><div class="vocab-arti">minum</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">maca</span><div class="vocab-arti">membaca</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">nulis</span><div class="vocab-arti">menulis</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">diajar</span><div class="vocab-arti">belajar</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">ulin</span><div class="vocab-arti">bermain</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">sare</span><div class="vocab-arti">tidur</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">linggih</span><div class="vocab-arti">duduk (halus)</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">ngomong</span><div class="vocab-arti">berbicara</div></div>
+        <div class="vocab-card"><span class="vocab-sunda">ngadangu</span><div class="vocab-arti">mendengarkan</div></div>
+      </div>
+
+      <div class="tips-box">
+        <div class="tips-box-title">💡 Tips Ujian — Ngaregepkeun-Nulis</div>
+        <ul class="tips-list">
+          <li>Latihan imla' setiap hari — minta orang tua atau teman membacakan kalimat Sunda dan tuliskan.</li>
+          <li>Perhatikan penulisan kata-kata yang mengandung <span class="sunda">eu</span> dan <span class="sunda">é</span> — ini sering jadi sumber kesalahan.</li>
+          <li>Hafalkan kosakata sehari-hari — lebih mudah menulis apa yang didengar jika kata tersebut sudah dikenal.</li>
+          <li>Jika tidak yakin ejaan, tuliskan yang paling mendekati bunyi — jangan biarkan kosong.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ASPEK 2: MACA–NYARITA (30%) ══ -->
+  <div class="section" id="maca">
+    <div class="section-header">
+      <span class="section-icon">🗣️</span>
+      <div>
+        <div class="section-title">Maca &amp; Nyarita</div>
+        <div class="section-sub">Membaca &amp; Berbicara · Kelancaran · Lafadz yang tepat · Intonasi</div>
+      </div>
+      <span class="bobot-pill">30%</span>
+    </div>
+    <div class="section-body">
+      <div class="rubrik-row">
+        <div class="rc r1"><span class="rl">📖 Maca — Membaca</span>Kelancaran membaca teks Sunda, ketepatan pelafalan (lafadz), penerapan intonasi yang sesuai dengan isi teks.</div>
+        <div class="rc r2"><span class="rl">🎤 Nyarita — Berbicara</span>Keberanian dan kelancaran berbicara dalam Bahasa Sunda, menggunakan kosakata yang tepat dan kalimat yang berstruktur baik.</div>
+        <div class="rc r3"><span class="rl">🎵 Pupuh (Tembang Sunda)</span>Jika diujikan: kemampuan melantunkan pupuh dengan tempo dan lagu yang benar, hafal lirik, dan ekspresi yang sesuai.</div>
+      </div>
+      <div class="bobot-bar">
+        <span class="bobot-chip" style="color:var(--ac);border-color:var(--ac);background:var(--ac-light)">Bobot: 30%</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Kelancaran membaca</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Lafadz &amp; intonasi</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Keberanian berbicara</span>
+      </div>
+
+      <div class="steps-title">📖 Teknik Maca (Membaca) Teks Sunda</div>
+      <ul class="steps-list">
+        <li><span class="sn">1</span><div><b>Perhatikan lafadz eu, é, dan ng:</b> Ini tiga bunyi khas Bahasa Sunda yang sering salah diucapkan. Latih secara khusus: <span class="sunda">eu</span> (seperti "oe" Belanda), <span class="sunda">é</span> (seperti "e" pada "sate"), dan <span class="sunda">ng</span> di awal kata (seperti <span class="sunda">ngomong</span>).</div></li>
+        <li><span class="sn">2</span><div><b>Baca perlahan namun lancar:</b> Lebih baik membaca pelan tapi lafadz tepat, daripada cepat tapi banyak salah ucap. Penilai menilai <em>ketepatan</em> bukan kecepatan.</div></li>
+        <li><span class="sn">3</span><div><b>Intonasi:</b> Kalimat pernyataan (wawaran) berakhir dengan intonasi turun. Kalimat tanya (pananya) berakhir dengan intonasi naik. Kalimat perintah (paréntah) diucapkan lebih tegas.</div></li>
+        <li><span class="sn">4</span><div><b>Jangan "mengindonesiakan" lafadz:</b> Kata <span class="sunda">leuweung</span> bukan dibaca "le-ung" tapi "leu-weung". Kata <span class="sunda">jeung</span> bukan "jéng" tapi "jeung" penuh. Perhatikan setiap suku kata.</div></li>
+      </ul>
+
+      <div class="steps-title">🎤 Teknik Nyarita (Berbicara) dalam Bahasa Sunda</div>
+      <ul class="steps-list">
+        <li><span class="sn">1</span><div><b>Mulai dengan salam Sunda:</b> <span class="sunda">"Assalamualaikum, wilujeng enjing/siang/sonten, Bapak/Ibu Guru."</span> Salam yang tepat menunjukkan adab dan penghargaan terhadap budaya Sunda.</div></li>
+        <li><span class="sn">2</span><div><b>Gunakan bahasa halus (basa lemes) kepada guru:</b> Kepada guru dan orang yang lebih tua, gunakan kata-kata halus. Contoh: gunakan <span class="sunda">"abdi"</span> bukan <span class="sunda">"kuring"</span> untuk "saya", <span class="sunda">"linggih"</span> bukan <span class="sunda">"calik"</span> untuk "duduk".</div></li>
+        <li><span class="sn">3</span><div><b>Berani meskipun tidak sempurna:</b> Penilai menilai keberanian berkomunikasi, bukan kesempurnaan. Lebih baik berbicara dengan beberapa kesalahan kecil daripada diam sama sekali.</div></li>
+        <li><span class="sn">4</span><div><b>Jika tidak tahu kata dalam Sunda:</b> Ucapkan: <span class="sunda">"Punten, kuring teu apal kecap Sundana, tapi hartosna..."</span> (Maaf, saya tidak tahu kata Sundanya, tapi artinya...) — ini lebih baik dari diam.</div></li>
+      </ul>
+
+      <!-- CONTOH PAGUNEMAN -->
+      <div class="steps-title">💬 Contoh Paguneman (Percakapan)</div>
+
+      <div class="pcq">
+        <div class="pcq-label">📌 Ngenalkeun Diri (Perkenalan Diri)</div>
+        <div class="pcq-row">
+          <div class="pcq-line"><div class="pcq-who">Guru:</div><div class="pcq-sunda">Saha nami anjeun?</div><div class="pcq-indo">Siapa nama kamu?</div></div>
+          <div class="pcq-line"><div class="pcq-who">Siswa:</div><div class="pcq-sunda">Nami abdi Ahmad Faarih, Bu Guru.</div><div class="pcq-indo">Nama saya Ahmad Faarih, Bu Guru.</div></div>
+          <div class="pcq-line"><div class="pcq-who">Guru:</div><div class="pcq-sunda">Cicing di mana?</div><div class="pcq-indo">Tinggal di mana?</div></div>
+          <div class="pcq-line"><div class="pcq-who">Siswa:</div><div class="pcq-sunda">Abdi cicing di Kukusan, Depok.</div><div class="pcq-indo">Saya tinggal di Kukusan, Depok.</div></div>
+          <div class="pcq-line"><div class="pcq-who">Guru:</div><div class="pcq-sunda">Sabaraha umur anjeun?</div><div class="pcq-indo">Berapa umur kamu?</div></div>
+          <div class="pcq-line"><div class="pcq-who">Siswa:</div><div class="pcq-sunda">Umur abdi dua belas taun.</div><div class="pcq-indo">Umur saya dua belas tahun.</div></div>
+        </div>
+      </div>
+
+      <div class="pcq">
+        <div class="pcq-label">📌 Di Sakola (Di Sekolah)</div>
+        <div class="pcq-row">
+          <div class="pcq-line"><div class="pcq-who">Guru:</div><div class="pcq-sunda">Naon palajaran anu paling dipikaresep?</div><div class="pcq-indo">Apa pelajaran yang paling disukai?</div></div>
+          <div class="pcq-line"><div class="pcq-who">Siswa:</div><div class="pcq-sunda">Palajaran anu paling dipikaresep ku abdi nyaéta Bahasa Sunda.</div><div class="pcq-indo">Pelajaran yang paling saya sukai adalah Bahasa Sunda.</div></div>
+          <div class="pcq-line"><div class="pcq-who">Guru:</div><div class="pcq-sunda">Naha resep kana Bahasa Sunda?</div><div class="pcq-indo">Kenapa suka Bahasa Sunda?</div></div>
+          <div class="pcq-line"><div class="pcq-who">Siswa:</div><div class="pcq-sunda">Margi Bahasa Sunda téh basa indung anu kudu dipiara.</div><div class="pcq-indo">Karena Bahasa Sunda adalah bahasa ibu yang harus dijaga/dilestarikan.</div></div>
+        </div>
+      </div>
+
+      <!-- PUPUH -->
+      <div class="steps-title">🎵 Pupuh — Tembang Sunda</div>
+      <div class="hl">
+        <strong>Apa itu Pupuh?</strong>
+        Pupuh adalah puisi/lagu tradisional Sunda yang memiliki aturan (guru wilangan = jumlah suku kata per baris, dan guru lagu = bunyi vokal akhir tiap baris). Ada 17 jenis pupuh, beberapa yang paling dikenal di tingkat SD adalah Kinanti, Sinom, Asmarandana, dan Pucung.
+      </div>
+      <div class="two-col">
+        <div class="mc ac">
+          <div class="mt">🎶 Pupuh Kinanti</div>
+          <p style="font-size:.78rem;margin-bottom:6px;">Aturan: 8u, 8i, 8a, 8i, 8a, 8i (6 baris, vokal akhir berurutan)</p>
+          <p style="font-style:italic;font-size:.8rem;color:var(--ac-dark);line-height:2;">Budak leutik bisa ngaji<br>Ngaji Qur'an sareng eling<br>Eling kana parentah Gusti<br>Gusti nu Maha Suci<br>Suci ati jeung rohani<br>Rohani caang berseri</p>
+        </div>
+        <div class="mc tl">
+          <div class="mt">🎶 Pupuh Asmarandana</div>
+          <p style="font-size:.78rem;margin-bottom:6px;">Aturan: 8i, 8a, 8é, 8a, 7a, 8u, 8a (7 baris)</p>
+          <p style="font-style:italic;font-size:.8rem;color:var(--teal);line-height:2;">Rék ngawih lagu Sunda asli<br>Tembang anu pinuh ku makna<br>Urang Sunda kudu nanjeur<br>Nanjeur dina kahormatan<br>Lakuning hirup saukur<br>Saukur ngabdi ka Gusti<br>Gusti Allah anu Maha</p>
+        </div>
+      </div>
+
+      <div class="tips-box">
+        <div class="tips-box-title">💡 Tips Ujian — Maca-Nyarita</div>
+        <ul class="tips-list">
+          <li>Latih lafadz <span class="sunda">eu</span> dan <span class="sunda">é</span> setiap hari — rekam suara sendiri lalu dengarkan untuk perbaikan.</li>
+          <li>Hafalkan percakapan perkenalan diri — ini hampir selalu ditanyakan dalam ujian berbicara Bahasa Sunda.</li>
+          <li>Gunakan <span class="sunda">abdi</span> (saya halus) saat berbicara dengan guru — bukan <span class="sunda">kuring</span> (saya kasual).</li>
+          <li>Jika diujikan pupuh, hafalkan lirik dan latih nada berulang kali — lebih baik lantunkan dengan tempo pelan tapi benar.</li>
+          <li>Awali dan akhiri dengan salam yang lengkap — ini menunjukkan adab dan apresiasi budaya yang akan menambah nilai.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ASPEK 3: APRESIASI BUDAYA & SIKAP (20%) ══ -->
+  <div class="section" id="apresiasi">
+    <div class="section-header">
+      <span class="section-icon">🙏</span>
+      <div>
+        <div class="section-title">Apresiasi Budaya &amp; Sikap</div>
+        <div class="section-sub">Unggah-ungguh · Ngajénan Basa Sunda · Kapercayaan Diri</div>
+      </div>
+      <span class="bobot-pill">20%</span>
+    </div>
+    <div class="section-body">
+      <div class="bobot-bar">
+        <span class="bobot-chip" style="color:var(--ac);border-color:var(--ac);background:var(--ac-light)">Bobot: 20%</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Unggah-ungguh (tata krama)</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Menghargai bahasa daerah</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Kepercayaan diri</span>
+      </div>
+
+      <div class="steps-title">🎭 Unggah-Ungguh Basa Sunda (Tata Krama Berbahasa)</div>
+      <div class="hl">
+        <strong>Apa itu Unggah-Ungguh?</strong>
+        Unggah-ungguh adalah sistem tingkatan bahasa dalam Bahasa Sunda yang digunakan sesuai dengan lawan bicara. Ada tiga tingkatan utama: <b>Basa Kasar</b> (bahasa kasual sesama teman), <b>Basa Loma</b> (bahasa biasa), dan <b>Basa Lemes</b> (bahasa halus untuk orang yang lebih tua/dihormati). Dalam ujian, selalu gunakan Basa Lemes kepada guru penilai.
+      </div>
+
+      <div class="three-col">
+        <div class="mc rd">
+          <div class="mt">⚠️ Basa Kasar / Loma (Jangan dipakai ke guru)</div>
+          <ul>
+            <li>Kuring (saya)</li>
+            <li>Manéh / Sia (kamu)</li>
+            <li>Calik (duduk)</li>
+            <li>Dahar (makan)</li>
+            <li>Omong (bicara)</li>
+            <li>Mati (meninggal)</li>
+          </ul>
+        </div>
+        <div class="mc ac">
+          <div class="mt">✓ Basa Lemes (Gunakan ke guru)</div>
+          <ul>
+            <li>Abdi (saya)</li>
+            <li>Anjeun (kamu — hormat)</li>
+            <li>Linggih (duduk — halus)</li>
+            <li>Tuang (makan — halus)</li>
+            <li>Nyarios (berbicara — halus)</li>
+            <li>Pupus (meninggal — halus)</li>
+          </ul>
+        </div>
+        <div class="mc gn">
+          <div class="mt">📋 Ungkapan Sopan yang Penting</div>
+          <ul>
+            <li><span class="sunda">Wilujeng enjing</span> — Selamat pagi</li>
+            <li><span class="sunda">Wilujeng siang</span> — Selamat siang</li>
+            <li><span class="sunda">Punten</span> — Permisi/Maaf</li>
+            <li><span class="sunda">Hatur nuhun</span> — Terima kasih</li>
+            <li><span class="sunda">Sami-sami</span> — Sama-sama</li>
+            <li><span class="sunda">Mangga</span> — Silakan</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="steps-title">🌺 Menghargai dan Melestarikan Bahasa Sunda</div>
+      <ul class="steps-list">
+        <li><span class="sn">1</span><div><b>Tunjukkan kebanggaan berbahasa Sunda:</b> Sikap positif terhadap Bahasa Sunda terlihat dari antusiasme saat berbicara dan membaca. Bahasa Sunda adalah warisan budaya yang perlu dijaga — tunjukkan rasa bangga itu dengan cara berbicara yang penuh semangat.</div></li>
+        <li><span class="sn">2</span><div><b>Gunakan unggah-ungguh secara konsisten:</b> Seluruh ujian, dari awal salam hingga akhir, gunakan Basa Lemes kepada guru. Tidak perlu diingatkan setiap kali — konsistensi ini yang mencerminkan penguasaan budaya yang sesungguhnya.</div></li>
+        <li><span class="sn">3</span><div><b>Percaya diri adalah bentuk apresiasi:</b> Berbicara Bahasa Sunda dengan percaya diri menunjukkan bahwa kamu benar-benar menghargai bahasa ini. Rasa malu atau enggan berbicara justru menunjukkan kurangnya apresiasi.</div></li>
+        <li><span class="sn">4</span><div><b>Akhiri dengan penutup yang baik:</b> <span class="sunda">"Sakitu anu tiasa abdi dugikeun, hatur nuhun kasadayana. Wilujeng!"</span> (Sekian yang dapat saya sampaikan, terima kasih semuanya. Selamat!)</div></li>
+      </ul>
+
+      <div class="steps-title">📊 Skala Nilai Apresiasi Budaya</div>
+      <table class="skala-table">
+        <thead><tr><th>Nilai</th><th>Kategori</th><th>Ciri-ciri</th></tr></thead>
+        <tbody>
+          <tr><td><span class="bv bv-sb">4 – SB</span><br><small>90–100</small></td><td>Sangat Baik</td><td>Unggah-ungguh Basa Lemes konsisten sepanjang ujian, sangat percaya diri, terlihat jelas mencintai Bahasa Sunda sebagai warisan budaya</td></tr>
+          <tr><td><span class="bv bv-b">3 – Baik</span><br><small>70–89</small></td><td>Baik</td><td>Umumnya menggunakan Basa Lemes, cukup percaya diri, sesekali lupa unggah-ungguh tapi langsung memperbaiki diri</td></tr>
+          <tr><td><span class="bv bv-c">2 – Cukup</span><br><small>50–69</small></td><td>Cukup</td><td>Kadang mencampur Basa Kasar dan Lemes, kurang percaya diri, perlu diingatkan untuk menggunakan bahasa yang tepat</td></tr>
+          <tr><td><span class="bv bv-pp">1 – PP</span><br><small>&lt;50</small></td><td>Perlu Perbaikan</td><td>Tidak memperhatikan unggah-ungguh, berbicara kasar kepada guru, tidak menunjukkan apresiasi terhadap Bahasa Sunda</td></tr>
+        </tbody>
+      </table>
+
+      <div class="tips-box">
+        <div class="tips-box-title">💡 Tips Ujian — Apresiasi Budaya</div>
+        <ul class="tips-list">
+          <li>Hafalkan urutan pembuka: Salam → Perkenalan diri dalam Basa Lemes — lakukan ini tanpa perlu diingatkan.</li>
+          <li>Gunakan <span class="sunda">punten</span> dan <span class="sunda">hatur nuhun</span> secara natural dalam percakapan.</li>
+          <li>Tatap mata guru saat berbicara — ini menunjukkan kepercayaan diri dan rasa hormat sekaligus.</li>
+          <li>Akhiri dengan <span class="sunda">"Hatur nuhun"</span> yang tulus — kesan akhir yang baik menguatkan penilaian keseluruhan.</li>
+        </ul>
+      </div>
+
+      <!-- RUMUS NILAI -->
+      <div class="divider"></div>
+      <div class="two-col">
+        <div>
+          <div class="steps-title">🔢 Rumus Nilai Akhir</div>
+          <div class="hl">
+            <strong>Formula Perhitungan</strong>
+            Nilai = (Ngaregep-Nulis/4×50) + (Maca-Nyarita/4×30) + (Apresiasi/4×20)
+            <br><br>
+            <b>Contoh:</b> Ngaregep=3, Maca=3, Apresiasi=4<br>
+            = (3/4×50) + (3/4×30) + (4/4×20) = 37,5+22,5+20 = <b>80 ✅</b>
+          </div>
+        </div>
+        <div>
+          <div class="steps-title">✅ Checklist Persiapan</div>
+          <div class="mc ac">
+            <div class="mt">Siapkan sebelum hari ujian</div>
+            <ul>
+              <li>Latihan imla' kata-kata Sunda umum</li>
+              <li>Hafalkan percakapan perkenalan diri</li>
+              <li>Latih lafadz <span class="sunda">eu</span> dan <span class="sunda">é</span></li>
+              <li>Hafal Basa Lemes yang sering dipakai</li>
+              <li>Kuasai salam pembuka dan penutup Sunda</li>
+              <li>Jika ada pupuh, hafal lirik dan nada</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;margin-bottom:12px;">
+    <div style="font-family:'Baloo 2',cursive;font-size:.88rem;font-weight:800;color:var(--ac-dark);margin-bottom:10px;">🔗 Navigasi Materi</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+      <a href="materi-bahasa-sunda.html" style="padding:6px 14px;border:1px solid var(--border);border-radius:8px;text-decoration:none;font-size:.72rem;font-weight:700;color:var(--text-muted);">🎋 Bahasa Sunda Teori</a>
+      <a href="index.html" style="padding:6px 14px;border:1px solid var(--border);border-radius:8px;text-decoration:none;font-size:.72rem;font-weight:700;color:var(--text-muted);">📚 Semua Materi</a>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">SD Muhammadiyah 01 Kukusan · Materi Ujian Praktik Bahasa Sunda Kelas 6 · Tahun Pelajaran 2025/2026 🎋</footer>
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+const bt=document.getElementById('backTop');
+window.addEventListener('scroll',()=>bt.classList.toggle('visible',window.scrollY>300));
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-70,behavior:'smooth'});}});});
+</script>
+</body>
+</html>

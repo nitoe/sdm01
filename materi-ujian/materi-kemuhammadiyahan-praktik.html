@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materi Kemuhammadiyahan Praktik – Ujian Sekolah Kelas 6</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ac:#7c3aed;--ac-dark:#5b21b6;--ac-xdark:#2e1065;
+      --ac-light:#ede9fe;--ac-pale:#f5f3ff;
+      --blue:#2563eb;--blue-light:#dbeafe;--green:#059669;--green-light:#d1fae5;
+      --red:#dc2626;--red-light:#fef2f2;--amber:#d97706;--amber-light:#fef3c7;
+      --teal:#0d9488;--teal-light:#ccfbf1;
+      --emerald:#059669;--emerald-light:#d1fae5;
+      --text:#1f2a37;--text-muted:#6b7280;--bg:#f5f3ff;--white:#fff;--border:#e5e7eb;
+      --radius:14px;--shadow:0 4px 20px rgba(0,0,0,.06);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:clamp(14px,3.2vw,16px);scroll-behavior:smooth;}
+    body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.75;}
+    .header{position:sticky;top:0;z-index:100;background:linear-gradient(135deg,var(--ac-xdark),var(--ac-dark) 50%,var(--ac));color:white;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(0,0,0,.25);}
+    .header-brand{display:flex;align-items:center;gap:10px;}
+    .logo{font-size:1.5rem;}
+    .brand-name{font-family:'Baloo 2',cursive;font-size:clamp(.82rem,2.6vw,1rem);font-weight:800;line-height:1.1;}
+    .sub-brand{font-size:.62rem;opacity:.8;font-weight:600;}
+    .header-back{display:flex;align-items:center;gap:5px;color:white;text-decoration:none;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 14px;font-size:.72rem;font-weight:700;transition:background .2s;}
+    .header-back:hover{background:rgba(255,255,255,.3);}
+    .hero{background:linear-gradient(160deg,var(--ac-xdark) 0%,var(--ac-dark) 40%,var(--ac) 100%);color:white;padding:42px 20px 50px;text-align:center;position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);background-size:24px 24px;}
+    .hero-inner{position:relative;z-index:1;}
+    .hero-emoji{font-size:3rem;display:block;margin-bottom:10px;animation:float 3s ease-in-out infinite;}
+    @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
+    .hero h1{font-family:'Baloo 2',cursive;font-size:clamp(1.35rem,4.3vw,1.95rem);font-weight:800;margin-bottom:8px;}
+    .hero p{font-size:clamp(.8rem,2.2vw,.92rem);opacity:.88;font-weight:600;max-width:560px;margin:0 auto;line-height:1.6;}
+    .hero-badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px;}
+    .hero-badge{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 14px;font-size:.72rem;font-weight:700;}
+    .container{max-width:900px;margin:0 auto;padding:32px 16px 60px;}
+    .info-box{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--ac);border-radius:var(--radius);padding:14px 16px;margin-bottom:24px;display:flex;gap:10px;align-items:flex-start;font-size:.82rem;line-height:1.6;}
+    .info-box .icon{font-size:1.2rem;flex-shrink:0;margin-top:1px;}
+    .info-box strong{display:block;color:var(--ac-dark);font-size:.88rem;margin-bottom:2px;}
+    .toc{background:var(--white);border:2px solid var(--ac-light);border-radius:var(--radius);padding:16px 18px;margin-bottom:28px;}
+    .toc-title{font-family:'Baloo 2',cursive;font-size:.9rem;font-weight:800;color:var(--ac-dark);margin-bottom:10px;}
+    .toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+    @media(min-width:600px){.toc-grid{grid-template-columns:repeat(4,1fr);}}
+    .toc-link{display:flex;align-items:center;gap:6px;padding:8px 10px;border-radius:10px;text-decoration:none;font-size:.76rem;font-weight:700;background:var(--ac-light);color:var(--ac-dark);transition:all .15s;}
+    .toc-link:hover{filter:brightness(.92);transform:translateY(-1px);}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+    .section{margin-bottom:44px;animation:fadeUp .5s ease both;}
+    .section:nth-child(2){animation-delay:.08s;}.section:nth-child(3){animation-delay:.16s;}
+    .section:nth-child(4){animation-delay:.24s;}.section:nth-child(5){animation-delay:.32s;}
+    .section-header{display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:var(--radius) var(--radius) 0 0;color:white;background:linear-gradient(135deg,var(--ac-xdark),var(--ac-dark) 50%,var(--ac));}
+    .section-icon{font-size:2rem;}
+    .section-title{font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;}
+    .section-sub{font-size:.7rem;opacity:.82;font-weight:600;margin-top:2px;}
+    .bobot-pill{background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.35);border-radius:12px;padding:3px 12px;font-size:.68rem;font-weight:800;margin-left:auto;flex-shrink:0;}
+    .section-body{background:var(--white);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--radius) var(--radius);padding:22px 20px;}
+    .rubrik-row{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:18px;}
+    @media(min-width:600px){.rubrik-row{grid-template-columns:repeat(3,1fr);}}
+    .rc{border-radius:10px;padding:12px 14px;font-size:.78rem;line-height:1.6;}
+    .rc .rl{font-weight:800;font-size:.82rem;display:block;margin-bottom:4px;}
+    .rc.r1{background:#eff6ff;}.rc.r1 .rl{color:var(--blue);}
+    .rc.r2{background:var(--ac-light);}.rc.r2 .rl{color:var(--ac-dark);}
+    .rc.r3{background:var(--teal-light);}.rc.r3 .rl{color:var(--teal);}
+    .bobot-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;}
+    .bobot-chip{padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:800;border:1px solid currentColor;}
+    .steps-title{font-family:'Baloo 2',cursive;font-size:.9rem;font-weight:800;color:var(--text);margin:16px 0 9px;display:flex;align-items:center;gap:6px;}
+    .steps-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+    .steps-list li{display:flex;gap:10px;align-items:flex-start;font-size:.82rem;line-height:1.55;background:#f9fafb;border-radius:8px;padding:8px 12px;}
+    .sn{flex-shrink:0;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:900;color:white;background:var(--ac);}
+    .two-col{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:16px;}
+    .three-col{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:16px;}
+    @media(min-width:580px){.two-col{grid-template-columns:1fr 1fr;}.three-col{grid-template-columns:1fr 1fr 1fr;}}
+    .mc{border-radius:10px;padding:13px 15px;font-size:.8rem;line-height:1.6;}
+    .mc .mt{font-weight:800;margin-bottom:6px;font-size:.82rem;}
+    .mc ul{padding-left:16px;}.mc li{margin-bottom:3px;}
+    .mc.ac{background:var(--ac-light);}.mc.ac .mt{color:var(--ac-dark);}
+    .mc.bl{background:var(--blue-light);}.mc.bl .mt{color:var(--blue);}
+    .mc.gn{background:var(--green-light);}.mc.gn .mt{color:var(--green);}
+    .mc.am{background:var(--amber-light);}.mc.am .mt{color:var(--amber);}
+    .mc.tl{background:var(--teal-light);}.mc.tl .mt{color:var(--teal);}
+
+    /* Timeline for project flow */
+    .timeline{display:flex;flex-direction:column;gap:0;margin-bottom:18px;}
+    .tl-item{display:flex;gap:14px;padding-bottom:16px;position:relative;}
+    .tl-item:last-child{padding-bottom:0;}
+    .tl-dot-wrap{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+    .tl-dot{width:36px;height:36px;border-radius:50%;background:var(--ac);color:white;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:900;flex-shrink:0;}
+    .tl-line{flex:1;width:2px;background:var(--ac-light);margin-top:4px;}
+    .tl-item:last-child .tl-line{display:none;}
+    .tl-content{flex:1;padding-top:4px;}
+    .tl-title{font-family:'Baloo 2',cursive;font-size:.9rem;font-weight:800;color:var(--ac-dark);margin-bottom:4px;}
+    .tl-desc{font-size:.8rem;line-height:1.6;color:var(--text-muted);}
+    .tl-badge{display:inline-block;background:var(--ac-light);color:var(--ac-dark);border-radius:8px;padding:1px 8px;font-size:.68rem;font-weight:800;margin-bottom:4px;}
+
+    /* Karakter card */
+    .karakter-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+    @media(min-width:500px){.karakter-grid{grid-template-columns:repeat(4,1fr);}}
+    .karakter-card{background:var(--ac-pale);border:1px solid var(--ac-light);border-radius:10px;padding:10px;text-align:center;}
+    .karakter-icon{font-size:1.5rem;margin-bottom:4px;}
+    .karakter-label{font-size:.72rem;font-weight:800;color:var(--ac-dark);}
+
+    .hl{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--ac);border-radius:8px;padding:11px 14px;font-size:.8rem;line-height:1.6;margin-bottom:12px;}
+    .hl strong{display:block;margin-bottom:3px;font-size:.83rem;color:var(--ac-dark);}
+    .hl.gn{border-left-color:var(--green);}.hl.gn strong{color:var(--green);}
+    .hl.am{border-left-color:var(--amber);}.hl.am strong{color:var(--amber);}
+    .tips-box{background:var(--ac-pale);border:1px solid var(--ac-light);border-radius:var(--radius);padding:14px 16px;margin-top:14px;}
+    .tips-box-title{font-family:'Baloo 2',cursive;font-size:.88rem;font-weight:800;color:var(--ac-dark);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+    .tips-list{list-style:none;display:flex;flex-direction:column;gap:5px;}
+    .tips-list li{font-size:.8rem;line-height:1.5;display:flex;gap:7px;align-items:flex-start;}
+    .tips-list li::before{content:'✓';color:var(--ac);font-weight:900;flex-shrink:0;}
+    .skala-table{width:100%;border-collapse:collapse;font-size:.78rem;margin-bottom:14px;border-radius:10px;overflow:hidden;border:1px solid var(--border);}
+    .skala-table th{background:#1f2937;color:white;padding:7px 10px;text-align:left;font-size:.72rem;font-weight:700;}
+    .skala-table td{padding:8px 10px;border-bottom:1px solid #f3f4f6;vertical-align:top;}
+    .skala-table tr:last-child td{border-bottom:none;}.skala-table tr:nth-child(even) td{background:#f9fafb;}
+    .bv{display:inline-block;padding:1px 8px;border-radius:6px;font-weight:800;font-size:.7rem;}
+    .bv-sb{background:var(--emerald-light);color:var(--emerald);}.bv-b{background:var(--blue-light);color:var(--blue);}
+    .bv-c{background:var(--amber-light);color:var(--amber);}.bv-pp{background:var(--red-light);color:var(--red);}
+    .divider{border:none;border-top:2px dashed var(--ac-light);margin:20px 0;}
+    .footer{text-align:center;padding:20px;font-size:.72rem;color:var(--text-muted);border-top:1px solid var(--border);background:var(--white);}
+    .back-top{position:fixed;bottom:20px;right:16px;background:var(--ac);color:white;border:none;border-radius:50%;width:40px;height:40px;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(124,58,237,.4);opacity:0;transition:opacity .3s;z-index:50;}
+    .back-top.visible{opacity:1;}
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-brand">
+    <span class="logo">🕌</span>
+    <div>
+      <div class="brand-name">Kemuhammadiyahan – Bakti Sosial</div>
+      <div class="sub-brand">Materi Ujian Sekolah · SD Muhammadiyah 01 Kukusan · Kelas 6</div>
+    </div>
+  </div>
+  <a href="index.html" class="header-back">← Kembali</a>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-emoji">🤝</span>
+    <h1>Materi Ujian Praktik Kemuhammadiyahan</h1>
+    <p>Ujian praktik berbentuk <b>Bakti Sosial Kelompok</b> — wujud nyata nilai-nilai Kemuhammadiyahan dalam tindakan. Rencanakan, laksanakan, dan refleksikan dengan penuh tanggung jawab.</p>
+    <div class="hero-badges">
+      <span class="hero-badge">📋 Perencanaan &amp; Persiapan (40%)</span>
+      <span class="hero-badge">🤝 Pelaksanaan &amp; Adab (40%)</span>
+      <span class="hero-badge">💭 Refleksi &amp; Dampak (20%)</span>
+      <span class="hero-badge">KKM: 70</span>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+
+  <div class="info-box">
+    <span class="icon">💡</span>
+    <div>
+      <strong>Tentang Ujian Praktik Kemuhammadiyahan — Format Bakti Sosial</strong>
+      Ujian ini bersifat <b>semi-projek berkelompok</b>. Kelompok menyusun dan melaksanakan kegiatan bakti sosial yang mencerminkan nilai-nilai Kemuhammadiyahan. Penilaian berfokus pada <b>karakter dan proses</b>, bukan kemewahan produk atau hasil. Tiga aspek: Perencanaan &amp; Persiapan (40%), Pelaksanaan &amp; Adab (40%), Refleksi &amp; Dampak (20%).
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">🗺️ Navigasi Cepat</div>
+    <div class="toc-grid">
+      <a href="#nilai" class="toc-link">⭐ Nilai Kemuhammadiyahan</a>
+      <a href="#perencanaan" class="toc-link">📋 Perencanaan</a>
+      <a href="#pelaksanaan" class="toc-link">🤝 Pelaksanaan</a>
+      <a href="#refleksi" class="toc-link">💭 Refleksi &amp; Rubrik</a>
+    </div>
+  </div>
+
+  <!-- ══ NILAI-NILAI KEMUHAMMADIYAHAN ══ -->
+  <div class="section" id="nilai">
+    <div class="section-header">
+      <span class="section-icon">⭐</span>
+      <div>
+        <div class="section-title">Nilai-Nilai Kemuhammadiyahan yang Harus Tercermin</div>
+        <div class="section-sub">Landasan karakter pelajar Muhammadiyah yang dinilai sepanjang kegiatan Bakti Sosial</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="hl">
+        <strong>🕌 Apa itu Kemuhammadiyahan?</strong>
+        Kemuhammadiyahan adalah pelajaran tentang nilai, sejarah, dan gerakan Persyarikatan Muhammadiyah yang didirikan oleh KH Ahmad Dahlan pada 18 November 1912 di Yogyakarta. Ujian praktiknya bukan tentang hafalan sejarah, tapi tentang menghidupi nilai-nilai tersebut dalam tindakan nyata — yaitu melalui Bakti Sosial.
+      </div>
+
+      <div class="karakter-grid">
+        <div class="karakter-card"><div class="karakter-icon">🤲</div><div class="karakter-label">Amar Ma'ruf Nahi Munkar</div></div>
+        <div class="karakter-card"><div class="karakter-icon">🤝</div><div class="karakter-label">Kerja Sama (Ta'awun)</div></div>
+        <div class="karakter-card"><div class="karakter-icon">💡</div><div class="karakter-label">Inovasi &amp; Kreativitas</div></div>
+        <div class="karakter-card"><div class="karakter-icon">🌱</div><div class="karakter-label">Peduli Lingkungan</div></div>
+        <div class="karakter-card"><div class="karakter-icon">📚</div><div class="karakter-label">Ilmu &amp; Amal</div></div>
+        <div class="karakter-card"><div class="karakter-icon">🎯</div><div class="karakter-label">Tanggung Jawab</div></div>
+        <div class="karakter-card"><div class="karakter-icon">❤️</div><div class="karakter-label">Peduli Sesama</div></div>
+        <div class="karakter-card"><div class="karakter-icon">🌟</div><div class="karakter-label">Akhlakul Karimah</div></div>
+      </div>
+
+      <div class="hl gn">
+        <strong>🎯 Prinsip Utama: Karakter dan Proses, Bukan Kemewahan Produk</strong>
+        Penilai mengevaluasi bagaimana kelompok merencanakan, berkomunikasi, bekerja sama, dan merefleksikan kegiatannya — bukan seberapa mahal atau rumit produk yang dibuat. Bakti sosial sederhana yang dijalankan dengan sungguh-sungguh dan penuh nilai jauh lebih berharga dari kegiatan besar yang kacau dan penuh konflik internal.
+      </div>
+
+      <div class="steps-title">🌟 Contoh Ide Kegiatan Bakti Sosial yang Bernilai</div>
+      <div class="three-col">
+        <div class="mc ac">
+          <div class="mt">🌿 Lingkungan</div>
+          <ul>
+            <li>Bersih-bersih lingkungan sekolah</li>
+            <li>Menanam pohon/tanaman herbal</li>
+            <li>Kampanye daur ulang sampah</li>
+            <li>Membuat taman mini sekolah</li>
+          </ul>
+        </div>
+        <div class="mc bl">
+          <div class="mt">❤️ Sosial Kemasyarakatan</div>
+          <ul>
+            <li>Mengumpulkan donasi buku/alat tulis</li>
+            <li>Membagi makanan kepada yang membutuhkan</li>
+            <li>Mengunjungi panti asuhan</li>
+            <li>Membuat brosur/poster kesehatan</li>
+          </ul>
+        </div>
+        <div class="mc tl">
+          <div class="mt">📚 Pendidikan &amp; Dakwah</div>
+          <ul>
+            <li>Mengajar adik kelas membaca/mengaji</li>
+            <li>Membuat pojok baca mini</li>
+            <li>Membuat poster nilai Islam di sekolah</li>
+            <li>Kampanye anti-sampah dengan infografis</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ASPEK 1: PERENCANAAN & PERSIAPAN (40%) ══ -->
+  <div class="section" id="perencanaan">
+    <div class="section-header">
+      <span class="section-icon">📋</span>
+      <div>
+        <div class="section-title">Perencanaan &amp; Persiapan</div>
+        <div class="section-sub">Rencana yang jelas · Pembagian tugas · Produk/media pendukung</div>
+      </div>
+      <span class="bobot-pill">40%</span>
+    </div>
+    <div class="section-body">
+      <div class="rubrik-row">
+        <div class="rc r1"><span class="rl">📝 Rencana Kegiatan</span>Kelompok menyusun rencana yang jelas: apa yang akan dilakukan, kapan, di mana, oleh siapa, dan bagaimana. Rencana yang baik menunjukkan kesiapan kelompok.</div>
+        <div class="rc r2"><span class="rl">👥 Pembagian Tugas</span>Setiap anggota memiliki peran dan tanggung jawab yang jelas. Tidak ada anggota yang tidak punya tugas — setiap orang berkontribusi.</div>
+        <div class="rc r3"><span class="rl">🖼️ Produk/Media Pendukung</span>Kelompok menyiapkan media yang mendukung kegiatan: brosur, poster, lembar donasi, jadwal, atau media lain yang relevan.</div>
+      </div>
+      <div class="bobot-bar">
+        <span class="bobot-chip" style="color:var(--ac);border-color:var(--ac);background:var(--ac-light)">Bobot: 40%</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Rencana kegiatan yang jelas</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Pembagian tugas</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Produk/media pendukung</span>
+      </div>
+
+      <div class="steps-title">📅 Alur Perencanaan Bakti Sosial</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot-wrap"><div class="tl-dot">1</div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-badge">Tahap Awal</div>
+            <div class="tl-title">Pilih Tema dan Topik Kegiatan</div>
+            <div class="tl-desc">Diskusikan bersama kelompok: kegiatan apa yang paling bermakna, paling mampu dilakukan, dan paling mencerminkan nilai Kemuhammadiyahan. Pilih satu tema yang disepakati bersama — bukan yang dipaksakan satu orang saja. Pertimbangkan: kemampuan kelompok, ketersediaan waktu, dan dampak nyata yang bisa diberikan.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot-wrap"><div class="tl-dot">2</div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-badge">Tahap Perencanaan</div>
+            <div class="tl-title">Susun Rencana Kegiatan (5W+1H)</div>
+            <div class="tl-desc">
+              <b>What</b> (Apa): Nama dan deskripsi kegiatan<br>
+              <b>Why</b> (Mengapa): Tujuan dan manfaat kegiatan bagi sesama<br>
+              <b>Who</b> (Siapa): Anggota kelompok dan peran masing-masing<br>
+              <b>When</b> (Kapan): Waktu pelaksanaan dan durasi<br>
+              <b>Where</b> (Di mana): Lokasi kegiatan<br>
+              <b>How</b> (Bagaimana): Langkah-langkah pelaksanaan secara rinci
+            </div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot-wrap"><div class="tl-dot">3</div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-badge">Pembagian Tugas</div>
+            <div class="tl-title">Tetapkan Peran Setiap Anggota</div>
+            <div class="tl-desc">Setiap anggota harus memiliki <b>peran yang spesifik dan tertulis</b>. Contoh pembagian peran: Ketua (koordinasi keseluruhan), Sekretaris (dokumentasi rencana dan laporan), Bendahara (jika ada dana/donasi), Anggota Produksi (buat media/poster), Anggota Lapangan (pelaksana teknis kegiatan). Tidak ada anggota yang "hanya ikut-ikutan" — semua harus punya kontribusi nyata.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot-wrap"><div class="tl-dot">4</div><div class="tl-line"></div></div>
+          <div class="tl-content">
+            <div class="tl-badge">Persiapan Media</div>
+            <div class="tl-title">Buat Produk/Media Pendukung</div>
+            <div class="tl-desc">Bergantung pada kegiatan, buat media yang sesuai. Beberapa contoh:
+              <ul style="padding-left:14px;margin-top:6px;">
+                <li>Poster ajakan (untuk kampanye lingkungan/kesehatan)</li>
+                <li>Brosur informasi (untuk kegiatan edukasi)</li>
+                <li>Lembar donasi (untuk pengumpulan bantuan)</li>
+                <li>Jadwal kegiatan tertulis</li>
+                <li>Dokumentasi foto/video (jika memungkinkan)</li>
+              </ul>
+              Media tidak harus mewah — yang penting <b>rapi, informatif, dan relevan</b> dengan kegiatan.
+            </div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot-wrap"><div class="tl-dot">5</div></div>
+          <div class="tl-content">
+            <div class="tl-badge">Kesiapan Akhir</div>
+            <div class="tl-title">Cek Kesiapan Seluruh Kelompok</div>
+            <div class="tl-desc">Sebelum pelaksanaan: semua anggota tahu perannya, semua bahan/media sudah siap, semua anggota hadir tepat waktu, dan setiap orang memahami tujuan kegiatan secara keseluruhan — bukan hanya tugasnya sendiri.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hl am">
+        <strong>⚠️ Perencanaan yang Dinilai Lemah</strong>
+        Kelompok yang tidak punya rencana tertulis, tidak ada pembagian tugas yang jelas (semua kerja serabutan), tidak membuat media apapun, atau baru "mendadak" menyusun rencana menjelang hari H — menunjukkan perencanaan yang tidak serius dan akan menghasilkan nilai yang rendah pada aspek ini.
+      </div>
+
+      <div class="tips-box">
+        <div class="tips-box-title">💡 Tips — Perencanaan &amp; Persiapan</div>
+        <ul class="tips-list">
+          <li>Tulis rencana kegiatan dalam satu dokumen yang bisa ditunjukkan kepada penilai — ini bukti konkret persiapan kelompok.</li>
+          <li>Pastikan pembagian tugas tertulis dengan nama masing-masing anggota — bukan hanya diingat secara lisan.</li>
+          <li>Buat media pendukung yang sederhana tapi rapi — poster yang bersih dan informatif lebih baik dari poster rumit yang berantakan.</li>
+          <li>Adakan minimal satu sesi diskusi kelompok sebelum hari H — ini menunjukkan koordinasi yang serius.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ASPEK 2: PELAKSANAAN & ADAB (40%) ══ -->
+  <div class="section" id="pelaksanaan">
+    <div class="section-header">
+      <span class="section-icon">🤝</span>
+      <div>
+        <div class="section-title">Pelaksanaan &amp; Adab</div>
+        <div class="section-sub">Sopan santun · Kerja sama tim · Karakter pelajar Muhammadiyah</div>
+      </div>
+      <span class="bobot-pill">40%</span>
+    </div>
+    <div class="section-body">
+      <div class="rubrik-row">
+        <div class="rc r1"><span class="rl">🎯 Pelaksanaan Kegiatan</span>Kegiatan dilaksanakan sesuai rencana, tepat waktu, dan mencapai tujuan yang ditetapkan. Ada kesesuaian antara rencana dan kenyataan di lapangan.</div>
+        <div class="rc r2"><span class="rl">🤝 Kerja Sama Tim</span>Semua anggota aktif berkontribusi. Tidak ada yang mendominasi atau yang pasif. Ada komunikasi antar anggota yang baik dan saling mendukung.</div>
+        <div class="rc r3"><span class="rl">⭐ Karakter Muhammadiyah</span>Sikap dan perilaku selama kegiatan mencerminkan nilai-nilai Islam dan Kemuhammadiyahan: sopan, jujur, peduli, bertanggung jawab, dan berakhlak mulia.</div>
+      </div>
+      <div class="bobot-bar">
+        <span class="bobot-chip" style="color:var(--ac);border-color:var(--ac);background:var(--ac-light)">Bobot: 40%</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Pelaksanaan sesuai rencana</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Kerja sama aktif</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Akhlakul karimah</span>
+      </div>
+
+      <div class="steps-title">⭐ Karakter Pelajar Muhammadiyah dalam Bakti Sosial</div>
+      <ul class="steps-list">
+        <li><span class="sn">1</span><div><b>Sopan santun (Akhlakul Karimah):</b> Bertutur kata dan bersikap sopan kepada siapapun — kepada guru penilai, teman kelompok, dan kepada masyarakat yang dilayani dalam kegiatan bakti sosial. Hindari berbicara kasar, bergurau berlebihan, atau bersikap meremehkan.</div></li>
+        <li><span class="sn">2</span><div><b>Kerja sama (Ta'awun):</b> Aktif membantu anggota yang kesulitan tanpa diminta. Tidak menonjolkan diri berlebihan atau menyudutkan anggota yang membuat kesalahan. Keberhasilan kelompok adalah keberhasilan bersama.</div></li>
+        <li><span class="sn">3</span><div><b>Tanggung jawab (Amanah):</b> Menyelesaikan tugas yang sudah disepakati tanpa harus selalu diingatkan. Jika ada hambatan, segera komunikasikan kepada kelompok — bukan diam-diam atau menyalahkan orang lain.</div></li>
+        <li><span class="sn">4</span><div><b>Kejujuran (Shidiq):</b> Laporkan apa adanya kepada penilai — berapa orang yang bisa hadir, apa yang berjalan baik, apa yang tidak berjalan sesuai rencana. Kejujuran lebih dihargai dari laporan yang dibuat-buat sempurna.</div></li>
+        <li><span class="sn">5</span><div><b>Kepedulian (Empati):</b> Saat melaksanakan kegiatan yang berhubungan dengan orang lain (memberi bantuan, mengunjungi yang membutuhkan), tunjukkan kepedulian yang tulus — bukan sekadar menjalankan prosedur untuk lulus ujian.</div></li>
+      </ul>
+
+      <div class="steps-title">👥 Ciri Kerja Sama Tim yang Dinilai Baik</div>
+      <div class="two-col">
+        <div class="mc gn">
+          <div class="mt">✓ Tanda Kerja Sama yang Baik</div>
+          <ul>
+            <li>Semua anggota aktif mengerjakan tugas masing-masing</li>
+            <li>Ada komunikasi dan koordinasi yang terlihat jelas</li>
+            <li>Anggota yang selesai tugasnya membantu yang masih mengerjakan</li>
+            <li>Keputusan diambil bersama, bukan oleh satu orang saja</li>
+            <li>Bila ada masalah, diselesaikan bersama tanpa konflik</li>
+            <li>Saling memberi semangat dan dukungan</li>
+          </ul>
+        </div>
+        <div class="mc am">
+          <div class="mt">⚠️ Tanda Kerja Sama yang Buruk</div>
+          <ul>
+            <li>Satu orang mengerjakan semua, yang lain diam</li>
+            <li>Ada anggota yang tidak hadir tanpa alasan</li>
+            <li>Saling menyalahkan saat ada yang tidak berjalan</li>
+            <li>Tidak ada koordinasi — setiap orang jalan sendiri</li>
+            <li>Konflik antar anggota terlihat oleh penilai</li>
+            <li>Ada anggota yang tidak tahu apa yang dikerjakan kelompok</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tips-box">
+        <div class="tips-box-title">💡 Tips — Pelaksanaan &amp; Adab</div>
+        <ul class="tips-list">
+          <li>Awali setiap kegiatan dengan bismillah dan doa bersama — ini mencerminkan karakter Islami yang dinilai.</li>
+          <li>Tunjukkan kerja sama yang nyata — penilai mengamati siapa yang aktif dan siapa yang pasif sepanjang kegiatan.</li>
+          <li>Jika ada yang tidak berjalan sesuai rencana, jangan panik — tunjukkan kemampuan adaptasi dan problem-solving kelompok.</li>
+          <li>Dokumentasikan kegiatan (foto, catatan) sebagai bukti pelaksanaan yang bisa ditunjukkan saat refleksi.</li>
+          <li>Berterima kasih kepada pihak yang dilibatkan dalam kegiatan — ini bagian dari akhlakul karimah.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ASPEK 3: REFLEKSI & DAMPAK (20%) ══ -->
+  <div class="section" id="refleksi">
+    <div class="section-header">
+      <span class="section-icon">💭</span>
+      <div>
+        <div class="section-title">Refleksi &amp; Dampak</div>
+        <div class="section-sub">Manfaat kegiatan · Dampak bagi masyarakat · Pembelajaran yang diperoleh</div>
+      </div>
+      <span class="bobot-pill">20%</span>
+    </div>
+    <div class="section-body">
+      <div class="bobot-bar">
+        <span class="bobot-chip" style="color:var(--ac);border-color:var(--ac);background:var(--ac-light)">Bobot: 20%</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Refleksi manfaat kegiatan</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Dampak nyata bagi sesama</span>
+        <span class="bobot-chip" style="color:var(--text-muted);border-color:#d1d5db;background:#f3f4f6">Pembelajaran yang diperoleh</span>
+      </div>
+
+      <div class="hl">
+        <strong>💭 Mengapa Refleksi Penting?</strong>
+        Refleksi adalah kemampuan untuk melihat ke belakang dan memaknai apa yang telah dilakukan. Ini adalah keterampilan yang sangat penting bagi pelajar Muhammadiyah — karena ilmu tanpa hikmah tidak menghasilkan perubahan. Kelompok yang mampu merefleksikan kegiatannya dengan jujur dan mendalam menunjukkan tingkat kematangan berpikir yang tinggi.
+      </div>
+
+      <div class="steps-title">🗣️ Panduan Presentasi Refleksi Kelompok</div>
+      <ul class="steps-list">
+        <li><span class="sn">1</span><div><b>Apa yang sudah berjalan dengan baik?</b> Ceritakan aspek kegiatan yang berhasil dilaksanakan sesuai rencana. Berikan contoh konkret — bukan sekadar "semua berjalan baik". Contoh: "Kami berhasil mengumpulkan 30 buku dari 15 donatur dalam 2 hari."</div></li>
+        <li><span class="sn">2</span><div><b>Apa yang tidak berjalan sesuai rencana?</b> Jujur mengakui tantangan atau hambatan yang dihadapi. Ini justru menunjukkan kejujuran dan kedewasaan berpikir. Contoh: "Dua anggota tidak bisa hadir di hari H, sehingga tugas mereka harus dibagi ke yang lain."</div></li>
+        <li><span class="sn">3</span><div><b>Apa dampak kegiatan ini bagi orang lain?</b> Jelaskan manfaat yang dirasakan oleh penerima manfaat kegiatan — bukan hanya oleh kelompok sendiri. Dampak tidak harus besar, tapi harus nyata. Contoh: "Pohon yang kami tanam akan membuat halaman sekolah lebih teduh dan asri."</div></li>
+        <li><span class="sn">4</span><div><b>Apa yang kamu pelajari dari kegiatan ini?</b> Ini adalah bagian paling penting dari refleksi. Apa nilai Kemuhammadiyahan yang benar-benar kamu rasakan selama kegiatan? Apa yang akan kamu lakukan berbeda jika mengulang kegiatan ini?</div></li>
+        <li><span class="sn">5</span><div><b>Hubungkan dengan nilai Kemuhammadiyahan:</b> Ekspresikan bagaimana kegiatan ini menghidupi nilai-nilai seperti ta'awun, amar ma'ruf nahi munkar, peduli sesama, atau akhlakul karimah. Ini menunjukkan pemahaman yang lebih dari sekadar melaksanakan kegiatan.</div></li>
+      </ul>
+
+      <div class="hl gn">
+        <strong>✅ Refleksi yang Bernilai Tinggi vs. Rendah</strong>
+        <b>Bernilai tinggi:</b> "Dari kegiatan ini, aku belajar bahwa kerja sama tim butuh komunikasi yang jelas. Kami sempat salah paham soal pembagian tugas, tapi kami selesaikan bersama-sama. Ke depannya, kami akan lebih sering berkomunikasi sejak awal. Ini yang dimaksud ta'awun — saling membantu bukan hanya saat semuanya mudah."<br><br>
+        <b>Bernilai rendah:</b> "Kegiatannya seru dan menyenangkan. Kami senang bisa membantu. Semoga bermanfaat." — Terlalu dangkal, tidak ada pembelajaran spesifik yang bisa diidentifikasi.
+      </div>
+
+      <!-- RUBRIK -->
+      <div class="divider"></div>
+      <div class="steps-title">📊 Rubrik Penilaian Lengkap</div>
+      <table class="skala-table">
+        <thead><tr><th>Nilai</th><th>📋 Perencanaan (40%)</th><th>🤝 Pelaksanaan (40%)</th><th>💭 Refleksi (20%)</th></tr></thead>
+        <tbody>
+          <tr><td><span class="bv bv-sb">4 – SB</span><br><small>90–100</small></td><td>Rencana sangat detail (5W+1H lengkap), pembagian tugas jelas per orang, media pendukung rapi dan informatif, persiapan matang</td><td>Kegiatan terlaksana sesuai rencana, semua anggota aktif, kerja sama erat, sikap Islami terlihat jelas, tidak ada konflik</td><td>Refleksi mendalam dan jujur, mampu mengidentifikasi dampak nyata, menghubungkan dengan nilai Kemuhammadiyahan secara konkret</td></tr>
+          <tr><td><span class="bv bv-b">3 – Baik</span><br><small>70–89</small></td><td>Rencana ada dan cukup jelas, pembagian tugas umumnya jelas, ada media pendukung meski sederhana</td><td>Kegiatan terlaksana dengan beberapa penyesuaian, sebagian besar anggota aktif, kerja sama cukup baik, sikap sopan</td><td>Refleksi cukup baik, mampu menyebutkan dampak dan pembelajaran, ada kaitannya dengan nilai Kemuhammadiyahan</td></tr>
+          <tr><td><span class="bv bv-c">2 – Cukup</span><br><small>50–69</small></td><td>Rencana ada tapi kurang lengkap, pembagian tugas kurang jelas, media pendukung minimal atau tidak ada</td><td>Kegiatan terlaksana sebagian, beberapa anggota kurang aktif, ada konflik kecil dalam tim</td><td>Refleksi dangkal, hanya deskripsi kegiatan tanpa pembelajaran nyata, tidak ada kaitan dengan nilai Kemuhammadiyahan</td></tr>
+          <tr><td><span class="bv bv-pp">1 – PP</span><br><small>&lt;50</small></td><td>Tidak ada rencana tertulis, tidak ada pembagian tugas, tidak ada persiapan yang terlihat</td><td>Kegiatan tidak terlaksana atau sangat kacau, banyak anggota pasif, konflik terbuka, sikap tidak mencerminkan nilai Islami</td><td>Tidak ada refleksi bermakna, tidak bisa menjelaskan apa yang dipelajari dari kegiatan</td></tr>
+        </tbody>
+      </table>
+
+      <div class="divider"></div>
+      <div class="two-col">
+        <div>
+          <div class="steps-title">🔢 Rumus Nilai Akhir</div>
+          <div class="hl">
+            <strong>Formula</strong>
+            Nilai = (Perenc./4×40) + (Pelaks./4×40) + (Refleksi/4×20)
+            <br><br>
+            <b>Contoh:</b> Perenc.=4, Pelaks.=3, Refleksi=3<br>
+            = (4/4×40)+(3/4×40)+(3/4×20)<br>
+            = 40+30+15 = <b>85 ✅ Lulus</b>
+          </div>
+        </div>
+        <div>
+          <div class="steps-title">✅ Checklist Kelompok</div>
+          <div class="mc ac">
+            <div class="mt">Siapkan sebelum hari ujian</div>
+            <ul>
+              <li>Dokumen rencana kegiatan (5W+1H)</li>
+              <li>Daftar pembagian tugas per anggota</li>
+              <li>Media pendukung sudah jadi (poster/brosur)</li>
+              <li>Semua anggota tahu peran masing-masing</li>
+              <li>Siapkan poin-poin refleksi untuk dipresentasikan</li>
+              <li>Dokumentasi kegiatan (foto/catatan)</li>
+              <li>Latihan presentasi refleksi kelompok</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tips-box">
+        <div class="tips-box-title">💡 Tips — Refleksi &amp; Dampak</div>
+        <ul class="tips-list">
+          <li>Catat hal-hal penting selama kegiatan — pengalaman nyata yang bisa diceritakan saat refleksi akan jauh lebih berkesan.</li>
+          <li>Setiap anggota siapkan satu poin refleksi pribadi — bukan hanya ketua yang bicara saat presentasi refleksi.</li>
+          <li>Hubungkan kegiatan dengan nilai spesifik Kemuhammadiyahan (ta'awun, amar ma'ruf, dll.) — ini menunjukkan pemahaman yang mendalam.</li>
+          <li>Jujur tentang hambatan yang dihadapi — penilai menghargai kejujuran lebih dari laporan yang selalu positif.</li>
+          <li>Tunjukkan bukti nyata dampak kegiatan: foto, testimoni, atau hasil konkret yang bisa diperlihatkan.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;margin-bottom:12px;">
+    <div style="font-family:'Baloo 2',cursive;font-size:.88rem;font-weight:800;color:var(--ac-dark);margin-bottom:10px;">🔗 Navigasi Materi</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+      <a href="materi-kemuhammadiyahan.html" style="padding:6px 14px;border:1px solid var(--border);border-radius:8px;text-decoration:none;font-size:.72rem;font-weight:700;color:var(--text-muted);">🕌 Kemuhammadiyahan Teori</a>
+      <a href="index.html" style="padding:6px 14px;border:1px solid var(--border);border-radius:8px;text-decoration:none;font-size:.72rem;font-weight:700;color:var(--text-muted);">📚 Semua Materi</a>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">SD Muhammadiyah 01 Kukusan · Materi Ujian Praktik Kemuhammadiyahan Kelas 6 · Tahun Pelajaran 2025/2026 🕌</footer>
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+const bt=document.getElementById('backTop');
+window.addEventListener('scroll',()=>bt.classList.toggle('visible',window.scrollY>300));
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-70,behavior:'smooth'});}});});
+</script>
+</body>
+</html>
