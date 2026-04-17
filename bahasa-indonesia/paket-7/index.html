@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Latihan TKA Bahasa Indonesia – Paket 7</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!-- EmailJS diganti dengan Google Apps Script + Brevo -->
     <style>
         :root {
             --primary: #1a56db;
@@ -1103,11 +1103,9 @@
     </div>
 
     <script>
-        const EMAILJS_CONFIG = {
-            PUBLIC_KEY: "xOghGdjMfoGLAB-CE",
-            SERVICE_ID: "service_03pdwdr",
-            TEMPLATE_ID: "template_hi8a1k9"
-        };
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzpiJ4mv3vjwrvYXUDE6tZu2dDrFJzQq59_y0SrUAegXJBQgqwSkGR-4uKhiUxMLpz4Iw/exec';
+        const MAPEL = 'Bahasa Indonesia';
+        const PAKET = 'Paket 7';
 
         /* ══════════════════════════════════════════════════════════
            IMAGE ASSETS — Paket 7
@@ -1717,7 +1715,7 @@
             init() {
                 this.fontMult = parseFloat(localStorage.getItem('tka_bi_font') || '1');
                 this.applyFont(this.fontMult);
-                emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+                // Brevo via Apps Script — tidak perlu inisialisasi
             },
 
             login() {
@@ -2002,41 +2000,56 @@
             sendEmail(score, tuntas, desc, kompData) {
                 const box = document.getElementById('email-status-box');
                 box.innerHTML = `<div class="email-status es-sending">✉️ Sedang mengirim laporan ke <strong>${this.state.email}</strong>...</div>`;
+
                 let rows = '';
                 for (const cat in kompData) {
                     const d = kompData[cat];
-                    rows += `<tr><td style="padding:8px 14px;border:1px solid #e5e7eb;">${cat}</td>
-        <td style="padding:8px 14px;border:1px solid #e5e7eb;text-align:center;font-weight:700;">${d.skor}%</td>
-        <td style="padding:8px 14px;border:1px solid #e5e7eb;text-align:center;color:${d.tuntas?'#057a55':'#e02424'};font-weight:700;">${d.tuntas?'✅ Tuntas':'⚠️ Perlu Bimbingan'}</td></tr>`;
+                    rows += `<tr>
+                        <td style="padding:8px 14px;border:1px solid #e5e7eb;">${cat}</td>
+                        <td style="padding:8px 14px;border:1px solid #e5e7eb;text-align:center;font-weight:700;">${d.skor}%</td>
+                        <td style="padding:8px 14px;border:1px solid #e5e7eb;text-align:center;color:${d.tuntas?'#057a55':'#e02424'};font-weight:700;">${d.tuntas?'✅ Tuntas':'⚠️ Perlu Bimbingan'}</td>
+                    </tr>`;
                 }
                 const detailHtml = `<table style="width:100%;border-collapse:collapse;font-size:14px;">
-      <tr style="background:#1e3a8a;color:white;">
-        <th style="padding:10px 14px;text-align:left;">Kompetensi</th>
-        <th style="padding:10px;">Skor</th><th style="padding:10px;">Status</th>
-      </tr>${rows}</table>`;
-                const em = Math.floor(this.elapsed / 60),
-                    es = this.elapsed % 60;
-                emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, {
-                    to_email: this.state.email,
-                    nama_siswa: this.state.nama,
-                    kelas: this.state.kelas,
-                    skor: score,
-                    status: tuntas ? 'TUNTAS ✅' : 'Perlu Bimbingan 📚',
-                    tanggal: new Date().toLocaleString('id-ID', {
-                        weekday: 'long',
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    }),
-                    durasi: `${em} menit ${es} detik`,
-                    detail_html: detailHtml,
-                    kesimpulan: desc
-                }).then(() => {
-                    box.innerHTML = `<div class="email-status es-sent">✅ Laporan berhasil dikirim ke <strong>${this.state.email}</strong>. Minta orang tua cek kotak masuk email.</div>`;
-                }).catch(err => {
-                    box.innerHTML = `<div class="email-status es-error">❌ Gagal mengirim email. Periksa koneksi internet.<br><small>${err.text||JSON.stringify(err)}</small></div>`;
+                    <tr style="background:#1e3a8a;color:white;">
+                        <th style="padding:10px 14px;text-align:left;">Kompetensi</th>
+                        <th style="padding:10px;">Skor</th>
+                        <th style="padding:10px;">Status</th>
+                    </tr>${rows}
+                </table>`;
+
+                const em = Math.floor(this.elapsed / 60), es = this.elapsed % 60;
+
+                fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        to_email:       this.state.email,
+                        nama_siswa:     this.state.nama,
+                        kelas:          this.state.kelas,
+                        mata_pelajaran: MAPEL,
+                        paket:          PAKET,
+                        skor:           score,
+                        status:         tuntas ? 'TUNTAS ✅' : 'Perlu Bimbingan 📚',
+                        tanggal:        new Date().toLocaleString('id-ID', {
+                                            weekday: 'long', day: 'numeric',
+                                            month: 'long', year: 'numeric',
+                                            hour: '2-digit', minute: '2-digit'
+                                        }),
+                        durasi:         `${em} menit ${es} detik`,
+                        detail_html:    detailHtml,
+                        kesimpulan:     desc
+                    })
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.ok) {
+                        box.innerHTML = `<div class="email-status es-sent">✅ Laporan berhasil dikirim ke <strong>${this.state.email}</strong>. Minta orang tua cek kotak masuk email.</div>`;
+                    } else {
+                        throw new Error(data.error || 'Terjadi kesalahan tidak diketahui.');
+                    }
+                })
+                .catch(err => {
+                    box.innerHTML = `<div class="email-status es-error">❌ Gagal mengirim email. Periksa koneksi internet.<br><small>${err.message}</small></div>`;
                 });
             },
 
