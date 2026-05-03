@@ -13,6 +13,7 @@
             --text: #334155;
             --bg: #f0faf6;
             --border: #cbd5e1;
+            --font-scale: 1;
         }
         * { box-sizing: border-box; outline: none; }
         body { margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; }
@@ -74,6 +75,12 @@
         #pin-err { font-size: .82rem; color: #dc2626; font-weight: 600; display: none; margin-bottom: 14px; }
         .stimulus-img { max-width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
         .matrix-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .quiz-scroll-area, .center-content-wrapper { font-size: calc(1rem * var(--font-scale)); }
+        .font-btn { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-weight: 800; font-size: 0.85rem; line-height: 1; letter-spacing: -0.02em; transition: background 0.15s; }
+        .font-btn:hover { background: rgba(255,255,255,0.28); }
+        .font-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .font-ctrl { display: flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 3px 6px; }
+        .font-ctrl-label { font-size: 0.7rem; color: rgba(255,255,255,0.6); text-align: center; min-width: 28px; user-select: none; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
         @media (max-width: 768px) {
@@ -89,8 +96,13 @@
 <div class="app-container">
     <div class="header">
         <div class="header-title">Ujian Sekolah – Pendidikan Pancasila</div>
-        <div style="display:flex;align-items:center;gap:15px;">
+        <div style="display:flex;align-items:center;gap:10px;">
             <div id="user-badge" style="display:none;font-size:0.85rem;background:rgba(255,255,255,0.1);padding:5px 12px;border-radius:20px;">Siswa</div>
+            <div class="font-ctrl">
+                <button class="font-btn" id="btn-font-minus" onclick="app.changeFont(-1)" title="Perkecil teks">A−</button>
+                <span class="font-ctrl-label" id="font-label">100%</span>
+                <button class="font-btn" id="btn-font-plus"  onclick="app.changeFont(+1)" title="Perbesar teks">A+</button>
+            </div>
             <div class="timer-box" id="timer-display">--:--</div>
         </div>
     </div>
@@ -665,6 +677,8 @@ const app = {
     timerInt: null,
     _hasSavedSession: false,
     _lastPayload: null,
+    _fontSteps: [82, 90, 100, 111, 122, 135],
+    _fontIdx: 2,
 
     init: function() {
         this.showSlide('pin');
@@ -678,6 +692,24 @@ const app = {
             p1.innerHTML += opt1;
             p2.innerHTML += opt2;
         });
+        // Restore preferensi ukuran font
+        try {
+            const saved = parseInt(localStorage.getItem('UST_FONT_IDX'));
+            if (!isNaN(saved) && saved >= 0 && saved < this._fontSteps.length) this._fontIdx = saved;
+        } catch(e) {}
+        this.changeFont(0); // terapkan ukuran yang tersimpan (tanpa mengubah indeks)
+    },
+
+    changeFont: function(dir) {
+        const next = this._fontIdx + dir;
+        if (next < 0 || next >= this._fontSteps.length) return;
+        this._fontIdx = next;
+        const scale = this._fontSteps[this._fontIdx] / 100;
+        document.documentElement.style.setProperty('--font-scale', scale);
+        document.getElementById('font-label').innerText = this._fontSteps[this._fontIdx] + '%';
+        document.getElementById('btn-font-minus').disabled = (this._fontIdx === 0);
+        document.getElementById('btn-font-plus').disabled  = (this._fontIdx === this._fontSteps.length - 1);
+        try { localStorage.setItem('UST_FONT_IDX', this._fontIdx); } catch(e) {}
     },
 
     checkPin: async function() {
