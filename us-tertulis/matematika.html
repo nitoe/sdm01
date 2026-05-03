@@ -20,6 +20,7 @@
             --text: #334155;
             --bg: #f0fdf9;
             --border: #cbd5e1;
+            --font-scale: 1;
         }
         * { box-sizing: border-box; outline: none; }
         body { margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; }
@@ -82,6 +83,12 @@
         .stimulus-img { max-width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); margin: 0 auto; }
         .matrix-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
         .hint-pgk { font-size:.82rem; color:#64748b; background:#f0fdf9; border-left:3px solid var(--primary); padding:8px 12px; border-radius:0 6px 6px 0; margin-bottom:12px; }
+                .quiz-scroll-area, .center-content-wrapper { font-size: calc(1rem * var(--font-scale)); }
+        .font-btn { background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;padding:5px 10px;border-radius:6px;cursor:pointer;font-weight:800;font-size:0.85rem;line-height:1;letter-spacing:-0.02em;transition:background 0.15s; }
+        .font-btn:hover { background:rgba(255,255,255,0.28); }
+        .font-btn:disabled { opacity:0.3;cursor:not-allowed; }
+        .font-ctrl { display:flex;align-items:center;gap:4px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:3px 6px; }
+        .font-ctrl-label { font-size:0.7rem;color:rgba(255,255,255,0.6);text-align:center;min-width:28px;user-select:none; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
         @media (max-width: 768px) {
@@ -99,6 +106,11 @@
         <div class="header-title">Ujian Sekolah – Matematika</div>
         <div style="display:flex;align-items:center;gap:15px;">
             <div id="user-badge" style="display:none;font-size:0.85rem;background:rgba(255,255,255,0.1);padding:5px 12px;border-radius:20px;">Siswa</div>
+            <div class="font-ctrl">
+                <button class="font-btn" id="btn-font-minus" onclick="app.changeFont(-1)">A−</button>
+                <span class="font-ctrl-label" id="font-label">100%</span>
+                <button class="font-btn" id="btn-font-plus" onclick="app.changeFont(+1)">A+</button>
+            </div>
             <div class="timer-box" id="timer-display">--:--</div>
         </div>
     </div>
@@ -137,6 +149,14 @@
                                 <option value="6A">Kelas 6A</option>
                                 <option value="6B">Kelas 6B</option>
                             </select>
+                            </select>
+                            <div style="background:#fef3c7;border:1px solid #f59e0b;border-radius:8px;padding:12px 14px;margin:4px 0 10px;font-size:0.85rem;color:#78350f;line-height:1.6;">
+                                &#9888;&#65039; <strong>Perhatian!</strong> Pilih guru yang <strong>benar-benar bertugas mengawasimu</strong> hari ini.
+                            </div>
+                            <label>Pengawas 1 <span style="color:#dc2626;">*</span></label>
+                            <select id="inpPengawas1"><option value="">-- Pilih Pengawas 1 --</option></select>
+                            <label>Pengawas 2 <span style="color:#94a3b8;font-size:0.8rem;">(opsional)</span></label>
+                            <select id="inpPengawas2"><option value="">-- Pilih Pengawas 2 --</option></select>
                         </div>
                         <button class="btn" style="width:100%" onclick="app.login()">Masuk Ujian</button>
                         <div id="resume-alert" style="display:none;margin-top:20px;padding:10px;background:#f0fdfa;color:#0f766e;border-radius:8px;cursor:pointer;font-size:0.9rem;" onclick="app.resume()">
@@ -178,17 +198,18 @@
             </div>
 
             <!-- ⑤ SLIDE HASIL -->
-            <div id="slide-result" class="slide">
+                        <div id="slide-result" class="slide">
                 <div class="center-content-wrapper">
-                    <div class="card" style="max-width:620px;margin:0 auto;text-align:center;">
-                        <div style="font-size:4rem;margin-bottom:10px;">🎉</div>
-                        <h2 style="color:var(--primary);margin:0;">Ujian Selesai!</h2>
-                        <p style="color:#64748b;">Jawaban Anda telah kami terima.</p>
-                        <div id="result-content" style="text-align:left;margin-top:30px;border-top:1px solid #e2e8f0;padding-top:20px;">
-                            <p style="text-align:center;color:#64748b;">Sedang memproses nilai...</p>
+                    <div class="card" style="max-width:540px;margin:0 auto;text-align:center;">
+                        <div style="font-size:3.5rem;margin-bottom:10px;">&#128203;</div>
+                        <h2 style="color:var(--primary);margin:0 0 8px;">Ujian Selesai!</h2>
+                        <p style="color:#64748b;margin-bottom:0;">Laporan dikirim ke guru pengawas.</p>
+                        <div id="result-content" style="margin-top:28px;border-top:1px solid #e2e8f0;padding-top:24px;">
+                            <p style="text-align:center;color:#64748b;">Sedang mengirim laporan...</p>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
 
@@ -230,10 +251,40 @@
 //  Untuk mengganti PIN: hashPin("PIN_BARU").then(h => console.log(h))
 // ════════════════════════════════════════════════════════
 const CONFIG = {
-    SCRIPT_URL:  "https://script.google.com/macros/s/AKfycbwJveJtAISKhveIQ4wspAaeaUKLrqB_IBY55qhOqDOl649QSjqtBa2hYhOrx7UNs0GbdA/exec",
+    // URL v2
+    SCRIPT_URL:  "https://script.google.com/macros/s/AKfycbzHQPvnoBPRxzNVsGDLZqVE-WRU6Mog0Nj59DLgmLrubydm4S5xID7S-SJzLLXJ6yWujQ/exec",
     STORAGE_KEY: "UST_2026_MATEMATIKA",
     DURATION:    90 * 60,
-    PIN_HASH:    "1666718e4fcb0058"
+    PIN_HASH:    "1666718e4fcb0058",
+
+    // -- DAFTAR PENGAWAS (hapus yang tidak bertugas)
+    PENGAWAS: [
+        { nama: "Pak Arif",     email: "arif.azwar79@gmail.com" },
+        { nama: "Pak Raka",     email: "febrianrakaramadhan@gmail.com" },
+        { nama: "Bu April",     email: "aprilianurhidayati8@gmail.com" },
+        { nama: "Bu Yulia",     email: "yuliakatim29@gmail.com" },
+        { nama: "Bu Syam",      email: "syamapriwilisseri@gmail.com" },
+        { nama: "Bu Anas",      email: "anastasiayulianasari@gmail.com" },
+        { nama: "Bu Ummu",      email: "lanternsdm@gmail.com" },
+        { nama: "Bu Azizah",    email: "zahroibrahimazizah04@gmail.com" },
+        { nama: "Bu Elya",      email: "elyalia38@gmail.com" },
+        { nama: "Bu Marnie SK", email: "marnieseptia1975@gmail.com" },
+        { nama: "Pak Rizki",    email: "muhrizki07221@gmail.com" },
+        { nama: "Bu Fitri",     email: "idatulfitri4@gmail.com" },
+        { nama: "Pak Zakir",    email: "mudzakkirw0@gmail.com" },
+        { nama: "Bu Silvi",     email: "silviasadiah@gmail.com" },
+        { nama: "Pak Sandi",    email: "sandisandi4655@gmail.com" },
+        { nama: "Bu Elsa",      email: "Nisyelsabila@gmail.com" },
+        { nama: "Bu Ratih",     email: "ratihratih092@gmail.com" },
+        { nama: "Bu Santi",     email: "susantiasuroh783@gmail.com" },
+        { nama: "Bu Evi",       email: "eviridho22@gmail.com" },
+        { nama: "Bu Mia",       email: "darmiati.mia69@gmail.com" },
+        { nama: "Pak Hendra",   email: "hendrahindrawan1@gmail.com" },
+        { nama: "Bu Suci",      email: "sucilestarii519@gmail.com" },
+        { nama: "Bu Rahmah",    email: "rahma10filisthin@gmail.com" },
+        { nama: "Pak Indra",    email: "luzyaspermana9776@gmail.com" },
+        { nama: "Pak Abduh",    email: "rahmanabdulah882@gmail.com" }
+    ]
 };
 
 async function hashPin(pin) {
@@ -629,12 +680,26 @@ const QUESTIONS = [{
 //  APP OBJECT
 // ════════════════════════════════════════════════════════
 const app = {
-    session: { nama:"", kelas:"", answers:{}, startTime:0 },
+    session: { nama:"", kelas:"", pengawas1Nama:"", pengawas1Email:"", pengawas2Nama:"", pengawas2Email:"", answers:{}, startTime:0 },
     currIdx: 0, timerInt: null, _hasSavedSession: false,
+    _lastPayload: null,
+    _fontSteps: [82, 90, 100, 111, 122, 135],
+    _fontIdx: 2,
 
-    init() {
+    init: function() {
         this.showSlide('pin');
-        try { if(localStorage.getItem(CONFIG.STORAGE_KEY)) this._hasSavedSession=true; } catch(e){}
+        try { if (localStorage.getItem(CONFIG.STORAGE_KEY)) this._hasSavedSession = true; } catch(e) {}
+        const p1 = document.getElementById('inpPengawas1');
+        const p2 = document.getElementById('inpPengawas2');
+        CONFIG.PENGAWAS.forEach(g => {
+            p1.innerHTML += '<option value="' + g.email + '" data-nama="' + g.nama + '">' + g.nama + '</option>';
+            p2.innerHTML += '<option value="' + g.email + '" data-nama="' + g.nama + '">' + g.nama + '</option>';
+        });
+        try {
+            const saved = parseInt(localStorage.getItem('UST_FONT_IDX'));
+            if (!isNaN(saved) && saved >= 0 && saved < this._fontSteps.length) this._fontIdx = saved;
+        } catch(e) {}
+        this.changeFont(0);
     },
 
     async checkPin() {
@@ -652,10 +717,20 @@ const app = {
         }
     },
 
-    login() {
-        const n=document.getElementById('inpNama').value.trim(), k=document.getElementById('inpKelas').value;
-        if(!n||!k){alert("Harap isi nama lengkap dan pilih kelas!");return;}
-        this.session.nama=n; this.session.kelas=k;
+    login: function() {
+        const n  = document.getElementById('inpNama').value.trim();
+        const k  = document.getElementById('inpKelas').value;
+        const p1 = document.getElementById('inpPengawas1');
+        const p2 = document.getElementById('inpPengawas2');
+        if (!n || !k)  { alert("Harap isi nama lengkap dan pilih kelas!"); return; }
+        if (!p1.value) { alert("Harap pilih Pengawas 1!"); return; }
+        if (p1.value === p2.value && p2.value !== "") { alert("Pengawas 1 dan Pengawas 2 tidak boleh sama!"); return; }
+        this.session.nama           = n;
+        this.session.kelas          = k;
+        this.session.pengawas1Nama  = p1.options[p1.selectedIndex].dataset.nama;
+        this.session.pengawas1Email = p1.value;
+        this.session.pengawas2Nama  = p2.value ? p2.options[p2.selectedIndex].dataset.nama : "";
+        this.session.pengawas2Email = p2.value || "";
         this.showSlide('rules');
     },
 
@@ -847,21 +922,58 @@ const app = {
             </div>`;
         });
 
-        const desc=nts.length===0?"Selamat! Tuntas semua elemen.":"Perlu belajar lagi di: "+nts.join(", ");
+        const payload = {
+            action: "submit_exam", mapel: "Matematika",
+            nama: this.session.nama, kelas: this.session.kelas,
+            skor: final, deskripsi: desc,
+            jawaban: this.session.answers, ringkasanNilai: summ,
+            pengawas1Nama:  this.session.pengawas1Nama  || "",
+            pengawas1Email: this.session.pengawas1Email || "",
+            pengawas2Nama:  this.session.pengawas2Nama  || "",
+            pengawas2Email: this.session.pengawas2Email || ""
+        };
         this.showSlide('result');
-        document.getElementById('modal-loading').style.display='none';
-        document.getElementById('result-content').innerHTML=`
-            <h3>Nilai Akhir: <span style="color:var(--primary);font-size:2.5rem;">${final}</span></h3>
-            <div style="background:#f0fdfa;padding:15px;border-radius:8px;margin-bottom:20px;">${desc}</div>
-            <h4>Capaian per Elemen:</h4>${cht}`;
+        this._sendPayload(payload);
+    },
 
-        fetch(CONFIG.SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},
-            body:JSON.stringify({action:"submit_exam",mapel:"Matematika",nama:this.session.nama,
-                kelas:this.session.kelas,skor:final,deskripsi:desc,
-                jawaban:this.session.answers,ringkasanNilai:summ})
-        }).then(()=>{ try{ localStorage.removeItem(CONFIG.STORAGE_KEY); }catch(e){} });
+        _sendPayload: function(payload) {
+        this._lastPayload = payload;
+        document.getElementById('modal-loading').style.display = 'flex';
+        document.getElementById('result-content').innerHTML =
+            '<p style="text-align:center;color:#64748b;">Sedang mengirim laporan...</p>';
+        fetch(CONFIG.SCRIPT_URL, {
+            method:'POST', redirect:'follow',
+            headers:{'Content-Type':'text/plain'},
+            body: JSON.stringify(payload)
+        })
+        .then(r => r.json())
+        .then(res => {
+            document.getElementById('modal-loading').style.display = 'none';
+            try { localStorage.removeItem(CONFIG.STORAGE_KEY); } catch(e) {}
+            const ok = res.status === 'success' || res.status === 'partial';
+            document.getElementById('result-content').innerHTML = ok
+                ? '<div style="text-align:center;padding:10px 0;"><div style="font-size:3rem;margin-bottom:14px;">&#9989;</div><p style="font-weight:700;color:#065f46;font-size:1.1rem;margin:0 0 8px;">Laporan berhasil terkirim!</p><p style="color:#64748b;font-size:0.9rem;margin:0;">Guru pengawas akan segera menerima laporan ujianmu.<br>Kamu boleh menutup halaman ini.</p></div>'
+                : '<div style="text-align:center;padding:10px 0;"><div style="font-size:3rem;margin-bottom:14px;">&#9888;</div><p style="font-weight:700;color:#b45309;font-size:1.05rem;margin:0 0 8px;">Pengiriman sebagian gagal</p><button class="btn btn-danger" onclick="app._sendPayload(app._lastPayload)">&#128260; Coba Lagi</button></div>';
+        })
+        .catch(() => {
+            document.getElementById('modal-loading').style.display = 'none';
+            document.getElementById('result-content').innerHTML =
+                '<div style="text-align:center;padding:10px 0;"><div style="font-size:3rem;margin-bottom:14px;">&#10060;</div><p style="font-weight:700;color:#dc2626;font-size:1.05rem;margin:0 0 8px;">Gagal terhubung ke server</p><button class="btn btn-danger" onclick="app._sendPayload(app._lastPayload)">&#128260; Coba Lagi</button></div>';
+        });
+    },
+    changeFont: function(dir) {
+        const next = this._fontIdx + dir;
+        if (next < 0 || next >= this._fontSteps.length) return;
+        this._fontIdx = next;
+        const scale = this._fontSteps[this._fontIdx] / 100;
+        document.documentElement.style.setProperty('--font-scale', scale);
+        document.getElementById('font-label').innerText = this._fontSteps[this._fontIdx] + '%';
+        document.getElementById('btn-font-minus').disabled = (this._fontIdx === 0);
+        document.getElementById('btn-font-plus').disabled  = (this._fontIdx === this._fontSteps.length - 1);
+        try { localStorage.setItem('UST_FONT_IDX', this._fontIdx); } catch(e) {}
     }
 };
+
 window.onload=()=>app.init();
 </script>
 </body>
