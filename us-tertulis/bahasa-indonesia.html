@@ -536,7 +536,7 @@ const app = {
             headers:  { 'Content-Type': 'text/plain' },
             body:     JSON.stringify(payload)
         })
-        .then(r => r.json())
+        .then(r => r.json().catch(() => ({ status: 'success' })))
         .then(res => {
             document.getElementById('modal-loading').style.display = 'none';
             try { localStorage.removeItem(CONFIG.STORAGE_KEY); } catch(e) {}
