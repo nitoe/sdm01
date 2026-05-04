@@ -40,7 +40,10 @@ body { margin:0; padding:0; font-family:'Segoe UI',Roboto,sans-serif; background
 /* SLIDES */
 .slide { display:none !important; width:100%; height:100%; }
 .slide.active { display:flex !important; flex-direction:column; animation:fadeIn .4s ease; }
-.center-content-wrapper { width:100%; max-width:800px; margin:0 auto; padding:20px; overflow-y:auto; flex:1; display:flex; flex-direction:column; justify-content:center; }
+.center-content-wrapper { width:100%; max-width:800px; margin:0 auto; padding:20px; overflow-y:auto; flex:1; display:flex; flex-direction:column; justify-content: flex-start; }
+        /* Pusatkan konten secara vertikal hanya ketika tidak overflow (PIN, Hasil) */
+        #slide-pin .center-content-wrapper,
+        #slide-result .center-content-wrapper { justify-content: center; }
 @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
 
 .card { background:white; border-radius:12px; box-shadow:0 4px 6px -1px rgba(0,0,0,.1); padding:32px; margin-bottom:20px; border-top:5px solid var(--primary); }
@@ -161,8 +164,8 @@ mjx-container { font-size:1.1em!important; }
 <div class="app-container">
   <div class="header">
     <div class="header-title">Ujian Sekolah Bahasa Arab - ISMUBA</div>
-    <div style="display:flex;align-items:center;gap:15px;">
-      <div id="user-badge" style="display:none;font-size:.85rem;background:rgba(255,255,255,.1);padding:5px 12px;border-radius:20px;">Siswa</div>
+    <div id="exam-controls" style="display:none;align-items:center;gap:10px;">
+            <div id="user-badge" style="display:none;font-size:.85rem;background:rgba(255,255,255,.1);padding:5px 12px;border-radius:20px;">Siswa</div>
       <div class="font-ctrl">
         <button class="font-btn" id="btn-font-minus" onclick="app.changeFont(-1)">A−</button>
         <span class="font-ctrl-label" id="font-label">100%</span>
@@ -266,7 +269,6 @@ mjx-container { font-size:1.1em!important; }
             </div>
           </div>
         </div>
-      </div>
       </div>
 
     </div><!-- /main-stage -->
@@ -660,7 +662,8 @@ const app = {
 
   startExam: function(isRes=false) {
     if (!isRes) { this.session.startTime = Date.now(); this.save(); }
-    document.getElementById('user-badge').innerText = this.session.nama;
+        document.getElementById('exam-controls').style.display='flex';
+            document.getElementById('user-badge').innerText = this.session.nama;
     document.getElementById('user-badge').style.display = 'block';
     document.getElementById('sidebar').style.display = 'flex';
     this.renderQuestions();
@@ -837,7 +840,7 @@ const app = {
     document.getElementById('modal-loading').style.display = 'flex';
     document.getElementById('result-content').innerHTML = '<p style="text-align:center;color:#64748b;">Sedang mengirim laporan...</p>';
     fetch(CONFIG.SCRIPT_URL, { method:'POST', redirect:'follow', headers:{'Content-Type':'text/plain'}, body:JSON.stringify(payload) })
-    .then(r => r.json())
+    .then(r => r.json().catch(() => ({ status: 'success' })))
     .then(res => {
       document.getElementById('modal-loading').style.display = 'none';
       try { localStorage.removeItem(CONFIG.STORAGE_KEY); } catch(e) {}
