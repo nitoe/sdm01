@@ -1,369 +1,1225 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Materi TIK – Ujian Sekolah Kelas 6</title>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root{--purple:#7c3aed;--purple-dark:#5b21b6;--purple-light:#f5f3ff;--purple-pale:#ede9fe;--green:#059669;--green-dark:#065f46;--green-light:#d1fae5;--blue:#2563eb;--blue-light:#dbeafe;--orange:#ea580c;--orange-light:#fff7ed;--red:#dc2626;--red-light:#fef2f2;--amber:#d97706;--amber-light:#fef3c7;--teal:#0d9488;--teal-light:#ccfbf1;--text:#1f2a37;--text-muted:#6b7280;--bg:#f0f4ff;--white:#fff;--border:#e5e7eb;--radius:14px;--shadow:0 4px 20px rgba(0,0,0,.06)}
-    *{box-sizing:border-box;margin:0;padding:0}html{font-size:clamp(14px,3.2vw,16px);scroll-behavior:smooth}body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.75}
-    .header{position:sticky;top:0;z-index:100;background:linear-gradient(135deg,#3b0764,#5b21b6 50%,#7c3aed);color:#fff;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(0,0,0,.25)}.header-brand{display:flex;align-items:center;gap:10px}.logo{font-size:1.5rem}.brand-name{font-family:'Baloo 2',cursive;font-size:clamp(.82rem,2.6vw,1rem);font-weight:800;line-height:1.1}.sub-brand{font-size:.62rem;opacity:.8;font-weight:600}.header-back{display:flex;align-items:center;gap:5px;color:#fff;text-decoration:none;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 14px;font-size:.72rem;font-weight:700;transition:background .2s}.header-back:hover{background:rgba(255,255,255,.3)}
-    .hero{background:linear-gradient(160deg,#3b0764,#5b21b6 40%,#7c3aed);color:#fff;padding:40px 20px 48px;text-align:center;position:relative;overflow:hidden}.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M50 50v-6h-2v6h-6v2h6v6h2v-6h6v-2h-6zM50 10V4h-2v6h-6v2h6v6h2v-6h6v-2h-6zM10 50v-6H8v6H2v2h6v6h2v-6h6v-2h-6zM10 10V4H8v6H2v2h6v6h2v-6h6v-2h-6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}.hero-emoji{font-size:3rem;display:block;margin-bottom:10px;position:relative}.hero h1{font-family:'Baloo 2',cursive;font-size:clamp(1.4rem,4.5vw,2rem);font-weight:800;margin-bottom:6px;position:relative}.hero p{font-size:clamp(.8rem,2.2vw,.92rem);opacity:.88;font-weight:600;max-width:620px;margin:0 auto;position:relative;line-height:1.6}
-    .nav-pills{background:var(--white);border-bottom:1px solid var(--border);padding:12px 16px;position:sticky;top:56px;z-index:90;box-shadow:0 2px 8px rgba(0,0,0,.04)}.nav-pills-inner{max-width:920px;margin:0 auto;display:flex;gap:6px;flex-wrap:wrap;justify-content:center}.nav-pill{font-size:.7rem;font-weight:700;padding:4px 12px;border-radius:20px;text-decoration:none;background:var(--purple-light);color:var(--purple-dark);border:1px solid transparent;transition:all .2s;white-space:nowrap}.nav-pill:hover{background:var(--purple-pale);border-color:var(--purple)}
-    .container{max-width:920px;margin:0 auto;padding:32px 16px 56px}
-    .section-block{margin-bottom:40px}.section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:3px solid var(--purple)}.section-num{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;color:#fff;flex-shrink:0}
-    .sn1{background:linear-gradient(135deg,#2563eb,#60a5fa)}.sn2{background:linear-gradient(135deg,#7c3aed,#a78bfa)}.sn3{background:linear-gradient(135deg,#059669,#10b981)}.sn4{background:linear-gradient(135deg,#d97706,#fbbf24)}
-    .section-title-group{flex:1}.section-title{font-family:'Baloo 2',cursive;font-size:1.15rem;font-weight:800}.section-subtitle{font-size:.73rem;font-weight:600;color:var(--text-muted)}
-    .cc{background:var(--white);border-radius:var(--radius);padding:24px;margin-bottom:20px;box-shadow:var(--shadow);border:1px solid var(--border)}.cc h3{font-family:'Baloo 2',cursive;font-size:1.02rem;font-weight:800;margin-bottom:12px;color:var(--purple-dark);display:flex;align-items:center;gap:8px}.cc h4{font-size:.9rem;font-weight:800;margin:16px 0 8px;color:var(--text)}.cc p{font-size:.86rem;margin-bottom:10px;color:#374151}.cc ul,.cc ol{padding-left:20px;margin-bottom:10px}.cc li{font-size:.84rem;margin-bottom:5px;color:#374151}.cc li strong{color:var(--text)}
-    .ib{border-radius:10px;padding:14px 16px;margin:14px 0;font-size:.82rem}.ib.green{background:var(--green-light);border-left:4px solid var(--green)}.ib.blue{background:var(--blue-light);border-left:4px solid var(--blue)}.ib.orange{background:var(--orange-light);border-left:4px solid var(--orange)}.ib.red{background:var(--red-light);border-left:4px solid var(--red)}.ib.amber{background:var(--amber-light);border-left:4px solid var(--amber)}.ib.teal{background:var(--teal-light);border-left:4px solid var(--teal)}.ib.purple{background:var(--purple-light);border-left:4px solid var(--purple)}
-    .ib strong{display:block;margin-bottom:4px}.ib.green strong{color:var(--green-dark)}.ib.blue strong{color:#1e40af}.ib.orange strong{color:var(--orange)}.ib.red strong{color:var(--red)}.ib.amber strong{color:var(--amber)}.ib.teal strong{color:var(--teal)}.ib.purple strong{color:var(--purple-dark)}
-    .tw{overflow-x:auto;margin:12px 0;-webkit-overflow-scrolling:touch}table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:320px}th{background:var(--purple-light);color:var(--purple-dark);padding:9px 12px;text-align:left;font-weight:800;font-size:.76rem;text-transform:uppercase;letter-spacing:.3px;border-bottom:2px solid var(--purple)}td{padding:9px 12px;border-bottom:1px solid var(--border)}tr:nth-child(even) td{background:#fafbff}
-    .kt{display:inline-block;background:var(--purple-light);color:var(--purple-dark);padding:1px 8px;border-radius:6px;font-weight:800;font-size:.82rem}
-    .cg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}@media(max-width:500px){.cg{grid-template-columns:1fr}}.cb{border-radius:10px;padding:14px;font-size:.82rem}
-    .footer{text-align:center;padding:24px 16px;font-size:.76rem;color:var(--text-muted);font-weight:600;border-top:1px solid var(--border)}
-  </style>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Materi TIK & KKA – Ujian Sekolah Kelas 6</title>
+ <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+ <style>
+ :root{
+ --purple:#7c3aed;--purple-dark:#5b21b6;--purple-light:#f5f3ff;--purple-pale:#ede9fe;
+ --green:#059669;--green-dark:#065f46;--green-light:#d1fae5;
+ --blue:#2563eb;--blue-light:#dbeafe;
+ --orange:#ea580c;--orange-light:#fff7ed;
+ --red:#dc2626;--red-light:#fef2f2;
+ --amber:#d97706;--amber-light:#fef3c7;
+ --teal:#0d9488;--teal-light:#ccfbf1;
+ --cyan:#0891b2;--cyan-dark:#0e7490;--cyan-light:#e0f2fe;
+ --pink:#db2777;--pink-dark:#9d174d;--pink-light:#fce7f3;
+ --indigo:#4f46e5;--indigo-light:#eef2ff;
+ --text:#1f2a37;--text-muted:#6b7280;
+ --bg:#f0f4ff;--white:#fff;--border:#e5e7eb;
+ --radius:14px;--shadow:0 4px 20px rgba(0,0,0,.06)
+ }
+ *{box-sizing:border-box;margin:0;padding:0}
+ html{font-size:clamp(14px,3.2vw,16px);scroll-behavior:smooth}
+ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.75}
+
+ /* ── HEADER ── */
+ .header{position:sticky;top:0;z-index:100;background:linear-gradient(135deg,#3b0764,#5b21b6 50%,#7c3aed);color:#fff;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+ .header-brand{display:flex;align-items:center;gap:10px}
+ .logo{font-size:1.5rem}
+ .brand-name{font-family:'Baloo 2',cursive;font-size:clamp(.82rem,2.6vw,1rem);font-weight:800;line-height:1.1}
+ .sub-brand{font-size:.62rem;opacity:.8;font-weight:600}
+ .header-back{display:flex;align-items:center;gap:5px;color:#fff;text-decoration:none;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 14px;font-size:.72rem;font-weight:700;transition:background .2s}
+ .header-back:hover{background:rgba(255,255,255,.3)}
+
+ /* ── HERO ── */
+ .hero{background:linear-gradient(160deg,#3b0764,#5b21b6 40%,#7c3aed);color:#fff;padding:36px 20px 44px;text-align:center;position:relative;overflow:hidden}
+ .hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M50 50v-6h-2v6h-6v2h6v6h2v-6h6v-2h-6zM10 10V4H8v6H2v2h6v6h2v-6h6v-2h-6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+ .hero-emoji{font-size:2.6rem;display:block;margin-bottom:8px;position:relative}
+ .hero h1{font-family:'Baloo 2',cursive;font-size:clamp(1.3rem,4.5vw,1.9rem);font-weight:800;margin-bottom:6px;position:relative}
+ .hero p{font-size:clamp(.78rem,2.2vw,.9rem);opacity:.88;font-weight:600;max-width:620px;margin:0 auto;position:relative;line-height:1.6}
+
+ /* ── TAB BAR ── */
+ .tab-bar{position:sticky;top:56px;z-index:95;background:#fff;border-bottom:2px solid var(--border);display:flex;justify-content:center;height:50px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+ .tab-btn{display:flex;align-items:center;gap:7px;padding:0 28px;font-family:'Baloo 2',cursive;font-size:.95rem;font-weight:800;border:none;background:none;cursor:pointer;color:var(--text-muted);border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;white-space:nowrap}
+ .tab-btn:hover{color:var(--purple)}
+ .tab-btn.active-tik{color:var(--purple);border-bottom-color:var(--purple)}
+ .tab-btn.active-kka{color:var(--cyan);border-bottom-color:var(--cyan)}
+ .tab-badge{font-size:.6rem;font-weight:800;padding:2px 7px;border-radius:12px;line-height:1.4}
+ .tab-btn.active-tik .tab-badge{background:var(--purple-light);color:var(--purple-dark)}
+ .tab-btn.active-kka .tab-badge{background:var(--cyan-light);color:var(--cyan-dark)}
+
+ /* ── TAB CONTENT ── */
+ .tab-content{display:none}
+ .tab-content.active{display:block}
+
+ /* ── NAV PILLS ── */
+ .nav-pills{background:var(--white);border-bottom:1px solid var(--border);padding:10px 16px;position:sticky;top:106px;z-index:90;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+ .nav-pills-inner{max-width:920px;margin:0 auto;display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+ .nav-pill{font-size:.7rem;font-weight:700;padding:4px 12px;border-radius:20px;text-decoration:none;background:var(--purple-light);color:var(--purple-dark);border:1px solid transparent;transition:all .2s;white-space:nowrap}
+ .nav-pill:hover{background:var(--purple-pale);border-color:var(--purple)}
+ .nav-pill.kka-pill{background:var(--cyan-light);color:var(--cyan-dark)}
+ .nav-pill.kka-pill:hover{background:#bae6fd;border-color:var(--cyan)}
+
+ /* ── CONTAINER ── */
+ .container{max-width:920px;margin:0 auto;padding:32px 16px 56px}
+
+ /* ── SECTION BLOCKS ── */
+ .section-block{margin-bottom:40px}
+ .section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:3px solid var(--purple)}
+ .section-header.kka-header{border-bottom-color:var(--cyan)}
+ .section-header.ai-header{border-bottom-color:var(--pink)}
+ .section-num{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;color:#fff;flex-shrink:0}
+ .sn1{background:linear-gradient(135deg,#2563eb,#60a5fa)}
+ .sn2{background:linear-gradient(135deg,#7c3aed,#a78bfa)}
+ .sn3{background:linear-gradient(135deg,#059669,#10b981)}
+ .sn4{background:linear-gradient(135deg,#d97706,#fbbf24)}
+ .sn-ld{background:linear-gradient(135deg,#059669,#0891b2)}
+ .sn-bc{background:linear-gradient(135deg,#0891b2,#06b6d4)}
+ .sn-ai{background:linear-gradient(135deg,#7c3aed,#db2777)}
+ .section-title-group{flex:1}
+ .section-title{font-family:'Baloo 2',cursive;font-size:1.15rem;font-weight:800}
+ .section-subtitle{font-size:.73rem;font-weight:600;color:var(--text-muted)}
+
+ /* ── CONTENT CARDS ── */
+ .cc{background:var(--white);border-radius:var(--radius);padding:24px;margin-bottom:20px;box-shadow:var(--shadow);border:1px solid var(--border)}
+ .cc h3{font-family:'Baloo 2',cursive;font-size:1.02rem;font-weight:800;margin-bottom:12px;color:var(--purple-dark);display:flex;align-items:center;gap:8px}
+ .cc h3.cyan-h{color:var(--cyan-dark)}
+ .cc h3.pink-h{color:var(--pink-dark)}
+ .cc h4{font-size:.9rem;font-weight:800;margin:16px 0 8px;color:var(--text)}
+ .cc p{font-size:.86rem;margin-bottom:10px;color:#374151}
+ .cc ul,.cc ol{padding-left:20px;margin-bottom:10px}
+ .cc li{font-size:.84rem;margin-bottom:5px;color:#374151}
+ .cc li strong{color:var(--text)}
+
+ /* ── INFO BOXES ── */
+ .ib{border-radius:10px;padding:14px 16px;margin:14px 0;font-size:.82rem}
+ .ib.green{background:var(--green-light);border-left:4px solid var(--green)}
+ .ib.blue{background:var(--blue-light);border-left:4px solid var(--blue)}
+ .ib.orange{background:var(--orange-light);border-left:4px solid var(--orange)}
+ .ib.red{background:var(--red-light);border-left:4px solid var(--red)}
+ .ib.amber{background:var(--amber-light);border-left:4px solid var(--amber)}
+ .ib.teal{background:var(--teal-light);border-left:4px solid var(--teal)}
+ .ib.purple{background:var(--purple-light);border-left:4px solid var(--purple)}
+ .ib.cyan{background:var(--cyan-light);border-left:4px solid var(--cyan)}
+ .ib.pink{background:var(--pink-light);border-left:4px solid var(--pink)}
+ .ib.indigo{background:var(--indigo-light);border-left:4px solid var(--indigo)}
+ .ib strong{display:block;margin-bottom:4px}
+ .ib.green strong{color:var(--green-dark)}.ib.blue strong{color:#1e40af}.ib.orange strong{color:var(--orange)}.ib.red strong{color:var(--red)}.ib.amber strong{color:var(--amber)}.ib.teal strong{color:var(--teal)}.ib.purple strong{color:var(--purple-dark)}.ib.cyan strong{color:var(--cyan-dark)}.ib.pink strong{color:var(--pink-dark)}.ib.indigo strong{color:var(--indigo)}
+
+ /* ── TABLES ── */
+ .tw{overflow-x:auto;margin:12px 0;-webkit-overflow-scrolling:touch}
+ table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:320px}
+ th{background:var(--purple-light);color:var(--purple-dark);padding:9px 12px;text-align:left;font-weight:800;font-size:.76rem;text-transform:uppercase;letter-spacing:.3px;border-bottom:2px solid var(--purple)}
+ th.cyan-th{background:var(--cyan-light);color:var(--cyan-dark);border-bottom-color:var(--cyan)}
+ th.pink-th{background:var(--pink-light);color:var(--pink-dark);border-bottom-color:var(--pink)}
+ td{padding:9px 12px;border-bottom:1px solid var(--border)}
+ tr:nth-child(even) td{background:#fafbff}
+
+ /* ── KEYWORDS ── */
+ .kt{display:inline-block;background:var(--purple-light);color:var(--purple-dark);padding:1px 8px;border-radius:6px;font-weight:800;font-size:.82rem}
+ .kt-c{background:var(--cyan-light);color:var(--cyan-dark)}
+ .kt-p{background:var(--pink-light);color:var(--pink-dark)}
+
+ /* ── COMPARISON GRIDS ── */
+ .cg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+ @media(max-width:500px){.cg{grid-template-columns:1fr}}
+ .cb{border-radius:10px;padding:14px;font-size:.82rem}
+ .cg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:12px 0}
+ @media(max-width:600px){.cg3{grid-template-columns:1fr}}
+
+ /* ── ALGORITHM FLOW ── */
+ .alg-flow{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin:14px 0;justify-content:center}
+ .alg-step{background:var(--cyan-light);border:2px solid var(--cyan);border-radius:10px;padding:8px 14px;font-size:.82rem;font-weight:700;color:var(--cyan-dark);text-align:center;min-width:80px}
+ .alg-step.err{background:#fef2f2;border-color:var(--red);color:var(--red)}
+ .alg-step.ok{background:var(--green-light);border-color:var(--green);color:var(--green-dark)}
+ .alg-arrow{font-size:1.2rem;color:#9ca3af;font-weight:700}
+
+ /* ── PATTERN VISUAL ── */
+ .patt-row{display:flex;align-items:center;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+ .patt-num{background:var(--indigo-light);border:2px solid var(--indigo);border-radius:10px;width:56px;height:56px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:900;color:var(--indigo)}
+ .patt-num.next{background:var(--green-light);border-color:var(--green);color:var(--green-dark)}
+ .patt-op{font-size:.8rem;font-weight:800;color:var(--text-muted);text-align:center}
+
+ /* ── AI VISUAL CARDS ── */
+ .ai-vs{display:flex;gap:0;border-radius:12px;overflow:hidden;border:2px solid var(--border);margin:14px 0}
+ .ai-vs-side{flex:1;padding:16px;font-size:.82rem}
+ .ai-vs-side h4{font-size:.88rem;font-weight:800;margin-bottom:8px;margin-top:0}
+ .ai-vs-a{background:#f0fdf4}
+ .ai-vs-b{background:#fef2f2;border-left:2px solid var(--border)}
+ .ai-gigo{border-radius:12px;overflow:hidden;border:2px solid var(--border);margin:14px 0;font-size:.82rem}
+ .ai-gigo-row{display:flex;align-items:center;padding:12px 16px;gap:12px}
+ .ai-gigo-row:not(:last-child){border-bottom:1px solid var(--border)}
+ .ai-gigo-icon{font-size:1.6rem;flex-shrink:0;width:36px;text-align:center}
+ .ai-gigo-label{font-weight:800;font-size:.76rem;text-transform:uppercase;margin-bottom:2px}
+
+ /* ── FOOTER ── */
+ .footer{text-align:center;padding:24px 16px;font-size:.76rem;color:var(--text-muted);font-weight:600;border-top:1px solid var(--border)}
+ </style>
 </head>
 <body>
 
-<header class="header"><div class="header-brand"><span class="logo">💻</span><div><div class="brand-name">Materi TIK</div><div class="sub-brand">Ujian Sekolah · Kelas 6</div></div></div><a href="index.html" class="header-back">← Hub Materi</a></header>
+<!-- ════════ HEADER ════════ -->
+<header class="header">
+ <div class="header-brand">
+ <span class="logo">💻</span>
+ <div>
+ <div class="brand-name">Materi TIK & KKA</div>
+ <div class="sub-brand">Ujian Sekolah · Kelas 6</div>
+ </div>
+ </div>
+ <a href="index.html" class="header-back">← Hub Materi</a>
+</header>
 
-<section class="hero"><span class="hero-emoji">💻</span><h1>TIK — Tertulis</h1><p>Teknologi Informasi & Komunikasi. Materi lengkap 4 topik: Aplikasi & File, Sistem Komputer, Jaringan & Internet, dan Dampak Sosial Teknologi.</p></section>
+<!-- ════════ HERO ════════ -->
+<section class="hero">
+ <span class="hero-emoji">💻🤖</span>
+ <h1>TIK & KKA — Ujian Sekolah</h1>
+ <p>Dua mata ujian dalam satu tempat belajar. Pilih tab <strong>TIK</strong> untuk materi Teknologi Informasi & Komunikasi, atau tab <strong>KKA</strong> untuk Koding, Berpikir Komputasional, dan Kecerdasan Artifisial.</p>
+</section>
+
+<!-- ════════ TAB BAR ════════ -->
+<div class="tab-bar">
+ <button class="tab-btn active-tik" id="btn-tik" onclick="switchTab('tik')">
+ 💻 TIK
+ <span class="tab-badge">4 Topik</span>
+ </button>
+ <button class="tab-btn" id="btn-kka" onclick="switchTab('kka')">
+ 🤖 KKA
+ <span class="tab-badge">3 Topik</span>
+ </button>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- TAB 1 — TIK -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div id="tab-tik" class="tab-content active">
 
 <nav class="nav-pills"><div class="nav-pills-inner">
-<a href="#s1" class="nav-pill">📂 Aplikasi & File</a><a href="#s2" class="nav-pill">🖥️ Sistem Komputer</a><a href="#s3" class="nav-pill">🌐 Jaringan & Internet</a><a href="#s4" class="nav-pill">👥 Dampak Sosial</a>
+ <a href="#s1" class="nav-pill">📂 Aplikasi & File</a>
+ <a href="#s2" class="nav-pill">🖥️ Sistem Komputer</a>
+ <a href="#s3" class="nav-pill">🌐 Jaringan & Internet</a>
+ <a href="#s4" class="nav-pill">👥 Dampak Sosial</a>
 </div></nav>
 
 <main class="container">
 
 <!-- ═══ 1: APLIKASI & FILE ═══ -->
-<div class="section-block" id="s1"><div class="section-header"><div class="section-num sn1">📂</div><div class="section-title-group"><div class="section-title">Aplikasi & Pengelolaan File</div><div class="section-subtitle">Pengolah kata, pengolah gambar, spreadsheet, ekstensi file, penyimpanan data, manajemen folder</div></div></div>
+<div class="section-block" id="s1">
+ <div class="section-header">
+ <div class="section-num sn1">📂</div>
+ <div class="section-title-group">
+ <div class="section-title">Aplikasi & Pengelolaan File</div>
+ <div class="section-subtitle">Pengolah kata, pengolah gambar, spreadsheet, ekstensi file, penyimpanan data, manajemen folder</div>
+ </div>
+ </div>
 
-<div class="cc"><h3>📝 Fitur Aplikasi Pengolah Kata</h3>
-<p>Aplikasi pengolah kata (seperti Microsoft Word, Google Docs) digunakan untuk membuat dokumen teks. Fitur-fitur utama:</p>
-<div class="tw"><table><thead><tr><th>Fitur</th><th>Fungsi</th><th>Ikon</th></tr></thead><tbody>
-<tr><td><strong>Bold (Tebal)</strong></td><td>Menebalkan teks agar menonjol (misal: judul)</td><td><strong>B</strong></td></tr>
-<tr><td><strong>Italic (Miring)</strong></td><td>Memiringkan teks (misal: istilah asing, penekanan)</td><td><em>I</em></td></tr>
-<tr><td><strong>Underline (Garis Bawah)</strong></td><td>Memberi garis bawah pada teks</td><td><u>U</u></td></tr>
-<tr><td><strong>Align Center</strong></td><td>Meratakan teks ke tengah halaman</td><td>≡</td></tr>
-<tr><td><strong>Font Size</strong></td><td>Mengubah ukuran huruf</td><td>12pt</td></tr>
-<tr><td><strong>Font Color</strong></td><td>Mengubah warna huruf</td><td>A🎨</td></tr>
-</tbody></table></div>
-<div class="ib blue"><strong>💡 Bold, Italic, Underline = Format Teks</strong>Ketiganya digunakan khusus untuk memformat <strong>tampilan teks</strong>. Crop, Resize, Rotate bukan fitur pengolah kata — itu fitur pengolah gambar.</div>
-</div>
+ <div class="cc"><h3>📝 Fitur Aplikasi Pengolah Kata</h3>
+ <p>Aplikasi pengolah kata (seperti Microsoft Word, Google Docs) digunakan untuk membuat dokumen teks. Fitur-fitur utama:</p>
+ <div class="tw"><table><thead><tr><th>Fitur</th><th>Fungsi</th><th>Ikon</th></tr></thead><tbody>
+ <tr><td><strong>Bold (Tebal)</strong></td><td>Menebalkan teks agar menonjol (misal: judul)</td><td><strong>B</strong></td></tr>
+ <tr><td><strong>Italic (Miring)</strong></td><td>Memiringkan teks (misal: istilah asing, penekanan)</td><td><em>I</em></td></tr>
+ <tr><td><strong>Underline (Garis Bawah)</strong></td><td>Memberi garis bawah pada teks</td><td><u>U</u></td></tr>
+ <tr><td><strong>Align Center</strong></td><td>Meratakan teks ke tengah halaman</td><td>≡</td></tr>
+ <tr><td><strong>Font Size</strong></td><td>Mengubah ukuran huruf</td><td>12pt</td></tr>
+ <tr><td><strong>Font Color</strong></td><td>Mengubah warna huruf</td><td>A🎨</td></tr>
+ </tbody></table></div>
+ <div class="ib blue"><strong>💡 Bold, Italic, Underline = Format Teks</strong>Ketiganya digunakan khusus untuk memformat <strong>tampilan teks</strong>. Crop, Resize, Rotate bukan fitur pengolah kata — itu fitur pengolah gambar.</div>
+ </div>
 
-<div class="cc"><h3>🖼️ Fitur Aplikasi Pengolah Gambar</h3>
-<div class="tw"><table><thead><tr><th>Fitur</th><th>Fungsi</th><th>Contoh Penggunaan</th></tr></thead><tbody>
-<tr><td><strong>Crop (Potong)</strong></td><td>Memotong bagian gambar yang tidak diinginkan</td><td>Menghilangkan objek sampah di sudut foto</td></tr>
-<tr><td><strong>Resize (Ubah Ukuran)</strong></td><td>Memperbesar atau memperkecil gambar</td><td>Menyesuaikan ukuran foto untuk presentasi</td></tr>
-<tr><td><strong>Rotate (Putar)</strong></td><td>Memutar gambar 90° atau 180°</td><td>Meluruskan foto yang miring</td></tr>
-<tr><td><strong>Brightness (Kecerahan)</strong></td><td>Mengatur terang-gelap gambar</td><td>Mencerahkan foto yang terlalu gelap</td></tr>
-</tbody></table></div>
-</div>
+ <div class="cc"><h3>🖼️ Fitur Aplikasi Pengolah Gambar</h3>
+ <div class="tw"><table><thead><tr><th>Fitur</th><th>Fungsi</th><th>Contoh Penggunaan</th></tr></thead><tbody>
+ <tr><td><strong>Crop (Potong)</strong></td><td>Memotong bagian gambar yang tidak diinginkan</td><td>Menghilangkan objek sampah di sudut foto</td></tr>
+ <tr><td><strong>Resize (Ubah Ukuran)</strong></td><td>Memperbesar atau memperkecil gambar</td><td>Menyesuaikan ukuran foto untuk presentasi</td></tr>
+ <tr><td><strong>Rotate (Putar)</strong></td><td>Memutar gambar 90° atau 180°</td><td>Meluruskan foto yang miring</td></tr>
+ <tr><td><strong>Brightness (Kecerahan)</strong></td><td>Mengatur terang-gelap gambar</td><td>Mencerahkan foto yang terlalu gelap</td></tr>
+ </tbody></table></div>
+ </div>
 
-<div class="cc"><h3>📊 Fitur Aplikasi Spreadsheet</h3>
-<p>Aplikasi spreadsheet (Microsoft Excel, Google Sheets) digunakan untuk mengolah data dalam bentuk tabel.</p>
-<div class="tw"><table><thead><tr><th>Fitur</th><th>Fungsi</th></tr></thead><tbody>
-<tr><td><strong>SUM / AutoSum</strong></td><td>Menjumlahkan angka dalam satu kolom/baris secara otomatis</td></tr>
-<tr><td><strong>AVERAGE</strong></td><td>Menghitung rata-rata</td></tr>
-<tr><td><strong>Sort (Urutkan)</strong></td><td>Mengurutkan data dari terkecil ke terbesar atau sebaliknya</td></tr>
-<tr><td><strong>Filter (Saring)</strong></td><td>Menyaring data berdasarkan kriteria tertentu</td></tr>
-</tbody></table></div>
-<div class="ib green"><strong>💡 Ingin menghitung total nilai 5 teman?</strong>Gunakan <strong>SUM/AutoSum</strong> — bukan Sort (mengurutkan), Filter (menyaring), atau Bold (memformat teks).</div>
-</div>
+ <div class="cc"><h3>📊 Fitur Aplikasi Spreadsheet</h3>
+ <p>Aplikasi spreadsheet (Microsoft Excel, Google Sheets) digunakan untuk mengolah data dalam bentuk tabel.</p>
+ <div class="tw"><table><thead><tr><th>Fitur</th><th>Fungsi</th></tr></thead><tbody>
+ <tr><td><strong>SUM / AutoSum</strong></td><td>Menjumlahkan angka dalam satu kolom/baris secara otomatis</td></tr>
+ <tr><td><strong>AVERAGE</strong></td><td>Menghitung rata-rata</td></tr>
+ <tr><td><strong>Sort (Urutkan)</strong></td><td>Mengurutkan data dari terkecil ke terbesar atau sebaliknya</td></tr>
+ <tr><td><strong>Filter (Saring)</strong></td><td>Menyaring data berdasarkan kriteria tertentu</td></tr>
+ </tbody></table></div>
+ <div class="ib green"><strong>💡 Ingin menghitung total nilai 5 teman?</strong>Gunakan <strong>SUM/AutoSum</strong> — bukan Sort (mengurutkan), Filter (menyaring), atau Bold (memformat teks).</div>
+ </div>
 
-<div class="cc"><h3>📁 Ekstensi File dan Jenis Kontennya</h3>
-<p>Setiap file memiliki <strong>ekstensi</strong> (akhiran nama file) yang menunjukkan jenis kontennya.</p>
-<div class="tw"><table><thead><tr><th>Ekstensi</th><th>Jenis Konten</th><th>Aplikasi</th></tr></thead><tbody>
-<tr><td><strong>.docx</strong></td><td>Dokumen teks</td><td>Microsoft Word, Google Docs</td></tr>
-<tr><td><strong>.xlsx</strong></td><td>Data tabel / spreadsheet</td><td>Microsoft Excel, Google Sheets</td></tr>
-<tr><td><strong>.pptx</strong></td><td>Presentasi</td><td>Microsoft PowerPoint, Google Slides</td></tr>
-<tr><td><strong>.jpg / .png</strong></td><td>Gambar / foto</td><td>Photos, Paint, Canva</td></tr>
-<tr><td><strong>.mp3</strong></td><td>Audio / musik</td><td>Pemutar musik</td></tr>
-<tr><td><strong>.mp4</strong></td><td>Video</td><td>Pemutar video</td></tr>
-<tr><td><strong>.pdf</strong></td><td>Dokumen format tetap</td><td>Adobe Reader, browser</td></tr>
-</tbody></table></div>
-<div class="ib amber"><strong>🔑 Yang Sering Diujikan</strong>.docx = <strong>Dokumen</strong>. .jpg = <strong>Gambar</strong>. .xlsx = <strong>Data/Spreadsheet</strong>. .mp3 & .mp4 = <strong>Multimedia</strong> (audio/video).</div>
-</div>
+ <div class="cc"><h3>📁 Ekstensi File dan Jenis Kontennya</h3>
+ <p>Setiap file memiliki <strong>ekstensi</strong> (akhiran nama file) yang menunjukkan jenis kontennya.</p>
+ <div class="tw"><table><thead><tr><th>Ekstensi</th><th>Jenis Konten</th><th>Aplikasi</th></tr></thead><tbody>
+ <tr><td><strong>.docx</strong></td><td>Dokumen teks</td><td>Microsoft Word, Google Docs</td></tr>
+ <tr><td><strong>.xlsx</strong></td><td>Data tabel / spreadsheet</td><td>Microsoft Excel, Google Sheets</td></tr>
+ <tr><td><strong>.pptx</strong></td><td>Presentasi</td><td>Microsoft PowerPoint, Google Slides</td></tr>
+ <tr><td><strong>.jpg / .png</strong></td><td>Gambar / foto</td><td>Photos, Paint, Canva</td></tr>
+ <tr><td><strong>.mp3</strong></td><td>Audio / musik</td><td>Pemutar musik</td></tr>
+ <tr><td><strong>.mp4</strong></td><td>Video</td><td>Pemutar video</td></tr>
+ <tr><td><strong>.pdf</strong></td><td>Dokumen format tetap</td><td>Adobe Reader, browser</td></tr>
+ </tbody></table></div>
+ <div class="ib amber"><strong>🔑 Yang Sering Diujikan</strong>.docx = <strong>Dokumen</strong>. .jpg = <strong>Gambar</strong>. .xlsx = <strong>Data/Spreadsheet</strong>. .mp3 & .mp4 = <strong>Multimedia</strong> (audio/video).</div>
+ </div>
 
-<div class="cc"><h3>💾 Penyimpanan Data: Online vs Offline</h3>
-<div class="cg">
-<div class="cb" style="background:var(--blue-light);"><h4 style="color:#1e40af;margin-top:0;">☁️ Online (Cloud Storage)</h4><p>Disimpan di server internet, bisa diakses dari mana saja.</p><ul style="font-size:.82rem;"><li><strong>Google Drive</strong></li><li>OneDrive, Dropbox, iCloud</li><li>✅ Bisa kerja di sekolah DAN di rumah tanpa flashdisk</li><li>✅ Tidak hilang jika komputer rusak</li><li>⚠️ Butuh koneksi internet</li></ul></div>
-<div class="cb" style="background:var(--orange-light);"><h4 style="color:var(--orange);margin-top:0;">💽 Offline (Local Storage)</h4><p>Disimpan di perangkat fisik, hanya bisa diakses dari perangkat itu.</p><ul style="font-size:.82rem;"><li><strong>Flashdisk</strong> — portable, kecil</li><li><strong>Hard Disk Internal</strong> — di dalam komputer</li><li><strong>DVD/CD</strong> — kapasitas terbatas</li><li>✅ Tidak butuh internet</li><li>⚠️ Bisa hilang/rusak</li></ul></div>
-</div>
-<div class="ib teal"><strong>📝 Soal Klasik</strong>"Siswa ingin mengerjakan tugas di sekolah dan melanjutkan di rumah TANPA flashdisk" → Jawaban: <strong>Cloud Storage</strong> (Google Drive) karena bisa diakses dari mana saja via internet.</div>
-</div>
+ <div class="cc"><h3>💾 Penyimpanan Data: Online vs Offline</h3>
+ <div class="cg">
+ <div class="cb" style="background:var(--blue-light);">
+ <h4 style="color:#1e40af;margin-top:0;">☁️ Online (Cloud Storage)</h4>
+ <p>Disimpan di server internet, bisa diakses dari mana saja.</p>
+ <ul style="font-size:.82rem;"><li><strong>Google Drive</strong></li><li>OneDrive, Dropbox, iCloud</li><li>✅ Bisa kerja di sekolah DAN di rumah tanpa flashdisk</li><li>✅ Tidak hilang jika komputer rusak</li><li>⚠️ Butuh koneksi internet</li></ul>
+ </div>
+ <div class="cb" style="background:var(--orange-light);">
+ <h4 style="color:var(--orange);margin-top:0;">💽 Offline (Local Storage)</h4>
+ <p>Disimpan di perangkat fisik, hanya bisa diakses dari perangkat itu.</p>
+ <ul style="font-size:.82rem;"><li><strong>Flashdisk</strong> — portable, kecil</li><li><strong>Hard Disk Internal</strong> — di dalam komputer</li><li><strong>DVD/CD</strong> — kapasitas terbatas</li><li>✅ Tidak butuh internet</li><li>⚠️ Bisa hilang/rusak</li></ul>
+ </div>
+ </div>
+ <div class="ib teal"><strong>📝 Contoh Klasik</strong>Siswa ingin mengerjakan tugas di sekolah dan melanjutkan di rumah TANPA flashdisk → Jawaban: <strong>Cloud Storage</strong> (Google Drive) karena bisa diakses dari mana saja via internet.</div>
+ </div>
 
-<div class="cc"><h3>📂 Manajemen File dan Folder</h3>
-<p>Cara paling efektif mengorganisir banyak file yang tercampur:</p>
-<ul>
-<li>✅ <strong>Membuat sub-folder berdasarkan jenis file</strong> — misal: Folder "Gambar", "Dokumen", "Data"</li>
-<li>✅ Memberi nama file yang deskriptif — misal: "Tugas_IPAS_Bab3.docx"</li>
-<li>❌ Menghapus semua file lama (bisa kehilangan data penting)</li>
-<li>❌ Menyimpan semua di desktop (berantakan)</li>
-<li>❌ Mengubah nama semua jadi angka (sulit ditemukan)</li>
-</ul>
-</div>
+ <div class="cc"><h3>📂 Manajemen File dan Folder</h3>
+ <p>Cara paling efektif mengorganisir banyak file yang tercampur:</p>
+ <ul>
+ <li>✅ <strong>Membuat sub-folder berdasarkan jenis file</strong> — misal: Folder "Gambar", "Dokumen", "Data"</li>
+ <li>✅ Memberi nama file yang deskriptif — misal: "Tugas_IPAS_Bab3.docx"</li>
+ <li>❌ Menghapus semua file lama (bisa kehilangan data penting)</li>
+ <li>❌ Menyimpan semua di desktop (berantakan)</li>
+ <li>❌ Mengubah nama semua jadi angka (sulit ditemukan)</li>
+ </ul>
+ </div>
 </div>
 
 <!-- ═══ 2: SISTEM KOMPUTER ═══ -->
-<div class="section-block" id="s2"><div class="section-header"><div class="section-num sn2">🖥️</div><div class="section-title-group"><div class="section-title">Sistem Komputer</div><div class="section-subtitle">Input-Proses-Output, perangkat keras, hardware vs software, komponen internal vs eksternal</div></div></div>
+<div class="section-block" id="s2">
+ <div class="section-header">
+ <div class="section-num sn2">🖥️</div>
+ <div class="section-title-group">
+ <div class="section-title">Sistem Komputer</div>
+ <div class="section-subtitle">Input-Proses-Output, perangkat keras, hardware vs software, komponen internal vs eksternal</div>
+ </div>
+ </div>
 
-<div class="cc"><h3>⚙️ Konsep Input → Proses → Output (IPO)</h3>
-<p>Cara kerja komputer mengikuti alur sederhana:</p>
+ <div class="cc"><h3>⚙️ Konsep Input → Proses → Output (IPO)</h3>
+ <p>Cara kerja komputer mengikuti alur sederhana:</p>
+ <div style="background:#f9fafb;border:1px solid var(--border);border-radius:12px;padding:20px;margin:14px 0;text-align:center;">
+ <svg viewBox="0 0 600 100" xmlns="http://www.w3.org/2000/svg" style="font-family:Nunito,sans-serif;max-width:100%;height:auto;">
+ <rect x="20" y="20" width="150" height="60" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+ <text x="95" y="45" text-anchor="middle" font-size="11" font-weight="800" fill="#1e40af">📥 INPUT</text>
+ <text x="95" y="62" text-anchor="middle" font-size="9" fill="#374151">Memasukkan data</text>
+ <text x="185" y="55" font-size="18" fill="#9ca3af">→</text>
+ <rect x="205" y="20" width="180" height="60" rx="12" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
+ <text x="295" y="45" text-anchor="middle" font-size="11" font-weight="800" fill="#5b21b6">⚙️ PROSES (CPU)</text>
+ <text x="295" y="62" text-anchor="middle" font-size="9" fill="#374151">Mengolah data</text>
+ <text x="400" y="55" font-size="18" fill="#9ca3af">→</text>
+ <rect x="420" y="20" width="160" height="60" rx="12" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+ <text x="500" y="45" text-anchor="middle" font-size="11" font-weight="800" fill="#065f46">📤 OUTPUT</text>
+ <text x="500" y="62" text-anchor="middle" font-size="9" fill="#374151">Menampilkan hasil</text>
+ </svg>
+ </div>
+ <div class="tw"><table><thead><tr><th>Kategori</th><th>Perangkat</th><th>Fungsi</th></tr></thead><tbody>
+ <tr><td rowspan="5"><strong>INPUT</strong><br>(memasukkan data)</td><td><strong>Keyboard</strong></td><td>Memasukkan teks/angka</td></tr>
+ <tr><td><strong>Mouse</strong></td><td>Menggerakkan kursor, mengklik</td></tr>
+ <tr><td><strong>Scanner</strong></td><td>Memindai dokumen fisik menjadi digital</td></tr>
+ <tr><td><strong>Microphone</strong></td><td>Memasukkan suara/audio</td></tr>
+ <tr><td><strong>Webcam</strong></td><td>Memasukkan gambar/video</td></tr>
+ <tr><td rowspan="3"><strong>OUTPUT</strong><br>(menampilkan hasil)</td><td><strong>Monitor</strong></td><td>Menampilkan gambar/teks di layar</td></tr>
+ <tr><td><strong>Printer</strong></td><td>Mencetak dokumen ke kertas</td></tr>
+ <tr><td><strong>Speaker</strong></td><td>Mengeluarkan suara/audio</td></tr>
+ <tr><td><strong>PROSES</strong></td><td><strong>CPU (Processor)</strong></td><td>"Otak" komputer — mengatur semua perhitungan dan logika</td></tr>
+ </tbody></table></div>
+ </div>
 
-<div style="background:#f9fafb;border:1px solid var(--border);border-radius:12px;padding:20px;margin:14px 0;text-align:center;">
-<svg viewBox="0 0 600 100" xmlns="http://www.w3.org/2000/svg" style="font-family:Nunito,sans-serif;max-width:100%;height:auto;">
-<rect x="20" y="20" width="150" height="60" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
-<text x="95" y="45" text-anchor="middle" font-size="11" font-weight="800" fill="#1e40af">📥 INPUT</text>
-<text x="95" y="62" text-anchor="middle" font-size="9" fill="#374151">Memasukkan data</text>
-<text x="185" y="55" font-size="18" fill="#9ca3af">→</text>
-<rect x="205" y="20" width="180" height="60" rx="12" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
-<text x="295" y="45" text-anchor="middle" font-size="11" font-weight="800" fill="#5b21b6">⚙️ PROSES (CPU)</text>
-<text x="295" y="62" text-anchor="middle" font-size="9" fill="#374151">Mengolah data</text>
-<text x="400" y="55" font-size="18" fill="#9ca3af">→</text>
-<rect x="420" y="20" width="160" height="60" rx="12" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
-<text x="500" y="45" text-anchor="middle" font-size="11" font-weight="800" fill="#065f46">📤 OUTPUT</text>
-<text x="500" y="62" text-anchor="middle" font-size="9" fill="#374151">Menampilkan hasil</text>
-</svg>
-</div>
+ <div class="cc"><h3>🔧 Hardware vs Software</h3>
+ <div class="cg">
+ <div class="cb" style="background:var(--blue-light);"><h4 style="color:#1e40af;margin-top:0;">🔩 Hardware (Perangkat Keras)</h4><p>Bisa <strong>disentuh secara fisik</strong>.</p><ul style="font-size:.82rem;"><li>Mouse, Keyboard, Monitor</li><li>Hard Disk, RAM, CPU</li><li>Printer, Speaker, Webcam</li></ul></div>
+ <div class="cb" style="background:var(--purple-light);"><h4 style="color:var(--purple-dark);margin-top:0;">💿 Software (Perangkat Lunak)</h4><p><strong>Tidak bisa disentuh</strong> — program/aplikasi.</p><ul style="font-size:.82rem;"><li>Windows (Sistem Operasi)</li><li>Microsoft Word (Pengolah Kata)</li><li>Google Chrome (Browser)</li></ul></div>
+ </div>
+ <div class="ib red"><strong>⚠️ Jangan Tertukar!</strong>Windows dan Microsoft Word = <strong>software</strong> (tidak bisa disentuh). Mouse dan Hard Disk = <strong>hardware</strong> (bisa disentuh). Keduanya sering dicampur dalam satu pilihan soal.</div>
+ </div>
 
-<div class="tw"><table><thead><tr><th>Kategori</th><th>Perangkat</th><th>Fungsi</th></tr></thead><tbody>
-<tr><td rowspan="5"><strong>INPUT</strong><br>(memasukkan data)</td><td><strong>Keyboard</strong></td><td>Memasukkan teks/angka</td></tr>
-<tr><td><strong>Mouse</strong></td><td>Menggerakkan kursor, mengklik</td></tr>
-<tr><td><strong>Scanner</strong></td><td>Memindai dokumen fisik menjadi digital</td></tr>
-<tr><td><strong>Microphone</strong></td><td>Memasukkan suara/audio</td></tr>
-<tr><td><strong>Webcam</strong></td><td>Memasukkan gambar/video</td></tr>
-<tr><td rowspan="3"><strong>OUTPUT</strong><br>(menampilkan hasil)</td><td><strong>Monitor</strong></td><td>Menampilkan gambar/teks di layar</td></tr>
-<tr><td><strong>Printer</strong></td><td>Mencetak dokumen ke kertas</td></tr>
-<tr><td><strong>Speaker</strong></td><td>Mengeluarkan suara/audio</td></tr>
-<tr><td><strong>PROSES</strong></td><td><strong>CPU (Processor)</strong></td><td>"Otak" komputer — mengatur semua perhitungan dan logika</td></tr>
-</tbody></table></div>
-</div>
-
-<div class="cc"><h3>🔧 Hardware vs Software</h3>
-<div class="cg">
-<div class="cb" style="background:var(--blue-light);"><h4 style="color:#1e40af;margin-top:0;">🔩 Hardware (Perangkat Keras)</h4><p>Bisa <strong>disentuh secara fisik</strong>.</p><ul style="font-size:.82rem;"><li>Mouse, Keyboard, Monitor</li><li>Hard Disk, RAM, CPU</li><li>Printer, Speaker, Webcam</li></ul></div>
-<div class="cb" style="background:var(--purple-light);"><h4 style="color:var(--purple-dark);margin-top:0;">💿 Software (Perangkat Lunak)</h4><p><strong>Tidak bisa disentuh</strong> — program/aplikasi.</p><ul style="font-size:.82rem;"><li>Windows (Sistem Operasi)</li><li>Microsoft Word (Pengolah Kata)</li><li>Google Chrome (Browser)</li></ul></div>
-</div>
-<div class="ib red"><strong>⚠️ Jangan Tertukar!</strong>Windows dan Microsoft Word = <strong>software</strong> (tidak bisa disentuh). Mouse dan Hard Disk = <strong>hardware</strong> (bisa disentuh). Soal sering mencampur keduanya dalam satu pilihan.</div>
-</div>
-
-<div class="cc"><h3>📦 Komponen Internal vs Eksternal</h3>
-<div class="tw"><table><thead><tr><th>Komponen</th><th>Internal / Eksternal</th><th>Keterangan</th></tr></thead><tbody>
-<tr><td><strong>RAM</strong></td><td>Internal</td><td>Memori sementara di dalam komputer</td></tr>
-<tr><td><strong>Hard Disk Internal</strong></td><td>Internal</td><td>Penyimpanan utama di dalam casing</td></tr>
-<tr><td><strong>CPU (Processor)</strong></td><td>Internal</td><td>"Otak" komputer di dalam casing</td></tr>
-<tr><td><strong>Monitor</strong></td><td>Eksternal</td><td>Layar di luar casing komputer</td></tr>
-<tr><td><strong>Keyboard</strong></td><td>Eksternal</td><td>Alat input di luar casing</td></tr>
-<tr><td><strong>Flashdisk</strong></td><td>Eksternal</td><td>Penyimpanan portabel yang dicolokkan</td></tr>
-</tbody></table></div>
-
-<h4>Komputer Umum vs Perangkat Khusus</h4>
-<div class="tw"><table><thead><tr><th>Perangkat</th><th>Kategori</th><th>Alasan</th></tr></thead><tbody>
-<tr><td><strong>Laptop</strong></td><td>Komputer Umum</td><td>Bisa menjalankan berbagai program</td></tr>
-<tr><td><strong>Smartphone</strong></td><td>Komputer Umum</td><td>Bisa menjalankan berbagai aplikasi</td></tr>
-<tr><td><strong>Kalkulator Sains</strong></td><td>Perangkat Khusus</td><td>Hanya bisa menghitung, tidak bisa browsing/mengetik dokumen</td></tr>
-</tbody></table></div>
-</div>
+ <div class="cc"><h3>📦 Komponen Internal vs Eksternal</h3>
+ <div class="tw"><table><thead><tr><th>Komponen</th><th>Internal / Eksternal</th><th>Keterangan</th></tr></thead><tbody>
+ <tr><td><strong>RAM</strong></td><td>Internal</td><td>Memori sementara di dalam komputer</td></tr>
+ <tr><td><strong>Hard Disk Internal</strong></td><td>Internal</td><td>Penyimpanan utama di dalam casing</td></tr>
+ <tr><td><strong>CPU (Processor)</strong></td><td>Internal</td><td>"Otak" komputer di dalam casing</td></tr>
+ <tr><td><strong>Monitor</strong></td><td>Eksternal</td><td>Layar di luar casing komputer</td></tr>
+ <tr><td><strong>Keyboard</strong></td><td>Eksternal</td><td>Alat input di luar casing</td></tr>
+ <tr><td><strong>Flashdisk</strong></td><td>Eksternal</td><td>Penyimpanan portabel yang dicolokkan</td></tr>
+ </tbody></table></div>
+ <h4>Komputer Umum vs Perangkat Khusus</h4>
+ <div class="tw"><table><thead><tr><th>Perangkat</th><th>Kategori</th><th>Alasan</th></tr></thead><tbody>
+ <tr><td><strong>Laptop</strong></td><td>Komputer Umum</td><td>Bisa menjalankan berbagai program</td></tr>
+ <tr><td><strong>Smartphone</strong></td><td>Komputer Umum</td><td>Bisa menjalankan berbagai aplikasi</td></tr>
+ <tr><td><strong>Kalkulator Sains</strong></td><td>Perangkat Khusus</td><td>Hanya bisa menghitung, tidak bisa browsing/mengetik dokumen</td></tr>
+ </tbody></table></div>
+ </div>
 </div>
 
 <!-- ═══ 3: JARINGAN & INTERNET ═══ -->
-<div class="section-block" id="s3"><div class="section-header"><div class="section-num sn3">🌐</div><div class="section-title-group"><div class="section-title">Jaringan & Keamanan Internet</div><div class="section-subtitle">Manfaat internet, verifikasi informasi, password, privasi, jejak digital, phishing, WiFi publik</div></div></div>
+<div class="section-block" id="s3">
+ <div class="section-header">
+ <div class="section-num sn3">🌐</div>
+ <div class="section-title-group">
+ <div class="section-title">Jaringan & Keamanan Internet</div>
+ <div class="section-subtitle">Manfaat internet, verifikasi informasi, password, privasi, jejak digital, phishing, WiFi publik</div>
+ </div>
+ </div>
 
-<div class="cc"><h3>🔍 Manfaat Internet untuk Pembelajaran</h3>
-<p>Internet sangat bermanfaat untuk belajar — asalkan digunakan dengan cara yang tepat.</p>
-<ul>
-<li>✅ <strong>Mencari di mesin pencari edukasi</strong> — cara paling efektif untuk mencari materi pelajaran</li>
-<li>❌ Bermain game online (bukan untuk belajar)</li>
-<li>❌ Mengobrol di media sosial (bukan tujuan akademik)</li>
-</ul>
+ <div class="cc"><h3>🔍 Manfaat Internet untuk Pembelajaran</h3>
+ <ul>
+ <li>✅ <strong>Mencari di mesin pencari edukasi</strong> — cara paling efektif untuk mencari materi pelajaran</li>
+ <li>❌ Bermain game online (bukan untuk belajar)</li>
+ <li>❌ Mengobrol di media sosial (bukan tujuan akademik)</li>
+ </ul>
+ <h4>Sumber Informasi yang Terpercaya</h4>
+ <div class="cg">
+ <div class="cb" style="background:var(--green-light);"><h4 style="color:var(--green-dark);margin-top:0;">✅ Terpercaya</h4><ul style="font-size:.82rem;"><li><strong>Situs berita resmi</strong> (kompas.com, detik.com)</li><li><strong>Website pemerintah (.go.id)</strong></li><li>Situs lembaga pendidikan (.ac.id, .edu)</li></ul></div>
+ <div class="cb" style="background:var(--red-light);"><h4 style="color:var(--red);margin-top:0;">❌ Kurang Terpercaya</h4><ul style="font-size:.82rem;"><li>Blog pribadi tidak jelas sumbernya</li><li>Wiki/forum yang bisa diedit siapa saja</li><li>Pesan berantai WhatsApp tanpa sumber</li></ul></div>
+ </div>
+ <h4>Memverifikasi Hoaks</h4>
+ <p>Saat menerima informasi mencurigakan: <strong>cek di situs berita resmi</strong> sebelum menyebarkan.</p>
+ </div>
 
-<h4>Sumber Informasi yang Terpercaya</h4>
-<div class="cg">
-<div class="cb" style="background:var(--green-light);"><h4 style="color:var(--green-dark);margin-top:0;">✅ Terpercaya</h4><ul style="font-size:.82rem;"><li><strong>Situs berita resmi</strong> (kompas.com, detik.com)</li><li><strong>Website pemerintah (.go.id)</strong></li><li>Situs lembaga pendidikan (.ac.id, .edu)</li></ul></div>
-<div class="cb" style="background:var(--red-light);"><h4 style="color:var(--red);margin-top:0;">❌ Kurang Terpercaya</h4><ul style="font-size:.82rem;"><li>Blog pribadi tidak jelas sumbernya</li><li>Wiki/forum yang bisa diedit siapa saja</li><li>Pesan berantai WhatsApp tanpa sumber</li></ul></div>
-</div>
+ <div class="cc"><h3>🔒 Keamanan Akun dan Password</h3>
+ <div class="tw"><table><thead><tr><th>Password</th><th>Kuat / Lemah</th><th>Alasan</th></tr></thead><tbody>
+ <tr><td><strong>Sekolah2026!</strong></td><td style="color:var(--green);font-weight:700;">✅ Kuat</td><td>Kombinasi huruf besar + kecil + angka + simbol</td></tr>
+ <tr><td>123456</td><td style="color:var(--red);font-weight:700;">❌ Lemah</td><td>Terlalu sederhana, mudah ditebak</td></tr>
+ <tr><td>nama_siswa</td><td style="color:var(--red);font-weight:700;">❌ Lemah</td><td>Menggunakan informasi pribadi yang bisa ditebak</td></tr>
+ <tr><td>aaaaaa</td><td style="color:var(--red);font-weight:700;">❌ Lemah</td><td>Karakter berulang, tidak ada variasi</td></tr>
+ </tbody></table></div>
+ <div class="ib green"><strong>🔑 Rumus Password Kuat</strong>Huruf besar + huruf kecil + angka + simbol (!, @, #) + minimal 8 karakter. Jangan gunakan: tanggal lahir, nama sendiri, urutan angka (123456).</div>
+ </div>
 
-<h4>Memverifikasi Hoaks</h4>
-<p>Saat menerima informasi mencurigakan (giveaway tanpa sumber, berita sensasional): <strong>cek di situs berita resmi</strong> sebelum menyebarkan. Jangan langsung share, jangan langsung klaim.</p>
-</div>
+ <div class="cc"><h3>🛡️ Privasi Data dan Jejak Digital</h3>
+ <div class="tw"><table><thead><tr><th>Data</th><th>Pribadi Sensitif / Umum</th></tr></thead><tbody>
+ <tr><td><strong>Alamat Rumah Lengkap</strong></td><td style="color:var(--red);font-weight:700;">🔒 Pribadi Sensitif — JANGAN bagikan online</td></tr>
+ <tr><td><strong>Nama Lengkap</strong></td><td style="color:var(--amber);font-weight:700;">⚠️ Pribadi Sensitif — hati-hati</td></tr>
+ <tr><td><strong>Password / PIN</strong></td><td style="color:var(--red);font-weight:700;">🔒 Sangat Sensitif — JANGAN pernah bagikan</td></tr>
+ <tr><td>Warna Favorit</td><td style="color:var(--green);font-weight:700;">✅ Umum — aman dibagikan</td></tr>
+ <tr><td>Nama Sekolah</td><td style="color:var(--green);font-weight:700;">✅ Umum</td></tr>
+ </tbody></table></div>
+ <h4>Jejak Digital</h4>
+ <p><span class="kt">Jejak digital</span> = semua rekam jejak aktivitas online (postingan, foto, komentar) yang <strong>sulit dihapus</strong> dan bisa ditemukan siapa saja di masa depan.</p>
+ </div>
 
-<div class="cc"><h3>🔒 Keamanan Akun dan Password</h3>
-<h4>Ciri-ciri Password yang Kuat</h4>
-<div class="tw"><table><thead><tr><th>Password</th><th>Kuat / Lemah</th><th>Alasan</th></tr></thead><tbody>
-<tr><td><strong>Sekolah2026!</strong></td><td style="color:var(--green);font-weight:700;">✅ Kuat</td><td>Kombinasi huruf besar + kecil + angka + simbol</td></tr>
-<tr><td>123456</td><td style="color:var(--red);font-weight:700;">❌ Lemah</td><td>Terlalu sederhana, mudah ditebak</td></tr>
-<tr><td>nama_siswa</td><td style="color:var(--red);font-weight:700;">❌ Lemah</td><td>Menggunakan informasi pribadi yang bisa ditebak</td></tr>
-<tr><td>aaaaaa</td><td style="color:var(--red);font-weight:700;">❌ Lemah</td><td>Karakter berulang, tidak ada variasi</td></tr>
-</tbody></table></div>
-<div class="ib green"><strong>🔑 Rumus Password Kuat</strong>Huruf besar + huruf kecil + angka + simbol (!, @, #) + minimal 8 karakter. Jangan gunakan: tanggal lahir, nama sendiri, urutan angka (123456).</div>
-</div>
+ <div class="cc"><h3>🎣 Phishing dan Penipuan Daring</h3>
+ <p><span class="kt">Phishing</span> = penipuan online yang menyamar sebagai pihak terpercaya untuk mencuri data pribadi.</p>
+ <h4>Ciri-ciri Pesan Phishing</h4>
+ <ul>
+ <li>🔗 <strong>Link website aneh</strong> — URL tidak resmi, banyak angka/huruf acak</li>
+ <li>📋 <strong>Meminta data pribadi</strong> — password, nomor rekening, PIN</li>
+ <li>⏰ <strong>Bahasa mendesak/urgent</strong> — "Segera klik!", "Akun Anda akan diblokir!"</li>
+ <li>❌ Pengirim TIDAK jelas — bukan dari institusi resmi</li>
+ </ul>
+ <h4>Keamanan WiFi</h4>
+ <div class="cg">
+ <div class="cb" style="background:var(--red-light);"><h4 style="color:var(--red);margin-top:0;">⚠️ Perlu Waspada Ekstra</h4><ul style="font-size:.82rem;"><li><strong>WiFi Publik di Kafe</strong></li><li><strong>WiFi Gratis Tanpa Password</strong></li><li>Data bisa disadap oleh orang jahat</li></ul></div>
+ <div class="cb" style="background:var(--green-light);"><h4 style="color:var(--green-dark);margin-top:0;">✅ Relatif Aman</h4><ul style="font-size:.82rem;"><li>WiFi Rumah (dilindungi password)</li><li>WiFi Sekolah (dikelola admin)</li></ul></div>
+ </div>
+ </div>
 
-<div class="cc"><h3>🛡️ Privasi Data dan Jejak Digital</h3>
-<h4>Data yang Tidak Boleh Dibagikan Sembarangan</h4>
-<div class="tw"><table><thead><tr><th>Data</th><th>Pribadi Sensitif / Umum</th></tr></thead><tbody>
-<tr><td><strong>Alamat Rumah Lengkap</strong></td><td style="color:var(--red);font-weight:700;">🔒 Pribadi Sensitif — JANGAN bagikan online</td></tr>
-<tr><td><strong>Nama Lengkap</strong></td><td style="color:var(--amber);font-weight:700;">⚠️ Pribadi Sensitif — hati-hati</td></tr>
-<tr><td><strong>Password / PIN</strong></td><td style="color:var(--red);font-weight:700;">🔒 Sangat Sensitif — JANGAN pernah bagikan</td></tr>
-<tr><td>Warna Favorit</td><td style="color:var(--green);font-weight:700;">✅ Umum — aman dibagikan</td></tr>
-<tr><td>Nama Sekolah</td><td style="color:var(--green);font-weight:700;">✅ Umum</td></tr>
-</tbody></table></div>
-
-<h4>Jejak Digital</h4>
-<p><span class="kt">Jejak digital</span> = semua rekam jejak aktivitas online (postingan, foto, komentar) yang <strong>sulit dihapus</strong> dan bisa ditemukan oleh siapa saja di masa depan. Foto tidak sopan yang diunggah sekarang → bisa <strong>merugikan reputasi</strong> saat mendaftar sekolah/kerja nanti.</p>
-</div>
-
-<div class="cc"><h3>🎣 Phishing dan Penipuan Daring</h3>
-<p><span class="kt">Phishing</span> = upaya penipuan online yang menyamar sebagai pihak terpercaya untuk mencuri data pribadi.</p>
-
-<h4>Ciri-ciri Pesan Phishing</h4>
-<ul>
-<li>🔗 <strong>Link website aneh</strong> — URL tidak resmi, banyak angka/huruf acak</li>
-<li>📋 <strong>Meminta data pribadi</strong> — password, nomor rekening, PIN</li>
-<li>⏰ <strong>Bahasa mendesak/urgent</strong> — "Segera klik!", "Akun Anda akan diblokir!"</li>
-<li>❌ Pengirim TIDAK jelas — bukan dari institusi resmi</li>
-</ul>
-
-<h4>Keamanan WiFi</h4>
-<div class="cg">
-<div class="cb" style="background:var(--red-light);"><h4 style="color:var(--red);margin-top:0;">⚠️ Perlu Waspada Ekstra</h4><ul style="font-size:.82rem;"><li><strong>WiFi Publik di Kafe</strong></li><li><strong>WiFi Gratis Tanpa Password</strong></li><li>Data bisa disadap oleh orang jahat</li></ul></div>
-<div class="cb" style="background:var(--green-light);"><h4 style="color:var(--green-dark);margin-top:0;">✅ Relatif Aman</h4><ul style="font-size:.82rem;"><li>WiFi Rumah (dilindungi password)</li><li>WiFi Sekolah (dikelola admin)</li></ul></div>
-</div>
-</div>
-
-<div class="cc"><h3>🔌 Aktivitas: Butuh Internet atau Tidak?</h3>
-<div class="tw"><table><thead><tr><th>Aktivitas</th><th>Butuh Internet?</th></tr></thead><tbody>
-<tr><td>Mengirim Email</td><td style="color:var(--blue);font-weight:700;">✅ Butuh Internet</td></tr>
-<tr><td>Video Call</td><td style="color:var(--blue);font-weight:700;">✅ Butuh Internet</td></tr>
-<tr><td>Browsing / Streaming</td><td style="color:var(--blue);font-weight:700;">✅ Butuh Internet</td></tr>
-<tr><td>Mengetik di Word Offline</td><td style="color:var(--text-muted);font-weight:700;">❌ Tidak Butuh</td></tr>
-<tr><td>Mengedit foto di Paint</td><td style="color:var(--text-muted);font-weight:700;">❌ Tidak Butuh</td></tr>
-<tr><td>Kalkulator</td><td style="color:var(--text-muted);font-weight:700;">❌ Tidak Butuh</td></tr>
-</tbody></table></div>
-</div>
+ <div class="cc"><h3>🔌 Aktivitas: Butuh Internet atau Tidak?</h3>
+ <div class="tw"><table><thead><tr><th>Aktivitas</th><th>Butuh Internet?</th></tr></thead><tbody>
+ <tr><td>Mengirim Email</td><td style="color:var(--blue);font-weight:700;">✅ Butuh Internet</td></tr>
+ <tr><td>Video Call</td><td style="color:var(--blue);font-weight:700;">✅ Butuh Internet</td></tr>
+ <tr><td>Browsing / Streaming</td><td style="color:var(--blue);font-weight:700;">✅ Butuh Internet</td></tr>
+ <tr><td>Mengetik di Word Offline</td><td style="color:var(--text-muted);font-weight:700;">❌ Tidak Butuh</td></tr>
+ <tr><td>Mengedit foto di Paint</td><td style="color:var(--text-muted);font-weight:700;">❌ Tidak Butuh</td></tr>
+ <tr><td>Kalkulator</td><td style="color:var(--text-muted);font-weight:700;">❌ Tidak Butuh</td></tr>
+ </tbody></table></div>
+ </div>
 </div>
 
 <!-- ═══ 4: DAMPAK SOSIAL ═══ -->
-<div class="section-block" id="s4"><div class="section-header"><div class="section-num sn4">👥</div><div class="section-title-group"><div class="section-title">Dampak Sosial Teknologi</div><div class="section-subtitle">Manfaat & risiko TIK, kecanduan gawai, cyberbullying, hak cipta, etika digital, screen time</div></div></div>
+<div class="section-block" id="s4">
+ <div class="section-header">
+ <div class="section-num sn4">👥</div>
+ <div class="section-title-group">
+ <div class="section-title">Dampak Sosial Teknologi</div>
+ <div class="section-subtitle">Manfaat & risiko TIK, kecanduan gawai, cyberbullying, hak cipta, etika digital, screen time</div>
+ </div>
+ </div>
 
-<div class="cc"><h3>📱 Manfaat dan Risiko TIK</h3>
-<div class="cg">
-<div class="cb" style="background:var(--green-light);"><h4 style="color:var(--green-dark);margin-top:0;">✅ Manfaat</h4><ul style="font-size:.82rem;"><li><strong>Video Call</strong> — menjaga hubungan keluarga jarak jauh (kakek-nenek di luar pulau)</li><li>Akses informasi & belajar online</li><li>Komunikasi cepat via chat/email</li><li>Grup komunitas online untuk berbagi</li></ul></div>
-<div class="cb" style="background:var(--red-light);"><h4 style="color:var(--red);margin-top:0;">❌ Risiko</h4><ul style="font-size:.82rem;"><li><strong>Kecanduan gawai</strong> — bermain game hingga larut malam</li><li>Gangguan kesehatan <strong>fisik</strong>: mata lelah, kurang gerak</li><li>Gangguan kesehatan <strong>mental</strong>: stres karena medsos</li><li>Kurangnya tatap muka langsung</li><li>Kesalahan sistem pada teknologi baru (self-driving car)</li></ul></div>
-</div>
-</div>
+ <div class="cc"><h3>📱 Manfaat dan Risiko TIK</h3>
+ <div class="cg">
+ <div class="cb" style="background:var(--green-light);"><h4 style="color:var(--green-dark);margin-top:0;">✅ Manfaat</h4><ul style="font-size:.82rem;"><li><strong>Video Call</strong> — menjaga hubungan keluarga jarak jauh</li><li>Akses informasi & belajar online</li><li>Komunikasi cepat via chat/email</li><li>Grup komunitas online</li></ul></div>
+ <div class="cb" style="background:var(--red-light);"><h4 style="color:var(--red);margin-top:0;">❌ Risiko</h4><ul style="font-size:.82rem;"><li><strong>Kecanduan gawai</strong></li><li>Gangguan kesehatan <strong>fisik</strong>: mata lelah, kurang gerak</li><li>Gangguan kesehatan <strong>mental</strong>: stres karena medsos</li><li>Kurangnya tatap muka langsung</li></ul></div>
+ </div>
+ </div>
 
-<div class="cc"><h3>⏰ Screen Time — Waktu Layar yang Sehat</h3>
-<p>Alokasi waktu penggunaan gawai yang paling sehat: <strong>saat waktu luang yang terbatas</strong> — bukan 24 jam, bukan saat jam belajar, dan BUKAN saat jam tidur.</p>
-<ul>
-<li>✅ Batasi waktu layar — gunakan hanya saat waktu luang</li>
-<li>✅ Jeda setiap 30-60 menit untuk istirahat mata</li>
-<li>❌ Bermain game sampai larut malam → gangguan tidur dan mata</li>
-<li>❌ Menggunakan gawai saat jam belajar → konsentrasi terpecah</li>
-</ul>
+ <div class="cc"><h3>⏰ Screen Time — Waktu Layar yang Sehat</h3>
+ <ul>
+ <li>✅ Batasi waktu layar — gunakan hanya saat waktu luang</li>
+ <li>✅ Jeda setiap 30-60 menit untuk istirahat mata</li>
+ <li>❌ Bermain game sampai larut malam → gangguan tidur dan mata</li>
+ <li>❌ Menggunakan gawai saat jam belajar → konsentrasi terpecah</li>
+ </ul>
+ <h4>Dampak Kecanduan Gawai</h4>
+ <div class="tw"><table><thead><tr><th>Dampak</th><th>Fisik / Mental</th></tr></thead><tbody>
+ <tr><td><strong>Mata lelah</strong></td><td>Fisik</td></tr>
+ <tr><td><strong>Kurang gerak (jarang olahraga)</strong></td><td>Fisik</td></tr>
+ <tr><td><strong>Gangguan tidur</strong></td><td>Fisik</td></tr>
+ <tr><td><strong>Stres karena media sosial</strong></td><td>Mental</td></tr>
+ <tr><td><strong>Kecanduan / ketergantungan</strong></td><td>Mental</td></tr>
+ </tbody></table></div>
+ </div>
 
-<h4>Dampak Kecanduan Gawai</h4>
-<div class="tw"><table><thead><tr><th>Dampak</th><th>Fisik / Mental</th></tr></thead><tbody>
-<tr><td><strong>Mata lelah</strong></td><td>Fisik</td></tr>
-<tr><td><strong>Kurang gerak (jarang olahraga)</strong></td><td>Fisik</td></tr>
-<tr><td><strong>Gangguan tidur</strong></td><td>Fisik</td></tr>
-<tr><td><strong>Stres karena media sosial</strong></td><td>Mental</td></tr>
-<tr><td><strong>Kecanduan / ketergantungan</strong></td><td>Mental</td></tr>
-</tbody></table></div>
-</div>
+ <div class="cc"><h3>🛑 Cyberbullying dan Etika Digital</h3>
+ <p>Cyberbullying = perundungan di dunia digital. Jika melihat teman diejek online: <strong>laporkan dan tegur</strong> — bukan ikut mengejek atau diam saja.</p>
+ <h4>Etika Berkomunikasi di Grup Chat</h4>
+ <div class="tw"><table><thead><tr><th>Perilaku</th><th>Etis / Tidak Etis</th></tr></thead><tbody>
+ <tr><td>Mengucapkan terima kasih</td><td style="color:var(--green);font-weight:700;">✅ Etis</td></tr>
+ <tr><td>Mengirim pesan relevan dan sopan</td><td style="color:var(--green);font-weight:700;">✅ Etis</td></tr>
+ <tr><td>Mengirim spam / pesan berulang</td><td style="color:var(--red);font-weight:700;">❌ Tidak Etis</td></tr>
+ <tr><td>Mengejek/menghina teman</td><td style="color:var(--red);font-weight:700;">❌ Tidak Etis</td></tr>
+ <tr><td>Menyebar hoaks tanpa verifikasi</td><td style="color:var(--red);font-weight:700;">❌ Tidak Etis</td></tr>
+ </tbody></table></div>
+ </div>
 
-<div class="cc"><h3>🛑 Cyberbullying dan Etika Digital</h3>
-<h4>Cyberbullying</h4>
-<p>Cyberbullying = perundungan yang terjadi di dunia digital (media sosial, grup chat, komentar). Jika melihat teman diejek secara kasar online, sikap yang paling tepat: <strong>melaporkan dan menegur</strong> — bukan ikut mengejek, diam saja, atau menyebarkan.</p>
+ <div class="cc"><h3>©️ Hak Cipta dan Penggunaan Karya Digital</h3>
+ <ul>
+ <li>✅ <strong>Menyebutkan sumber</strong> — tulis dari mana gambar tersebut diambil</li>
+ <li>✅ <strong>Meminta izin pemilik</strong> — jika karya tersebut memiliki hak cipta</li>
+ <li>❌ Copy-paste tanpa kredit (mengabaikan hak cipta)</li>
+ <li>❌ Mengaku sebagai karya sendiri (plagiarisme)</li>
+ </ul>
+ </div>
 
-<h4>Etika Berkomunikasi di Grup Chat</h4>
-<div class="tw"><table><thead><tr><th>Perilaku</th><th>Etis / Tidak Etis</th></tr></thead><tbody>
-<tr><td>Mengucapkan terima kasih</td><td style="color:var(--green);font-weight:700;">✅ Etis</td></tr>
-<tr><td>Mengirim pesan relevan dan sopan</td><td style="color:var(--green);font-weight:700;">✅ Etis</td></tr>
-<tr><td>Mengirim spam / pesan berulang</td><td style="color:var(--red);font-weight:700;">❌ Tidak Etis</td></tr>
-<tr><td>Mengejek/menghina teman</td><td style="color:var(--red);font-weight:700;">❌ Tidak Etis</td></tr>
-<tr><td>Menyebar hoaks tanpa verifikasi</td><td style="color:var(--red);font-weight:700;">❌ Tidak Etis</td></tr>
-</tbody></table></div>
-</div>
-
-<div class="cc"><h3>©️ Hak Cipta dan Penggunaan Karya Digital</h3>
-<p>Saat menggunakan gambar/karya dari internet untuk tugas:</p>
-<ul>
-<li>✅ <strong>Menyebutkan sumber</strong> — tulis dari mana gambar tersebut diambil</li>
-<li>✅ <strong>Meminta izin pemilik</strong> — jika karya tersebut memiliki hak cipta</li>
-<li>❌ Copy-paste tanpa kredit (mengabaikan hak cipta)</li>
-<li>❌ Mengaku sebagai karya sendiri (plagiarisme)</li>
-</ul>
-</div>
-
-<div class="cc"><h3>🧭 Sikap Digital yang Bertanggung Jawab</h3>
-<div class="tw"><table><thead><tr><th>Sikap</th><th>Bertanggung Jawab?</th></tr></thead><tbody>
-<tr><td>Verifikasi berita sebelum menyebarkan</td><td style="color:var(--green);font-weight:700;">✅ Bertanggung Jawab</td></tr>
-<tr><td>Bijak mengatur waktu layar</td><td style="color:var(--green);font-weight:700;">✅ Bertanggung Jawab</td></tr>
-<tr><td>Melaporkan cyberbullying</td><td style="color:var(--green);font-weight:700;">✅ Bertanggung Jawab</td></tr>
-<tr><td>Menyebarkan hoaks</td><td style="color:var(--red);font-weight:700;">❌ Tidak Bertanggung Jawab</td></tr>
-<tr><td>Menggunakan karya tanpa kredit</td><td style="color:var(--red);font-weight:700;">❌ Tidak Bertanggung Jawab</td></tr>
-</tbody></table></div>
-</div>
-
-<div class="cc"><h3>🌐 Dampak Teknologi terhadap Interaksi Sosial</h3>
-<p>Teknologi mengubah cara manusia berinteraksi — ada sisi positif dan negatif:</p>
-<ul>
-<li>✅ <strong>Bertemu virtual</strong> — bisa berkomunikasi jarak jauh</li>
-<li>✅ <strong>Grup komunitas online</strong> — berbagi minat/hobi</li>
-<li>⚠️ <strong>Kurang tatap muka langsung</strong> — interaksi langsung berkurang</li>
-<li>⚠️ <strong>Ketergantungan pada gawai</strong> — sulit lepas dari layar</li>
-</ul>
-</div>
+ <div class="cc"><h3>🧭 Sikap Digital yang Bertanggung Jawab</h3>
+ <div class="tw"><table><thead><tr><th>Sikap</th><th>Bertanggung Jawab?</th></tr></thead><tbody>
+ <tr><td>Verifikasi berita sebelum menyebarkan</td><td style="color:var(--green);font-weight:700;">✅ Bertanggung Jawab</td></tr>
+ <tr><td>Bijak mengatur waktu layar</td><td style="color:var(--green);font-weight:700;">✅ Bertanggung Jawab</td></tr>
+ <tr><td>Melaporkan cyberbullying</td><td style="color:var(--green);font-weight:700;">✅ Bertanggung Jawab</td></tr>
+ <tr><td>Menyebarkan hoaks</td><td style="color:var(--red);font-weight:700;">❌ Tidak Bertanggung Jawab</td></tr>
+ <tr><td>Menggunakan karya tanpa kredit</td><td style="color:var(--red);font-weight:700;">❌ Tidak Bertanggung Jawab</td></tr>
+ </tbody></table></div>
+ </div>
 </div>
 
-<!-- ═══ RINGKASAN ═══ -->
+<!-- ═══ RINGKASAN TIK ═══ -->
 <div class="cc" style="border:2px solid var(--purple);background:var(--purple-light);">
-<h3 style="color:var(--purple-dark);font-size:1.08rem;">📝 Ringkasan Poin Kunci untuk Ujian</h3>
-
-<h4>Aplikasi & File</h4>
-<ul>
-<li>Format teks: <strong>Bold, Italic, Underline</strong>. Crop/Resize = pengolah gambar, bukan pengolah kata</li>
-<li>Ekstensi: .docx = dokumen, .xlsx = spreadsheet, .jpg = gambar, .mp3/.mp4 = multimedia</li>
-<li>Cloud Storage (Google Drive) → akses dari mana saja tanpa flashdisk</li>
-<li>Organisir file → buat <strong>sub-folder berdasarkan jenis</strong></li>
-<li>SUM/AutoSum → menghitung total di spreadsheet</li>
-</ul>
-
-<h4>Sistem Komputer</h4>
-<ul>
-<li>Alur: <strong>Input → Proses (CPU) → Output</strong></li>
-<li>Input: keyboard, mouse, scanner, microphone, webcam</li>
-<li>Output: monitor, printer, speaker</li>
-<li>CPU = "otak" komputer (pemroses utama)</li>
-<li>Hardware = bisa disentuh. Software = program/aplikasi</li>
-<li>RAM & Hard Disk = internal. Monitor & Keyboard = eksternal</li>
-</ul>
-
-<h4>Jaringan & Internet</h4>
-<ul>
-<li>Password kuat: huruf besar + kecil + angka + simbol (Sekolah2026!)</li>
-<li>Data sensitif: alamat rumah, password → JANGAN dibagikan online</li>
-<li>Jejak digital bersifat permanen → bisa merugikan di masa depan</li>
-<li>Ciri phishing: link aneh + minta data pribadi + bahasa mendesak</li>
-<li>WiFi publik/gratis = perlu waspada ekstra</li>
-<li>Sumber terpercaya: situs berita resmi, .go.id</li>
-</ul>
-
-<h4>Dampak Sosial</h4>
-<ul>
-<li>Video Call = manfaat TIK untuk keluarga jarak jauh</li>
-<li>Screen time sehat = saat waktu luang terbatas, bukan 24 jam</li>
-<li>Cyberbullying → <strong>laporkan dan tegur</strong></li>
-<li>Hak cipta: <strong>sebut sumber + minta izin</strong></li>
-<li>Etis: ucap terima kasih, sopan. Tidak etis: spam, ejek, hoaks</li>
-<li>Warga digital bertanggung jawab: verifikasi berita, bijak waktu layar</li>
-</ul>
+ <h3 style="color:var(--purple-dark);font-size:1.08rem;">📝 Ringkasan Poin Kunci TIK</h3>
+ <h4>Aplikasi & File</h4>
+ <ul>
+ <li>Format teks: <strong>Bold, Italic, Underline</strong>. Crop/Resize = pengolah gambar</li>
+ <li>Ekstensi: .docx = dokumen, .xlsx = spreadsheet, .jpg = gambar, .mp3/.mp4 = multimedia</li>
+ <li>Cloud Storage (Google Drive) → akses dari mana saja tanpa flashdisk</li>
+ <li>SUM/AutoSum → menghitung total di spreadsheet</li>
+ </ul>
+ <h4>Sistem Komputer</h4>
+ <ul>
+ <li>Alur: <strong>Input → Proses (CPU) → Output</strong></li>
+ <li>Input: keyboard, mouse, scanner. Output: monitor, printer, speaker</li>
+ <li>Hardware = bisa disentuh. Software = program/aplikasi</li>
+ <li>RAM & Hard Disk = internal. Monitor & Keyboard = eksternal</li>
+ </ul>
+ <h4>Jaringan & Internet</h4>
+ <ul>
+ <li>Password kuat: huruf besar + kecil + angka + simbol (Sekolah2026!)</li>
+ <li>Data sensitif: alamat rumah, password → JANGAN dibagikan online</li>
+ <li>Ciri phishing: link aneh + minta data pribadi + bahasa mendesak</li>
+ <li>WiFi publik/gratis = perlu waspada ekstra</li>
+ </ul>
+ <h4>Dampak Sosial</h4>
+ <ul>
+ <li>Video Call = manfaat TIK untuk keluarga jarak jauh</li>
+ <li>Cyberbullying → <strong>laporkan dan tegur</strong></li>
+ <li>Hak cipta: <strong>sebut sumber + minta izin</strong></li>
+ <li>Warga digital bertanggung jawab: verifikasi berita, bijak waktu layar</li>
+ </ul>
 </div>
 
 </main>
+</div><!-- end tab-tik -->
 
-<footer class="footer">SD Muhammadiyah 01 Kukusan · Materi TIK Kelas 6 · Tahun Pelajaran 2025/2026 💻</footer>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- TAB 2 — KKA -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div id="tab-kka" class="tab-content">
+
+<nav class="nav-pills"><div class="nav-pills-inner">
+ <a href="#bc1" class="nav-pill kka-pill">🧩 Dekomposisi</a>
+ <a href="#bc2" class="nav-pill kka-pill">📋 Algoritma</a>
+ <a href="#bc3" class="nav-pill kka-pill">🔍 Abstraksi</a>
+ <a href="#bc4" class="nav-pill kka-pill">🔢 Pola & Logika</a>
+ <a href="#ld1" class="nav-pill kka-pill" style="background:#d1fae5;color:#065f46;">💻 Literasi Digital</a>
+ <a href="#ai1" class="nav-pill kka-pill" style="background:var(--pink-light);color:var(--pink-dark);">🤖 Apa itu AI?</a>
+ <a href="#ai2" class="nav-pill kka-pill" style="background:var(--pink-light);color:var(--pink-dark);">📦 AI & Data</a>
+ <a href="#ai3" class="nav-pill kka-pill" style="background:var(--pink-light);color:var(--pink-dark);">⚖️ Etika AI</a>
+ <a href="#ai4" class="nav-pill kka-pill" style="background:var(--pink-light);color:var(--pink-dark);">🌍 Dampak AI</a>
+</div></nav>
+
+<main class="container">
+
+<!-- ──────────────────────────────────────── -->
+<!-- BAGIAN A: BERPIKIR KOMPUTASIONAL -->
+<!-- ──────────────────────────────────────── -->
+<div class="section-block">
+ <div class="section-header kka-header">
+ <div class="section-num sn-bc">🧠</div>
+ <div class="section-title-group">
+ <div class="section-title">Berpikir Komputasional</div>
+ <div class="section-subtitle">Dekomposisi, Algoritma, Abstraksi, Pengenalan Pola, Logika If-Then, Klasifikasi Masalah</div>
+ </div>
+ </div>
+
+ <!-- OVERVIEW 4 PILAR -->
+ <div class="cc">
+ <h3 class="cyan-h">🧩 Apa Itu Berpikir Komputasional?</h3>
+ <p>Berpikir komputasional adalah cara berpikir untuk memecahkan masalah secara <strong>sistematis dan logis</strong> — seperti cara kerja komputer. Ada 4 pilar utama:</p>
+ <div class="cg" style="grid-template-columns:1fr 1fr;">
+ <div class="cb" style="background:var(--cyan-light);border:2px solid var(--cyan);">
+ <h4 style="color:var(--cyan-dark);margin-top:0;">🧩 Dekomposisi</h4>
+ <p style="font-size:.82rem;">Memecah masalah besar menjadi bagian-bagian kecil yang lebih mudah diselesaikan satu per satu.</p>
+ </div>
+ <div class="cb" style="background:var(--indigo-light);border:2px solid var(--indigo);">
+ <h4 style="color:var(--indigo);margin-top:0;">📋 Algoritma</h4>
+ <p style="font-size:.82rem;">Langkah-langkah yang urut, jelas, dan bisa diikuti untuk menyelesaikan suatu masalah.</p>
+ </div>
+ <div class="cb" style="background:var(--orange-light);border:2px solid var(--orange);">
+ <h4 style="color:var(--orange);margin-top:0;">🔍 Abstraksi</h4>
+ <p style="font-size:.82rem;">Mengidentifikasi informasi yang <em>penting</em> dan mengabaikan informasi yang <em>tidak relevan</em>.</p>
+ </div>
+ <div class="cb" style="background:var(--purple-light);border:2px solid var(--purple);">
+ <h4 style="color:var(--purple-dark);margin-top:0;">🔢 Pengenalan Pola</h4>
+ <p style="font-size:.82rem;">Menemukan kesamaan, pola, atau aturan berulang dalam sebuah masalah atau data.</p>
+ </div>
+ </div>
+ </div>
+
+ <!-- DEKOMPOSISI -->
+ <div class="cc" id="bc1">
+ <h3 class="cyan-h">🧩 Dekomposisi — Memecah Masalah Besar</h3>
+ <p>Saat menghadapi masalah yang terasa besar dan membingungkan, langkah pertama yang paling logis adalah <strong>membuat daftar semua hal yang perlu dilakukan</strong> beserta siapa yang bertanggung jawab. Ini disebut <span class="kt kt-c">dekomposisi</span>.</p>
+
+ <div class="ib cyan"><strong>📌 Contoh</strong>Adi perlu menyiapkan ulang tahun adiknya: beli kue, undang teman, dekorasi, permainan. Masalah ini besar → <strong>buat daftar semua tugas dulu</strong> sebelum mulai mengerjakan satu per satu. Ini bukan langsung pergi belanja, bukan langsung telepon teman.</div>
+
+ <h4>Langkah Dekomposisi</h4>
+ <div class="alg-flow">
+ <div class="alg-step">❓ Masalah Besar</div>
+ <div class="alg-arrow">→</div>
+ <div class="alg-step ok">📝 Buat Daftar</div>
+ <div class="alg-arrow">→</div>
+ <div class="alg-step ok">🔢 Urutkan Prioritas</div>
+ <div class="alg-arrow">→</div>
+ <div class="alg-step ok">✅ Selesaikan Satu per Satu</div>
+ </div>
+
+ <div class="tw"><table><thead><tr><th>Situasi</th><th>Cara Dekomposisi</th></tr></thead><tbody>
+ <tr><td>Menyiapkan ulang tahun</td><td>Buat daftar: kue, undangan, dekorasi, permainan</td></tr>
+ <tr><td>Mengerjakan proyek kelompok</td><td>Bagi tugas: siapa riset, siapa menulis, siapa presentasi</td></tr>
+ <tr><td>Membereskan kamar</td><td>Pisahkan: rapikan meja, lipat baju, sapu lantai, buang sampah</td></tr>
+ </tbody></table></div>
+ </div>
+
+ <!-- ALGORITMA -->
+ <div class="cc" id="bc2">
+ <h3 class="cyan-h">📋 Algoritma — Urutan Langkah yang Tepat</h3>
+ <p><span class="kt kt-c">Algoritma</span> adalah urutan langkah-langkah yang <strong>teratur, jelas, dan harus diikuti dengan urutan benar</strong> untuk menghasilkan hasil yang diinginkan. Jika urutan salah → hasilnya gagal.</p>
+
+ <h4>Contoh Algoritma yang Benar: Membuat Minuman Instan</h4>
+ <div class="alg-flow">
+ <div class="alg-step ok">R<br><small>Siapkan gelas & sachet</small></div>
+ <div class="alg-arrow">→</div>
+ <div class="alg-step ok">Q<br><small>Masukkan serbuk ke gelas</small></div>
+ <div class="alg-arrow">→</div>
+ <div class="alg-step ok">T<br><small>Tuang air panas</small></div>
+ <div class="alg-arrow">→</div>
+ <div class="alg-step ok">P<br><small>Aduk hingga larut</small></div>
+ <div class="alg-arrow">→</div>
+ <div class="alg-step ok">S<br><small>Minum selagi hangat</small></div>
+ </div>
+ <div class="ib cyan"><strong>💡 Urutan R→Q→T→P→S adalah yang BENAR</strong>Kamu tidak bisa menuang air panas (T) sebelum masukkan serbuk (Q). Urutkan selalu dari persiapan → proses → penyajian.</div>
+
+ <h4>Mendeteksi Kesalahan Urutan Algoritma</h4>
+ <p>Dari contoh soal berikut (Resep Telur Dadar) — ada kesalahan urutan:</p>
+ <div class="alg-flow">
+ <div class="alg-step ok">1<br><small>Panaskan wajan</small></div>
+ <div class="alg-arrow">→</div>
+ <div class="alg-step ok">2<br><small>Kocok telur + garam</small></div>
+ <div class="alg-arrow">→</div>
+ <div class="alg-step err">3 ❌<br><small>Angkat & sajikan</small></div>
+ <div class="alg-arrow">→</div>
+ <div class="alg-step">4<br><small>Tuang adonan</small></div>
+ <div class="alg-arrow">→</div>
+ <div class="alg-step">5<br><small>Tunggu matang & balik</small></div>
+ </div>
+ <div class="ib red"><strong>⚠️ Kesalahan: Langkah 3 ada di tempat yang salah!</strong>Telur sudah "diangkat" (langkah 3) sebelum sempat dimasak (langkah 4 & 5). Urutan yang benar: 1→2→4→5→3.</div>
+
+ <h4>Prinsip Penting Algoritma</h4>
+ <div class="tw"><table><thead><tr><th>Prinsip</th><th>Penjelasan</th></tr></thead><tbody>
+ <tr><td><strong>Urutan (Sequence)</strong></td><td>Langkah-langkah dilakukan satu per satu sesuai urutan</td></tr>
+ <tr><td><strong>Kejelasan</strong></td><td>Setiap langkah harus jelas dan tidak ambigu</td></tr>
+ <tr><td><strong>Hasil Akhir</strong></td><td>Algoritma harus menghasilkan output/tujuan yang diinginkan</td></tr>
+ </tbody></table></div>
+ </div>
+
+ <!-- ABSTRAKSI -->
+ <div class="cc" id="bc3">
+ <h3 class="cyan-h">🔍 Abstraksi — Memilah Informasi yang Relevan</h3>
+ <p><span class="kt kt-c">Abstraksi</span> adalah kemampuan untuk <strong>mengidentifikasi informasi yang penting</strong> dan mengabaikan informasi yang tidak berkaitan dengan masalah yang ingin diselesaikan.</p>
+
+ <div class="ib cyan"><strong>📌 Contoh — Cerita Pak Tani</strong>Pak Slamet ingin tahu <em>kapan waktu tepat menanam padi</em>. Dari banyak informasi dalam cerita, mana yang relevan?</div>
+
+ <div class="tw"><table><thead><tr><th>Informasi</th><th>Relevan / Tidak?</th><th>Alasan</th></tr></thead><tbody>
+ <tr><td>Usia Pak Slamet (52 tahun)</td><td style="color:var(--red);font-weight:700;">❌ Tidak Relevan</td><td>Usia tidak mempengaruhi waktu tanam padi</td></tr>
+ <tr><td>Jumlah kambing (3 ekor)</td><td style="color:var(--red);font-weight:700;">❌ Tidak Relevan</td><td>Kambing tidak ada hubungan dengan padi</td></tr>
+ <tr><td>Menu sarapan keluarga</td><td style="color:var(--red);font-weight:700;">❌ Tidak Relevan</td><td>Tidak berpengaruh pada waktu tanam</td></tr>
+ <tr><td>Nama desa & luas sawah</td><td style="color:var(--red);font-weight:700;">❌ Tidak Relevan</td><td>Bukan penentu kapan mulai tanam</td></tr>
+ <tr><td><strong>Kondisi cuaca saat ini</strong></td><td style="color:var(--green);font-weight:700;">✅ Relevan</td><td>Cuaca menentukan apakah cocok tanam padi</td></tr>
+ <tr><td><strong>Jadwal waktu tanam padi</strong></td><td style="color:var(--green);font-weight:700;">✅ Relevan</td><td>Ini langsung menjawab masalah inti Pak Slamet</td></tr>
+ </tbody></table></div>
+
+ <div class="ib green"><strong>💡 Rumus Abstraksi</strong>Tanyakan: "Apakah informasi ini membantu menjawab masalah INTI?" Jika tidak → abaikan. Fokus hanya pada informasi yang langsung berkaitan dengan pertanyaan utama.</div>
+ </div>
+
+ <!-- PENGENALAN POLA & IF-THEN -->
+ <div class="cc" id="bc4">
+ <h3 class="cyan-h">🔢 Pengenalan Pola</h3>
+ <p><span class="kt kt-c">Pengenalan pola</span> = menemukan kesamaan atau aturan berulang. Ini membantu kita mengelompokkan masalah dengan cara penyelesaian yang sama.</p>
+
+ <h4>Pola Urutan Langkah Tetap</h4>
+ <p>Dari contoh soal berikut — Kasus mana yang polanya paling sama?</p>
+ <div class="tw"><table><thead><tr><th>Kasus</th><th>Deskripsi</th><th>Pola</th></tr></thead><tbody>
+ <tr><td><strong>Kasus 1 (Budi — Rutinitas Pagi)</strong></td><td>Bangun → sarapan → mandi → berangkat — urutannya selalu sama</td><td style="color:var(--cyan);font-weight:700;">✅ Urutan Tetap & Terstruktur</td></tr>
+ <tr><td><strong>Kasus 2 (Chef Membuat Kue)</strong></td><td>Siapkan bahan → campur → oven → sajikan — tidak boleh diubah</td><td style="color:var(--cyan);font-weight:700;">✅ Urutan Tetap & Terstruktur</td></tr>
+ <tr><td><strong>Kasus 3 (Siti Memilih Baju)</strong></td><td>Melihat semua pilihan, mencoba satu per satu, pilih berdasarkan selera</td><td style="color:var(--text-muted);font-weight:700;">≠ Bergantung Preferensi</td></tr>
+ </tbody></table></div>
+ <div class="ib indigo"><strong>📌 Jawaban: Kasus 1 & Kasus 2 memiliki pola yang sama</strong>Keduanya menggunakan urutan langkah tetap dan terstruktur yang tidak bisa diubah sembarangan.</div>
+
+ <h4>Pola Bilangan</h4>
+ <p>Perhatikan barisan bilangan berikut:</p>
+ <div class="patt-row">
+ <div><div class="patt-num">2</div><div class="patt-op">×2</div></div>
+ <div class="alg-arrow">→</div>
+ <div><div class="patt-num">4</div><div class="patt-op">×2</div></div>
+ <div class="alg-arrow">→</div>
+ <div><div class="patt-num">8</div><div class="patt-op">×2</div></div>
+ <div class="alg-arrow">→</div>
+ <div><div class="patt-num">16</div><div class="patt-op">×2</div></div>
+ <div class="alg-arrow">→</div>
+ <div><div class="patt-num next">32</div><div class="patt-op">= Jawaban</div></div>
+ </div>
+ <div class="ib indigo"><strong>🔑 Pola ini menggunakan perkalian dua (×2), bukan penjumlahan</strong>2→4→8→16→<strong>32</strong>. Bukan +2, +4, +6 (itu pola berbeda). Setiap angka dikalikan 2, maka angka berikutnya adalah 16 × 2 = 32.</div>
+
+ <h4>Logika Kondisional (If–Then)</h4>
+ <p>Logika <span class="kt kt-c">Jika … maka …</span> adalah aturan yang menghubungkan kondisi dengan tindakan yang tepat. Kondisi harus benar agar tindakannya benar.</p>
+ <div class="tw"><table><thead><tr><th>Pernyataan If-Then</th><th>Benar / Salah?</th><th>Alasan</th></tr></thead><tbody>
+ <tr><td>Jika <strong>hujan deras dan ada petir</strong>, maka hindari berteduh di bawah pohon tinggi</td><td style="color:var(--green);font-weight:700;">✅ Benar</td><td>Petir berbahaya di bawah pohon tinggi — logis</td></tr>
+ <tr><td>Jika <strong>cerah dan angin sepoi</strong>, maka ini waktu tepat olahraga lari pagi</td><td style="color:var(--green);font-weight:700;">✅ Benar</td><td>Cuaca cerah = kondisi baik untuk aktivitas luar</td></tr>
+ <tr><td>Jika <strong>mendung tapi tidak hujan</strong>, maka tidak perlu membawa payung sama sekali</td><td style="color:var(--red);font-weight:700;">❌ Salah</td><td>Mendung bisa berubah jadi hujan — wajib bawa payung</td></tr>
+ <tr><td>Jika <strong>hujan deras</strong>, maka aman berenang di sungai</td><td style="color:var(--red);font-weight:700;">❌ Salah</td><td>Hujan deras membuat sungai meluap — sangat berbahaya</td></tr>
+ </tbody></table></div>
+
+ <h4>Klasifikasi Masalah: Sistematis vs Subjektif</h4>
+ <div class="tw"><table><thead><tr><th>Masalah</th><th>Jenis</th><th>Alasan</th></tr></thead><tbody>
+ <tr><td>Menghitung luas persegi sisi 7 cm (7×7 = 49 cm²)</td><td style="color:var(--cyan);font-weight:700;">✅ Sistematis</td><td>Ada rumus pasti, hasilnya sama untuk semua orang</td></tr>
+ <tr><td>Memilih teman terbaik untuk ketua kelompok</td><td style="color:var(--purple);font-weight:700;">⚡ Subjektif</td><td>Bergantung pada pendapat/selera masing-masing</td></tr>
+ <tr><td>Merapikan kamar agar rapi dan nyaman</td><td style="color:var(--purple);font-weight:700;">⚡ Subjektif</td><td>"Rapi" dan "nyaman" berbeda-beda menurut setiap orang</td></tr>
+ </tbody></table></div>
+
+ <h4>Menilai Urutan Logis</h4>
+ <div class="tw"><table><thead><tr><th>Set Instruksi</th><th>Logis / Tidak Logis</th><th>Masalahnya</th></tr></thead><tbody>
+ <tr><td><strong>Set A:</strong> Cuci beras → Rice cooker → Tambah air → Nyalakan</td><td style="color:var(--green);font-weight:700;">✅ Logis</td><td>Urutan sudah benar dari awal hingga akhir</td></tr>
+ <tr><td><strong>Set B:</strong> Tekan saklar ON → Pasang bola lampu → Pastikan kabel aman</td><td style="color:var(--red);font-weight:700;">❌ Tidak Logis</td><td>Seharusnya: pasang lampu → sambung kabel → baru nyalakan</td></tr>
+ <tr><td><strong>Set C:</strong> Kenakan kemeja → Kenakan kaos dalam → Pasang kancing</td><td style="color:var(--red);font-weight:700;">❌ Tidak Logis</td><td>Seharusnya: kaos dalam dulu → kemeja → baru pasang kancing</td></tr>
+ </tbody></table></div>
+ </div>
+</div><!-- end BC section -->
+
+
+<!-- ──────────────────────────────────────── -->
+<!-- BAGIAN B: LITERASI DIGITAL (KKA) -->
+<!-- ──────────────────────────────────────── -->
+<div class="section-block" id="ld1">
+ <div class="section-header" style="border-bottom-color:var(--green);">
+ <div class="section-num sn-ld">💻</div>
+ <div class="section-title-group">
+ <div class="section-title">Literasi Digital — KKA</div>
+ <div class="section-subtitle">Memilih aplikasi tepat, jenis konten digital, IPO, berbagi file, password, privasi data, manfaat internet, perilaku online</div>
+ </div>
+ </div>
+
+ <!-- Q5: MEMILIH APLIKASI YANG TEPAT -->
+ <div class="cc">
+ <h3 style="color:var(--green-dark);">🛠️ Memilih Aplikasi yang Tepat untuk Tugas</h3>
+ <p>Setiap tugas digital memerlukan <strong>kombinasi alat yang sesuai</strong>. Kamu harus tahu fungsi masing-masing aplikasi agar bisa memilih yang paling tepat.</p>
+
+ <div class="ib green"><strong>📌 Kasus: Membuat Poster Digital "Hemat Air"</strong>Poster harus memiliki: teks slogan + gambar ilustrasi + bisa dicetak ukuran A3. Alat yang paling tepat: <strong>Aplikasi desain grafis (Canva/PowerPoint) + Printer</strong>.</div>
+
+ <div class="tw"><table><thead><tr><th>Pilihan</th><th>Tepat?</th><th>Alasan</th></tr></thead><tbody>
+ <tr><td><strong>Canva / PowerPoint + Printer</strong></td><td style="color:var(--green);font-weight:700;">✅ Tepat</td><td>Canva & PowerPoint bisa gabungkan teks + gambar + desain visual → hasilnya bisa dicetak</td></tr>
+ <tr><td>Kalkulator + Kamera HP</td><td style="color:var(--red);font-weight:700;">❌ Salah</td><td>Kalkulator untuk hitung angka, kamera hanya ambil foto — tidak bisa buat poster</td></tr>
+ <tr><td>Pemutar video + Scanner</td><td style="color:var(--red);font-weight:700;">❌ Salah</td><td>Pemutar video untuk menonton, scanner memindai — tidak bisa membuat poster</td></tr>
+ <tr><td>Notepad + Printer</td><td style="color:var(--red);font-weight:700;">❌ Salah</td><td>Notepad hanya teks polos, tidak bisa memasukkan gambar atau mendesain layout</td></tr>
+ </tbody></table></div>
+
+ <h4>Panduan Cepat: Pilih Aplikasi Sesuai Kebutuhan</h4>
+ <div class="tw"><table><thead><tr><th>Kebutuhan</th><th>Aplikasi yang Tepat</th></tr></thead><tbody>
+ <tr><td>Menulis laporan/dokumen teks panjang</td><td><strong>Microsoft Word / Google Docs</strong> (.docx)</td></tr>
+ <tr><td>Membuat tabel & menghitung data (nilai, keuangan)</td><td><strong>Microsoft Excel / Google Sheets</strong> (.xlsx)</td></tr>
+ <tr><td>Membuat presentasi slide show</td><td><strong>PowerPoint / Google Slides</strong> (.pptx)</td></tr>
+ <tr><td>Membuat poster, flyer, desain visual</td><td><strong>Canva / PowerPoint</strong> (ekspor → cetak)</td></tr>
+ <tr><td>Mengedit foto/gambar</td><td><strong>Paint / Snapseed / Adobe Express</strong></td></tr>
+ <tr><td>Mengerjakan tugas dari mana saja</td><td><strong>Google Drive</strong> (cloud storage)</td></tr>
+ </tbody></table></div>
+ </div>
+
+ <!-- Q13 & Q18: JENIS KONTEN DIGITAL -->
+ <div class="cc">
+ <h3 style="color:var(--green-dark);">🗂️ Jenis Konten Digital: Teks, Gambar, Video</h3>
+ <p>Konten digital dikelompokkan berdasarkan <strong>jenis media yang paling dominan</strong>. Kamu harus bisa mengidentifikasi jenis konten dari nama file atau deskripsinya.</p>
+
+ <h4>Mengenali Konten dari Ekstensi File</h4>
+ <div class="tw"><table><thead><tr><th>File</th><th>Ekstensi</th><th>Jenis Konten</th></tr></thead><tbody>
+ <tr><td>dokumen_laporan.doc</td><td>.doc</td><td style="color:var(--blue);font-weight:700;">📄 Teks (dokumen)</td></tr>
+ <tr><td><strong>foto_kelas.jpg</strong></td><td>.jpg</td><td style="color:var(--green);font-weight:700;">🖼️ Gambar ✅</td></tr>
+ <tr><td><strong>logo_sekolah.png</strong></td><td>.png</td><td style="color:var(--green);font-weight:700;">🖼️ Gambar ✅</td></tr>
+ </tbody></table></div>
+ <div class="ib green"><strong>🔑 .jpg dan .png = FORMAT GAMBAR. .doc/.docx = Dokumen Teks. .mp4 = Video. .mp3 = Audio</strong>contoh soal meminta file yang berupa GAMBAR → jawab: foto_kelas.jpg DAN logo_sekolah.png (keduanya benar, ini soal PGK pilih lebih dari satu).</div>
+
+ <h4>Mengenali Jenis Konten dari Deskripsinya</h4>
+ <div class="tw"><table><thead><tr><th>Karya Digital</th><th>Jenis Konten Dominan</th><th>Alasan</th></tr></thead><tbody>
+ <tr><td>Artikel blog: tulisan panjang + beberapa foto</td><td style="color:var(--blue);font-weight:700;">📄 Dominan Teks</td><td>Isinya berupa tulisan/artikel panjang — foto hanya pelengkap</td></tr>
+ <tr><td>Album foto liburan keluarga di Google Photos</td><td style="color:var(--green);font-weight:700;">🖼️ Dominan Gambar</td><td>Isinya koleksi foto-foto — tidak ada narasi/video</td></tr>
+ <tr><td>Vlog perjalanan wisata: rekaman video + narasi di YouTube</td><td style="color:var(--red);font-weight:700;">🎬 Dominan Video</td><td>Isinya rekaman video perjalanan yang diunggah ke platform video</td></tr>
+ </tbody></table></div>
+ </div>
+
+ <!-- Q9: INPUT-PROSES-OUTPUT -->
+ <div class="cc">
+ <h3 style="color:var(--green-dark);">⚙️ Konsep Input → Proses → Output (IPO)</h3>
+ <p>Setiap aktivitas komputer mengikuti alur: <strong>Input (masukkan data) → Proses (CPU mengolah) → Output (tampilkan hasil)</strong>.</p>
+
+ <div class="ib cyan"><strong>💡 Kasus: Seorang siswa mengetik laporan</strong>⌨️ Keyboard menekan tombol (INPUT) → ❓ ??? (PROSES) → 🖥️ Teks muncul di monitor (OUTPUT). Yang mengisi kotak "Proses" adalah <strong>CPU (Central Processing Unit)</strong>.</div>
+
+ <div class="tw"><table><thead><tr><th>Pilihan Jawaban</th><th>Tepat?</th><th>Alasan</th></tr></thead><tbody>
+ <tr><td>Keyboard (papan ketik)</td><td style="color:var(--red);font-weight:700;">❌ Bukan Proses</td><td>Keyboard adalah perangkat INPUT, bukan proses</td></tr>
+ <tr><td>Monitor (layar)</td><td style="color:var(--red);font-weight:700;">❌ Bukan Proses</td><td>Monitor adalah perangkat OUTPUT, menampilkan hasil</td></tr>
+ <tr><td><strong>CPU (Central Processing Unit)</strong></td><td style="color:var(--green);font-weight:700;">✅ Benar — Proses</td><td>CPU = "otak" komputer yang mengolah semua data sebelum ditampilkan</td></tr>
+ <tr><td>Mouse (tetikus)</td><td style="color:var(--red);font-weight:700;">❌ Bukan Proses</td><td>Mouse adalah perangkat INPUT untuk menggerakkan kursor</td></tr>
+ </tbody></table></div>
+ <div class="ib amber"><strong>💡 Cara hafal: IPO = Input → Proses → Output</strong>Input = semua yang MEMASUKKAN data (keyboard, mouse, scanner, mic, webcam). Proses = CPU. Output = semua yang MENAMPILKAN hasil (monitor, printer, speaker).</div>
+ </div>
+
+ <!-- Q10: BERBAGI FILE DI KELAS -->
+ <div class="cc">
+ <h3 style="color:var(--green-dark);">📤 Cara Berbagi File yang Efektif & Aman</h3>
+ <p>Saat ingin berbagi file kepada banyak orang sekaligus, kamu harus memilih cara yang paling <strong>efektif</strong> (menghemat waktu/usaha) dan <strong>aman</strong> (tidak mengekspos data ke sembarang orang).</p>
+
+ <div class="ib blue"><strong>💡 Kasus: Maya ingin membagikan cerpen ke 30 teman sebelum presentasi besok</strong></div>
+
+ <div class="tw"><table><thead><tr><th>Cara Berbagi</th><th>Efektif & Aman?</th><th>Alasan</th></tr></thead><tbody>
+ <tr><td>Kirim file satu per satu via pesan langsung ke 30 teman</td><td style="color:var(--red);font-weight:700;">❌ Tidak Efektif</td><td>Harus kirim 30 kali — sangat membuang waktu dan tenaga</td></tr>
+ <tr><td><strong>Unggah ke Google Classroom / Grup WhatsApp Kelas</strong></td><td style="color:var(--green);font-weight:700;">✅ Paling Tepat</td><td>Satu unggahan → semua 30 teman bisa akses sekaligus. Efektif DAN terbatas hanya ke kelas</td></tr>
+ <tr><td>Cetak 30 salinan dan bagikan fisik besok pagi</td><td style="color:var(--red);font-weight:700;">❌ Tidak Efektif</td><td>Butuh banyak kertas dan tinta — tidak praktis untuk file digital</td></tr>
+ <tr><td>Posting cerpen ke akun media sosial pribadi yang bersifat publik</td><td style="color:var(--red);font-weight:700;">❌ Tidak Aman</td><td>Bisa diakses siapa saja di internet — privasi dan hak cipta tidak terlindungi</td></tr>
+ </tbody></table></div>
+ <div class="ib green"><strong>🔑 Prinsip Berbagi File di Kelas</strong>Platform berbagi KELAS (Google Classroom, grup WA kelas) = paling tepat karena: ① semua anggota bisa akses sekaligus, ② akses terbatas hanya anggota kelas, ③ tidak perlu kirim berulang-ulang.</div>
+ </div>
+
+ <!-- Q4: PRIVASI DATA DI FORMULIR ONLINE -->
+ <div class="cc">
+ <h3 style="color:var(--green-dark);">🔐 Data yang Tidak Boleh Diisi di Formulir Sembarangan</h3>
+ <p>Saat mengisi formulir online (pendaftaran lomba, akun, dsb.), ada data yang <strong>sangat sensitif</strong> dan tidak pernah boleh diisi, seberapa pun resminya formulir tersebut terlihat.</p>
+
+ <div class="ib green"><strong>💡 Kasus: Formulir Pendaftaran Lomba Sains Daring</strong>Formulir meminta: (1) Nama lengkap, (2) NISN, (3) Nama sekolah, (4) <strong>Kata sandi akun email</strong>, (5) Nama guru pembimbing. Data manakah yang paling kritis dan tidak boleh diisi?</div>
+
+ <div class="tw"><table><thead><tr><th>Data</th><th>Boleh Diisi di Formulir?</th><th>Alasan</th></tr></thead><tbody>
+ <tr><td>Nama Lengkap</td><td style="color:var(--amber);font-weight:700;">⚠️ Umumnya Oke</td><td>Diperlukan untuk identitas peserta</td></tr>
+ <tr><td>NISN (Nomor Induk Siswa)</td><td style="color:var(--amber);font-weight:700;">⚠️ Hati-hati</td><td>Identitas resmi — hanya isi di formulir resmi lembaga pendidikan</td></tr>
+ <tr><td>Nama Sekolah</td><td style="color:var(--green);font-weight:700;">✅ Umum Oke</td><td>Informasi umum yang tidak sensitif</td></tr>
+ <tr><td><strong>Kata Sandi Akun Email</strong></td><td style="color:var(--red);font-weight:700;">🚫 TIDAK PERNAH</td><td>Formulir apapun TIDAK PERNAH memerlukan kata sandimu. Ini pasti penipuan/phishing!</td></tr>
+ <tr><td>Nama Guru Pembimbing</td><td style="color:var(--green);font-weight:700;">✅ Umum Oke</td><td>Informasi yang relevan dan tidak sensitif</td></tr>
+ </tbody></table></div>
+ <div class="ib red"><strong>🚨 Aturan Emas: TIDAK ADA formulir resmi yang meminta kata sandi akunmu!</strong>Jika ada formulir yang meminta password/kata sandi email, PIN, atau data rekening → itu adalah penipuan (phishing). Langsung tutup dan laporkan ke orang tua/guru.</div>
+ </div>
+
+ <!-- Q12: PASSWORD KUAT -->
+ <div class="cc">
+ <h3 style="color:var(--green-dark);">🔑 Menilai Kekuatan Password</h3>
+ <p>Password yang kuat harus memenuhi <strong>semua 4 kriteria</strong> sekaligus: huruf besar, huruf kecil, angka, dan simbol — minimal 8 karakter.</p>
+
+ <div class="tw"><table><thead><tr><th>Password</th><th>Huruf Besar</th><th>Huruf Kecil</th><th>Angka</th><th>Simbol</th><th>Status</th></tr></thead><tbody>
+ <tr><td><strong>budi123</strong></td><td style="color:var(--red);">❌</td><td style="color:var(--green);">✅</td><td style="color:var(--green);">✅</td><td style="color:var(--red);">❌</td><td style="color:var(--red);font-weight:700;">❌ Lemah</td></tr>
+ <tr><td><strong>Aku@Suka#Belajar7</strong></td><td style="color:var(--green);">✅</td><td style="color:var(--green);">✅</td><td style="color:var(--green);">✅</td><td style="color:var(--green);">✅ (@, #)</td><td style="color:var(--green);font-weight:700;">✅ Kuat</td></tr>
+ <tr><td><strong>P@ssw0rd!9x</strong></td><td style="color:var(--green);">✅ (P)</td><td style="color:var(--green);">✅</td><td style="color:var(--green);">✅ (0, 9)</td><td style="color:var(--green);">✅ (@, !)</td><td style="color:var(--green);font-weight:700;">✅ Kuat</td></tr>
+ </tbody></table></div>
+ <div class="ib green"><strong>💡 Jawaban yang benar: B dan C (PGK, pilih lebih dari satu)</strong>"Aku@Suka#Belajar7" dan "P@ssw0rd!9x" keduanya memenuhi semua 4 kriteria. "budi123" hanya memiliki huruf kecil + angka — tidak ada huruf besar dan simbol → LEMAH.</div>
+ </div>
+
+ <!-- Q17: DATA PRIBADI SENSITIF vs UMUM -->
+ <div class="cc">
+ <h3 style="color:var(--green-dark);">🛡️ Klasifikasi Data Pribadi Sensitif vs Umum</h3>
+ <p>Tidak semua data pribadi sama tingkat sensitivitasnya. Kamu harus tahu mana yang <strong>sensitif</strong> (bisa disalahgunakan jika bocor) dan mana yang <strong>umum</strong> (relatif aman dibagikan).</p>
+
+ <div class="tw"><table><thead><tr><th>Informasi</th><th>Kategori</th><th>Alasan</th></tr></thead><tbody>
+ <tr><td><strong>Nama lengkap & nomor telepon orang tua</strong></td><td style="color:var(--red);font-weight:700;">🔒 Pribadi Sensitif</td><td>Bisa digunakan penipu untuk menghubungi orang tua dengan alasan palsu</td></tr>
+ <tr><td><strong>Alamat rumah lengkap (RT/RW, Kelurahan, Kecamatan)</strong></td><td style="color:var(--red);font-weight:700;">🔒 Pribadi Sensitif</td><td>Lokasi rumah yang presisi sangat berbahaya jika jatuh ke orang jahat</td></tr>
+ <tr><td><strong>Warna favorit & makanan kesukaan</strong></td><td style="color:var(--green);font-weight:700;">✅ Data Umum</td><td>Informasi preferensi pribadi yang tidak bisa disalahgunakan</td></tr>
+ </tbody></table></div>
+ <div class="ib cyan"><strong>🔑 Cara Cepat Menentukan: Bisa disalahgunakan?</strong>Tanya: "Jika orang jahat tahu data ini, apakah bisa merugikan saya atau keluarga?" — Jika YA → data sensitif, jaga kerahasiaannya. Jika TIDAK → data umum, relatif aman.</div>
+ </div>
+
+ <!-- Q7: DAMPAK GAWAI TERHADAP BELAJAR -->
+ <div class="cc">
+ <h3 style="color:var(--green-dark);">📱 Dampak Penggunaan Gawai terhadap Prestasi Belajar</h3>
+ <p>Gawai bukan selalu negatif — <strong>cara penggunaannya</strong> yang menentukan dampaknya terhadap prestasi belajar.</p>
+
+ <div class="cg">
+ <div class="cb" style="background:var(--green-light);border:2px solid var(--green);">
+ <h4 style="color:var(--green-dark);margin-top:0;">✅ Rena — Dampak Positif</h4>
+ <ul style="font-size:.82rem;">
+ <li>Menonton <strong>video pelajaran</strong></li>
+ <li>Membaca <strong>e-book</strong></li>
+ <li>Diskusi tugas di <strong>grup kelas</strong></li>
+ </ul>
+ <p style="font-size:.82rem;"><strong>Hasilnya:</strong> Prestasi <span style="color:var(--green);font-weight:700;">meningkat</span> karena gawai digunakan sebagai alat belajar</p>
+ </div>
+ <div class="cb" style="background:var(--red-light);border:2px solid var(--red);">
+ <h4 style="color:var(--red);margin-top:0;">❌ Doni — Dampak Negatif</h4>
+ <ul style="font-size:.82rem;">
+ <li>Bermain <strong>game online</strong> setiap hari</li>
+ <li>Main hingga <strong>larut malam</strong></li>
+ <li>Sering <strong>mengantuk</strong> di kelas</li>
+ </ul>
+ <p style="font-size:.82rem;"><strong>Hasilnya:</strong> Prestasi <span style="color:var(--red);font-weight:700;">menurun drastis</span> karena gawai mengganggu istirahat & belajar</p>
+ </div>
+ </div>
+ <div class="ib amber"><strong>💡 Jawaban: Rena prestasinya meningkat; Doni prestasinya menurun</strong>Gawai BISA bermanfaat untuk belajar, BISA juga merugikan — tergantung bagaimana kamu menggunakannya. Gawai bukan selalu negatif dan bukan selalu positif.</div>
+ </div>
+
+ <!-- Q15: MANFAAT INTERNET UNTUK PELAJAR -->
+ <div class="cc">
+ <h3 style="color:var(--green-dark);">🌐 Manfaat Positif Internet untuk Pelajar</h3>
+ <p>Internet bermanfaat untuk belajar jika digunakan untuk kegiatan yang <strong>mendukung proses belajar</strong> secara aktif.</p>
+
+ <div class="tw"><table><thead><tr><th>Aktivitas</th><th>Manfaat Positif?</th><th>Alasan</th></tr></thead><tbody>
+ <tr><td><strong>Mencari referensi artikel ilmiah di mesin pencari</strong></td><td style="color:var(--green);font-weight:700;">✅ Ya, Manfaat Positif</td><td>Menggunakan internet untuk mencari informasi akademik yang mendukung tugas</td></tr>
+ <tr><td><strong>Video call bersama kelompok untuk diskusi proyek</strong></td><td style="color:var(--green);font-weight:700;">✅ Ya, Manfaat Positif</td><td>Menggunakan internet untuk kolaborasi dan komunikasi yang produktif</td></tr>
+ <tr><td>Bermain game <em>offline</em> selama 5 jam</td><td style="color:var(--red);font-weight:700;">❌ Bukan Manfaat Internet</td><td>Game offline tidak menggunakan internet sama sekali. Selain itu, 5 jam hanya main game bukan manfaat belajar</td></tr>
+ </tbody></table></div>
+ <div class="ib teal"><strong>💡 Jawaban: Aktivitas 1 DAN Aktivitas 2 (PGK, pilih lebih dari satu)</strong>Perhatikan: Aktivitas 3 (game offline) bahkan tidak menggunakan internet — jadi jelas bukan manfaat internet. Manfaat internet harus: ① menggunakan koneksi internet, ② mendukung pembelajaran/kolaborasi.</div>
+ </div>
+
+ <!-- Q20: PERILAKU ONLINE AMAN vs TIDAK AMAN -->
+ <div class="cc">
+ <h3 style="color:var(--green-dark);">🔐 Klasifikasi Perilaku Online: Aman vs Tidak Aman</h3>
+ <p>Setiap perilaku online memiliki risiko yang berbeda. Kamu harus bisa menilai apakah suatu tindakan <strong>melindungi keamananmu</strong> atau justru <strong>membahayakanmu</strong>.</p>
+
+ <div class="tw"><table><thead><tr><th>Perilaku</th><th>Aman / Tidak Aman</th><th>Alasan</th></tr></thead><tbody>
+ <tr><td>Mengklik tautan dari pengirim yang tidak dikenal di email</td><td style="color:var(--red);font-weight:700;">❌ Tidak Aman</td><td>Link tidak dikenal = bisa berisi malware atau phishing yang mencuri datamu</td></tr>
+ <tr><td><strong>Selalu logout setelah menggunakan komputer publik</strong></td><td style="color:var(--green);font-weight:700;">✅ Aman</td><td>Logout = memastikan akun tidak bisa diakses orang berikutnya yang memakai komputer itu</td></tr>
+ <tr><td>Membagikan kata sandi akun media sosial kepada teman dekat</td><td style="color:var(--red);font-weight:700;">❌ Tidak Aman</td><td>Kata sandi TIDAK boleh dibagikan kepada siapapun, bahkan teman dekat sekalipun</td></tr>
+ </tbody></table></div>
+
+ <div class="ib red"><strong>⚠️ Kata sandi = RAHASIA MUTLAK, tidak boleh dibagikan kepada siapapun!</strong>Teman dekat, sahabat, bahkan keluarga pun tidak boleh tahu kata sandimu. Jika kata sandi sudah dibagikan → segera ganti!</div>
+
+ <div class="ib green"><strong>💡 Kebiasaan Aman Online yang Wajib Dikuasai</strong>✅ Selalu logout di komputer/perangkat umum. ✅ Jangan klik link dari pengirim tidak dikenal. ✅ Jangan bagikan password kepada siapapun. ✅ Gunakan password berbeda untuk setiap akun. ✅ Aktifkan verifikasi 2 langkah jika tersedia.</div>
+ </div>
+
+ <!-- RINGKASAN LITERASI DIGITAL KKA -->
+ <div class="cc" style="border:2px solid var(--green);background:var(--green-light);">
+ <h3 style="color:var(--green-dark);">📝 Ringkasan Literasi Digital KKA</h3>
+ <div class="tw"><table><thead><tr><th style="background:var(--green-light);color:var(--green-dark);border-bottom:2px solid var(--green);">Konsep</th><th style="background:var(--green-light);color:var(--green-dark);border-bottom:2px solid var(--green);">Jawaban Kunci</th></tr></thead><tbody>
+ <tr><td>Data kritis di formulir</td><td><strong>Kata sandi email</strong> — TIDAK PERNAH diisi di formulir apapun</td></tr>
+ <tr><td>Aplikasi tepat untuk poster</td><td><strong>Canva/PowerPoint + Printer</strong></td></tr>
+ <tr><td>Dampak gawai terhadap belajar</td><td>Rena (belajar) = meningkat; Doni (game larut malam) = menurun</td></tr>
+ <tr><td>IPO — kotak "Proses"</td><td><strong>CPU</strong> (Central Processing Unit)</td></tr>
+ <tr><td>Berbagi file ke 30 teman</td><td><strong>Google Classroom / Grup WA Kelas</strong></td></tr>
+ <tr><td>Password yang kuat (PGK)</td><td><strong>B (Aku@Suka#Belajar7) + C (P@ssw0rd!9x)</strong></td></tr>
+ <tr><td>File berformat gambar (PGK)</td><td><strong>.jpg + .png</strong> (bukan .doc)</td></tr>
+ <tr><td>Manfaat internet untuk pelajar (PGK)</td><td><strong>Cari artikel ilmiah + Video call diskusi</strong> (bukan game offline)</td></tr>
+ <tr><td>Data pribadi sensitif (PGK-cat)</td><td>Nama+Telp Orang Tua = Sensitif; Alamat Rumah = Sensitif; Warna Favorit = Umum</td></tr>
+ <tr><td>Jenis konten digital (PGK-cat)</td><td>Blog = Teks; Album Foto = Gambar; Vlog YouTube = Video</td></tr>
+ <tr><td>Perilaku online (PGK-cat)</td><td>Klik link asing = Tidak Aman; Logout komputer publik = Aman; Bagikan password = Tidak Aman</td></tr>
+ </tbody></table></div>
+ </div>
+</div><!-- end Literasi Digital KKA section -->
+
+<!-- ──────────────────────────────────────── -->
+<!-- BAGIAN C: KECERDASAN ARTIFISIAL (AI) -->
+<!-- ──────────────────────────────────────── -->
+<div class="section-block">
+ <div class="section-header ai-header">
+ <div class="section-num sn-ai">🤖</div>
+ <div class="section-title-group">
+ <div class="section-title">Kecerdasan Artifisial (AI)</div>
+ <div class="section-subtitle">Definisi AI, klasifikasi, data latihan, GIGO, manusia vs AI, etika & bias, dampak sosial, penggunaan bijak</div>
+ </div>
+ </div>
+
+ <!-- APA ITU AI -->
+ <div class="cc" id="ai1">
+ <h3 class="pink-h">🤖 Apa Itu Kecerdasan Artifisial (AI)?</h3>
+ <p><span class="kt kt-p">Kecerdasan Artifisial</span> (Artificial Intelligence / AI) adalah teknologi yang memungkinkan mesin atau komputer <strong>belajar dari data</strong> dan mengambil keputusan atau memberikan rekomendasi yang <strong>berbeda-beda tergantung situasi</strong> — mirip seperti cara manusia berpikir.</p>
+
+ <h4>Kunci Membedakan AI vs Bukan AI</h4>
+ <div class="tw"><table><thead><tr><th class="pink-th">Teknologi</th><th class="pink-th">AI atau Bukan?</th><th class="pink-th">Alasan</th></tr></thead><tbody>
+ <tr><td>YouTube merekomendasikan video berdasarkan riwayat tontonanmu</td><td style="color:var(--pink);font-weight:700;">🤖 AI</td><td><strong>Belajar dari data</strong> tontonanmu → rekomendasi berbeda untuk setiap orang</td></tr>
+ <tr><td>Kalkulator menghitung 345 × 678</td><td style="color:var(--text-muted);font-weight:700;">⚙️ Bukan AI</td><td>Menggunakan <strong>rumus tetap</strong> yang sama untuk semua orang, tidak belajar</td></tr>
+ <tr><td>Lampu koridor menyala otomatis saat ada gerakan</td><td style="color:var(--text-muted);font-weight:700;">⚙️ Bukan AI</td><td>Aturan tetap: gerak → ON, tidak ada gerakan → OFF. Tidak belajar atau beradaptasi</td></tr>
+ <tr><td>Robot vacuum yang memetakan ruangan dan menghindari rintangan</td><td style="color:var(--pink);font-weight:700;">🤖 AI</td><td><strong>Membuat keputusan mandiri</strong>: peta ruangan, deteksi kursi, berhenti saat baterai habis</td></tr>
+ <tr><td>Penggaris untuk mengukur panjang</td><td style="color:var(--text-muted);font-weight:700;">🔧 Alat Biasa</td><td>Tidak ada komputasi sama sekali, hanya alat ukur pasif</td></tr>
+ </tbody></table></div>
+
+ <div class="ib pink"><strong>🔑 Rumus Cepat: Apakah ini AI?</strong>Tanya dua hal: (1) Apakah ia <strong>belajar dari data</strong>? (2) Apakah keputusannya bisa <strong>berbeda untuk setiap orang/situasi</strong>? Jika keduanya YA → kemungkinan besar AI. Jika aturannya TETAP dan sama untuk semua → bukan AI.</div>
+
+ <h4>AI vs Otomasi Biasa (Perbedaan Penting!)</h4>
+ <div class="ai-vs">
+ <div class="ai-vs-side ai-vs-a">
+ <h4 style="color:var(--pink-dark);">🤖 AI (Mesin Cerdas)</h4>
+ <ul style="padding-left:16px;font-size:.82rem;">
+ <li>Belajar dari data (pola, contoh)</li>
+ <li>Keputusan bisa berbeda per konteks</li>
+ <li>Dapat beradaptasi terhadap situasi baru</li>
+ <li><strong>Contoh:</strong> YouTube, Spotify, robot vacuum, Google Translate</li>
+ </ul>
+ </div>
+ <div class="ai-vs-side ai-vs-b">
+ <h4 style="color:var(--text-muted);">⚙️ Otomasi Biasa (Non-AI)</h4>
+ <ul style="padding-left:16px;font-size:.82rem;">
+ <li>Mengikuti aturan tetap yang diprogramkan</li>
+ <li>Hasil selalu sama untuk input yang sama</li>
+ <li>Tidak bisa belajar atau beradaptasi sendiri</li>
+ <li><strong>Contoh:</strong> lampu sensor gerak, kalkulator, pintu otomatis, mesin cuci timer</li>
+ </ul>
+ </div>
+ </div>
+ </div>
+
+ <!-- AI DAN DATA -->
+ <div class="cc" id="ai2">
+ <h3 class="pink-h">📦 AI Belajar dari Data Latihan</h3>
+ <p>AI tidak langsung "tahu" sesuatu. Ia perlu <strong>dilatih</strong> menggunakan banyak contoh data. Proses ini disebut <span class="kt kt-p">training</span> (pelatihan). Semakin baik datanya, semakin cerdas AI-nya.</p>
+
+ <h4>Data Latihan untuk AI Mengenali Kucing</h4>
+ <p>Agar AI bisa mengenali gambar kucing dengan benar, data latihan yang diberikan harus:</p>
+ <div class="tw"><table><thead><tr><th class="pink-th">Jenis Data</th><th class="pink-th">Perlu / Tidak?</th><th class="pink-th">Alasan</th></tr></thead><tbody>
+ <tr><td>Foto kucing dari berbagai sudut (depan, samping, belakang)</td><td style="color:var(--green);font-weight:700;">✅ Perlu</td><td>AI perlu tahu kucing terlihat seperti apa dari semua arah</td></tr>
+ <tr><td>Foto kucing dengan berbagai warna bulu (putih, hitam, oranye, belang)</td><td style="color:var(--green);font-weight:700;">✅ Perlu</td><td>AI perlu tahu kucing tidak hanya satu warna</td></tr>
+ <tr><td>Foto anjing yang jelas (sebagai contoh "bukan kucing")</td><td style="color:var(--green);font-weight:700;">✅ Perlu</td><td>AI butuh contoh negatif agar bisa <em>membedakan</em> kucing dan bukan kucing</td></tr>
+ <tr><td>Foto teks bertulisan "KUCING"</td><td style="color:var(--red);font-weight:700;">❌ Tidak Perlu</td><td>AI mengenali gambar, bukan tulisan label — teks tidak membantu</td></tr>
+ </tbody></table></div>
+ <div class="ib pink"><strong>📌 Prinsip Data Latihan yang Baik</strong>Harus beragam (berbagai sudut, warna, ukuran), harus ada contoh positif (kucing) DAN contoh negatif (bukan kucing), dan harus berlabel dengan benar.</div>
+
+ <h4>Kualitas Data Latihan</h4>
+ <div class="tw"><table><thead><tr><th class="pink-th">Data</th><th class="pink-th">Mendukung / Mengganggu?</th><th class="pink-th">Alasan</th></tr></thead><tbody>
+ <tr><td>Foto kucing jelas, terang, seluruh tubuh terlihat</td><td style="color:var(--green);font-weight:700;">✅ Mendukung</td><td>Data berkualitas tinggi — AI bisa belajar dengan baik</td></tr>
+ <tr><td>Foto sangat buram dan gelap, hampir tidak terlihat</td><td style="color:var(--red);font-weight:700;">❌ Mengganggu</td><td>AI tidak bisa mengenali fitur apa pun dari foto yang buram</td></tr>
+ <tr><td>Foto anjing jelas, dimasukkan ke folder "kucing" tanpa keterangan</td><td style="color:var(--red);font-weight:700;">❌ Mengganggu</td><td>Label salah → AI belajar bahwa anjing = kucing → kesalahan fatal</td></tr>
+ </tbody></table></div>
+
+ <h4>Prinsip GIGO: Garbage In, Garbage Out</h4>
+ <div class="ai-gigo">
+ <div class="ai-gigo-row" style="background:#fef2f2;">
+ <div class="ai-gigo-icon">🗑️</div>
+ <div>
+ <div class="ai-gigo-label" style="color:var(--red);">Garbage IN</div>
+ <div style="font-size:.82rem;">Data salah atau rusak dimasukkan (misal: curah hujan 500 mm padahal harusnya 50 mm)</div>
+ </div>
+ </div>
+ <div class="ai-gigo-row" style="background:#f9fafb;">
+ <div class="ai-gigo-icon">⚙️</div>
+ <div>
+ <div class="ai-gigo-label" style="color:var(--text-muted);">PROSES AI</div>
+ <div style="font-size:.82rem;">AI mengolah data yang masuk apa adanya — tidak bisa mendeteksi sendiri bahwa datanya salah</div>
+ </div>
+ </div>
+ <div class="ai-gigo-row" style="background:#fef2f2;">
+ <div class="ai-gigo-icon">❌</div>
+ <div>
+ <div class="ai-gigo-label" style="color:var(--red);">Garbage OUT</div>
+ <div style="font-size:.82rem;">Rekomendasi AI menjadi tidak akurat atau menyesatkan — karena input datanya sudah salah</div>
+ </div>
+ </div>
+ </div>
+ <div class="ib red"><strong>⚠️ AI tidak bisa otomatis memperbaiki data yang salah!</strong>Jika operator salah input, AI akan tetap memproses data salah itu dan menghasilkan rekomendasi yang keliru. Tanggung jawab akurasi data ada pada manusia.</div>
+
+ <h4>AI untuk Klasifikasi</h4>
+ <p>AI sering digunakan untuk <strong>mengelompokkan (mengklasifikasikan)</strong> objek berdasarkan sifat-sifat yang dapat diamati:</p>
+ <div class="tw"><table><thead><tr><th class="pink-th">Topik</th><th class="pink-th">Objek</th><th class="pink-th">Sifat yang Digunakan AI</th></tr></thead><tbody>
+ <tr><td>Apel merah kecil, Jeruk besar bulat, Pisang kuning panjang</td><td><strong>Warna dan Ukuran</strong> — bukan rasa, harga, atau asal</td></tr>
+ <tr><td>Bola sepak (bulat), Kubus Rubik (kotak), Tabung Kaleng (silinder)</td><td><strong>Bentuk geometris</strong> — bukan berat, harga, atau warna</td></tr>
+ <tr><td>Bola merah besar, Bola biru kecil, Kubus merah besar</td><td><strong>Bentuk bulat / Tidak memiliki sudut</strong> — untuk pisahkan bola dari kubus</td></tr>
+ </tbody></table></div>
+ <div class="ib pink"><strong>💡 AI memilih sifat yang PALING MEMBEDAKAN objek</strong>Untuk memisahkan bola dari kubus, ciri "bulat" dan "tidak bersudut" jauh lebih relevan daripada warna atau ukuran — karena warna/ukuran bisa sama antara bola dan kubus.</div>
+ </div>
+
+ <!-- ETIKA AI -->
+ <div class="cc" id="ai3">
+ <h3 class="pink-h">⚖️ Manusia vs AI — Siapa Lebih Unggul?</h3>
+ <p>AI sangat hebat dalam hal tertentu, tapi manusia tetap unggul dalam hal lain. Penting untuk tahu perbedaannya!</p>
+
+ <div class="tw"><table><thead><tr><th class="pink-th">Kemampuan</th><th class="pink-th">Lebih Unggul</th><th class="pink-th">Alasan</th></tr></thead><tbody>
+ <tr><td>Merasakan kesedihan teman & memberikan dukungan emosional</td><td style="color:var(--blue);font-weight:700;">👤 Manusia</td><td>Empati nyata hanya dimiliki manusia — AI tidak benar-benar "merasakan"</td></tr>
+ <tr><td>Menghitung 1.000 soal perkalian 5 digit dalam &lt;1 detik</td><td style="color:var(--pink);font-weight:700;">🤖 AI</td><td>Kecepatan dan ketelitian komputasi jauh melampaui manusia</td></tr>
+ <tr><td>Mengenali wajah dari database 10 juta foto dalam hitungan detik</td><td style="color:var(--pink);font-weight:700;">🤖 AI</td><td>Pemrosesan data besar dan cepat adalah keunggulan utama AI</td></tr>
+ <tr><td>Memahami konteks budaya & humor yang kompleks</td><td style="color:var(--blue);font-weight:700;">👤 Manusia</td><td>AI bisa salah memahami humor atau konteks yang sangat spesifik</td></tr>
+ <tr><td>Mengambil keputusan moral yang kompleks</td><td style="color:var(--blue);font-weight:700;">👤 Manusia</td><td>Pertimbangan etis mendalam membutuhkan pemahaman nilai manusia</td></tr>
+ </tbody></table></div>
+
+ <div class="ib blue"><strong>💡 Siapa yang lebih tepat memberikan empati kepada Bagas?</strong>Manusia (Zara atau guru) — karena manusia memiliki kemampuan <strong>merasakan dan memahami emosi secara mendalam</strong>. AI belum bisa benar-benar "merasakan" apa yang dialami orang lain.</div>
+
+ <h4>Etika & Bias dalam AI</h4>
+ <p><span class="kt kt-p">Bias AI</span> terjadi ketika data latihan tidak mewakili semua kelompok secara adil, sehingga AI menghasilkan keputusan yang tidak adil.</p>
+
+ <div class="tw"><table><thead><tr><th class="pink-th">Situasi</th><th class="pink-th">Berpotensi Bias?</th><th class="pink-th">Alasan</th></tr></thead><tbody>
+ <tr><td>AI seleksi beasiswa — dilatih HANYA dari data siswa kota besar</td><td style="color:var(--red);font-weight:700;">⚠️ Ya, Berpotensi Bias</td><td>Siswa desa/daerah terpencil dirugikan karena data mereka tidak terwakili</td></tr>
+ <tr><td>AI rekomendasi lagu — dari riwayat lagu yang kamu dengarkan</td><td style="color:var(--amber);font-weight:700;">⚠️ Bisa Bias</td><td>AI hanya merekomendasikan lagu mirip — kamu tidak akan temukan musik baru yang berbeda</td></tr>
+ <tr><td>AI prediksi cuaca — dari ribuan stasiun di seluruh dunia</td><td style="color:var(--green);font-weight:700;">✅ Lebih Adil</td><td>Data sangat beragam dari banyak lokasi berbeda</td></tr>
+ </tbody></table></div>
+
+ <h4>Privasi & Persetujuan (Consent) dalam AI</h4>
+ <p>Saat mengumpulkan data (seperti foto wajah) untuk melatih AI, <strong>harus ada persetujuan dari orang yang fotonya digunakan</strong>.</p>
+ <div class="tw"><table><thead><tr><th class="pink-th">Tindakan</th><th class="pink-th">Etis?</th><th class="pink-th">Alasan</th></tr></thead><tbody>
+ <tr><td>Mengambil foto teman diam-diam dari media sosial TANPA izin</td><td style="color:var(--red);font-weight:700;">❌ Tidak Etis</td><td>Melanggar privasi — foto diambil tanpa persetujuan</td></tr>
+ <tr><td>Menggunakan foto lama teman dari album kelas TANPA memberitahu</td><td style="color:var(--red);font-weight:700;">❌ Tidak Etis</td><td>Tetap melanggar privasi meski fotonya "sudah ada" — tetap harus minta izin</td></tr>
+ <tr><td>Meminta izin langsung kepada setiap teman sebelum menggunakan foto mereka</td><td style="color:var(--green);font-weight:700;">✅ Etis</td><td>Menghormati hak privasi — ada persetujuan yang jelas</td></tr>
+ </tbody></table></div>
+
+ <h4>Etika AI di Sekolah</h4>
+ <div class="tw"><table><thead><tr><th class="pink-th">Penggunaan AI</th><th class="pink-th">Etis?</th><th class="pink-th">Alasan</th></tr></thead><tbody>
+ <tr><td>Menggunakan AI untuk memahami materi yang sulit & mencari contoh soal latihan</td><td style="color:var(--green);font-weight:700;">✅ Etis</td><td>AI digunakan sebagai alat bantu belajar yang positif</td></tr>
+ <tr><td>Menggunakan AI untuk menjawab soal ujian langsung dan menyalinnya saat ujian</td><td style="color:var(--red);font-weight:700;">❌ Tidak Etis</td><td>Ini adalah bentuk mencontek — tidak jujur dan tidak belajar sendiri</td></tr>
+ <tr><td>Menggunakan AI untuk membuat berita bohong tentang calon ketua OSIS</td><td style="color:var(--red);font-weight:700;">❌ Tidak Etis</td><td>Menyebar hoaks = berbahaya dan merugikan orang lain</td></tr>
+ </tbody></table></div>
+
+ <h4>Prinsip Etika AI</h4>
+ <div class="ib pink"><strong>🔑 Prinsip Utama: AI harus meningkatkan kesejahteraan manusia, bukan merugikannya</strong>Jika AI digunakan untuk membuat dan menyebarkan hoaks yang merusak reputasi orang → ini melanggar prinsip dasar etika AI. AI harus dikembangkan dan digunakan untuk kebaikan manusia.</div>
+ </div>
+
+ <!-- DAMPAK AI -->
+ <div class="cc" id="ai4">
+ <h3 class="pink-h">🌍 Dampak AI terhadap Masyarakat</h3>
+ <div class="tw"><table><thead><tr><th class="pink-th">Dampak AI</th><th class="pink-th">Meningkatkan Kesejahteraan / Berpotensi Merugikan</th></tr></thead><tbody>
+ <tr><td>AI membantu dokter mendiagnosis penyakit lebih cepat dan akurat → banyak nyawa terselamatkan</td><td style="color:var(--green);font-weight:700;">✅ Meningkatkan Kesejahteraan</td></tr>
+ <tr><td>Mesin otomatis berbasis AI menggantikan pekerja manusia di pabrik → banyak orang kehilangan pekerjaan</td><td style="color:var(--red);font-weight:700;">⚠️ Berpotensi Merugikan</td></tr>
+ <tr><td>AI digunakan menghasilkan dan menyebarkan hoaks dalam jumlah sangat besar</td><td style="color:var(--red);font-weight:700;">⚠️ Berpotensi Merugikan</td></tr>
+ </tbody></table></div>
+
+ <h4>AI untuk Keselamatan Manusia</h4>
+ <div class="tw"><table><thead><tr><th class="pink-th">Penggunaan AI</th><th class="pink-th">Berkontribusi pada Keselamatan/Kesejahteraan?</th></tr></thead><tbody>
+ <tr><td>AI menganalisis rontgen dan membantu dokter mendeteksi kanker lebih dini</td><td style="color:var(--green);font-weight:700;">✅ Ya — menyelamatkan nyawa</td></tr>
+ <tr><td>Mobil otonom yang mendeteksi pejalan kaki dan mengerem otomatis</td><td style="color:var(--green);font-weight:700;">✅ Ya — mencegah kecelakaan</td></tr>
+ <tr><td>Filter wajah lucu di media sosial</td><td style="color:var(--text-muted);font-weight:700;">➡️ Hiburan — tidak langsung berhubungan dengan keselamatan</td></tr>
+ </tbody></table></div>
+
+ <h4>Cara Bijak Menggunakan AI untuk Belajar</h4>
+ <div class="cg">
+ <div class="cb" style="background:var(--green-light);border:2px solid var(--green);">
+ <h4 style="color:var(--green-dark);margin-top:0;">✅ Cara Bijak</h4>
+ <ul style="font-size:.82rem;">
+ <li>Gunakan AI untuk <strong>mencari informasi awal</strong></li>
+ <li><strong>Baca dan pahami sendiri</strong> hasil dari AI</li>
+ <li>Tulis ulang dengan <strong>kalimatmu sendiri</strong></li>
+ <li>Gunakan AI untuk <strong>mengecek pemahamanmu</strong>, bukan menggantikan belajar</li>
+ </ul>
+ </div>
+ <div class="cb" style="background:var(--red-light);border:2px solid var(--red);">
+ <h4 style="color:var(--red);margin-top:0;">❌ Cara Salah</h4>
+ <ul style="font-size:.82rem;">
+ <li>Meminta AI menuliskan seluruh tugas → salin langsung tanpa membaca</li>
+ <li>Tanya jawaban soal ke AI → hafal tanpa memahami</li>
+ <li>Biarkan AI mengerjakan segalanya agar bisa bermain</li>
+ </ul>
+ </div>
+ </div>
+ <div class="ib pink"><strong>⚠️ Dampak Jangka Panjang Jika Selalu Menyalin AI</strong>Rian yang selalu menyalin jawaban AI tanpa membaca → kemampuan berpikir kritis dan menulisnya akan <strong>menurun drastis</strong> karena tidak pernah berlatih sendiri. Nilai mungkin bagus sementara, tapi kemampuan sesungguhnya tidak berkembang.</div>
+
+ <h4>Empati dalam Penggunaan Teknologi</h4>
+ <p>Saat Cici tidak sengaja membagikan foto Lia dengan filter yang menggelikan ke grup kelas, dan Lia merasa malu — tindakan yang paling tepat adalah:</p>
+ <ul>
+ <li>✅ <strong>Meminta maaf kepada Lia</strong> dengan tulus</li>
+ <li>✅ <strong>Menghapus foto</strong> dari grup</li>
+ <li>✅ Memastikan <strong>Lia tidak merasa dipermalukan</strong></li>
+ <li>❌ Ikut tertawa karena "memang lucu dan tidak sengaja"</li>
+ <li>❌ Menyebarkan foto ke lebih banyak orang</li>
+ <li>❌ Mengatakan Lia "terlalu sensitif"</li>
+ </ul>
+ <div class="ib indigo"><strong>💡 Teknologi bisa menyakiti perasaan orang — meski tidak disengaja</strong>Empati dalam menggunakan teknologi berarti selalu mempertimbangkan bagaimana tindakan digitalmu bisa memengaruhi perasaan orang lain.</div>
+ </div>
+</div><!-- end AI section -->
+
+
+<!-- ═══ RINGKASAN KKA ═══ -->
+<div class="cc" style="border:2px solid var(--cyan);background:var(--cyan-light);">
+ <h3 style="color:var(--cyan-dark);font-size:1.08rem;">📝 Ringkasan Poin Kunci KKA</h3>
+
+ <h4>🧠 Berpikir Komputasional</h4>
+ <ul>
+ <li><strong>Dekomposisi:</strong> Masalah besar → buat daftar semua hal yang perlu dilakukan, baru kerjakan satu per satu</li>
+ <li><strong>Algoritma:</strong> R→Q→T→P→S (siapkan gelas → masukkan serbuk → tuang air → aduk → minum). Urutan salah = gagal</li>
+ <li><strong>Pengenalan Pola:</strong> Kasus 1 & 2 punya pola sama — urutan langkah tetap dan terstruktur</li>
+ <li><strong>Abstraksi:</strong> Dari cerita Pak Tani, yang relevan hanya: kondisi cuaca + jadwal waktu tanam padi</li>
+ <li><strong>Deteksi Error Algoritma:</strong> Langkah 3 (angkat) ada sebelum langkah 4–5 (masak) → menyebabkan kegagalan</li>
+ <li><strong>If-Then benar:</strong> Hujan+petir → hindari pohon ✅. Cerah+sepoi → lari pagi ✅. Mendung → tidak perlu payung ❌. Hujan → berenang di sungai ❌</li>
+ <li><strong>Pola Bilangan:</strong> 2→4→8→16 menggunakan pola ×2 → berikutnya adalah <strong>32</strong></li>
+ <li><strong>Urutan Logis:</strong> Set A (masak nasi) = Logis ✅. Set B (saklar sebelum pasang lampu) = Tidak Logis ❌. Set C (kemeja sebelum kaos dalam) = Tidak Logis ❌</li>
+ <li><strong>Masalah Sistematis vs Subjektif:</strong> Hitung luas = Sistematis. Pilih ketua kelompok = Subjektif. Rapikan kamar = Subjektif</li>
+ </ul>
+
+ <h4>💻 Literasi Digital — KKA</h4>
+ <ul>
+ <li><strong>Formulir online:</strong> Data yang PALING KRITIS = kata sandi email — TIDAK PERNAH boleh diisi di formulir apapun</li>
+ <li><strong>Aplikasi poster:</strong> Canva/PowerPoint + Printer — bukan kalkulator, pemutar video, atau Notepad</li>
+ <li><strong>Dampak gawai:</strong> Gawai untuk belajar (Rena) → prestasi meningkat. Game online larut malam (Doni) → prestasi menurun</li>
+ <li><strong>Kotak Proses IPO:</strong> Keyboard (Input) → <strong>CPU (Proses)</strong> → Monitor (Output)</li>
+ <li><strong>Berbagi file:</strong> Google Classroom / Grup WA Kelas — paling efektif dan aman untuk 30 teman sekaligus</li>
+ <li><strong>Password kuat:</strong> B (Aku@Suka#Belajar7) + C (P@ssw0rd!9x) → keduanya memenuhi 4 kriteria. A (budi123) = lemah</li>
+ <li><strong>Format gambar:</strong> .jpg dan .png = gambar. .doc = teks. Jawab keduanya (PGK)</li>
+ <li><strong>Manfaat internet:</strong> Cari artikel ilmiah ✅. Video call diskusi ✅. Game offline ❌ (bahkan tidak menggunakan internet)</li>
+ <li><strong>Data pribadi:</strong> Nama+Telp orang tua = Sensitif. Alamat rumah = Sensitif. Warna/makanan favorit = Umum</li>
+ <li><strong>Jenis konten:</strong> Blog artikel = Dominan Teks. Album foto = Dominan Gambar. Vlog YouTube = Dominan Video</li>
+ <li><strong>Perilaku online:</strong> Klik link asing = Tidak Aman. Logout di komputer publik = Aman. Bagikan password = Tidak Aman</li>
+ </ul>
+
+ <h4>🤖 Kecerdasan Artifisial — AI</h4>
+ <ul>
+ <li><strong>Identifikasi AI:</strong> YouTube rekomendasi = AI (belajar dari data). Kalkulator & lampu sensor = bukan AI (aturan tetap)</li>
+ <li><strong>AI bijak:</strong> Cari info awal → baca & pahami sendiri → tulis ulang dengan kalimatmu sendiri</li>
+ <li><strong>Dampak salin AI:</strong> Rian selalu salin AI tanpa baca → kemampuan berpikir kritis & menulis menurun jangka panjang</li>
+ <li><strong>Empati:</strong> Manusia (Zara/guru) lebih tepat beri dukungan emosional — AI tidak bisa benar-benar "merasakan"</li>
+ <li><strong>Robot vacuum vs sapu:</strong> Robot vacuum = bisa ambil keputusan mandiri. Sapu biasa = tidak bisa keputusan apapun</li>
+ <li><strong>Etika AI:</strong> AI untuk sebar hoaks = melanggar prinsip AI harus meningkatkan kesejahteraan manusia</li>
+ <li><strong>Empati teknologi:</strong> Cici harus: minta maaf, hapus foto, pastikan Lia tidak merasa dipermalukan</li>
+ <li><strong>Klasifikasi buah:</strong> AI mengelompokkan berdasarkan warna dan ukuran</li>
+ <li><strong>Beda benda geometris:</strong> AI membedakan bola/kubus/tabung berdasarkan bentuk geometris</li>
+ <li><strong>GIGO:</strong> Input salah (500mm bukan 50mm) → output AI tidak akurat. AI tidak bisa deteksi/perbaiki sendiri</li>
+ <li><strong>AI untuk keselamatan:</strong> Deteksi kanker dini ✅ + Mobil otonom cegah kecelakaan ✅. Filter lucu ❌ (bukan keselamatan)</li>
+ <li><strong>Bias AI:</strong> Seleksi beasiswa (data kota besar saja) ✅ bias. Rekomendasi lagu ✅ bisa bias. Prediksi cuaca (data seluruh dunia) = lebih adil</li>
+ <li><strong>Data latihan kucing:</strong> Perlu: foto berbagai sudut ✅, berbagai warna ✅, foto anjing (contoh negatif) ✅. Tidak perlu: foto teks "KUCING" ❌</li>
+ <li><strong>Privasi AI:</strong> Foto tanpa izin dari medsos = tidak etis ❌. Foto album tanpa memberitahu = tidak etis ❌. Minta izin langsung = etis ✅</li>
+ <li><strong>Identifikasi objek bulat:</strong> Kriteria: bentuk bulat/sphere ✅ + tidak memiliki sudut ✅. Warna merah & ukuran besar tidak relevan</li>
+ <li><strong>Keunggulan manusia vs AI:</strong> Empati = Manusia. Hitung super cepat = AI. Kenali wajah jutaan foto = AI</li>
+ <li><strong>Etika AI di sekolah:</strong> Bantu belajar = Etis. Mencontek ujian = Tidak Etis. Buat hoaks OSIS = Tidak Etis</li>
+ <li><strong>Kualitas data latihan:</strong> Foto kucing jelas = Mendukung. Foto buram = Mengganggu. Foto anjing tanpa label = Mengganggu</li>
+ <li><strong>Mesin cerdas vs non-cerdas:</strong> Robot vacuum = AI (Cerdas). Penggaris = Non-Cerdas. Lampu sensor gerak sederhana = Non-Cerdas</li>
+ <li><strong>Dampak AI:</strong> Diagnosa penyakit = Meningkatkan Kesejahteraan. Otomatisasi gantikan pekerja = Merugikan. Penyebar hoaks = Merugikan</li>
+ </ul>
+</div>
+
+</main>
+</div><!-- end tab-kka -->
+
+<footer class="footer">SD Muhammadiyah 01 Kukusan · Materi TIK & KKA Kelas 6 · Tahun Pelajaran 2025/2026 💻🤖</footer>
+
+<script>
+ function switchTab(name) {
+ // Update buttons
+ document.getElementById('btn-tik').className = 'tab-btn' + (name === 'tik' ? ' active-tik' : '');
+ document.getElementById('btn-kka').className = 'tab-btn' + (name === 'kka' ? ' active-kka' : '');
+ // Update content
+ document.querySelectorAll('.tab-content').forEach(function(el) {
+ el.classList.remove('active');
+ });
+ document.getElementById('tab-' + name).classList.add('active');
+ // Scroll to top of content
+ window.scrollTo({ top: 0, behavior: 'smooth' });
+ }
+</script>
 </body>
 </html>
