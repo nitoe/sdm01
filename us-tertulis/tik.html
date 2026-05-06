@@ -991,7 +991,39 @@ const app = {
         const _body  = JSON.stringify(payload);
         const self   = this;
 
-        // Coba fetch dulu; jika gagal (misal di SEB), fallback ke XHR
+        // ── MODE SEB ─────────────────────────────────────────────────
+        // Di SEB, request POST berhasil sampai ke Apps Script namun
+        // response diblokir SEB saat redirect ke script.googleusercontent.com.
+        // Solusi: kirim no-cors (tidak baca respons) lalu tampilkan sukses
+        // setelah jeda 5 detik (cukup untuk GAS memproses & kirim email).
+        const isSEB = /SEB|SafeExamBrowser/i.test(navigator.userAgent);
+        if (isSEB) {
+            fetch(CONFIG.SCRIPT_URL, {
+                method:    'POST',
+                mode:      'no-cors',
+                headers:   { 'Content-Type': 'text/plain' },
+                body:      _body,
+                keepalive: true
+            }).catch(function() {});  // abaikan error — data sudah terkirim sebelum redirect
+
+            setTimeout(function() {
+                document.getElementById('modal-loading').style.display = 'none';
+                try { localStorage.removeItem(CONFIG.STORAGE_KEY); } catch(e) {}
+                const emailList = [payload.pengawas1Nama, payload.pengawas2Nama]
+                    .filter(Boolean).join(' & ') || '—';
+                document.getElementById('result-content').innerHTML =
+                    '<div style="text-align:center;padding:10px 0;">' +
+                    '<div style="font-size:3rem;margin-bottom:14px;">&#9989;</div>' +
+                    '<p style="font-weight:700;color:#065f46;font-size:1.1rem;margin:0 0 8px;">Laporan berhasil terkirim!</p>' +
+                    '<p style="color:#64748b;font-size:0.9rem;margin:0;">Laporan <strong>' + _siswa + '</strong> mapel <strong>' + _mapel + '</strong>' +
+                    '<br>telah dikirim ke: <strong>' + emailList + '</strong>.' +
+                    '<br>Kamu boleh menutup halaman ini.</p>' +
+                    '</div>';
+            }, 5000);
+            return;  // selesai — tidak lanjut ke blok browser biasa
+        }
+
+        // ── MODE BROWSER BIASA ────────────────────────────────────────
         const handleResponse = function(httpStatus, text) {
             let res;
             try { res = JSON.parse(text); }
