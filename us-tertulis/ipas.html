@@ -947,6 +947,10 @@ const app = {
                     </div>`;
         });
 
+        const desc = nts.length === 0
+            ? "Nilai " + final + " — Semua elemen mencapai ketuntasan."
+            : "Nilai " + final + " — Perlu bimbingan pada: " + nts.join(", ") + ".";
+
         const payload = {
             action: "submit_exam", mapel: "IPAS",
             nama: this.session.nama, kelas: this.session.kelas,
