@@ -722,6 +722,9 @@ const app = {
             cht+=`<div class="chart-row"><div class="chart-lbl">${c}</div><div class="chart-track"><div class="chart-fill" style="width:${p}%;background:${p>=70?'#16a34a':'#dc2626'}"></div></div><div class="chart-val">${p}%</div></div>`;
         });
 
+        const desc = nts.length === 0
+            ? "Nilai " + final + " — Semua elemen mencapai ketuntasan."
+            : "Nilai " + final + " — Perlu bimbingan pada: " + nts.join(", ") + ".";
         const payload = {
             action:"submit_exam", mapel:"Bahasa Sunda",
             nama:this.session.nama, kelas:this.session.kelas,
@@ -736,25 +739,169 @@ const app = {
         this._sendPayload(payload);
     },
 
-        _sendPayload: function(payload) {
+    _lastLog: null,
+
+    _sendPayload: function(payload) {
         this._lastPayload = payload;
         document.getElementById('modal-loading').style.display = 'flex';
-        document.getElementById('result-content').innerHTML = '<p style="text-align:center;color:#64748b;">Sedang mengirim laporan...</p>';
-        fetch(CONFIG.SCRIPT_URL, { method:'POST', redirect:'follow', headers:{'Content-Type':'text/plain'}, body:JSON.stringify(payload) })
-        .then(r => r.json().catch(() => ({ status: 'success' })))
-        .then(res => {
+        document.getElementById('result-content').innerHTML =
+            '<p style="text-align:center;color:#64748b;">Sedang mengirim laporan...</p>';
+
+        const _ts    = new Date().toLocaleTimeString('id-ID');
+        const _siswa = payload.nama + ' (' + payload.kelas + ')';
+        const _mapel = payload.mapel || '—';
+        const _body  = JSON.stringify(payload);
+        const self   = this;
+
+        // ── MODE SEB ─────────────────────────────────────────────────
+        const isSEB = /SEB|SafeExamBrowser/i.test(navigator.userAgent);
+        if (isSEB) {
+            fetch(CONFIG.SCRIPT_URL, {
+                method:    'POST',
+                mode:      'no-cors',
+                headers:   { 'Content-Type': 'text/plain' },
+                body:      _body,
+                keepalive: true
+            }).catch(function() {});
+            setTimeout(function() {
+                document.getElementById('modal-loading').style.display = 'none';
+                try { localStorage.removeItem(CONFIG.STORAGE_KEY); } catch(e) {}
+                const emailList = [payload.pengawas1Nama, payload.pengawas2Nama]
+                    .filter(Boolean).join(' & ') || '—';
+                document.getElementById('result-content').innerHTML =
+                    '<div style="text-align:center;padding:10px 0;">' +
+                    '<div style="font-size:3rem;margin-bottom:14px;">&#9989;</div>' +
+                    '<p style="font-weight:700;color:#065f46;font-size:1.1rem;margin:0 0 8px;">Laporan berhasil terkirim!</p>' +
+                    '<p style="color:#64748b;font-size:0.9rem;margin:0;">Laporan <strong>' + _siswa + '</strong> mapel <strong>' + _mapel + '</strong>' +
+                    '<br>telah dikirim ke: <strong>' + emailList + '</strong>.' +
+                    '<br>Kamu boleh menutup halaman ini.</p>' +
+                    '</div>';
+            }, 5000);
+            return;
+        }
+
+        // ── MODE BROWSER BIASA ────────────────────────────────────────
+        const handleResponse = function(httpStatus, text) {
+            let res;
+            try { res = JSON.parse(text); }
+            catch(e) { res = { status: 'error', msg: 'Server tidak mengembalikan JSON yang valid.' }; }
+
             document.getElementById('modal-loading').style.display = 'none';
             try { localStorage.removeItem(CONFIG.STORAGE_KEY); } catch(e) {}
-            const ok = res.status === 'success' || res.status === 'partial';
-            document.getElementById('result-content').innerHTML = ok
-                ? '<div style="text-align:center;padding:10px 0;"><div style="font-size:3rem;margin-bottom:14px;">&#9989;</div><p style="font-weight:700;color:#065f46;font-size:1.1rem;margin:0 0 8px;">Laporan berhasil terkirim!</p><p style="color:#64748b;font-size:0.9rem;margin:0;">Guru pengawas akan segera menerima laporan ujianmu.<br>Kamu boleh menutup halaman ini.</p></div>'
-                : '<div style="text-align:center;padding:10px 0;"><div style="font-size:3rem;margin-bottom:14px;">&#9888;</div><p style="font-weight:700;color:#b45309;font-size:1.05rem;margin:0 0 8px;">Pengiriman sebagian gagal</p><button class="btn btn-danger" onclick="app._sendPayload(app._lastPayload)">&#128260; Coba Lagi</button></div>';
-        })
-        .catch(() => {
+
+            if (res.status === 'success') {
+                const emailList = [payload.pengawas1Nama, payload.pengawas2Nama]
+                    .filter(Boolean).join(' & ') || '—';
+                document.getElementById('result-content').innerHTML =
+                    '<div style="text-align:center;padding:10px 0;">' +
+                    '<div style="font-size:3rem;margin-bottom:14px;">&#9989;</div>' +
+                    '<p style="font-weight:700;color:#065f46;font-size:1.1rem;margin:0 0 8px;">Laporan berhasil terkirim!</p>' +
+                    '<p style="color:#64748b;font-size:0.9rem;margin:0;">Laporan <strong>' + _siswa + '</strong> mapel <strong>' + _mapel + '</strong><br>telah dikirim ke: <strong>' + emailList + '</strong>.<br>Kamu boleh menutup halaman ini.</p>' +
+                    '</div>';
+            } else if (res.status === 'partial') {
+                const successList = Array.isArray(res.sent)
+                    ? res.sent.map(function(e){ return '<span style="color:#16a34a;">&#10003; ' + e + '</span>'; }).join('<br>')
+                    : '<span style="color:#64748b;">tidak ada info</span>';
+                const failList = Array.isArray(res.failed)
+                    ? res.failed.map(function(e){ return '<span style="color:#dc2626;">&#10007; ' + e + '</span>'; }).join('<br>')
+                    : '<span style="color:#64748b;">' + (res.msg || 'tidak ada detail') + '</span>';
+                self._lastLog = ['=== LOG PENGIRIMAN ===','Waktu  : '+_ts,'Siswa  : '+_siswa,'Mapel  : '+_mapel,'Status : PARTIAL','HTTP   : '+httpStatus,'Berhasil: '+(Array.isArray(res.sent)?res.sent.join(', '):'—'),'Gagal  : '+(Array.isArray(res.failed)?res.failed.join(', '):(res.msg||'—'))].join('\n');
+                document.getElementById('result-content').innerHTML =
+                    '<div style="padding:10px 0;">' +
+                    '<div style="text-align:center;font-size:2.5rem;margin-bottom:12px;">&#9888;&#65039;</div>' +
+                    '<p style="font-weight:700;color:#b45309;font-size:1.05rem;text-align:center;margin:0 0 16px;">Pengiriman sebagian gagal</p>' +
+                    '<div style="background:#fef9c3;border:1px solid #fde047;border-radius:8px;padding:14px;font-size:0.85rem;line-height:1.8;margin-bottom:14px;">' +
+                    '<strong>Email berhasil:</strong><br>' + successList +
+                    '<hr style="border:none;border-top:1px solid #fde047;margin:10px 0;">' +
+                    '<strong>Email gagal:</strong><br>' + failList +
+                    '</div>' +
+                    '<div style="text-align:center;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">' +
+                    '<button class="btn btn-danger" onclick="app._sendPayload(app._lastPayload)">&#128260; Coba Lagi</button>' +
+                    '<button class="btn btn-outline" style="font-size:0.82rem;" onclick="app._copyLog()">&#128203; Salin Log</button>' +
+                    '</div></div>';
+            } else {
+                const preview = text ? (text.length > 300 ? text.substring(0, 300) + '…' : text) : '(kosong)';
+                self._lastLog = ['=== LOG ERROR ===','Waktu       : '+_ts,'Siswa       : '+_siswa,'Mapel       : '+_mapel,'Status HTTP : '+httpStatus,'Pesan server: '+(res.msg||'—'),'Respons     : '+preview].join('\n');
+                document.getElementById('result-content').innerHTML =
+                    '<div style="padding:10px 0;">' +
+                    '<div style="text-align:center;font-size:2.5rem;margin-bottom:12px;">&#10060;</div>' +
+                    '<p style="font-weight:700;color:#dc2626;font-size:1.05rem;text-align:center;margin:0 0 12px;">Pengiriman gagal</p>' +
+                    '<div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:12px;font-size:0.82rem;color:#7f1d1d;font-family:monospace;white-space:pre-wrap;text-align:left;margin-bottom:14px;max-height:130px;overflow-y:auto;">' +
+                    'HTTP ' + httpStatus + ' · ' + _ts + '\n' +
+                    'Pesan: ' + (res.msg || '—') + '\n' +
+                    'Respons: ' + preview +
+                    '</div>' +
+                    '<div style="text-align:center;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">' +
+                    '<button class="btn btn-danger" onclick="app._sendPayload(app._lastPayload)">&#128260; Coba Lagi</button>' +
+                    '<button class="btn btn-outline" style="font-size:0.82rem;" onclick="app._copyLog()">&#128203; Salin Log</button>' +
+                    '</div></div>';
+            }
+        };
+
+        const handleError = function(method, errMsg) {
+            self._lastLog = ['=== LOG NETWORK ERROR ===','Waktu  : '+_ts,'Siswa  : '+_siswa,'Mapel  : '+_mapel,'Metode : '+method,'Error  : '+errMsg].join('\n');
             document.getElementById('modal-loading').style.display = 'none';
-            document.getElementById('result-content').innerHTML = '<div style="text-align:center;padding:10px 0;"><div style="font-size:3rem;margin-bottom:14px;">&#10060;</div><p style="font-weight:700;color:#dc2626;font-size:1.05rem;margin:0 0 8px;">Gagal terhubung ke server</p><button class="btn btn-danger" onclick="app._sendPayload(app._lastPayload)">&#128260; Coba Lagi</button></div>';
-        });
+            document.getElementById('result-content').innerHTML =
+                '<div style="padding:10px 0;">' +
+                '<div style="text-align:center;font-size:2.5rem;margin-bottom:12px;">&#128244;</div>' +
+                '<p style="font-weight:700;color:#dc2626;font-size:1.05rem;text-align:center;margin:0 0 12px;">Gagal terhubung ke server</p>' +
+                '<div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:12px;font-size:0.82rem;color:#7f1d1d;font-family:monospace;white-space:pre-wrap;text-align:left;margin-bottom:14px;">' +
+                '[' + method + '] ' + errMsg +
+                '</div>' +
+                '<p style="color:#64748b;font-size:0.83rem;text-align:center;margin:0 0 14px;">Pastikan internet aktif dan URL Apps Script ada di whitelist SEB.<br>Salin log dan hubungi admin.</p>' +
+                '<div style="text-align:center;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">' +
+                '<button class="btn btn-danger" onclick="app._sendPayload(app._lastPayload)">&#128260; Coba Lagi</button>' +
+                '<button class="btn btn-outline" style="font-size:0.82rem;" onclick="app._copyLog()">&#128203; Salin Log</button>' +
+                '</div></div>';
+        };
+
+        const tryFetch = function() {
+            return fetch(CONFIG.SCRIPT_URL, {
+                method: 'POST', redirect: 'follow',
+                headers: { 'Content-Type': 'text/plain' },
+                body: _body
+            })
+            .then(function(r) {
+                const status = r.status;
+                return r.text().then(function(t) { return { status: status, text: t }; });
+            })
+            .then(function(r) { handleResponse(r.status, r.text); });
+        };
+
+        const tryXHR = function() {
+            return new Promise(function(resolve, reject) {
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', CONFIG.SCRIPT_URL, true);
+                xhr.setRequestHeader('Content-Type', 'text/plain');
+                xhr.timeout = 30000;
+                xhr.onload    = function() { handleResponse(xhr.status, xhr.responseText); resolve(); };
+                xhr.onerror   = function() { reject(new Error('XHR network error')); };
+                xhr.ontimeout = function() { reject(new Error('XHR timeout (30 detik)')); };
+                xhr.send(_body);
+            });
+        };
+
+        tryFetch()
+            .catch(function(fetchErr) {
+                return tryXHR()
+                    .catch(function(xhrErr) {
+                        handleError('fetch+XHR', fetchErr.message + ' / ' + xhrErr.message);
+                    });
+            });
     },
+
+    _copyLog: function() {
+        const log = this._lastLog || '(tidak ada log tersedia)';
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(log).then(
+                function() { alert('✅ Log berhasil disalin! Kirimkan ke pengawas atau admin.'); },
+                function() { prompt('Salin teks berikut secara manual:', log); }
+            );
+        } else {
+            prompt('Salin teks berikut secara manual:', log);
+        }
+    },
+
     changeFont: function(dir) {
         const next = this._fontIdx + dir;
         if (next < 0 || next >= this._fontSteps.length) return;
