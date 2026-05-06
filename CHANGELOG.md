@@ -172,3 +172,68 @@ File yang **perlu dicek**: semua file ujian yang belum dipatch Sesi 5.
 ## ✅ Yang Tidak Berubah
 - Semua soal, kunci jawaban, dan logika penilaian tidak disentuh.
 - Struktur `summ`, `nts`, dan `final` tidak berubah — hanya penambahan satu blok `const desc`.
+
+---
+
+# 📋 Catatan Perubahan — Sesi 7
+**Tanggal:** 7 Mei 2026
+**File yang diubah:** `bahasa-arab.html`, `pjok.html`, `pendidikan-pancasila.html`, `bahasa-inggris.html`, `bahasa-indonesia.html`
+**Status:** Selesai ✅
+
+---
+
+## 🐛 Bug yang Diperbaiki
+
+### Bug 7 — `TypeError: Cannot read properties of undefined (reading 'length')` saat halaman dimuat
+**File:** `bahasa-arab.html` (dikonfirmasi); file lain perlu dicek
+**Gejala:** Error muncul di console browser sejak halaman pertama dibuka, sebelum siswa melakukan apapun. Fungsi `changeFont` yang dipanggil dari `init()` mengakses `this._fontSteps.length`, namun `_fontSteps` tidak pernah dideklarasikan sebagai properti awal objek `app`.
+
+**Akar masalah:**
+Properti `_fontSteps`, `_fontIdx`, `_lastPayload`, dan `_lastLog` digunakan di dalam method-method `app`, namun tidak didaftarkan sebagai properti di bagian atas definisi objek `app`. Di file-file lain properti ini sudah ada; `bahasa-arab.html` terlewat karena strukturnya sedikit berbeda.
+
+**Perbaikan:**
+Tambahkan empat baris berikut di bagian atas objek `app`, setelah `timerInt: null,`:
+```javascript
+_fontSteps: [82, 90, 100, 111, 122, 135],
+_fontIdx: 2,
+_lastPayload: null,
+_lastLog: null,
+```
+
+**Catatan untuk patch berikutnya:** Saat mengerjakan file baru, pastikan keempat properti ini sudah ada di definisi awal objek `app`. Cek cepat: `grep -c '_fontSteps\s*:' namafile.html` — hasilnya harus ≥ 1.
+
+---
+
+## ✅ Patch Sesi 4+5 Diterapkan ke Sisa File
+
+File-file berikut menerima patch `_sendPayload` lengkap (Sesi 4 + Sesi 5) dalam sesi ini:
+
+| File | Kondisi Sebelum | Tindakan |
+|---|---|---|
+| `pjok.html` | Versi lama (bug `.catch → success`) | Full patch Sesi 4+5 |
+| `pendidikan-pancasila.html` | Versi antara Sesi 3 (tanpa SEB detection) | Patch Sesi 4+5* |
+| `bahasa-inggris.html` | Versi antara Sesi 3 (tanpa SEB detection) | Patch Sesi 4+5 |
+| `bahasa-indonesia.html` | Versi lama (bug `.catch → success`) | Full patch Sesi 4+5 |
+| `kka.html` | Sudah lengkap dari sesi sebelumnya | Tidak diubah |
+
+*`pendidikan-pancasila.html` memiliki struktur unik: `_sendPayload` adalah method terakhir di objek `app` tanpa `changeFont` sesudahnya. Patch menggunakan titik akhir berbeda (`};\n\nwindow.onload`).
+
+---
+
+## ✅ Status Akhir Seluruh File Ujian
+
+Semua 14 file ujian di `us-tertulis/` kini telah menerima seluruh perbaikan dari Sesi 1–7:
+
+```
+al-islam.html ✅        bahasa-arab.html ✅      bahasa-indonesia.html ✅
+bahasa-inggris.html ✅  bahasa-sunda.html ✅     ipas.html ✅
+kka.html ✅             kmdy.html ✅             matematika.html ✅
+pendidikan-pancasila.html ✅  pjok.html ✅       seni-budaya.html ✅
+tik.html ✅             kka.html ✅
+```
+
+---
+
+## ✅ Yang Tidak Berubah
+- Semua soal, kunci jawaban, dan logika penilaian tidak disentuh di seluruh file.
+- PIN hash, daftar pengawas, URL Apps Script, dan `STORAGE_KEY` tetap sama di semua file.
