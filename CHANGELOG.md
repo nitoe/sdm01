@@ -117,3 +117,58 @@ matematika.html, pendidikan-pancasila.html, pjok.html,
 seni-budaya.html, bahasa-inggris.html
 ```
 Prioritas pertama: `ipas.html` dan `kka.html`.
+
+---
+
+# 📋 Catatan Perubahan — Sesi 6
+**Tanggal:** 6 Mei 2026
+**File yang diubah:** `ipas.html`
+**Status:** Selesai ✅
+
+---
+
+## 🐛 Bug yang Diperbaiki
+
+### Bug 6 — `ReferenceError: desc is not defined` saat submit ujian
+**File:** `ipas.html` — perlu dicek di semua file ujian lainnya sebelum patch
+**Gejala:** Ujian tidak dapat diselesaikan. Di SEB, pengiriman berhenti tanpa pesan error. Di browser biasa, console menampilkan `Uncaught ReferenceError: desc is not defined at Object.submitExam (ipas.html:953:37)`.
+
+**Akar masalah:**
+Variabel `desc` digunakan di baris `deskripsi: desc` dalam objek `payload` di fungsi `submitExam`, namun tidak pernah didefinisikan di dalam fungsi tersebut. Bug ini sudah ada di file sumber sebelum patch Sesi 4 maupun Sesi 5 — bukan akibat perubahan sebelumnya. Array `nts` (daftar elemen yang belum tuntas) sudah dihitung dengan benar di atasnya, tetapi baris yang mengubah `nts` menjadi string deskripsi tidak ada.
+
+**Perbaikan:**
+Tambahkan definisi `desc` tepat setelah blok `catOrder.forEach` selesai dan sebelum `const payload`:
+
+```javascript
+const desc = nts.length === 0
+    ? "Nilai " + final + " — Semua elemen mencapai ketuntasan."
+    : "Nilai " + final + " — Perlu bimbingan pada: " + nts.join(", ") + ".";
+```
+
+---
+
+## ⚠️ Catatan Penting untuk Patch File Berikutnya
+Sebelum menerapkan patch Sesi 5 ke file ujian lain, **periksa terlebih dahulu** apakah variabel `desc` sudah terdefinisi di fungsi `submitExam` masing-masing file.
+
+Cara cek cepat — cari dua baris ini dan pastikan keduanya ada:
+```
+nts.push(...)        ← nts diisi
+const desc = ...     ← desc didefinisikan dari nts
+deskripsi: desc,     ← desc dipakai di payload
+```
+
+Jika `const desc` tidak ditemukan, tambahkan baris berikut (sesuaikan teks label elemen dengan mapel yang bersangkutan) tepat sebelum `const payload`:
+```javascript
+const desc = nts.length === 0
+    ? "Nilai " + final + " — Semua elemen mencapai ketuntasan."
+    : "Nilai " + final + " — Perlu bimbingan pada: " + nts.join(", ") + ".";
+```
+
+File yang **sudah terkonfirmasi** memiliki `desc`: `tik.html`
+File yang **perlu dicek**: semua file ujian yang belum dipatch Sesi 5.
+
+---
+
+## ✅ Yang Tidak Berubah
+- Semua soal, kunci jawaban, dan logika penilaian tidak disentuh.
+- Struktur `summ`, `nts`, dan `final` tidak berubah — hanya penambahan satu blok `const desc`.
