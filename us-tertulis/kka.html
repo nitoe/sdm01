@@ -528,17 +528,25 @@ const app = {
         document.getElementById('result-content').innerHTML =
             '<p style="text-align:center;color:#64748b;">Sedang mengirim laporan...</p>';
 
-        const _ts    = new Date().toLocaleTimeString('id-ID');
-        const _siswa = payload.nama + ' (' + payload.kelas + ')';
-        const _mapel = payload.mapel || '—';
-        const _body  = JSON.stringify(payload);
-        const self   = this;
+        let _httpStatus = '?';
+        let _rawText    = '';
+        const _ts       = new Date().toLocaleTimeString('id-ID');
+        const _siswa    = payload.nama + ' (' + payload.kelas + ')';
+        const _mapel    = payload.mapel || CONFIG.MAPEL || '—';
 
-        // Coba fetch dulu; jika gagal (misal di SEB), fallback ke XHR
-        const handleResponse = function(httpStatus, text) {
+        fetch(CONFIG.SCRIPT_URL, {
+            method: 'POST', redirect: 'follow',
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify(payload)
+        })
+        .then(r => { _httpStatus = r.status; return r.text(); })
+        .then(text => {
+            _rawText = text;
             let res;
             try { res = JSON.parse(text); }
-            catch(e) { res = { status: 'error', msg: 'Server tidak mengembalikan JSON yang valid.' }; }
+            catch(e) {
+                res = { status: 'error', msg: 'Server tidak mengembalikan JSON yang valid.' };
+            }
 
             document.getElementById('modal-loading').style.display = 'none';
             try { localStorage.removeItem(CONFIG.STORAGE_KEY); } catch(e) {}
@@ -555,12 +563,26 @@ const app = {
 
             } else if (res.status === 'partial') {
                 const successList = Array.isArray(res.sent)
-                    ? res.sent.map(function(e){ return '<span style="color:#16a34a;">&#10003; ' + e + '</span>'; }).join('<br>')
+                    ? res.sent.map(e => '<span style="color:#16a34a;">&#10003; ' + e + '</span>').join('<br>')
                     : '<span style="color:#64748b;">tidak ada info</span>';
                 const failList = Array.isArray(res.failed)
-                    ? res.failed.map(function(e){ return '<span style="color:#dc2626;">&#10007; ' + e + '</span>'; }).join('<br>')
+                    ? res.failed.map(e => '<span style="color:#dc2626;">&#10007; ' + e + '</span>').join('<br>')
                     : '<span style="color:#64748b;">' + (res.msg || 'tidak ada detail') + '</span>';
-                self._lastLog = ['=== LOG PENGIRIMAN ===','Waktu  : '+_ts,'Siswa  : '+_siswa,'Mapel  : '+_mapel,'Status : PARTIAL','HTTP   : '+httpStatus,'Berhasil: '+(Array.isArray(res.sent)?res.sent.join(', '):'—'),'Gagal  : '+(Array.isArray(res.failed)?res.failed.join(', '):(res.msg||'—'))].join('\n');
+                const logText = [
+                    '=== LOG PENGIRIMAN ===',
+                    'Waktu  : ' + _ts,
+                    'Siswa  : ' + _siswa,
+                    'Mapel  : ' + _mapel,
+                    'Status : PARTIAL (sebagian gagal)',
+                    'HTTP   : ' + _httpStatus,
+                    '--- Berhasil ---',
+                    (Array.isArray(res.sent) ? res.sent.join(', ') : '—'),
+                    '--- Gagal ---',
+                    (Array.isArray(res.failed) ? res.failed.join(', ') : (res.msg || '—')),
+                    '--- Pesan server ---',
+                    res.msg || '—'
+                ].join('\n');
+                this._lastLog = logText;
                 document.getElementById('result-content').innerHTML =
                     '<div style="padding:10px 0;">' +
                     '<div style="text-align:center;font-size:2.5rem;margin-bottom:12px;">&#9888;&#65039;</div>' +
@@ -576,14 +598,27 @@ const app = {
                     '</div></div>';
 
             } else {
-                const preview = text ? (text.length > 300 ? text.substring(0, 300) + '…' : text) : '(kosong)';
-                self._lastLog = ['=== LOG ERROR ===','Waktu       : '+_ts,'Siswa       : '+_siswa,'Mapel       : '+_mapel,'Status HTTP : '+httpStatus,'Pesan server: '+(res.msg||'—'),'Respons     : '+preview].join('\n');
+                const preview = _rawText
+                    ? (_rawText.length > 300 ? _rawText.substring(0, 300) + '…' : _rawText)
+                    : '(kosong)';
+                const logText = [
+                    '=== LOG ERROR PENGIRIMAN ===',
+                    'Waktu       : ' + _ts,
+                    'Siswa       : ' + _siswa,
+                    'Mapel       : ' + _mapel,
+                    'Status HTTP : ' + _httpStatus,
+                    'Status JSON : ' + (res.status || '—'),
+                    'Pesan server: ' + (res.msg || '—'),
+                    '--- Respons mentah (300 kar pertama) ---',
+                    preview
+                ].join('\n');
+                this._lastLog = logText;
                 document.getElementById('result-content').innerHTML =
                     '<div style="padding:10px 0;">' +
                     '<div style="text-align:center;font-size:2.5rem;margin-bottom:12px;">&#10060;</div>' +
                     '<p style="font-weight:700;color:#dc2626;font-size:1.05rem;text-align:center;margin:0 0 12px;">Pengiriman gagal</p>' +
                     '<div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:12px;font-size:0.82rem;color:#7f1d1d;font-family:monospace;white-space:pre-wrap;text-align:left;margin-bottom:14px;max-height:130px;overflow-y:auto;">' +
-                    'HTTP ' + httpStatus + ' · ' + _ts + '\n' +
+                    'HTTP ' + _httpStatus + ' · ' + _ts + '\n' +
                     'Pesan: ' + (res.msg || '—') + '\n' +
                     'Respons: ' + preview +
                     '</div>' +
@@ -592,69 +627,39 @@ const app = {
                     '<button class="btn btn-outline" style="font-size:0.82rem;" onclick="app._copyLog()">&#128203; Salin Log</button>' +
                     '</div></div>';
             }
-        };
-
-        const handleError = function(method, errMsg) {
-            self._lastLog = ['=== LOG NETWORK ERROR ===','Waktu  : '+_ts,'Siswa  : '+_siswa,'Mapel  : '+_mapel,'Metode : '+method,'Error  : '+errMsg].join('\n');
+        })
+        .catch(err => {
+            const logText = [
+                '=== LOG NETWORK ERROR ===',
+                'Waktu   : ' + _ts,
+                'Siswa   : ' + _siswa,
+                'Mapel   : ' + _mapel,
+                'Error JS: ' + (err && err.message ? err.message : String(err)),
+                'HTTP    : ' + _httpStatus
+            ].join('\n');
+            this._lastLog = logText;
             document.getElementById('modal-loading').style.display = 'none';
             document.getElementById('result-content').innerHTML =
                 '<div style="padding:10px 0;">' +
                 '<div style="text-align:center;font-size:2.5rem;margin-bottom:12px;">&#128244;</div>' +
                 '<p style="font-weight:700;color:#dc2626;font-size:1.05rem;text-align:center;margin:0 0 12px;">Gagal terhubung ke server</p>' +
                 '<div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:12px;font-size:0.82rem;color:#7f1d1d;font-family:monospace;white-space:pre-wrap;text-align:left;margin-bottom:14px;">' +
-                '[' + method + '] ' + errMsg +
+                (err && err.message ? err.message : 'Network error') +
                 '</div>' +
-                '<p style="color:#64748b;font-size:0.83rem;text-align:center;margin:0 0 14px;">Pastikan internet aktif dan URL Apps Script ada di whitelist SEB.<br>Salin log dan hubungi admin.</p>' +
+                '<p style="color:#64748b;font-size:0.83rem;text-align:center;margin:0 0 14px;">Pastikan internet aktif. Jika sudah aktif namun tetap gagal,<br>salin log dan hubungi pengawas/admin.</p>' +
                 '<div style="text-align:center;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">' +
                 '<button class="btn btn-danger" onclick="app._sendPayload(app._lastPayload)">&#128260; Coba Lagi</button>' +
                 '<button class="btn btn-outline" style="font-size:0.82rem;" onclick="app._copyLog()">&#128203; Salin Log</button>' +
                 '</div></div>';
-        };
-
-        // Metode 1: fetch (modern, dipakai di browser biasa)
-        const tryFetch = function() {
-            return fetch(CONFIG.SCRIPT_URL, {
-                method: 'POST', redirect: 'follow',
-                headers: { 'Content-Type': 'text/plain' },
-                body: _body
-            })
-            .then(function(r) {
-                const status = r.status;
-                return r.text().then(function(t) { return { status: status, text: t }; });
-            })
-            .then(function(r) { handleResponse(r.status, r.text); });
-        };
-
-        // Metode 2: XMLHttpRequest (fallback untuk SEB yang memblokir fetch)
-        const tryXHR = function() {
-            return new Promise(function(resolve, reject) {
-                const xhr = new XMLHttpRequest();
-                xhr.open('POST', CONFIG.SCRIPT_URL, true);
-                xhr.setRequestHeader('Content-Type', 'text/plain');
-                xhr.timeout = 30000;
-                xhr.onload  = function() { handleResponse(xhr.status, xhr.responseText); resolve(); };
-                xhr.onerror = function() { reject(new Error('XHR network error')); };
-                xhr.ontimeout = function() { reject(new Error('XHR timeout (30 detik)')); };
-                xhr.send(_body);
-            });
-        };
-
-        tryFetch()
-            .catch(function(fetchErr) {
-                // fetch gagal → coba XHR sebelum menyerah
-                return tryXHR()
-                    .catch(function(xhrErr) {
-                        handleError('fetch+XHR', fetchErr.message + ' / ' + xhrErr.message);
-                    });
-            });
+        });
     },
 
     _copyLog: function() {
         const log = this._lastLog || '(tidak ada log tersedia)';
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(log).then(
-                function() { alert('✅ Log berhasil disalin! Kirimkan ke pengawas atau admin.'); },
-                function() { prompt('Salin teks berikut secara manual:', log); }
+                () => alert('✅ Log berhasil disalin! Kirimkan ke pengawas atau admin.'),
+                () => prompt('Salin teks berikut secara manual:', log)
             );
         } else {
             prompt('Salin teks berikut secara manual:', log);
