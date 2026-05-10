@@ -629,50 +629,47 @@ const app = {
 
     showSlide(id) { document.querySelectorAll('.slide').forEach(e=>e.classList.remove('active')); document.getElementById('slide-'+id).classList.add('active'); },
 
-    renderQuestions() {
-        const box = document.getElementById('quiz-container');
-        let fullHtml = "";
-        QUESTIONS.forEach((q, i) => {
-            // Catatan: q.q sudah mengandung nomor soal (mis. "1. Tempat nu…"),
-            // jadi TIDAK ditambahkan prefix ${i+1}. lagi untuk menghindari penomoran ganda.
-            let h = `<div id="q-item-${i}" class="question-item" style="display:none;"><div class="tag-cat">${q.cat}</div>${q.stim || ""}<div class="q-text">${q.q}</div>`;
-            if (q.type === 'pg') {
-                q.opt.forEach((o, oi) => h += `<label class="opt-label"><input type="radio" name="ans_${q.id}" value="${oi}" onchange="app.saveAns(${q.id},${oi})"> ${o}</label>`);
-            } else if (q.type === 'pgk') {
-                h += `<p style="font-size:.82rem;color:#64748b;margin-bottom:10px;">☑ Boleh memilih lebih dari satu jawaban</p>`;
-                q.opt.forEach((o, oi) => h += `<label class="opt-label"><input type="checkbox" value="${oi}" onchange="app.saveMulti(${q.id},${oi})"> ${o}</label>`);
-            } else if (q.type === 'pgk-cat') {
-                h += `<div class="matrix-wrapper"><table class="matrix-table"><tr><th>Pernyataan</th>`;
-                q.cols.forEach(c => h += `<th>${c}</th>`);
+    // Membangun DOM untuk SATU soal saja (idx). Dipanggil setiap navigasi.
+    // Pendekatan ini memastikan hanya 1 soal yang ada di DOM setiap saat,
+    // sehingga tidak mungkin soal lain "muncul" secara tidak sengaja.
+    _buildQuestionDOM(idx) {
+        const q = QUESTIONS[idx];
+        // Catatan: q.q sudah mengandung nomor soal (mis. "1. Tempat nu…"),
+        // sehingga TIDAK ditambahkan prefix nomor lagi.
+        let h = `<div id="q-item-${idx}" class="question-item active-q">`;
+        h += `<div class="tag-cat">${q.cat}</div>`;
+        h += q.stim || "";
+        h += `<div class="q-text">${q.q}</div>`;
+        if (q.type === 'pg') {
+            q.opt.forEach((o, oi) => h += `<label class="opt-label"><input type="radio" name="ans_${q.id}" value="${oi}" onchange="app.saveAns(${q.id},${oi})"> ${o}</label>`);
+        } else if (q.type === 'pgk') {
+            h += `<p style="font-size:.82rem;color:#64748b;margin-bottom:10px;">☑ Boleh memilih lebih dari satu jawaban</p>`;
+            q.opt.forEach((o, oi) => h += `<label class="opt-label"><input type="checkbox" value="${oi}" onchange="app.saveMulti(${q.id},${oi})"> ${o}</label>`);
+        } else if (q.type === 'pgk-cat') {
+            h += `<div class="matrix-wrapper"><table class="matrix-table"><tr><th>Pernyataan</th>`;
+            q.cols.forEach(c => h += `<th>${c}</th>`);
+            h += `</tr>`;
+            q.rows.forEach((r, ri) => {
+                h += `<tr><td>${r}</td>`;
+                q.cols.forEach(c => h += `<td><input type="radio" name="mx_${q.id}_${ri}" value="${c}" onchange="app.saveMx(${q.id},${ri},'${c}')"></td>`);
                 h += `</tr>`;
-                q.rows.forEach((r, ri) => {
-                    h += `<tr><td>${r}</td>`;
-                    q.cols.forEach(c => h += `<td><input type="radio" name="mx_${q.id}_${ri}" value="${c}" onchange="app.saveMx(${q.id},${ri},'${c}')"></td>`);
-                    h += `</tr>`;
-                });
-                h += `</table></div>`;
-            }
-            h += `</div>`;
-            fullHtml += h;
-        });
-        // Set innerHTML SEKALI setelah semua soal selesai dibangun,
-        // bukan += per soal, untuk mencegah bug render DOM berulang.
-        box.innerHTML = fullHtml;
+            });
+            h += `</table></div>`;
+        }
+        h += `</div>`;
+        document.getElementById('quiz-container').innerHTML = h;
+    },
+
+    renderQuestions() {
+        // Tidak melakukan apa-apa; rendering dilakukan per-soal di goToQ.
     },
 
     goToQ(idx) {
         if(idx<0||idx>=QUESTIONS.length) return;
         this.currIdx=idx;
         const qs=document.getElementById('quiz-scroll'); if(qs) qs.scrollTop=0;
-        // Sembunyikan semua soal dengan style.display eksplisit (lebih andal dari class toggle)
-        document.querySelectorAll('.question-item').forEach(e => {
-            e.style.display = 'none';
-            e.classList.remove('active-q');
-        });
-        // Tampilkan soal yang aktif
-        const activeEl = document.getElementById(`q-item-${idx}`);
-        activeEl.style.display = 'block';
-        activeEl.classList.add('active-q');
+        // Render HANYA soal saat ini — soal lama otomatis terhapus dari DOM.
+        this._buildQuestionDOM(idx);
         document.getElementById('q-indicator').innerText=`Soal ${idx+1} / 40`;
         document.getElementById('btn-prev').disabled=(idx===0);
         const nBtn=document.getElementById('btn-next');
